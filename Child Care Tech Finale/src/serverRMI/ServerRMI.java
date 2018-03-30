@@ -7,6 +7,9 @@ import java.rmi.RemoteException;
 import java.sql.*;
 
 public class ServerRMI extends UnicastRemoteObject implements InterfaceRMI{
+    protected ServerRMI() throws RemoteException {
+    }
+
     public void insertBambino() {
 
         // bisognerebbe passargli come argomento il riferimento al bambino

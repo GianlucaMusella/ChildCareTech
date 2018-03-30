@@ -44,7 +44,7 @@ public class ConnectionDatabase{
     }
 
     public boolean Autentication(String user){
-        String u = "SELECT CodiceFiscale FROM PersonaleInterno";
+        String u = "SELECT Username FROM PersonaleConAccesso";
 
         try {
 
@@ -62,7 +62,7 @@ public class ConnectionDatabase{
             }
 
             while (resultSet.next()){
-                username.add(resultSet.getString("CodiceFiscale"));
+                username.add(resultSet.getString("Username"));
 
                 if(username.contains(user)){
                     return true;
@@ -77,7 +77,7 @@ public class ConnectionDatabase{
 
     public boolean verification(String username, String password){
 
-        String u = "SELECT CodiceFiscale,Password FROM PersonaleInterno WHERE CodiceFiscale = " + '"' + username + '"' + "AND Password = " + '"' + password + '"';
+        String u = "SELECT Username,Password FROM PersonaleConAccesso WHERE Username = " + '"' + username + '"' + "AND Password = " + '"' + password + '"';
 
         try{
 
@@ -88,8 +88,8 @@ public class ConnectionDatabase{
 
             while(resultSet.next()){
 
-                utente.add(resultSet.getString("CodiceFiscale"));
-                System.out.println(resultSet.getString("CodiceFiscale"));
+                utente.add(resultSet.getString("Username"));
+                System.out.println(resultSet.getString("Username"));
                 System.out.println(resultSet.getString("Password"));
                 if(!utente.isEmpty())
 
