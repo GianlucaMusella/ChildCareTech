@@ -1,29 +1,28 @@
 package loginScreen;
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
-import javafx.event.ActionEvent;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import serverRMI.InterfaceRMI;
+import java.io.*;
+import java.net.InetAddress;
+import java.net.Socket;
 
-import java.awt.*;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
-public class Controller{
+public class Controller {
+    static Socket socket = null;
+    static BufferedReader bufferedReader;
+    static PrintWriter printWriter;
+
 
     @FXML
     private Label lblStatus;
@@ -35,47 +34,78 @@ public class Controller{
     private TextField txtPassword;
 
     @FXML
-    private MenuButton menuConnessione;
+    private ChoiceBox menuConnessione;
 
 
-    public void connessioneRMI(ActionEvent actionEvent) {
-        System.out.println("Ho scelto RMI");
-        menuConnessione.setText("RMI");
+    public void initialize(Stage primaryStage) throws Exception {
 
-    }
-
-    public void connessioneSocket(ActionEvent actionEvent) throws RemoteException {
-        System.out.println("Ho scelto Socket");
-        menuConnessione.setText("Socket");
-
-
-
-    }
-
-    /*public void initialize(Stage primaryStage) throws Exception{
-        BorderPane root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-        primaryStage.setTitle("Login");
-        Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-        ObservableList<String> C = FXCollections.observableArrayList("RMI","Socket");
+        Parent root = FXMLLoader.load(getClass().getResource("/loginScreen/Login.fxml"));
+        Scene scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-
-    }*/
-
-    public void Login(ActionEvent event) throws Exception{
-        if(txtUsername.getText().equals("Gianluca") && txtPassword.getText().equals("gianluca95")){
-            lblStatus.setText("Login Riuscito");
-            Stage primaryStage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/loginscreen/Choice.fxml"));
-            Scene scene = new Scene(root, 600, 400);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        }else{
-            lblStatus.setText("Login Fallito");
-        }
+        ObservableList<String> C = FXCollections.observableArrayList("RMI", "Socket");
+        menuConnessione = (ChoiceBox<String>) root.lookup("#menuConnessione");
+        menuConnessione.setItems(C);
+        menuConnessione.setValue("RMI");
     }
 
+
+
+    public void login(ActionEvent actionEvent) throws Exception {
+        //String username = txtUsername.getText().toString();
+        //String password = txtPassword.getText().toString();
+
+
+
+            if(menuConnessione.getValue().equals("RMI")){
+                System.out.println("E' stata scelta la connessione RMI");
+
+
+
+
+            } else {
+
+                final InetAddress URL = InetAddress.getLocalHost();
+                final int porta = 3365;
+                socket = new Socket(URL, porta);
+
+                if (loginServerSocket(socket)) {
+                    //System.out.println("E' stata scelta la connessione Socket");
+                    ((Node) actionEvent.getSource()).getScene().getWindow().hide();
+                    //apro la schermata del menù
+                    Parent root = FXMLLoader.load(getClass().getResource("/loginScreen/Choice.fxml"));
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+
+                }
+                else socket.close();
+
+            }
+
+    }
+
+    private boolean loginServerSocket(Socket client) throws Exception{
+
+        printWriter = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+        //mando username al server
+        printWriter.println(txtUsername.getText());
+
+        //mando psw al server
+        printWriter.println(txtPassword.getText());
+
+        //pulisco
+        printWriter.flush();
+
+        InputStream inputStream = socket.getInputStream();
+        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+        String risultato = (String) objectInputStream.readObject();
+
+        if(risultato.equals("true"))
+            return true;
+
+        return false;
+    }
 }

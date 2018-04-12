@@ -23,7 +23,7 @@ public class ConnectionDatabase{
     public ConnectionDatabase() {
         conn = login();
 
-        System.out.println("Connessione avvenuta con successo");
+        System.out.println("Connessione avvenuta con successo al database");
     }
 
     public Connection login(){
@@ -43,8 +43,8 @@ public class ConnectionDatabase{
         return null;
     }
 
-    public boolean Autentication(String user){
-        String u = "SELECT Username FROM PersonaleConAccesso";
+    public boolean autentication(String user){
+        String u = "SELECT Username FROM mydb.personaleconaccesso";
 
         try {
 
@@ -75,9 +75,9 @@ public class ConnectionDatabase{
         return false;
     }
 
-    public boolean verification(String username, String password){
+    public boolean controllo(String username, String password){
 
-        String u = "SELECT Username,Password FROM PersonaleConAccesso WHERE Username = " + '"' + username + '"' + "AND Password = " + '"' + password + '"';
+        String u = "SELECT Username,Password FROM mydb.personaleconaccesso WHERE Username = " + '"' + username + '"' + "AND Password = " + '"' + password + '"';
 
         try{
 
@@ -103,4 +103,5 @@ public class ConnectionDatabase{
 
         return false;
     }
+
 }

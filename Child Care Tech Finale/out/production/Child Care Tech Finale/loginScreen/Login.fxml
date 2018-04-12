@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -29,7 +28,7 @@
                     <Font size="14.0" />
                 </font>
             </PasswordField>
-            <Button layoutX="75.0" layoutY="170.0" mnemonicParsing="false" onAction="#Login" prefHeight="30.0" prefWidth="89.0" text="Login">
+            <Button fx:id="bastardo" layoutX="75.0" layoutY="170.0" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="89.0" text="Login">
                 <font>
                     <Font size="14.0" />
                 </font>
@@ -47,10 +46,5 @@
         </children>
     </AnchorPane>
     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-    <MenuButton fx:id="menuConnessione" layoutX="464.0" layoutY="354.0" mnemonicParsing="false" text="Connessione">
-        <items>
-            <MenuItem fx:id="connessioneRMI" mnemonicParsing="false" onAction="#connessioneRMI" text="RMI" />
-            <MenuItem fx:id="connessioneSocket" mnemonicParsing="false" onAction="#connessioneSocket" text="Socket" />
-        </items>
-    </MenuButton>
+   <ChoiceBox fx:id="menuConnessione" layoutX="456.0" layoutY="361.0" prefHeight="25.0" prefWidth="107.0" />
 </AnchorPane>

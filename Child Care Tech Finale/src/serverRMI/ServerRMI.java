@@ -1,14 +1,26 @@
 package serverRMI;
 
 import java.net.MalformedURLException;
+import java.rmi.server.RMIClientSocketFactory;
+import java.rmi.server.RMIServerSocketFactory;
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.sql.*;
 
 public class ServerRMI extends UnicastRemoteObject implements InterfaceRMI{
+
     protected ServerRMI() throws RemoteException {
     }
+
+    protected ServerRMI(int port) throws RemoteException {
+        super(port);
+    }
+
+    protected ServerRMI(int port, RMIClientSocketFactory csf, RMIServerSocketFactory ssf) throws RemoteException {
+        super(port, csf, ssf);
+    }
+
 
     public void insertBambino() {
 

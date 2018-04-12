@@ -1,7 +1,6 @@
 package serverSocket;
 
 import connectionDatabase.ConnectionDatabase;
-import serverRMI.InterfaceRMI;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,54 +8,43 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class Handler {/*
-    BufferedReader input;
-    OutputStream out;
+public class Handler extends Thread implements SocketInterface {
+
+    BufferedReader bufferedReader;
+    OutputStream outputStream;
     Socket client;
-    public handler(Socket clientSocket) {
-        this.client=clientSocket;
-        System.out.println();
+
+    public Handler(Socket socketClient) {
+        this.client = socketClient;
     }
 
-    public  void run(){
-        String user,password;
-        boolean risp;
-        try {
-            input = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            user = input.readLine();
-            password = input.readLine();
-            risp = Login(user, password);
-            //invio la risposta al client
-            if(risp)
-                user = "true";
-            else
-                user = "false";
+    public void run(){
+        String username, password;
+        boolean risposta;
 
-            out = client.getOutputStream();
-            ObjectOutputStream oout = new ObjectOutputStream(out);
-            oout.writeObject(user);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
+        try{
+            bufferedReader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            username = bufferedReader.readLine();
+            password = bufferedReader.readLine();
+            risposta = login(username, password);
+
+            if(risposta)
+                username = "true";
+            else
+                username = "false";
+
+            outputStream = client.getOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(username);
+        }catch (Exception e){
             e.printStackTrace();
         }
-
-        //}
-    }// fine run
-
-    @Override
-    public boolean Login(String user, String pw) throws Exception {
-        ConnectionDatabase = new ConnectionDatabase();
-
-        return d.check(user, pw);
     }
 
     @Override
-    public void SignUp(String usr, String pw) throws Exception {
-        // TODO Auto-generated method stub
+    public boolean login(String username, String password){
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
 
+        return  connectionDatabase.controllo(username, password);
     }
-
-
-*/
-
 }
