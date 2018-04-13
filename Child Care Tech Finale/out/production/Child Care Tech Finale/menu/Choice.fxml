@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menu.Choice">
+    <Text layoutX="119.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quale operazione vuoi effettuare?" textAlignment="CENTER" wrappingWidth="362.396484375">
+        <font>
+            <Font size="21.0" />
+        </font>
+    </Text>
+    <Button layoutX="46.0" layoutY="104.0" mnemonicParsing="false" onAction="#inserisciPersona" prefHeight="53.0" prefWidth="180.0" text="Inserisci una persona" textAlignment="CENTER" />
+    <Button fx:id="organizzaGita" layoutX="367.0" layoutY="104.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="180.0" text="Organizza una gita" />
+    <Button fx:id="menuMensa" layoutX="46.0" layoutY="287.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="180.0" text="Crea un menù per la mensa" />
+    <Button fx:id="fornitore" layoutX="367.0" layoutY="287.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="180.0" text="Fornitore" />
+</AnchorPane>

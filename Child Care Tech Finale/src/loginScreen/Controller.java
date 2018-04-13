@@ -67,7 +67,7 @@ public class Controller {
                     //se il login ha avuto successo nascono il login
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
                     //apro la schermata del menù
-                    Parent root = FXMLLoader.load(getClass().getResource("/menuPrincipale/Choice.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/menu/Choice.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
                     stage.setScene(scene);
@@ -87,7 +87,7 @@ public class Controller {
                     System.out.println("E' stata scelta la connessione Socket");
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
                     //apro la schermata del menù
-                    Parent root = FXMLLoader.load(getClass().getResource("/menuPrincipale/Choice.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/menu/Choice.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
                     stage.setScene(scene);
