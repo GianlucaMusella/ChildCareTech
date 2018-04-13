@@ -23,7 +23,7 @@ public class ConnectionDatabase{
     public ConnectionDatabase() {
         conn = login();
 
-        System.out.println("Connessione avvenuta con successo al database");
+        System.out.println("Connessione avvenuta con successo");
     }
 
     public Connection login(){
@@ -43,8 +43,8 @@ public class ConnectionDatabase{
         return null;
     }
 
-    public boolean autentication(String user){
-        String u = "SELECT Username FROM mydb.personaleconaccesso";
+    public boolean Autentication(String user){
+        String u = "SELECT CodiceFiscale FROM PersonaleInterno";
 
         try {
 
@@ -62,7 +62,7 @@ public class ConnectionDatabase{
             }
 
             while (resultSet.next()){
-                username.add(resultSet.getString("Username"));
+                username.add(resultSet.getString("CodiceFiscale"));
 
                 if(username.contains(user)){
                     return true;
@@ -75,9 +75,9 @@ public class ConnectionDatabase{
         return false;
     }
 
-    public boolean controllo(String username, String password){
+    public boolean verification(String username, String password){
 
-        String u = "SELECT Username,Password FROM mydb.personaleconaccesso WHERE Username = " + '"' + username + '"' + "AND Password = " + '"' + password + '"';
+        String u = "SELECT CodiceFiscale,Password FROM PersonaleInterno WHERE CodiceFiscale = " + '"' + username + '"' + "AND Password = " + '"' + password + '"';
 
         try{
 
@@ -88,8 +88,8 @@ public class ConnectionDatabase{
 
             while(resultSet.next()){
 
-                utente.add(resultSet.getString("Username"));
-                System.out.println(resultSet.getString("Username"));
+                utente.add(resultSet.getString("CodiceFiscale"));
+                System.out.println(resultSet.getString("CodiceFiscale"));
                 System.out.println(resultSet.getString("Password"));
                 if(!utente.isEmpty())
 
@@ -103,5 +103,4 @@ public class ConnectionDatabase{
 
         return false;
     }
-
 }
