@@ -1,53 +1,20 @@
 package serverRMI;
 
-import java.net.MalformedURLException;
-import java.rmi.server.RMIClientSocketFactory;
-import java.rmi.server.RMIServerSocketFactory;
-import java.rmi.server.UnicastRemoteObject;
-import java.rmi.Naming;
+import javax.naming.NamingException;
+import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
-import java.sql.*;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
-public class ServerRMI extends UnicastRemoteObject implements InterfaceRMI{
+public class ServerRMI {
 
-    protected ServerRMI() throws RemoteException {
+    public static void main(String[] args) throws RemoteException, NamingException, AlreadyBoundException {
+
+        System.out.println("Inizializzo connessione al server RMI");
+        InterfaceRMI MainFrame = new RMIServer();
+        Registry registry = LocateRegistry.createRegistry(1099);
+        registry.bind("MainFrame", MainFrame);
+        System.out.println("Server RMI pronto, in attesa di client");
+
     }
-
-    protected ServerRMI(int port) throws RemoteException {
-        super(port);
-    }
-
-    protected ServerRMI(int port, RMIClientSocketFactory csf, RMIServerSocketFactory ssf) throws RemoteException {
-        super(port, csf, ssf);
-    }
-
-
-    public void insertBambino() {
-
-        // bisognerebbe passargli come argomento il riferimento al bambino
-        // codice per caricare i dati del bambino sul server
-
-        /*String SQL = new String ("INSERT into Bambino"+this.GetNome+","+this.GetCognome+",");
-        Statement stmt = con.CreateStatement ();
-        int line = stmt.executeUpdate(SQL);*/
-
-        // questa è solo una bozza. Gli errori che mi da sono probabilmente dovuti al fatto che non è ancora
-        // connesso al database. La stringa SQL va comunque sistemata perché mancano tanti dati.
-    }
-
-    public void insertPersonaleInterno() { // stesso discorso per passargli il parametro
-        // codice per caricare i dati del personale sul server
-    }
-
-    public void insertGenitore() {
-        // codice per caricare i dati del genitore sul server
-    }
-
-    public void organizzaGita () {
-        // codice per inserire i dati della gita
-    }
-    public void menùGiorno () {
-        // stesso discorso di prima, va tolto il void. Qui deve restituire una stringa con il menù del giorno
-    }
-
 }

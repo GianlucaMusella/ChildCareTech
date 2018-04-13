@@ -43,7 +43,7 @@ public class ConnectionDatabase{
         return null;
     }
 
-    public boolean autentication(String user){
+    /*public boolean autentication(String user){
         String u = "SELECT Username FROM mydb.personaleconaccesso";
 
         try {
@@ -73,7 +73,7 @@ public class ConnectionDatabase{
             System.err.println(e);
         }
         return false;
-    }
+    }*/
 
     public boolean controllo(String username, String password){
 

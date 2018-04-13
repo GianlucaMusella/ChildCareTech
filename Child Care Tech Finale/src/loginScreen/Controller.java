@@ -13,14 +13,18 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.json.simple.JSONObject;
+import serverRMI.InterfaceRMI;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 
 public class Controller {
     static Socket socket = null;
-    static BufferedReader bufferedReader;
     static PrintWriter printWriter;
 
 
@@ -36,6 +40,8 @@ public class Controller {
     @FXML
     private ChoiceBox menuConnessione;
 
+    JSONObject txt;
+    private String remoteObjectName = "MainFrame";
 
     public void initialize(Stage primaryStage) throws Exception {
 
@@ -52,16 +58,24 @@ public class Controller {
 
 
     public void login(ActionEvent actionEvent) throws Exception {
-        //String username = txtUsername.getText().toString();
-        //String password = txtPassword.getText().toString();
-
-
 
             if(menuConnessione.getValue().equals("RMI")){
-                System.out.println("E' stata scelta la connessione RMI");
+                //System.out.println("E' stata scelta la connessione RMI");
+                Registry registry = LocateRegistry.getRegistry();
+                InterfaceRMI Mainframe = (InterfaceRMI) registry.lookup(remoteObjectName);
+                if(Mainframe.login(txtUsername.getText(), txtPassword.getText())) {
+                    //se il login ha avuto successo nascono il login
+                    ((Node) actionEvent.getSource()).getScene().getWindow().hide();
+                    //apro la schermata del menù
+                    Parent root = FXMLLoader.load(getClass().getResource("/menuPrincipale/Choice.fxml"));
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
 
-
-
+                }
+                else
+                    lblStatus.setText("Login Fallito");
 
             } else {
 
@@ -70,17 +84,20 @@ public class Controller {
                 socket = new Socket(URL, porta);
 
                 if (loginServerSocket(socket)) {
-                    //System.out.println("E' stata scelta la connessione Socket");
+                    System.out.println("E' stata scelta la connessione Socket");
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
                     //apro la schermata del menù
-                    Parent root = FXMLLoader.load(getClass().getResource("/loginScreen/Choice.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/menuPrincipale/Choice.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
                     stage.setScene(scene);
                     stage.show();
 
                 }
-                else socket.close();
+                else {
+                    lblStatus.setText("Login Fallito");
+                    socket.close();
+                }
 
             }
 

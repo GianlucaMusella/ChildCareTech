@@ -12,11 +12,11 @@ public class Server {
 
     private Socket inizializzaServer() throws IOException {
 
-        System.out.println("Inizializzo la connessione al Server");
+        System.out.println("Inizializzo la connessione al Server Socket");
         //inizializzo
         server = new ServerSocket(porta);
 
-        System.out.println("Server pronto, in ascolto sulla porta " + porta);
+        System.out.println("Server Socket pronto, in ascolto sulla porta " + porta);
         //mi metto sulla porta che ho aperto
 
         while(true) {
