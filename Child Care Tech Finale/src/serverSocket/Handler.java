@@ -10,9 +10,9 @@ import java.net.Socket;
 
 public class Handler extends Thread implements SocketInterface {
 
-    BufferedReader bufferedReader;
-    OutputStream outputStream;
-    Socket client;
+    private BufferedReader bufferedReader;
+    private OutputStream outputStream;
+    private Socket client;
 
     public Handler(Socket socketClient) {
         this.client = socketClient;

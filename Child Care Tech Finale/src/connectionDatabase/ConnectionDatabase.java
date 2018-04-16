@@ -26,7 +26,7 @@ public class ConnectionDatabase{
         System.out.println("Connessione avvenuta con successo al database");
     }
 
-    public Connection login(){
+    private Connection login(){
         String driver = "com.mysql.jdbc.Driver";
         try {
             Class.forName(driver);
@@ -35,8 +35,7 @@ public class ConnectionDatabase{
             e1.printStackTrace();
         }
         try {
-            Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            return conn;
+            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
         }catch(Exception e) {
             System.out.println(e);
         }
@@ -84,7 +83,7 @@ public class ConnectionDatabase{
             PreparedStatement statement = conn.prepareStatement(u);
             ResultSet resultSet = statement.executeQuery();
 
-            ArrayList<String> utente = new ArrayList<String>();
+            ArrayList<String> utente = new ArrayList<>();
 
             while(resultSet.next()){
 

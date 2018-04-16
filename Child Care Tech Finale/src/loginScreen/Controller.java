@@ -24,8 +24,8 @@ import java.rmi.registry.Registry;
 
 
 public class Controller {
-    static Socket socket = null;
-    static PrintWriter printWriter;
+    private static Socket socket = null;
+    private static PrintWriter printWriter;
 
 
     @FXML
@@ -40,7 +40,7 @@ public class Controller {
     @FXML
     private ChoiceBox menuConnessione;
 
-    JSONObject txt;
+    //JSONObject txt;
     private String remoteObjectName = "MainFrame";
 
     public void initialize(Stage primaryStage) throws Exception {
@@ -60,7 +60,7 @@ public class Controller {
     public void login(ActionEvent actionEvent) throws Exception {
 
             if(menuConnessione.getValue().equals("RMI")){
-                //System.out.println("E' stata scelta la connessione RMI");
+                System.out.println("E' stata scelta la connessione RMI");
                 Registry registry = LocateRegistry.getRegistry();
                 InterfaceRMI Mainframe = (InterfaceRMI) registry.lookup(remoteObjectName);
                 if(Mainframe.login(txtUsername.getText(), txtPassword.getText())) {
@@ -75,7 +75,7 @@ public class Controller {
 
                 }
                 else
-                    lblStatus.setText("Login Fallito");
+                    lblStatus.setText("Login fallito");
 
             } else {
 
@@ -83,7 +83,7 @@ public class Controller {
                 final int porta = 3365;
                 socket = new Socket(URL, porta);
 
-                if (loginServerSocket(socket)) {
+                if (loginServerSocket()) {
                     System.out.println("E' stata scelta la connessione Socket");
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
                     //apro la schermata del menù
@@ -95,15 +95,12 @@ public class Controller {
 
                 }
                 else {
-                    lblStatus.setText("Login Fallito");
-                    socket.close();
+                    lblStatus.setText("Login fallito");
                 }
-
             }
-
     }
 
-    private boolean loginServerSocket(Socket client) throws Exception{
+    private boolean loginServerSocket() throws Exception{
 
         printWriter = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 
@@ -120,8 +117,9 @@ public class Controller {
         ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
         String risultato = (String) objectInputStream.readObject();
 
-        if(risultato.equals("true"))
+        if(risultato.equals("true")) {
             return true;
+        }
 
         return false;
     }
