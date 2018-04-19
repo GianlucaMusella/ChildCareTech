@@ -1,9 +1,8 @@
 package connectionDatabase;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import dataEntry.Child;
+
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ConnectionDatabase{
@@ -17,8 +16,26 @@ public class ConnectionDatabase{
     // jdbc url per MySql.
     private static final String URL = "jdbc:mysql://localhost:3306/mydb";
 
-    private final Connection conn;
+    private static Connection conn;
 
+    static{
+        String driver = "com.mysql.jdbc.Driver";
+        try {
+            Class.forName(driver);
+        } catch (ClassNotFoundException e1) {
+            e1.printStackTrace();
+        }
+        try {
+            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        }catch(Exception e) {
+            System.out.println(e);
+            conn = null;
+        }
+    }
+
+    public static Connection getConnection(){
+        return conn;
+    }
 
     public ConnectionDatabase() {
         conn = login();
@@ -31,7 +48,6 @@ public class ConnectionDatabase{
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
         try {
@@ -103,4 +119,18 @@ public class ConnectionDatabase{
         return false;
     }
 
+
+    public void newSupplier(String name, String surname, String azienda, String fornitura, String partitaIva) throws SQLException {
+
+        String supplier = "INSERT INTO mydb.fornitori (Nome,Cognome,Azienda,TipoDiFornitura,PartitaIVA) VALUES ('"+name+"','"+surname+"','"+azienda+"','"+fornitura+"','"+partitaIva+"') ";
+        PreparedStatement preparedStatement = conn.prepareStatement(supplier);
+        preparedStatement.executeUpdate();
+
+    }
+
+    public static void insertChild(Child child) throws SQLException {
+        String newChild = "INSERT INTO mydb.bambini (Nome,Cognome, CodiceFiscale) VALUES ('"+child.getNome()+"','"+child.getCognome()+"','"+child.getCodiceFiscale()+"') ";
+        PreparedStatement preparedStatement = conn.prepareStatement(newChild);
+        preparedStatement.executeUpdate();
+    }
 }

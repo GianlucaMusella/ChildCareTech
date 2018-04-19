@@ -2,43 +2,48 @@ package dataEntry;
 
 import java.util.Date;
 
-public class Child extends Generality{
+public class Child extends Generality {
+    private String allergie;
+    private String codicefiscalegen1;
+    private String codicefiscalegen2;
+    private String codicefiscalecontatto;
+    private String codicefiscalepediatra;
+    private int idbambino;
 
-    private String codiceFiscaleGenitore;       //richiedo questi codici fiscali perchè chiavi primarie nel db
-    private String codiceFiscaleContatto;
-    private String codiceFiscalePediatra;
-    private int IDBambino;
-
-    public void setIDBambino (int IDBambino) {
-        this.IDBambino=IDBambino;
+    public void setAllergie(String allergie) {
+        this.allergie = allergie;
     }
 
-    public int getIDBambino (){ return IDBambino; }
-
-    public String getCodiceFiscaleGenitore() {
-        return codiceFiscaleGenitore;
+    public void setCodicefiscalegen1(String codicefiscalegen1) {
+        this.codicefiscalegen1 = codicefiscalegen1;
     }
 
-    public void setCodiceFiscaleGenitore(String codiceFiscaleGenitore) {
-        this.codiceFiscaleGenitore = codiceFiscaleGenitore;
+    public void setCodicefiscalegen2(String codicefiscalegen2){ this.codicefiscalegen2 = codicefiscalegen2;}
+
+    public void setCodicefiscalecontatto (String codicefiscalecontatto) {this.codicefiscalecontatto = codicefiscalecontatto;}
+
+    public void setIdbambino(int idbambino) {
+        this.idbambino = idbambino;
     }
 
-    public String getCodiceFiscaleContatto() {
-        return codiceFiscaleContatto;
+    public void setCodicefiscalepediatra(String codicefiscalepediatrapediatra) { this.codicefiscalepediatra = codicefiscalepediatrapediatra;    }
+
+    public String getAllergie() {
+        return allergie;
     }
 
-    public void setCodiceFiscaleContatto(String codiceFiscaleContatto) {
-        this.codiceFiscaleContatto = codiceFiscaleContatto;
+    public String getCodicefiscalegen1() {
+        return codicefiscalegen1;
     }
 
-    public String getCodiceFiscalePediatra() {
-        return codiceFiscalePediatra;
+    public String getCodicefiscalegen2 () {return codicefiscalegen2;}
+
+    public String getCodicefiscalecontatto () {return codicefiscalecontatto;}
+
+    public int getIdbambino() {
+        return idbambino;
     }
 
-    public void setCodiceFiscalePediatra(String codiceFiscalePediatra) {
-        this.codiceFiscalePediatra = codiceFiscalePediatra;
-    }
-    public void insertChild (String nome, String cognome, String luogodiNascita, String sesso, String codiceFiscale, Date data, String codiceFiscaleGenitore, String codiceFiscaleContatto, String codiceFiscalePediatra){
-        String SQL = "INSERT INTO Bambini (idBambino, CodiceFiscale, Nome, Cognome, Data di Nascita, Luogo di Nascita, Sesso) VALUES (" + IDBambino + "," + codiceFiscale + "," + nome + "," + cognome + "," + data + "," + luogodiNascita + "," + sesso + ";";
+    public String getCodicefiscalepediatra () { return codicefiscalepediatra;
     }
 }

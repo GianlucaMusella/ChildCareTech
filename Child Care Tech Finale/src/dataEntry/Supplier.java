@@ -1,8 +1,31 @@
 package dataEntry;
 
+import connectionDatabase.ConnectionDatabase;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+
+import java.sql.SQLException;
+
+
 public class Supplier {
 
-    private String nome;
+    @FXML
+    private TextField txtName;
+
+    @FXML
+    private TextField txtSurname;
+
+    @FXML
+    private TextField txtAzienda;
+
+    @FXML
+    private TextField txtFornitura;
+
+    @FXML
+    private TextField txtPiva;
+
+    /*private String nome;
     private String cognome;
     private String azienda;
     private String fornitura;
@@ -47,5 +70,22 @@ public class Supplier {
     public void setPartitaIva(String partitaIva) {
         this.partitaIva = partitaIva;
     }
+*/
+    public void addSupplier(ActionEvent actionEvent) throws SQLException {
+        String name = txtName.getText();
+        String surname = txtSurname.getText();
+        String azienda = txtAzienda.getText();
+        String fornitura = txtFornitura.getText();
+        String partitaIva = txtPiva.getText();
 
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        connectionDatabase.newSupplier(name, surname, azienda, fornitura, partitaIva);
+
+        txtName.clear();
+        txtSurname.clear();
+        txtAzienda.clear();
+        txtFornitura.clear();
+        txtPiva.clear();
+
+    }
 }

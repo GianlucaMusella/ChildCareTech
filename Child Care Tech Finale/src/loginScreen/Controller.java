@@ -37,6 +37,8 @@ public class Controller {
     @FXML
     private TextField txtPassword;
 
+
+
     @FXML
     private ChoiceBox menuConnessione;
 
@@ -72,7 +74,6 @@ public class Controller {
                     Stage stage = new Stage();
                     stage.setScene(scene);
                     stage.show();
-
                 }
                 else
                     lblStatus.setText("Login fallito");

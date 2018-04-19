@@ -30,9 +30,9 @@
                     <Font name="Berlin Sans FB" size="15.0" />
                 </font>
             </PasswordField>
-            <Button fx:id="bastardo" layoutX="84.0" layoutY="195.0" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="89.0" text="Login">
+            <Button fx:id="bastardo" layoutX="84.0" layoutY="189.0" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="107.0" text="Login">
                 <font>
-                    <Font size="14.0" />
+                    <Font name="Berlin Sans FB" size="19.0" />
                 </font>
             </Button>
             <Text fill="WHITE" layoutX="96.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign In" textAlignment="CENTER">

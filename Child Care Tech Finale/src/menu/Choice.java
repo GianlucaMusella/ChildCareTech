@@ -1,15 +1,22 @@
 package menu;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import loginScreen.Controller;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class Choice {
+
+public class Choice{
 
     public void inserisciPersona(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
