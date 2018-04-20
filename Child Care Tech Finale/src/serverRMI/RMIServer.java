@@ -26,8 +26,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String login = "SELECT Username,Password FROM mydb.personaleconaccesso WHERE Username = " + '"' + username + '"' + "AND Password = " + '"' + password + '"';
 
-        boolean risp = false;
-
         try{
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(login);
@@ -59,13 +57,13 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             }finally {
                 try {
                     if (resultSet != null)
-                        resultSet.close();
+                        resultSet.close();      //chiudo le connessioni al db una volta effettuato il controllo
                 }catch (Exception e){
                     e.printStackTrace();
                 }
                 try {
                     if(preparedStatement != null)
-                        preparedStatement.close();
+                        preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -78,6 +76,45 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         return false;
 
+    }
+
+    @Override
+    public boolean newSupplier(String name, String surname, String azienda, String fornitura, String partitaIva) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String supplier = "INSERT INTO mydb.fornitori (Nome,Cognome,Azienda,TipoDiFornitura,PartitaIVA) VALUES (?,?,?,?,?)";
+
+       // +name+"','"+surname+"','"+azienda+"','"+fornitura+"','"+partitaIva+"') ";
+
+        try{
+
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(supplier);
+            preparedStatement.setString(1,name);
+            preparedStatement.setString(2,surname);
+            preparedStatement.setString(3,azienda);
+            preparedStatement.setString(4,fornitura);
+            preparedStatement.setString(5,partitaIva);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+
+                if(preparedStatement != null){
+                    preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
+                    return true;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+       /* ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        PreparedStatement preparedStatement = connectionDatabase.initializeConnection().prepareStatement(supplier);
+        preparedStatement.executeUpdate();*/
+        return false;
     }
 
     @Override

@@ -15,10 +15,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import serverRMI.InterfaceRMI;
+import serverRMI.User;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -43,7 +46,7 @@ public class Controller {
     private ChoiceBox menuConnessione;
 
     //JSONObject txt;
-    private String remoteObjectName = "MainFrame";
+    public String remoteObjectName = "MainFrame";
 
     public void initialize(Stage primaryStage) throws Exception {
 
@@ -63,8 +66,10 @@ public class Controller {
 
             if(menuConnessione.getValue().equals("RMI")){
                 System.out.println("E' stata scelta la connessione RMI");
-                Registry registry = LocateRegistry.getRegistry();
-                InterfaceRMI Mainframe = (InterfaceRMI) registry.lookup(remoteObjectName);
+               // Registry registry = LocateRegistry.getRegistry();
+                //InterfaceRMI Mainframe = (InterfaceRMI) registry.lookup(remoteObjectName);
+               // InterfaceRMI Mainframe = rmiInt();
+                InterfaceRMI Mainframe =Singleton.getInstance().rmiLookup();
                 if(Mainframe.login(txtUsername.getText(), txtPassword.getText())) {
                     //se il login ha avuto successo nascono il login
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
