@@ -13,14 +13,16 @@
       <TextField id="txtNome" fx:id="txtNome" layoutX="26.0" layoutY="35.0" promptText="Nome" />
       <TextField id="txtCognme" fx:id="txtCognome" layoutX="26.0" layoutY="70.0" promptText="Cognome" />
       <TextField id="txtCodiceFiscale" fx:id="txtCodiceFiscale" layoutX="26.0" layoutY="104.0" promptText="Codice Fiscale" />
-      <TextField id="txtSesso" fx:id="txtAllergia" layoutX="26.0" layoutY="246.0" promptText="Allergia" />
+      <TextField fx:id="txtIDBambino" layoutX="26.0" layoutY="139.0" promptText="ID Bambino" />
       <TextField id="txtLuogo" fx:id="txtLuogo" layoutX="26.0" layoutY="174.0" promptText="Luogo di Nascita" />
-      <DatePicker id="dateData" fx:id="dateData" layoutX="26.0" layoutY="209.0" promptText="Data di Nascita" />
+      <DatePicker id="dateData" fx:id="dateData" layoutX="26.0" layoutY="209.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di Nascita" />
+      <TextField id="txtSesso" fx:id="txtAllergia" layoutX="26.0" layoutY="246.0" promptText="Allergia" />
       <TextField id="txtGenitore1" fx:id="txtGenitore1" layoutX="26.0" layoutY="283.0" promptText="Codice Fiscale Genitore" />
       <TextField id="txtGenitore2" fx:id="txtGenitore2" layoutX="26.0" layoutY="323.0" promptText="Codice Fiscale Genitore" />
-      <TextField id="txtPediatra" fx:id="txtPediatra" layoutX="26.0" layoutY="363.0" promptText="Codice Fiscale Pediatra" />
+      <TextField id="txtPediatra" fx:id="txtSesso" layoutX="26.0" layoutY="354.0" promptText="Sesso" />
+      <TextField id="txtPediatra" fx:id="txtPediatra" layoutX="26.0" layoutY="390.0" promptText="Codice Fiscale Pediatra" />
       <Button layoutX="510.0" layoutY="402.0" mnemonicParsing="false" onAction="#addChild" text="Conferma" />
-      <Label id="Error" layoutX="348.0" layoutY="358.0" textFill="RED" />
+      <Label id="Error" layoutX="348.0" layoutY="358.0" prefHeight="17.0" prefWidth="0.0" textFill="RED" />
       <TableView id="tableBambini" layoutX="229.0" layoutY="38.0" prefHeight="322.0" prefWidth="349.0">
         <columns>
           <TableColumn id="columnNome" prefWidth="96.0" text="Nome" />
@@ -28,6 +30,5 @@
             <TableColumn id="columnCodiceFiscale" prefWidth="167.20001220703125" text="Codice fiscale" />
         </columns>
       </TableView>
-      <TextField fx:id="txtIDBambino" layoutX="26.0" layoutY="139.0" promptText="ID Bambino" />
    </children>
 </Pane>
