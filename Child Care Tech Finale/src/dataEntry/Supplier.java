@@ -1,16 +1,11 @@
 package dataEntry;
 
-import connectionDatabase.ConnectionDatabase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import loginScreen.Singleton;
 import serverRMI.InterfaceRMI;
-import serverRMI.RMIServer;
-
-import java.rmi.RemoteException;
-import java.sql.SQLException;
 
 
 public class Supplier {

@@ -11,10 +11,8 @@ import loginScreen.Singleton;
 import serverRMI.InterfaceRMI;
 
 import java.awt.*;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+
 
 public class NewChild {
 
@@ -67,15 +65,12 @@ public class NewChild {
     private TableColumn columnCodiceFiscale;
 
     public void addChild(ActionEvent actionEvent) throws Exception {
+
         String nome = txtNome.getText();
         String cognome = txtCognome.getText();
         String codiceFiscale = txtCodiceFiscale.getText();
         String luogo = txtLuogo.getText();
-
-        LocalDate localDate = dateData.getValue();
-        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-        Date data = Date.from(instant);
-
+        LocalDate data = dateData.getValue();
         String genitore1 = txtGenitore1.getText();
         String genitore2 = txtGenitore2.getText();
         String pediatra = txtPediatra.getText();
@@ -99,6 +94,7 @@ public class NewChild {
         txtPediatra.clear();
         txtAllergia.clear();
         txtIDBambino.clear();
+        txtSesso.clear();
 
     }
 

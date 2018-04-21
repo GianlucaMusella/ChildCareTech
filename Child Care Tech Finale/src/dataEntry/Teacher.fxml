@@ -6,18 +6,17 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataEntry.Teacher">
    <children>
-      <TextField layoutX="41.0" layoutY="50.0" promptText="Nome" />
-      <TextField layoutX="41.0" layoutY="82.0" promptText="Cognome" />
-      <TextField layoutX="41.0" layoutY="115.0" promptText="Codice Fiscale" />
-      <DatePicker layoutX="41.0" layoutY="150.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di Nascita" />
-      <TextField layoutX="41.0" layoutY="188.0" promptText="Allergie" />
-      <TextField layoutX="41.0" layoutY="224.0" promptText="Sesso" />
-      <TextField layoutX="41.0" layoutY="261.0" promptText="Insegnante di.." />
-      <TextField layoutX="41.0" layoutY="296.0" promptText="Username" />
-      <PasswordField layoutX="41.0" layoutY="333.0" promptText="Password" />
-      <Button layoutX="367.0" layoutY="358.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Salva" />
+      <TextField fx:id="txtNome" layoutX="41.0" layoutY="50.0" promptText="Nome" />
+      <TextField fx:id="txtCognome" layoutX="41.0" layoutY="82.0" promptText="Cognome" />
+      <TextField fx:id="txtCodiceFiscale" layoutX="41.0" layoutY="115.0" promptText="Codice Fiscale" />
+      <DatePicker fx:id="dateData" layoutX="41.0" layoutY="150.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di Nascita" />
+      <TextField fx:id="txtAllergie" layoutX="41.0" layoutY="188.0" promptText="Allergie" />
+      <TextField fx:id="txtSesso" layoutX="41.0" layoutY="224.0" promptText="Sesso" />
+      <TextField fx:id="txtInsegnante" layoutX="41.0" layoutY="261.0" promptText="Insegnante di.." />
+      <TextField fx:id="txtUsername" layoutX="41.0" layoutY="296.0" promptText="Username" />
+      <PasswordField fx:id="txtPassword" layoutX="41.0" layoutY="333.0" promptText="Password" />
+      <Button layoutX="367.0" layoutY="358.0" mnemonicParsing="false" onAction="#addTeacher" prefHeight="25.0" prefWidth="56.0" text="Salva" />
    </children>
 </AnchorPane>

@@ -113,29 +113,34 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public boolean addChild(String codiceFiscale, String idBambino, String nome, String cognome, java.util.Date data, String luogo, String allergie, String genitore1, String genitore2, String sesso, String pediatra) throws Exception {
+    public boolean addChild(String codiceFiscale, String idBambino, String nome, String cognome, LocalDate data, String luogo, String allergie, String genitore1, String genitore2, String sesso, String pediatra) throws Exception {
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement1 = null;
         ResultSet resultSet = null;
 
-        String child = "INSERT INTO mydb.bambini (CodiceFiscale,idBambino,Nome,Cognome,DatadiNascita,LuogodiNascita,Allergie,Sesso,Pediatra_CodiceFiscale) VALUES (?,?,?,?,?,?,?,?,?)";
-        String parents = "INSERT INTO mydb.bambini_has_genitori (Bambini_idBambino,Genitori_Codice Fiscale) VALUES (?,?)";
+        String child = "INSERT INTO mydb.bambini (CodiceFiscale,idBambino,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Allergie,Sesso) VALUES (?,?,?,?,?,?,?,?)";
+        String parents = "INSERT INTO mydb.bambini_has_genitori (Bambini_idBambino,Genitori_CodiceFiscale) VALUES (?,?)";
         try{
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(child);
+            //preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(parents);
 
 
             preparedStatement.setString(1,codiceFiscale);
             preparedStatement.setString(2,idBambino);
             preparedStatement.setString(3,nome);
             preparedStatement.setString(4, cognome);
-            preparedStatement.setDate(5, (Date) data);
+            preparedStatement.setDate(5, java.sql.Date.valueOf(data));
             preparedStatement.setString(6, luogo);
             preparedStatement.setString(7, allergie);
             preparedStatement.setString(8, sesso);
-            preparedStatement.setString(9, pediatra);
+            //preparedStatement.setString(9, pediatra);
             preparedStatement.executeUpdate();
+
+            /*preparedStatement1.setString(1, idBambino);
+            preparedStatement1.setString(2, genitore1);
+            preparedStatement1.executeUpdate();*/
 
 
 
@@ -144,8 +149,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         }finally {
             try {
 
-                if(preparedStatement != null){
-                    preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
+                if(preparedStatement != null /*&& preparedStatement1 != null*/){
+                    preparedStatement.close();
+                    preparedStatement1.close(); //chiudo le connessioni al db una volta effettuato il controllo
                     return true;
                 }
             }catch (Exception e){
@@ -153,15 +159,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             }
         }
 
-        try{
+        /*try{
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-            preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(parents);
 
-
-            preparedStatement1.setString(1, idBambino);
-            preparedStatement1.setString(2, genitore1);
-            preparedStatement.executeUpdate();
 
 
         }catch (SQLException e){
@@ -169,89 +170,18 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         }finally {
             try {
 
-                if(preparedStatement != null){
-                    preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
+                if(preparedStatement1 != null){
+                    preparedStatement1.close();      //chiudo le connessioni al db una volta effettuato il controllo
                     return true;
                 }
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
-
+*/
 
         return false;
     }
-/*
-    @Override
-    public boolean addChild(String codiceFiscale, String idBambino, String nome, String cognome, Date data, String luogo, String allergie, String genitore1, String genitore2, String sesso, String pediatra) throws Exception{
-
-        PreparedStatement preparedStatement = null;
-        PreparedStatement preparedStatement1 = null;
-        ResultSet resultSet = null;
-
-        String child = "INSERT INTO mydb.bambini (CodiceFiscale,idBambino,Nome,Cognome,DatadiNascita,LuogodiNascita,Allergie,Sesso,Pediatra_CodiceFiscale) VALUES (?,?,?,?,?,?,?,?,?)";
-        String parents = "INSERT INTO mydb.bambini_has_genitori (Bambini_idBambino,Genitori_Codice Fiscale) VALUES (?,?)";
-        try{
-
-            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(child);
-
-
-            preparedStatement.setString(1,codiceFiscale);
-            preparedStatement.setString(2,idBambino);
-            preparedStatement.setString(3,nome);
-            preparedStatement.setString(4, cognome);
-            preparedStatement.setDate(5, Date.valueOf(data));
-            preparedStatement.setString(6, luogo);
-            preparedStatement.setString(7, allergie);
-            preparedStatement.setString(8, sesso);
-            preparedStatement.setString(9, pediatra);
-            preparedStatement.executeUpdate();
-
-
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }finally {
-            try {
-
-                if(preparedStatement != null){
-                    preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
-                    return true;
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-
-        try{
-
-            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-            preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(parents);
-
-
-            preparedStatement1.setString(1, idBambino);
-            preparedStatement1.setString(2, genitore1);
-            preparedStatement.executeUpdate();
-
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }finally {
-            try {
-
-                if(preparedStatement != null){
-                    preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
-                    return true;
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-
-
-        return false;
-    }*/
 
 
 }
