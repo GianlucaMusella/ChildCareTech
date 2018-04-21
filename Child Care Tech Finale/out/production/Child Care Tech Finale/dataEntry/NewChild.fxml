@@ -8,26 +8,26 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataEntry.NewChild">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="641.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataEntry.NewChild">
    <children>
-      <TextField id="txtNome" layoutX="14.0" layoutY="14.0" promptText="Nome" />
-      <TextField id="txtCognme" layoutX="14.0" layoutY="51.0" promptText="Cognome" />
-      <TextField id="txtCodiceFiscale" layoutX="14.0" layoutY="88.0" promptText="Codice Fiscale" />
-      <TextField id="txtSesso" layoutX="14.0" layoutY="124.0" promptText="Sesso" />
-      <TextField id="txtLuogo" layoutX="14.0" layoutY="163.0" promptText="Luogo di nascita" />
-      <DatePicker id="dateData" layoutX="14.0" layoutY="203.0" promptText="Data di nascita" />
-      <TextField id="txtGenitore1" layoutX="14.0" layoutY="241.0" promptText="Codice fiscale genitore" />
-      <TextField id="txtGenitore2" layoutX="14.0" layoutY="279.0" promptText="Codice fiscale genitore" />
-      <TextField id="txtContatto" layoutX="14.0" layoutY="316.0" promptText="Codice fiscale contatto" />
-      <TextField id="txtPediatra" layoutX="14.0" layoutY="354.0" promptText="ID pediatra" />
-      <Button layoutX="510.0" layoutY="354.0" mnemonicParsing="false" onAction="#NewChild" text="Conferma" />
+      <TextField id="txtNome" fx:id="txtNome" layoutX="26.0" layoutY="35.0" promptText="Nome" />
+      <TextField id="txtCognme" fx:id="txtCognome" layoutX="26.0" layoutY="70.0" promptText="Cognome" />
+      <TextField id="txtCodiceFiscale" fx:id="txtCodiceFiscale" layoutX="26.0" layoutY="104.0" promptText="Codice Fiscale" />
+      <TextField id="txtSesso" fx:id="txtAllergia" layoutX="26.0" layoutY="246.0" promptText="Allergia" />
+      <TextField id="txtLuogo" fx:id="txtLuogo" layoutX="26.0" layoutY="174.0" promptText="Luogo di Nascita" />
+      <DatePicker id="dateData" fx:id="dateData" layoutX="26.0" layoutY="209.0" promptText="Data di Nascita" />
+      <TextField id="txtGenitore1" fx:id="txtGenitore1" layoutX="26.0" layoutY="283.0" promptText="Codice Fiscale Genitore" />
+      <TextField id="txtGenitore2" fx:id="txtGenitore2" layoutX="26.0" layoutY="323.0" promptText="Codice Fiscale Genitore" />
+      <TextField id="txtPediatra" fx:id="txtPediatra" layoutX="26.0" layoutY="363.0" promptText="Codice Fiscale Pediatra" />
+      <Button layoutX="510.0" layoutY="402.0" mnemonicParsing="false" onAction="#addChild" text="Conferma" />
       <Label id="Error" layoutX="348.0" layoutY="358.0" textFill="RED" />
-      <TableView id="tableBambini" layoutX="229.0" layoutY="13.0" prefHeight="322.0" prefWidth="349.0">
+      <TableView id="tableBambini" layoutX="229.0" layoutY="38.0" prefHeight="322.0" prefWidth="349.0">
         <columns>
           <TableColumn id="columnNome" prefWidth="96.0" text="Nome" />
           <TableColumn id="columnCognome" prefWidth="85.60003662109375" text="Cognome" />
             <TableColumn id="columnCodiceFiscale" prefWidth="167.20001220703125" text="Codice fiscale" />
         </columns>
       </TableView>
+      <TextField fx:id="txtIDBambino" layoutX="26.0" layoutY="139.0" promptText="ID Bambino" />
    </children>
 </Pane>

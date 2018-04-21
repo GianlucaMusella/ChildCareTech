@@ -1,14 +1,11 @@
 package serverRMI;
 
 import connectionDatabase.ConnectionDatabase;
-import dataEntry.Child;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
@@ -86,18 +83,18 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String supplier = "INSERT INTO mydb.fornitori (Nome,Cognome,Azienda,TipoDiFornitura,PartitaIVA) VALUES (?,?,?,?,?)";
 
-       // +name+"','"+surname+"','"+azienda+"','"+fornitura+"','"+partitaIva+"') ";
-
         try{
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(supplier);
+
             preparedStatement.setString(1,name);
             preparedStatement.setString(2,surname);
             preparedStatement.setString(3,azienda);
             preparedStatement.setString(4,fornitura);
             preparedStatement.setString(5,partitaIva);
             preparedStatement.executeUpdate();
+
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
@@ -111,20 +108,50 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 e.printStackTrace();
             }
         }
-       /* ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        PreparedStatement preparedStatement = connectionDatabase.initializeConnection().prepareStatement(supplier);
-        preparedStatement.executeUpdate();*/
+
         return false;
     }
 
     @Override
-    public void insertChild(Child child) throws SQLException {
-        /*Statement statement = ConnectionDatabase.getConnection().createStatement();
-        String newChild = "INSERT INTO mydb.bambini (Nome,Cognome, CodiceFiscale) VALUES ('"+child.getNome()+"','"+child.getCognome()+"','"+child.getCodiceFiscale()+"') ";
-        int ciao = statement.executeUpdate(newChild);*/
+    public boolean addChild(String codiceFiscale, String idBambino, String nome, String cognome, LocalDate data, String luogo, String allergie, String genitore1, String genitore2, String pediatra) throws Exception{
 
-        /*ConnectionDatabase.getConnection();
-        ConnectionDatabase.insertChild(child);*/
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String child = "INSERT INTO mydb.bambini (CodiceFiscale, Nome, Cognome, DatadiNascita, LuogodiNascita, Allergie, Genitori_idGenitori, Genitori_idGenitori1, Pediatra_idPediatra) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+        try{
+
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(child);
+
+            preparedStatement.setString(1,codiceFiscale);
+            preparedStatement.setString(2,idBambino);
+            preparedStatement.setString(3,nome);
+            preparedStatement.setString(4, cognome);
+            preparedStatement.setDate(5, Date.valueOf(data));
+            preparedStatement.setString(6, luogo);
+            preparedStatement.setString(7, allergie);
+            preparedStatement.setString(8, genitore1);
+            preparedStatement.setString(9, genitore2);
+            preparedStatement.setString(10, pediatra);
+            preparedStatement.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+
+                if(preparedStatement != null){
+                    preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
+                    return true;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return false;
     }
 
 

@@ -1,13 +1,12 @@
 package serverRMI;
 
-import loginScreen.Controller;
-
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class ClientRMI implements User {
+
     Registry registry = null;
     public ClientRMI(){
 
@@ -18,6 +17,7 @@ public class ClientRMI implements User {
         }
 
     }
+
     @Override
     public InterfaceRMI getUser() throws Exception {
         InterfaceRMI Mainframe = null;

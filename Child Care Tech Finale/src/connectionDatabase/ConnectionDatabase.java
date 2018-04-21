@@ -1,7 +1,5 @@
 package connectionDatabase;
 
-import dataEntry.Child;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -59,18 +57,4 @@ public class ConnectionDatabase{
         return null;
     }
 
-
-    public void newSupplier(String name, String surname, String azienda, String fornitura, String partitaIva) throws SQLException {
-
-        String supplier = "INSERT INTO mydb.fornitori (Nome,Cognome,Azienda,TipoDiFornitura,PartitaIVA) VALUES ('"+name+"','"+surname+"','"+azienda+"','"+fornitura+"','"+partitaIva+"') ";
-        PreparedStatement preparedStatement = conn.prepareStatement(supplier);
-        preparedStatement.executeUpdate();
-
-    }
-
-    public static void insertChild(Child child) throws SQLException {
-        /*String newChild = "INSERT INTO mydb.bambini (Nome,Cognome, CodiceFiscale) VALUES ('"+child.getNome()+"','"+child.getCognome()+"','"+child.getCodiceFiscale()+"') ";
-        PreparedStatement preparedStatement = conn.prepareStatement(newChild);
-        preparedStatement.executeUpdate();*/
-    }
 }
