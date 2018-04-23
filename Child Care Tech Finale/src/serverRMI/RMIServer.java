@@ -159,9 +159,40 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             }
         }
 
-        /*try{
+        return false;
+    }
+
+    @Override
+    public boolean addTeacher(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String insegnante, String username, String password) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement1 = null;
+        ResultSet resultSet = null;
+
+        String teacher = "INSERT INTO mydb.personaleinterno (CodiceFiscale,Nome,Cognome,Data_di_Nascita,Allergie,Luogo_di_Nascita,Sesso,Mansione) VALUES (?,?,?,?,?,?,?,?)";
+        String teacherCredentials = "INSERT INTO mydb.personaleconaccesso(Username,Password,PersonaleInterno_CodiceFiscale) VALUES (?,?,?)";
+        try{
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(teacher);
+            preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(teacherCredentials);
+
+
+            preparedStatement.setString(1,codiceFiscale);
+            preparedStatement.setString(2,nome);
+            preparedStatement.setString(3,cognome);
+            preparedStatement.setDate(4, java.sql.Date.valueOf(data));
+            preparedStatement.setString(5, allergie);
+            preparedStatement.setString(6, luogo);
+            preparedStatement.setString(7, sesso);
+            preparedStatement.setString(8, insegnante);
+            preparedStatement.executeUpdate();
+
+
+            preparedStatement1.setString(1, username);
+            preparedStatement1.setString(2, password);
+            preparedStatement1.setString(3, codiceFiscale);
+            preparedStatement1.executeUpdate();
 
 
 
@@ -170,15 +201,59 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         }finally {
             try {
 
-                if(preparedStatement1 != null){
-                    preparedStatement1.close();      //chiudo le connessioni al db una volta effettuato il controllo
+                if(preparedStatement != null && preparedStatement1 != null){
+                    preparedStatement.close();
+                    preparedStatement1.close(); //chiudo le connessioni al db una volta effettuato il controllo
                     return true;
                 }
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
-*/
+
+
+        return false;
+    }
+
+    @Override
+    public boolean addStaff(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String mansione) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String teacher = "INSERT INTO mydb.personaleinterno (CodiceFiscale,Nome,Cognome,Data_di_Nascita,Allergie,Luogo_di_Nascita,Sesso,Mansione) VALUES (?,?,?,?,?,?,?,?)";
+
+        try{
+
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(teacher);
+
+
+            preparedStatement.setString(1,codiceFiscale);
+            preparedStatement.setString(2,nome);
+            preparedStatement.setString(3,cognome);
+            preparedStatement.setDate(4, java.sql.Date.valueOf(data));
+            preparedStatement.setString(5, allergie);
+            preparedStatement.setString(6, luogo);
+            preparedStatement.setString(7, sesso);
+            preparedStatement.setString(8, mansione);
+            preparedStatement.executeUpdate();
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+
+                if(preparedStatement != null){
+                    preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
+                    return true;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
 
         return false;
     }

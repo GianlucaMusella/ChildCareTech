@@ -2,33 +2,46 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="641.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataEntry.NewChild">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="673.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataEntry.NewChild">
    <children>
-      <TextField id="txtNome" fx:id="txtNome" layoutX="26.0" layoutY="35.0" promptText="Nome" />
-      <TextField id="txtCognme" fx:id="txtCognome" layoutX="26.0" layoutY="70.0" promptText="Cognome" />
-      <TextField id="txtCodiceFiscale" fx:id="txtCodiceFiscale" layoutX="26.0" layoutY="104.0" promptText="Codice Fiscale" />
-      <TextField fx:id="txtIDBambino" layoutX="26.0" layoutY="139.0" promptText="ID Bambino" />
-      <TextField id="txtLuogo" fx:id="txtLuogo" layoutX="26.0" layoutY="174.0" promptText="Luogo di Nascita" />
-      <DatePicker id="dateData" fx:id="dateData" layoutX="26.0" layoutY="209.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di Nascita" />
-      <TextField id="txtSesso" fx:id="txtAllergia" layoutX="26.0" layoutY="246.0" promptText="Allergia" />
-      <TextField id="txtGenitore1" fx:id="txtGenitore1" layoutX="26.0" layoutY="283.0" promptText="Codice Fiscale Genitore" />
-      <TextField id="txtGenitore2" fx:id="txtGenitore2" layoutX="26.0" layoutY="323.0" promptText="Codice Fiscale Genitore" />
-      <TextField id="txtPediatra" fx:id="txtSesso" layoutX="26.0" layoutY="354.0" promptText="Sesso" />
-      <TextField id="txtPediatra" fx:id="txtPediatra" layoutX="26.0" layoutY="390.0" promptText="Codice Fiscale Pediatra" />
-      <Button layoutX="510.0" layoutY="402.0" mnemonicParsing="false" onAction="#addChild" text="Conferma" />
+      <TextField id="txtNome" fx:id="txtNome" layoutX="26.0" layoutY="58.0" promptText="Nome" />
+      <TextField id="txtCognme" fx:id="txtCognome" layoutX="26.0" layoutY="92.0" promptText="Cognome" />
+      <TextField id="txtCodiceFiscale" fx:id="txtCodiceFiscale" layoutX="26.0" layoutY="126.0" promptText="Codice Fiscale" />
+      <TextField fx:id="txtIDBambino" layoutX="26.0" layoutY="158.0" promptText="ID Bambino" />
+      <TextField id="txtLuogo" fx:id="txtLuogo" layoutX="26.0" layoutY="193.0" promptText="Luogo di Nascita" />
+      <DatePicker id="dateData" fx:id="dateData" layoutX="26.0" layoutY="226.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di Nascita" />
+      <TextField id="txtSesso" fx:id="txtAllergia" layoutX="26.0" layoutY="261.0" promptText="Allergia" />
+      <TextField id="txtGenitore1" fx:id="txtGenitore1" layoutX="26.0" layoutY="294.0" promptText="Codice Fiscale Genitore" />
+      <TextField id="txtGenitore2" fx:id="txtGenitore2" layoutX="26.0" layoutY="327.0" promptText="Codice Fiscale Genitore" />
+      <TextField id="txtPediatra" fx:id="txtSesso" layoutX="26.0" layoutY="363.0" promptText="Sesso" />
+      <TextField id="txtPediatra" fx:id="txtPediatra" layoutX="26.0" layoutY="395.0" promptText="Codice Fiscale Pediatra" />
+      <Button layoutX="561.0" layoutY="395.0" mnemonicParsing="false" onAction="#addChild" text="Conferma" />
       <Label id="Error" layoutX="348.0" layoutY="358.0" prefHeight="17.0" prefWidth="0.0" textFill="RED" />
-      <TableView id="tableBambini" layoutX="229.0" layoutY="38.0" prefHeight="322.0" prefWidth="349.0">
+      <TableView id="tableBambini" layoutX="280.0" layoutY="44.0" prefHeight="322.0" prefWidth="349.0">
         <columns>
           <TableColumn id="columnNome" prefWidth="96.0" text="Nome" />
           <TableColumn id="columnCognome" prefWidth="85.60003662109375" text="Cognome" />
             <TableColumn id="columnCodiceFiscale" prefWidth="167.20001220703125" text="Codice fiscale" />
         </columns>
       </TableView>
+      <Hyperlink layoutX="565.0" layoutY="453.0" onAction="#menuPrincipale" text="Menù principale" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </Pane>
