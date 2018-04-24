@@ -13,7 +13,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.json.simple.JSONObject;
 import serverRMI.InterfaceRMI;
 import serverRMI.User;
 
