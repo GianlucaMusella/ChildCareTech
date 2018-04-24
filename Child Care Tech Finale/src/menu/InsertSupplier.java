@@ -7,13 +7,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import loginScreen.Controller;
-import dataEntry.Supplier;
 
 public class InsertSupplier {
 
     public void inserisciFornitore(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/dataEntry/Supplier.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/dataEntry/AddSupplier.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

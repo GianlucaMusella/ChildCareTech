@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menu.InsertPeople">
+   <children>
+      <Button layoutX="97.0" layoutY="73.0" mnemonicParsing="false" onAction="#inserisciBambino" prefHeight="52.0" prefWidth="89.0" text="Bambino" />
+      <Button layoutX="421.0" layoutY="73.0" mnemonicParsing="false" onAction="#inserisciGenitore" prefHeight="52.0" prefWidth="89.0" text="Genitore" />
+      <Button layoutX="97.0" layoutY="297.0" mnemonicParsing="false" onAction="#inserisciContatto" prefHeight="52.0" prefWidth="89.0" text="Contatto" />
+      <Button layoutX="421.0" layoutY="297.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="89.0" text="Pediatra" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@back-arrow-35325b9dd72f970a-512x512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Hyperlink layoutX="540.0" layoutY="363.0" onAction="#logout" text="Logout">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Hyperlink>
+   </children>
+</AnchorPane>
