@@ -1,5 +1,7 @@
 package Delete;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -16,7 +18,7 @@ public class SearchPerson {
     @FXML
     private TextField cognome;
     @FXML
-    private TableView tableBambini;
+    private TableView<elemTable> tableBambini;
     @FXML
     private TableColumn columnNome;
     @FXML
@@ -27,6 +29,66 @@ public class SearchPerson {
     private TableColumn columnDatadinascita;
     @FXML
     private TableColumn columnLuogodinascita;
+
+    private class elemTable {
+        private String nome;
+        private String cognome;
+        private String codfisc;
+        private String luogo;
+        private Date data;
+
+        public elemTable (String nome, String cognome, String codfisc, String luogo, Date data){
+            this.nome = nome;
+            this.cognome = cognome;
+            this.codfisc = codfisc;
+            this.luogo = luogo;
+            this.data = data;
+            /*
+
+
+        public String getNome() {
+            return nome;
+        }
+
+        public void setNome(String nome) {
+            this.nome = nome;
+        }
+
+        public String getCognome() {
+            return cognome;
+        }
+
+        public void setCognome(String cognome) {
+            this.cognome = cognome;
+        }
+
+        public String getCodfisc() {
+            return codfisc;
+        }
+
+        public void setCodfisc(String codfisc) {
+            this.codfisc = codfisc;
+        }
+
+        public String getLuogo() {
+            return luogo;
+        }
+
+        public void setLuogo(String luogo) {
+            this.luogo = luogo;
+        }
+
+        public Date getData() {
+            return data;
+        }
+
+        public void setData(Date data) {
+            this.data = data;
+        }
+    }
+             */
+        }
+    }
 
     public void searchChild() throws SQLException {
 
@@ -48,6 +110,12 @@ public class SearchPerson {
                 Date colonnadatadinascita = rs.getDate("Data di nascita");
 
                 //  E qui devo popolare la tabella
+
+                Label lblValue = new Label();
+                ObservableList<elemTable> values = FXCollections.observableArrayList();
+                values.add(new elemTable(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+                tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
+                tableBambini.setItems(values);
             }
         } else if (name.isEmpty() && cod.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "COGNOME = '" + surname + "'");
@@ -59,6 +127,12 @@ public class SearchPerson {
                 Date colonnadatadinascita = rs.getDate("Data di nascita");
 
                 //  E qui devo popolare la tabella
+
+                Label lblValue = new Label();
+                ObservableList<elemTable> values = FXCollections.observableArrayList();
+                values.add(new elemTable(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+                tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
+                tableBambini.setItems(values);
             }
         } else if (name.isEmpty() && surname.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "CODICE FISCALE = '" + cod + "'");
@@ -70,6 +144,12 @@ public class SearchPerson {
                 Date colonnadatadinascita = rs.getDate("Data di nascita");
 
                 //  E qui devo popolare la tabella
+
+                Label lblValue = new Label();
+                ObservableList<elemTable> values = FXCollections.observableArrayList();
+                values.add(new elemTable(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+                tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
+                tableBambini.setItems(values);
             }
         } else if (name.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "CODICE FISCALE = '" + cod + "' AND COGNOME = '" + surname + "'");
@@ -81,6 +161,12 @@ public class SearchPerson {
                 Date colonnadatadinascita = rs.getDate("Data di nascita");
 
                 //  E qui devo popolare la tabella
+
+                Label lblValue = new Label();
+                ObservableList<elemTable> values = FXCollections.observableArrayList();
+                values.add(new elemTable(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+                tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
+                tableBambini.setItems(values);
             }
         } else if (surname.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "CODICE FISCALE = '" + cod + "' AND NOME = '" + name + "'");
@@ -92,6 +178,12 @@ public class SearchPerson {
                 Date colonnadatadinascita = rs.getDate("Data di nascita");
 
                 //  E qui devo popolare la tabella
+
+                Label lblValue = new Label();
+                ObservableList<elemTable> values = FXCollections.observableArrayList();
+                values.add(new elemTable(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+                tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
+                tableBambini.setItems(values);
             }
         } else if (cod.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "NOME = '" + name + "' AND COGNOME = '" + surname + "'");
@@ -103,6 +195,12 @@ public class SearchPerson {
                 Date colonnadatadinascita = rs.getDate("Data di nascita");
 
                 //  E qui devo popolare la tabella
+
+                Label lblValue = new Label();
+                ObservableList<elemTable> values = FXCollections.observableArrayList();
+                values.add(new elemTable(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+                tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
+                tableBambini.setItems(values);
             }
         }
     }

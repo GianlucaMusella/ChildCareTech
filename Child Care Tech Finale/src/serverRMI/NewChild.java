@@ -1,6 +1,5 @@
 package serverRMI;
 
-import DataEntry.Child;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -13,7 +12,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class NewChild {
-    @FXML
+/*    @FXML
     private Label lblError;
     @FXML
     private TextField txtNome;
@@ -67,5 +66,5 @@ public class NewChild {
             child.setCodicefiscalepediatra(txtPediatra.getText()); // qui c'è l'errore perché io prendo il testo ma ID pediatra è un int
         }
         return child;
-    }
+    }*/
 }
