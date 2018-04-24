@@ -262,7 +262,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         return false;
     }
-
+    /*
     public ArrayList<ChildGS> searchCALL () throws Exception{
         ArrayList<ChildGS> values = new ArrayList<>();
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
@@ -273,6 +273,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                     rs.getString("Luogo_di_Nasscita"), rs.getDate("Data_di_Nascita")));
         return values;
     }
+    */
     public ArrayList<ChildGS> searchC(String name, String surname, String cod) throws Exception {
 
         ArrayList<ChildGS> values = new ArrayList<>();
