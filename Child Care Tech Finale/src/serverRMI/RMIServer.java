@@ -1,6 +1,9 @@
 package serverRMI;
 
 import connectionDatabase.ConnectionDatabase;
+import dataEntry.ChildGS;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -76,7 +79,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public boolean newSupplier(String name, String surname, String azienda, String fornitura, String partitaIva) throws Exception {
+    public boolean addSupplier(String name, String surname, String azienda, String fornitura, String partitaIva) throws Exception {
 
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -114,6 +117,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
     @Override
     public boolean addChild(String codiceFiscale, String idBambino, String nome, String cognome, LocalDate data, String luogo, String allergie, String genitore1, String genitore2, String sesso, String pediatra) throws Exception {
+
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement1 = null;
         ResultSet resultSet = null;
@@ -151,7 +155,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
                 if(preparedStatement != null /*&& preparedStatement1 != null*/){
                     preparedStatement.close();
-                    preparedStatement1.close(); //chiudo le connessioni al db una volta effettuato il controllo
+                   // preparedStatement1.close(); //chiudo le connessioni al db una volta effettuato il controllo
                     return true;
                 }
             }catch (Exception e){
@@ -258,5 +262,106 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         return false;
     }
 
+    @Override
+    public ArrayList<ChildGS> searchC(String name, String surname, String cod) throws Exception {
 
+        ArrayList<ChildGS> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.bambini WHERE ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        /*Statement all = connectionDatabase.initializeConnection().createStatement();
+        ResultSet rsall = all.executeQuery("SELECT * FROM mydb.bambini");*/
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+
+        if (surname.isEmpty() && cod.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "Nome = '" + name + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
+                Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+
+                //  E qui devo popolare la tabella
+                System.out.println(colonnacodicefiscale);
+
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+
+            }
+        } else if (name.isEmpty() && cod.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "Cognome = '" + surname + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
+                Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+
+                //  E qui devo popolare la tabella
+
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+
+
+            }
+        } else if (name.isEmpty() && surname.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
+                Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+
+                //  E qui devo popolare la tabella
+
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+
+            }
+        } else if (name.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "' AND Cognome = '" + surname + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
+                Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+
+                //  E qui devo popolare la tabella
+
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+
+
+            }
+        } else if (surname.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "' AND Nome = '" + name + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
+                Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+
+                //  E qui devo popolare la tabella
+
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+
+            }
+        } else if (cod.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "Nome = '" + name + "' AND Cognome = '" + surname + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
+                Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+
+                //  E qui devo popolare la tabella
+
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+
+            }
+        }
+        return values;
+    }
 }
+

@@ -8,11 +8,20 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import loginScreen.Controller;
 
-public class InsertContact {
+public class ChildMenu {
 
     public void inserisciBambino(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/ChildMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/dataEntry/NewChild.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void cercaBambino(ActionEvent actionEvent) throws Exception {
+        ((Node) actionEvent.getSource()).getScene().getWindow().hide();
+        Parent root = FXMLLoader.load(getClass().getResource("/delete/SearchPerson.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -21,7 +30,7 @@ public class InsertContact {
 
     public void back_method(ActionEvent actionEvent) throws Exception{
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/InsertPerson.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/menu/Choice.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

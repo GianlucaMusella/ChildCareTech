@@ -10,6 +10,10 @@ public class ChildGS extends Generality {
     private String codicefiscalepediatra;
     private int idbambino;
 
+    public ChildGS(String nome, String cognome, String codiceFiscale, String luogoDiNascita, Date data) {
+        super(nome, cognome, codiceFiscale, luogoDiNascita, data);
+    }
+
     public void setAllergie(String allergie) {
         this.allergie = allergie;
     }

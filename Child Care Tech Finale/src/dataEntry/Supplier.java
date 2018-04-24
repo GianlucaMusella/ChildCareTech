@@ -36,7 +36,7 @@ public class Supplier {
         String partitaIva = txtPiva.getText();
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        boolean success = interfaceRMI.newSupplier(name, surname, azienda, fornitura, partitaIva);
+        boolean success = interfaceRMI.addSupplier(name, surname, azienda, fornitura, partitaIva);
 
         //se metti il cambio del label serve la try catch con remoteexception
 

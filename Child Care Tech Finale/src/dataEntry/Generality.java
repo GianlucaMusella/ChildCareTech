@@ -1,8 +1,9 @@
 package dataEntry;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Generality {
+public class Generality implements Serializable {
 
     private String nome;
     private String cognome;
@@ -10,6 +11,16 @@ public class Generality {
     private String luogoDiNascita;
     private Date data;
     private String sesso;
+
+    public Generality(String nome, String cognome, String codiceFiscale, String luogoDiNascita, Date data){
+
+        this.nome = nome;
+        this.cognome = cognome;
+        this.codiceFiscale = codiceFiscale;
+        this.luogoDiNascita = luogoDiNascita;
+        this.data = data;
+
+    }
 
     public String getNome() {
         return nome;
