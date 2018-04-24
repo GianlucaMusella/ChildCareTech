@@ -5,6 +5,7 @@ import dataEntry.ChildGS;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.swing.plaf.nimbus.State;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
@@ -262,7 +263,16 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         return false;
     }
 
-    @Override
+    public ArrayList<ChildGS> searchCALL () throws Exception{
+        ArrayList<ChildGS> values = new ArrayList<>();
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM mydb.bambini");
+        while (rs.next())
+            values.add(new ChildGS(rs.getString("Nome"), rs.getString("Cognome"), rs.getString("CodiceFiscale"),
+                    rs.getString("Luogo_di_Nasscita"), rs.getDate("Data_di_Nascita")));
+        return values;
+    }
     public ArrayList<ChildGS> searchC(String name, String surname, String cod) throws Exception {
 
         ArrayList<ChildGS> values = new ArrayList<>();

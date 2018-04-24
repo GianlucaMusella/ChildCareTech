@@ -20,6 +20,6 @@
       <TextField id="nome" fx:id="txtNome" layoutX="17.0" layoutY="29.0" promptText="Nome" />
       <TextField id="cognome" fx:id="txtCognome" layoutX="239.0" layoutY="29.0" promptText="Cognome" />
       <TextField id="codicefiscale" fx:id="txtCodicefiscale" layoutX="461.0" layoutY="29.0" promptText="Codice fiscale" />
-      <Button layoutX="564.0" layoutY="398.0" mnemonicParsing="false" onAction="#searchChild" text="Cerca" />
+      <Button fx:id="buttonSearch" layoutX="564.0" layoutY="398.0" mnemonicParsing="false" onAction="#searchChild" text="Cerca" />
    </children>
 </Pane>
