@@ -16,5 +16,5 @@ public interface InterfaceRMI extends Remote {
     boolean addTeacher(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String insegnante, String username, String password) throws Exception;
     boolean addStaff(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String mansione) throws Exception;
     ArrayList<ChildGS> searchC(String name, String surname, String cod) throws Exception;
-    ArrayList<ChildGS> searchCALL () throws Exception;
+    boolean addParents(String codiceFiscale, String nome, String cognome, LocalDate data, String luogo, String telefono, String sesso) throws Exception;
 }

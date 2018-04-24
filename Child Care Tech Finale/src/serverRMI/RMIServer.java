@@ -5,7 +5,6 @@ import dataEntry.ChildGS;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.swing.plaf.nimbus.State;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
@@ -129,7 +128,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(child);
-            //preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(parents);
+            preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(parents);
 
 
             preparedStatement.setString(1,codiceFiscale);
@@ -143,9 +142,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             //preparedStatement.setString(9, pediatra);
             preparedStatement.executeUpdate();
 
-            /*preparedStatement1.setString(1, idBambino);
+            preparedStatement1.setString(1, idBambino);
             preparedStatement1.setString(2, genitore1);
-            preparedStatement1.executeUpdate();*/
+            preparedStatement1.executeUpdate();
 
 
 
@@ -154,9 +153,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         }finally {
             try {
 
-                if(preparedStatement != null /*&& preparedStatement1 != null*/){
+                if(preparedStatement != null && preparedStatement1 != null){
                     preparedStatement.close();
-                   // preparedStatement1.close(); //chiudo le connessioni al db una volta effettuato il controllo
+                    preparedStatement1.close(); //chiudo le connessioni al db una volta effettuato il controllo
                     return true;
                 }
             }catch (Exception e){
@@ -262,18 +261,8 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         return false;
     }
-    /*
-    public ArrayList<ChildGS> searchCALL () throws Exception{
-        ArrayList<ChildGS> values = new ArrayList<>();
-        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        Statement stmt = connectionDatabase.initializeConnection().createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM mydb.bambini");
-        while (rs.next())
-            values.add(new ChildGS(rs.getString("Nome"), rs.getString("Cognome"), rs.getString("CodiceFiscale"),
-                    rs.getString("Luogo_di_Nasscita"), rs.getDate("Data_di_Nascita")));
-        return values;
-    }
-    */
+
+    @Override
     public ArrayList<ChildGS> searchC(String name, String surname, String cod) throws Exception {
 
         ArrayList<ChildGS> values = new ArrayList<>();
@@ -374,5 +363,46 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         }
         return values;
     }
+
+    @Override
+    public boolean addParents(String codiceFiscale, String nome, String cognome, LocalDate data, String luogo, String telefono, String sesso) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+
+        String parents = "INSERT INTO mydb.genitori (CodiceFiscale,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Telefono,Sesso) VALUES (?,?,?,?,?,?,?)";
+
+        try{
+
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(parents);
+
+
+            preparedStatement.setString(1,codiceFiscale);
+            preparedStatement.setString(2,nome);
+            preparedStatement.setString(3,cognome);
+            preparedStatement.setDate(4, java.sql.Date.valueOf(data));
+            preparedStatement.setString(5, luogo);
+            preparedStatement.setString(6, telefono);
+            preparedStatement.setString(7, sesso);
+            preparedStatement.executeUpdate();
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+
+                if(preparedStatement != null){
+                    preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
+                    return true;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
 }
 
