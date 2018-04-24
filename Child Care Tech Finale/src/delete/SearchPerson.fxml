@@ -7,19 +7,20 @@
 <?import javafx.scene.layout.Pane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="delete.SearchPerson">
-   <children>
-      <TableView id="tableBambini" fx:id="tableBambini" layoutX="17.0" layoutY="83.0" prefHeight="300.0" prefWidth="593.0">
-        <columns>
-          <TableColumn id="columnNome" fx:id="columnNome" prefWidth="105.5999755859375" text="Nome" />
-          <TableColumn id="columnCognome" fx:id="columnCognome" prefWidth="97.5999755859375" text="Cognome" />
-            <TableColumn id="columnCodicefiscale" fx:id="columnCodicefiscale" prefWidth="151.199951171875" text="Codice Fiscale" />
-            <TableColumn id="columnDatadinascita" fx:id="columnDatadinascita" prefWidth="114.39996337890625" text="Data di nascita" />
-            <TableColumn id="columnLuogodinascita" fx:id="columnLuogodinascita" prefWidth="121.0" text="Luogo di nascita" />
-        </columns>
-      </TableView>
-      <TextField id="nome" fx:id="txtNome" layoutX="17.0" layoutY="29.0" promptText="Nome" />
-      <TextField id="cognome" fx:id="txtCognome" layoutX="239.0" layoutY="29.0" promptText="Cognome" />
-      <TextField id="codicefiscale" fx:id="txtCodicefiscale" layoutX="461.0" layoutY="29.0" promptText="Codice fiscale" />
-      <Button fx:id="buttonSearch" layoutX="564.0" layoutY="398.0" mnemonicParsing="false" onAction="#searchChild" text="Cerca" />
-   </children>
+    <children>
+        <TableView id="tableBambini" fx:id="tableBambini" layoutX="17.0" layoutY="83.0" prefHeight="300.0" prefWidth="593.0">
+            <columns>
+                <TableColumn id="columnNome" fx:id="columnNome" prefWidth="105.5999755859375" text="Nome" />
+                <TableColumn id="columnCognome" fx:id="columnCognome" prefWidth="97.5999755859375" text="Cognome" />
+                <TableColumn id="columnCodicefiscale" fx:id="columnCodicefiscale" prefWidth="151.199951171875" text="Codice Fiscale" />
+                <TableColumn id="columnDatadinascita" fx:id="columnDatadinascita" prefWidth="114.39996337890625" text="Data di nascita" />
+                <TableColumn id="columnLuogodinascita" fx:id="columnLuogodinascita" prefWidth="121.0" text="Luogo di nascita" />
+            </columns>
+        </TableView>
+        <TextField id="nome" fx:id="txtNome" layoutX="17.0" layoutY="29.0" promptText="Nome" />
+        <TextField id="cognome" fx:id="txtCognome" layoutX="239.0" layoutY="29.0" promptText="Cognome" />
+        <TextField id="codicefiscale" fx:id="txtCodicefiscale" layoutX="461.0" layoutY="29.0" promptText="Codice fiscale" />
+        <Button layoutX="564.0" layoutY="398.0" mnemonicParsing="false" onAction="#searchChild" text="Cerca" />
+      <Button layoutX="17.0" layoutY="398.0" mnemonicParsing="false" onAction="#viewChild" text="Carica Dati" />
+    </children>
 </Pane>
