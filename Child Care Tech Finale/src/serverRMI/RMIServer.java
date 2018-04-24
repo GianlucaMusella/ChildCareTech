@@ -2,8 +2,6 @@ package serverRMI;
 
 import connectionDatabase.ConnectionDatabase;
 import dataEntry.ChildGS;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -116,19 +114,22 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public boolean addChild(String codiceFiscale, String idBambino, String nome, String cognome, LocalDate data, String luogo, String allergie, String genitore1, String genitore2, String sesso, String pediatra) throws Exception {
+    public boolean addChild(String codiceFiscale, String idBambino, String nome, String cognome, LocalDate data, String luogo, String allergie, String genitore1, String genitore2, String sesso, String pediatra, String contatto) throws Exception {
 
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement1 = null;
-        ResultSet resultSet = null;
+        PreparedStatement preparedStatement2 = null;
 
         String child = "INSERT INTO mydb.bambini (CodiceFiscale,idBambino,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Allergie,Sesso) VALUES (?,?,?,?,?,?,?,?)";
         String parents = "INSERT INTO mydb.bambini_has_genitori (Bambini_idBambino,Genitori_CodiceFiscale) VALUES (?,?)";
+        String contact = "INSERT INTO mydb.bambini_has_contatti (Bambini_idBambino,Contatti_CodiceFiscale) VALUES (?,?)";
+
         try{
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(child);
             preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(parents);
+            preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(contact);
 
 
             preparedStatement.setString(1,codiceFiscale);
@@ -146,6 +147,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             preparedStatement1.setString(2, genitore1);
             preparedStatement1.executeUpdate();
 
+            preparedStatement2.setString(1, idBambino);
+            preparedStatement2.setString(2, contatto);
+            preparedStatement2.executeUpdate();
+
 
 
         }catch (SQLException e){
@@ -153,9 +158,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         }finally {
             try {
 
-                if(preparedStatement != null && preparedStatement1 != null){
+                if(preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null){
                     preparedStatement.close();
                     preparedStatement1.close(); //chiudo le connessioni al db una volta effettuato il controllo
+                    preparedStatement2.close();
                     return true;
                 }
             }catch (Exception e){
@@ -171,7 +177,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement1 = null;
-        ResultSet resultSet = null;
 
         String teacher = "INSERT INTO mydb.personaleinterno (CodiceFiscale,Nome,Cognome,Data_di_Nascita,Allergie,Luogo_di_Nascita,Sesso,Mansione) VALUES (?,?,?,?,?,?,?,?)";
         String teacherCredentials = "INSERT INTO mydb.personaleconaccesso(Username,Password,PersonaleInterno_CodiceFiscale) VALUES (?,?,?)";
@@ -402,6 +407,65 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         }
 
         return false;
+    }
+
+    @Override
+    public boolean addContact(String codiceFiscale, String nome, String cognome, String telefono) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+
+        String contact = "INSERT INTO mydb.contatti (CodiceFiscale,Nome,Cognome,Telefono) VALUES (?,?,?,?)";
+
+        try{
+
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(contact);
+
+
+            preparedStatement.setString(1,codiceFiscale);
+            preparedStatement.setString(2,nome);
+            preparedStatement.setString(3,cognome);
+            preparedStatement.setString(4,telefono);
+            preparedStatement.executeUpdate();
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+
+                if(preparedStatement != null){
+                    preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
+                    return true;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public ArrayList<ChildGS> viewChild() throws Exception {
+
+        ArrayList<ChildGS> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.bambini ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()){
+            String colonnanome = rs.getString("Nome");
+            String colonnacognome = rs.getString("Cognome");
+            String colonnacodicefiscale = rs.getString("CodiceFiscale");
+            String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
+            Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+
+            values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+        }
+        return values;
     }
 
 }
