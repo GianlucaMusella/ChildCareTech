@@ -1,24 +1,28 @@
 package dataEntry;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
-import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import loginScreen.Singleton;
 import serverRMI.InterfaceRMI;
 
+import java.io.Serializable;
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 
-public class AddChild {
+public class AddChild implements Initializable{
 
     @FXML
     private TextField txtNome;
@@ -51,25 +55,68 @@ public class AddChild {
     private TextField txtIDBambino;
 
     @FXML
-    private TextField txtSesso;
-
-    @FXML
     private TextField txtContatto;
 
     @FXML
-    private TableView tableBambini;
+    private TableView<ChildGS> tableBambini;
 
     @FXML
-    private TableColumn columnNome;
+    private TableColumn<ChildGS, String> columnNome;
 
     @FXML
-    private TableColumn columnCognome;
+    private TableColumn<ChildGS, String> columnCognome;
 
     @FXML
-    private TableColumn columnCodiceFiscale;
+    private TableColumn<ChildGS, String> columnCodicefiscale;
+
+    @FXML
+    private TableColumn<ChildGS, String> columnDatadinascita;
+
+    @FXML
+    private TableColumn<ChildGS, String> columnLuogodinascita;
+
+    @FXML
+    private TableColumn<ChildGS, String> columnID;
+
+    @FXML
+    private RadioButton radioMaschio;
+
+    @FXML
+    private RadioButton radioFemmina;
+
+    @FXML
+    private TableView<Parents> tabellaGenitori;
+
+    @FXML
+    private TableColumn<Parents, String> colonnaNome;
+
+    @FXML
+    private TableColumn<Parents, String> colonnaCF;
+
+    @FXML
+    private TableView<Contact> tabellaContatti;
+
+    @FXML
+    private TableColumn<Contact, String> colonnaNomeC;
+
+    @FXML
+    private TableColumn<Contact, String> colonnaCfC;
+
+    @FXML
+    private TableView<Doctor> tabellaPediatra;
+
+    @FXML
+    private TableColumn<Doctor, String> colonnaNomeP;
+
+    @FXML
+    private TableColumn<Doctor, String> colonnaCfP;
+
+
+
 
     public void addChild(ActionEvent actionEvent) throws Exception {
 
+        String sesso;
         String nome = txtNome.getText();
         String cognome = txtCognome.getText();
         String codiceFiscale = txtCodiceFiscale.getText();
@@ -80,8 +127,15 @@ public class AddChild {
         String pediatra = txtPediatra.getText();
         String allergie = txtAllergia.getText();
         String idBambino = txtIDBambino.getText();
-        String sesso = txtSesso.getText();
         String contatto = txtContatto.getText();
+        String sessoM = radioMaschio.getText();
+        String sessoF = radioFemmina.getText();
+
+
+        if(radioMaschio.isSelected())
+            sesso = sessoM;
+        else
+            sesso = sessoF;
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
         boolean success = interfaceRMI.addChild(codiceFiscale, idBambino,  nome,  cognome,  data,  luogo,  allergie,  genitore1,  genitore2, sesso, pediatra, contatto);
@@ -99,7 +153,6 @@ public class AddChild {
         txtPediatra.clear();
         txtAllergia.clear();
         txtIDBambino.clear();
-        txtSesso.clear();
         txtContatto.clear();
 
     }
@@ -144,6 +197,62 @@ public class AddChild {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    public void inserisciPediatra(ActionEvent actionEvent) throws Exception {
+
+        Parent root = FXMLLoader.load(getClass().getResource("/dataEntry/AddDoctor.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        columnCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        columnCodicefiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+        columnDatadinascita.setCellValueFactory(new PropertyValueFactory<>("data"));
+        columnLuogodinascita.setCellValueFactory(new PropertyValueFactory<>("luogoDiNascita"));
+        columnID.setCellValueFactory(new PropertyValueFactory<>("idBambino"));
+
+        colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCF.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+
+        colonnaNomeC.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCfC.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+
+        colonnaNomeP.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCfP.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+
+        tableBambini.getItems().clear();
+        tabellaGenitori.getItems().clear();
+        tabellaContatti.getItems().clear();
+        tabellaPediatra.getItems().clear();
+
+    }
+
+    public void viewChild(ActionEvent actionEvent) throws Exception {
+
+        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
+        ArrayList<Parents> parents = interfaceRMI.viewParents();
+        ArrayList<Contact> contacts = interfaceRMI.viewContacts();
+        ArrayList<Doctor> doctors = interfaceRMI.viewDoctors();
+
+        tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
+        tableBambini.setItems(FXCollections.observableArrayList(childrenGS));
+
+        tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
+        tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
+
+        tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
+        tabellaContatti.setItems(FXCollections.observableArrayList(contacts));
+
+        tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);
+        tabellaPediatra.setItems(FXCollections.observableArrayList(doctors));
     }
 
 }

@@ -11,6 +11,7 @@ import loginScreen.Controller;
 public class ChildMenu {
 
     public void inserisciBambino(ActionEvent actionEvent) throws Exception {
+
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
         Parent root = FXMLLoader.load(getClass().getResource("/dataEntry/AddChild.fxml"));
         Scene scene = new Scene(root);

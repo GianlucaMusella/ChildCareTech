@@ -1,10 +1,19 @@
 package dataEntry;
 
-public class Contact {
+import java.io.Serializable;
+
+public class Contact implements Serializable{
     private String nome;
     private String cognome;
     private String codiceFiscale;
     private int telefono;
+
+    public Contact(String nome, String codiceFiscale){
+
+        this.nome = nome;
+        this.codiceFiscale = codiceFiscale;
+
+    }
 
     public String getNome() {
         return nome;

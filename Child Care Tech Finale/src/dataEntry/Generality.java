@@ -1,5 +1,7 @@
 package dataEntry;
 
+import javafx.beans.property.StringProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,7 +14,7 @@ public class Generality implements Serializable {
     private Date data;
     private String sesso;
 
-    public Generality(String nome, String cognome, String codiceFiscale, String luogoDiNascita, Date data){
+    public Generality(String nome, String cognome, String codiceFiscale, String luogoDiNascita, Date data, String idBambino){
 
         this.nome = nome;
         this.cognome = cognome;

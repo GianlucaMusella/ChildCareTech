@@ -2,6 +2,9 @@ package serverRMI;
 
 import connectionDatabase.ConnectionDatabase;
 import dataEntry.ChildGS;
+import dataEntry.Contact;
+import dataEntry.Doctor;
+import dataEntry.Parents;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -120,7 +123,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         PreparedStatement preparedStatement1 = null;
         PreparedStatement preparedStatement2 = null;
 
-        String child = "INSERT INTO mydb.bambini (CodiceFiscale,idBambino,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Allergie,Sesso) VALUES (?,?,?,?,?,?,?,?)";
+        String child = "INSERT INTO mydb.bambini (CodiceFiscale,idBambino,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Allergie,Sesso,Pediatra_CodiceFiscale) VALUES (?,?,?,?,?,?,?,?,?)";
         String parents = "INSERT INTO mydb.bambini_has_genitori (Bambini_idBambino,Genitori_CodiceFiscale) VALUES (?,?)";
         String contact = "INSERT INTO mydb.bambini_has_contatti (Bambini_idBambino,Contatti_CodiceFiscale) VALUES (?,?)";
 
@@ -140,7 +143,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             preparedStatement.setString(6, luogo);
             preparedStatement.setString(7, allergie);
             preparedStatement.setString(8, sesso);
-            //preparedStatement.setString(9, pediatra);
+            preparedStatement.setString(9, pediatra);
             preparedStatement.executeUpdate();
 
             preparedStatement1.setString(1, idBambino);
@@ -273,8 +276,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         ArrayList<ChildGS> values = new ArrayList<>();
         String sql = ("SELECT * FROM mydb.bambini WHERE ");
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        /*Statement all = connectionDatabase.initializeConnection().createStatement();
-        ResultSet rsall = all.executeQuery("SELECT * FROM mydb.bambini");*/
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
 
@@ -286,11 +287,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 String colonnacodicefiscale = rs.getString("CodiceFiscale");
                 String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
                 Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+                String colonnaID = rs.getString("idBambino");
 
-                //  E qui devo popolare la tabella
-                System.out.println(colonnacodicefiscale);
 
-                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
 
             }
         } else if (name.isEmpty() && cod.isEmpty()) {
@@ -302,9 +302,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
                 Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
 
-                //  E qui devo popolare la tabella
+                String colonnaID = rs.getString("idBambino");
 
-                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
 
 
             }
@@ -316,10 +317,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 String colonnacodicefiscale = rs.getString("CodiceFiscale");
                 String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
                 Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+                String colonnaID = rs.getString("idBambino");
 
-                //  E qui devo popolare la tabella
 
-                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
 
             }
         } else if (name.isEmpty()) {
@@ -330,11 +331,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 String colonnacodicefiscale = rs.getString("CodiceFiscale");
                 String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
                 Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+                String colonnaID = rs.getString("idBambino");
 
-                //  E qui devo popolare la tabella
 
-                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
-
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
 
             }
         } else if (surname.isEmpty()) {
@@ -345,10 +345,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 String colonnacodicefiscale = rs.getString("CodiceFiscale");
                 String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
                 Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+                String colonnaID = rs.getString("idBambino");
 
-                //  E qui devo popolare la tabella
 
-                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
 
             }
         } else if (cod.isEmpty()) {
@@ -359,13 +359,15 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 String colonnacodicefiscale = rs.getString("CodiceFiscale");
                 String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
                 Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+                String colonnaID = rs.getString("idBambino");
 
-                //  E qui devo popolare la tabella
 
-                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
 
             }
+            rs.close();
         }
+
         return values;
     }
 
@@ -462,10 +464,118 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             String colonnacodicefiscale = rs.getString("CodiceFiscale");
             String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
             Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+            String colonnaID = rs.getString("idBambino");
 
-            values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita));
+            values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
         }
+        rs.close();
         return values;
+    }
+
+    @Override
+    public boolean addDoctor(String codiceFiscale, String nome, String cognome, LocalDate data, String luogo, String sesso) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+
+        String doctor = "INSERT INTO mydb.pediatra (CodiceFiscale,Nome,Cognome,Luogo_di_Nascita, Data_di_Nascita,Sesso) VALUES (?,?,?,?,?,?)";
+
+        try{
+
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(doctor);
+
+
+            preparedStatement.setString(1,codiceFiscale);
+            preparedStatement.setString(2,nome);
+            preparedStatement.setString(3,cognome);
+            preparedStatement.setString(4, luogo);
+            preparedStatement.setDate(5, java.sql.Date.valueOf(data));
+            preparedStatement.setString(6, sesso);
+            preparedStatement.executeUpdate();
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+
+                if(preparedStatement != null){
+                    preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
+                    return true;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
+
+    @Override
+    public ArrayList<Parents> viewParents() throws Exception {
+
+        ArrayList<Parents> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.genitori ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()){
+            String colonnanome = rs.getString("Nome");
+            String colonnacodicefiscale = rs.getString("CodiceFiscale");
+
+            values.add(new Parents(colonnanome, colonnacodicefiscale));
+        }
+
+        rs.close();
+        return values;
+    }
+
+    @Override
+    public ArrayList<Contact> viewContacts() throws Exception {
+
+        ArrayList<Contact> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.contatti ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()){
+            String colonnanome = rs.getString("Nome");
+            String colonnacodicefiscale = rs.getString("CodiceFiscale");
+
+            values.add(new Contact(colonnanome, colonnacodicefiscale));
+        }
+
+        rs.close();
+        return values;
+
+    }
+
+    @Override
+    public ArrayList<Doctor> viewDoctors() throws Exception {
+
+        ArrayList<Doctor> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.pediatra ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()){
+            String colonnanome = rs.getString("Nome");
+            String colonnacodicefiscale = rs.getString("CodiceFiscale");
+
+            values.add(new Doctor(colonnanome, colonnacodicefiscale));
+        }
+
+        rs.close();
+        return values;
+
+
     }
 
 }

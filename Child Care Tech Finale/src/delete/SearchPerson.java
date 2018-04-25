@@ -49,6 +49,10 @@ public class SearchPerson implements Initializable {
     @FXML
     private TableColumn<ChildGS, String> columnLuogodinascita;
 
+    @FXML
+    private TableColumn<ChildGS, String> columnID;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -57,6 +61,7 @@ public class SearchPerson implements Initializable {
         columnCodicefiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
         columnDatadinascita.setCellValueFactory(new PropertyValueFactory<>("data"));
         columnLuogodinascita.setCellValueFactory(new PropertyValueFactory<>("luogoDiNascita"));
+        columnID.setCellValueFactory(new PropertyValueFactory<>("idBambino"));
 
         tableBambini.getItems().clear();
 
@@ -82,4 +87,5 @@ public class SearchPerson implements Initializable {
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
         tableBambini.setItems(FXCollections.observableArrayList(childrenGS));
     }
+
 }

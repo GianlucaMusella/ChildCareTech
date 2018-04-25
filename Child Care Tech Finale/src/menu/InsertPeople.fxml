@@ -12,7 +12,7 @@
       <Button layoutX="97.0" layoutY="73.0" mnemonicParsing="false" onAction="#inserisciBambino" prefHeight="52.0" prefWidth="89.0" text="Bambino" />
       <Button layoutX="421.0" layoutY="73.0" mnemonicParsing="false" onAction="#inserisciGenitore" prefHeight="52.0" prefWidth="89.0" text="Genitore" />
       <Button layoutX="97.0" layoutY="297.0" mnemonicParsing="false" onAction="#inserisciContatto" prefHeight="52.0" prefWidth="89.0" text="Contatto" />
-      <Button layoutX="421.0" layoutY="297.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="89.0" text="Pediatra" />
+      <Button layoutX="421.0" layoutY="297.0" mnemonicParsing="false" onAction="#inserisciPediatra" prefHeight="52.0" prefWidth="89.0" text="Pediatra" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="31.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">

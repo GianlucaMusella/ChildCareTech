@@ -1,6 +1,9 @@
 package serverRMI;
 
 import dataEntry.ChildGS;
+import dataEntry.Contact;
+import dataEntry.Doctor;
+import dataEntry.Parents;
 import javafx.collections.ObservableList;
 
 import java.rmi.Remote;
@@ -21,4 +24,12 @@ public interface InterfaceRMI extends Remote {
     boolean addContact(String codiceFiscale, String nome, String cognome, String telefono) throws Exception;
 
     ArrayList<ChildGS> viewChild() throws Exception;
+
+    boolean addDoctor(String codiceFiscale, String nome, String cognome, LocalDate data, String luogo, String sesso) throws Exception;
+
+    ArrayList<Parents> viewParents() throws Exception;
+
+    ArrayList<Contact> viewContacts() throws Exception;
+
+    ArrayList<Doctor> viewDoctors() throws Exception;
 }
