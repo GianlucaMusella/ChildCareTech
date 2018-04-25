@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="462.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataEntry.AddStaff">
+   <children>
+      <TextField fx:id="txtNome" layoutX="41.0" layoutY="50.0" promptText="Nome" />
+      <TextField fx:id="txtCognome" layoutX="41.0" layoutY="82.0" promptText="Cognome" />
+      <TextField fx:id="txtCodiceFiscale" layoutX="41.0" layoutY="115.0" promptText="Codice Fiscale" />
+      <DatePicker fx:id="dateData" layoutX="41.0" layoutY="150.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di Nascita" />
+      <TextField fx:id="txtAllergie" layoutX="41.0" layoutY="219.0" promptText="Allergie" />
+      <TextField fx:id="txtSesso" layoutX="41.0" layoutY="252.0" promptText="Sesso" />
+      <TextField fx:id="txtMansione" layoutX="41.0" layoutY="287.0" promptText="Mansione" />
+      <Button layoutX="568.0" layoutY="371.0" mnemonicParsing="false" onAction="#addStaff" prefHeight="25.0" prefWidth="56.0" text="Salva" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <TextField fx:id="txtLuogo" layoutX="41.0" layoutY="188.0" promptText="Luogo di Nascita" />
+      <Hyperlink layoutX="549.0" layoutY="425.0" onAction="#menuPrincipale" text="Menù Principale" />
+   </children>
+</AnchorPane>
