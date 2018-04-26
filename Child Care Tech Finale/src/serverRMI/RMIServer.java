@@ -601,7 +601,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         if (!newer.getIdBambino().isEmpty()) {
             int n = stmt.executeUpdate(SQL + "Nome = '" + newer.getIdBambino() + "'" + equal);
         }
-        if (newer.getData() == null ) {
+        if (newer.getData() != null ) {
             int n = stmt.executeUpdate(SQL + "Data_di_Nascita = '" + newer.getData() + "'" + equal);
         }
     }
