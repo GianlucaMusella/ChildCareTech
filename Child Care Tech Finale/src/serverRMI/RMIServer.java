@@ -579,14 +579,31 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public void modifyChild(String text, ChildGS newer) throws Exception {
+    public void modifyChild(String CodicefiscaleOld, ChildGS newer) throws Exception {
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
-        String SQL = ("UPDATE mydb.bambini SET (CodiceFiscale,idBambino,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita) = ('");
-        stmt.executeUpdate(SQL + newer.getCodiceFiscale() + "', '" + newer.getIdBambino() + "', '" + newer.getNome() + "', '" + newer.getCognome()
-                + "', '" + newer.getData() + "', '" + newer.getLuogoDiNascita() + "' " + "WHERE CodiceFiscale = '" + text + "'");
+        String SQL = ("UPDATE mydb.bambini SET ");
+        String equal = ("WHERE CodiceFiscale = '" + CodicefiscaleOld + "'");
+        if (!newer.getCodiceFiscale().isEmpty()) {
+            int n = stmt.executeUpdate(SQL + "CodiceFiscale = '" + newer.getCodiceFiscale() + "'" + equal);
+        }
+        if (!newer.getNome().isEmpty()) {
+            int n = stmt.executeUpdate(SQL + "Nome = '" + newer.getNome() + "'" + equal);
+        }
+        if (!newer.getCognome().isEmpty()) {
+            int n = stmt.executeUpdate(SQL + "Cognome = '" + newer.getCognome() + "'" + equal);
+        }
+        if (!newer.getLuogoDiNascita().isEmpty()) {
+            int n = stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + newer.getLuogoDiNascita() + "'" + equal);
+        }
+        if (!newer.getIdBambino().isEmpty()) {
+            int n = stmt.executeUpdate(SQL + "Nome = '" + newer.getIdBambino() + "'" + equal);
+        }
+        if (newer.getData() == null ) {
+            int n = stmt.executeUpdate(SQL + "Data_di_Nascita = '" + newer.getData() + "'" + equal);
+        }
     }
 
 }
