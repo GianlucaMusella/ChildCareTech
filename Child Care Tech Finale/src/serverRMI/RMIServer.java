@@ -578,5 +578,16 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
     }
 
+    @Override
+    public void modifyChild(String text, ChildGS newer) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+        String SQL = ("UPDATE mydb.bambini SET (CodiceFiscale,idBambino,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita) = ('");
+        stmt.executeUpdate(SQL + newer.getCodiceFiscale() + "', '" + newer.getIdBambino() + "', '" + newer.getNome() + "', '" + newer.getCognome()
+                + "', '" + newer.getData() + "', '" + newer.getLuogoDiNascita() + "' " + "WHERE CodiceFiscale = '" + text + "'");
+    }
+
 }
 

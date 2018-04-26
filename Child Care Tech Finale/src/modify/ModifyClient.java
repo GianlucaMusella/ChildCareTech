@@ -4,6 +4,8 @@ import dataEntry.ChildGS;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import loginScreen.Singleton;
+import serverRMI.InterfaceRMI;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -27,7 +29,7 @@ public class ModifyClient  {
     @FXML
     private DatePicker dateData;
 
-    public void modifyClient (javafx.event.ActionEvent actionEvent){
+    public void modifyClient (javafx.event.ActionEvent actionEvent) throws Exception {
 
         LocalDate localDate = dateData.getValue();
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
@@ -35,9 +37,9 @@ public class ModifyClient  {
 
         ChildGS newer = new ChildGS(txtNome.getText(), txtCognome.getText(), txtCodicefiscaleNew.getText(), txtLuogo.getText(), datadinascita, txtIdbambino.getText());
 
-        /*
+
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        InterfaceRMI.modifyChild(txtCodicefiscaleOld.getText(), newer);
-         */
+        interfaceRMI.modifyChild(txtCodicefiscaleOld.getText(), newer);
+
     }
 }

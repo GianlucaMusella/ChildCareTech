@@ -32,4 +32,7 @@ public interface InterfaceRMI extends Remote {
     ArrayList<Contact> viewContacts() throws Exception;
 
     ArrayList<Doctor> viewDoctors() throws Exception;
+
+
+    void modifyChild(String text, ChildGS newer) throws Exception;
 }
