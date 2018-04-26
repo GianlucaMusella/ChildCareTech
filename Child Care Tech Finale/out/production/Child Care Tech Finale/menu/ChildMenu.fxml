@@ -6,7 +6,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menu.ChildMenu">
    <children>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
@@ -20,7 +19,8 @@
       </Button>
       <Button layoutX="149.0" layoutY="122.0" mnemonicParsing="false" onAction="#inserisciBambino" prefHeight="46.0" prefWidth="74.0" text="Inserisci" />
       <Button layoutX="347.0" layoutY="122.0" mnemonicParsing="false" onAction="#cercaBambino" prefHeight="46.0" prefWidth="74.0" text="Cerca" />
-      <Button layoutX="257.0" layoutY="243.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="74.0" text="Rimuovi" />
+      <Button layoutX="149.0" layoutY="244.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="74.0" text="Rimuovi" />
       <Hyperlink layoutX="527.0" layoutY="363.0" onAction="#logout" text="Logout" />
+      <Button layoutX="358.0" layoutY="254.0" mnemonicParsing="false" onAction="#modificaBambino" prefHeight="46.0" prefWidth="74.0" text="Modifica" />
    </children>
 </AnchorPane>
