@@ -34,5 +34,5 @@ public interface InterfaceRMI extends Remote {
     ArrayList<Doctor> viewDoctors() throws Exception;
 
 
-    void modifyChild(String CodicefiscaleOld, String CodicefiscaleNew, String Nome, String Cognome, String Luogo, String ID, LocalDate data) throws Exception;
+    void modifyChild(String CodicefiscaleOld, String CodicefiscaleNew, String Nome, String Cognome, String Luogo, LocalDate data) throws Exception;
 }

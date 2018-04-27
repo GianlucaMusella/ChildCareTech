@@ -579,36 +579,32 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public void modifyChild(String CodicefiscaleOld, String CodicefiscaleNew, String Nome, String Cognome, String Luogo, String ID, LocalDate data) throws Exception {
+    public void modifyChild(String CodicefiscaleOld, String CodicefiscaleNew, String Nome, String Cognome, String Luogo, LocalDate data) throws Exception {
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
         String SQL = ("UPDATE mydb.bambini SET ");
         String equal = ("WHERE CodiceFiscale = '" + CodicefiscaleOld + "'");
-        if (!CodicefiscaleNew.isEmpty()) {
-            int n = stmt.executeUpdate(SQL + "CodiceFiscale = '" + CodicefiscaleNew + "'" + equal);
-            System.out.println(CodicefiscaleNew);
-        }
         if (!Nome.isEmpty()) {
-            int n = stmt.executeUpdate(SQL + "Nome = '" + Nome + "'" + equal);
-            System.out.println(Nome);
+            int s = stmt.executeUpdate(SQL + "Nome = '" + Nome + "'" + equal);
+            // System.out.println(Nome);
         }
         if (!Cognome.isEmpty()) {
-            int n = stmt.executeUpdate(SQL + "Cognome = '" + Cognome + "'" + equal);
-            System.out.println(Cognome);
+            int p = stmt.executeUpdate(SQL + "Cognome = '" + Cognome + "'" + equal);
+            // System.out.println(Cognome);
         }
         if (!Luogo.isEmpty()) {
-            int n = stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + Luogo + "'" + equal);
-            System.out.println(Luogo);
-        }
-        if (!ID.isEmpty()) {
-            int n = stmt.executeUpdate(SQL + "Nome = '" + ID + "'" + equal);
-            System.out.println(ID);
+            int x = stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + Luogo + "'" + equal);
+            // System.out.println(Luogo);
         }
         if (data != null ) {
-            int n = stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
-            System.out.println(data);
+            int z = stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
+            // System.out.println(data);
+        }
+        if (!CodicefiscaleNew.isEmpty()) {
+            int n = stmt.executeUpdate(SQL + "CodiceFiscale = '" + CodicefiscaleNew + "'" + equal);
+            // System.out.println(CodicefiscaleNew);
         }
     }
 
