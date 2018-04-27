@@ -35,11 +35,8 @@ public class ModifyClient  {
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         Date datadinascita = Date.from(instant);
 
-        ChildGS newer = new ChildGS(txtNome.getText(), txtCognome.getText(), txtCodicefiscaleNew.getText(), txtLuogo.getText(), datadinascita, txtIdbambino.getText());
-
-
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        interfaceRMI.modifyChild(txtCodicefiscaleOld.getText(), newer);
+        interfaceRMI.modifyChild(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtCodicefiscaleNew.getText(), txtLuogo.getText(), txtIdbambino.getText(), datadinascita);
 
     }
 }

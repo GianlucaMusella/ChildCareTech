@@ -579,36 +579,36 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public void modifyChild(String CodicefiscaleOld, ChildGS newer) throws Exception {
+    public void modifyChild(String CodicefiscaleOld, String CodicefiscaleNew, String Nome, String Cognome, String Luogo, String ID, java.util.Date data) throws Exception {
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
         String SQL = ("UPDATE mydb.bambini SET ");
         String equal = ("WHERE CodiceFiscale = '" + CodicefiscaleOld + "'");
-        if (!newer.getCodiceFiscale().isEmpty()) {
-            int n = stmt.executeUpdate(SQL + "CodiceFiscale = '" + newer.getCodiceFiscale() + "'" + equal);
-            System.out.println(newer.getCodiceFiscale());
+        if (!CodicefiscaleNew.isEmpty()) {
+            int n = stmt.executeUpdate(SQL + "CodiceFiscale = '" + CodicefiscaleNew + "'" + equal);
+            System.out.println(CodicefiscaleNew);
         }
-        if (!newer.getNome().isEmpty()) {
-            int n = stmt.executeUpdate(SQL + "Nome = '" + newer.getNome() + "'" + equal);
-            System.out.println(newer.getNome());
+        if (!Nome.isEmpty()) {
+            int n = stmt.executeUpdate(SQL + "Nome = '" + Nome + "'" + equal);
+            System.out.println(Nome);
         }
-        if (!newer.getCognome().isEmpty()) {
-            int n = stmt.executeUpdate(SQL + "Cognome = '" + newer.getCognome() + "'" + equal);
-            System.out.println(newer.getCognome());
+        if (!Cognome.isEmpty()) {
+            int n = stmt.executeUpdate(SQL + "Cognome = '" + Cognome + "'" + equal);
+            System.out.println(Cognome);
         }
-        if (!newer.getLuogoDiNascita().isEmpty()) {
-            int n = stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + newer.getLuogoDiNascita() + "'" + equal);
-            System.out.println(newer.getLuogoDiNascita());
+        if (!Luogo.isEmpty()) {
+            int n = stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + Luogo + "'" + equal);
+            System.out.println(Luogo);
         }
-        if (!newer.getIdBambino().isEmpty()) {
-            int n = stmt.executeUpdate(SQL + "Nome = '" + newer.getIdBambino() + "'" + equal);
-            System.out.println(newer.getIdBambino());
+        if (!ID.isEmpty()) {
+            int n = stmt.executeUpdate(SQL + "Nome = '" + ID + "'" + equal);
+            System.out.println(ID);
         }
-        if (newer.getData() != null ) {
-            int n = stmt.executeUpdate(SQL + "Data_di_Nascita = '" + newer.getData() + "'" + equal);
-            System.out.println(newer.getData());
+        if (data != null ) {
+            int n = stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
+            System.out.println(data);
         }
     }
 
