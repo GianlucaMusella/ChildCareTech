@@ -31,12 +31,13 @@ public class ModifyClient  {
 
     public void modifyClient (javafx.event.ActionEvent actionEvent) throws Exception {
 
+       /*
         LocalDate localDate = dateData.getValue();
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-        Date datadinascita = Date.from(instant);
+        Date datadinascita = Date.from(instant); */
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        interfaceRMI.modifyChild(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtCodicefiscaleNew.getText(), txtLuogo.getText(), txtIdbambino.getText(), datadinascita);
+        interfaceRMI.modifyChild(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtCodicefiscaleNew.getText(), txtLuogo.getText(), txtIdbambino.getText(), dateData.getValue());
 
     }
 }
