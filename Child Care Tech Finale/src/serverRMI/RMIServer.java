@@ -588,21 +588,27 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         String equal = ("WHERE CodiceFiscale = '" + CodicefiscaleOld + "'");
         if (!newer.getCodiceFiscale().isEmpty()) {
             int n = stmt.executeUpdate(SQL + "CodiceFiscale = '" + newer.getCodiceFiscale() + "'" + equal);
+            System.out.println(newer.getCodiceFiscale());
         }
         if (!newer.getNome().isEmpty()) {
             int n = stmt.executeUpdate(SQL + "Nome = '" + newer.getNome() + "'" + equal);
+            System.out.println(newer.getNome());
         }
         if (!newer.getCognome().isEmpty()) {
             int n = stmt.executeUpdate(SQL + "Cognome = '" + newer.getCognome() + "'" + equal);
+            System.out.println(newer.getCognome());
         }
         if (!newer.getLuogoDiNascita().isEmpty()) {
             int n = stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + newer.getLuogoDiNascita() + "'" + equal);
+            System.out.println(newer.getLuogoDiNascita());
         }
         if (!newer.getIdBambino().isEmpty()) {
             int n = stmt.executeUpdate(SQL + "Nome = '" + newer.getIdBambino() + "'" + equal);
+            System.out.println(newer.getIdBambino());
         }
         if (newer.getData() != null ) {
             int n = stmt.executeUpdate(SQL + "Data_di_Nascita = '" + newer.getData() + "'" + equal);
+            System.out.println(newer.getData());
         }
     }
 
