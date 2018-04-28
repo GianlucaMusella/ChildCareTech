@@ -92,6 +92,8 @@ public class SearchPerson implements Initializable {
         ChildGS DeletableChild = tableBambini.getSelectionModel().getSelectedItem();
         String CodiceFiscale = DeletableChild.getCodiceFiscale();
 
+        System.out.println(CodiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
+
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
         interfaceRMI.deleteChild(CodiceFiscale);
 
