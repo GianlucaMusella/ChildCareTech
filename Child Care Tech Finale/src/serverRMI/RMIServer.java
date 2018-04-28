@@ -608,5 +608,11 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         }
     }
 
+    @Override
+    public void deleteChild(String CodiceFiscale) throws Exception {
+       ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+       Statement stmt = connectionDatabase.initializeConnection().createStatement();
+       int i = stmt.executeUpdate("DELETE * FROM mydb.bambini WHERE CODICE FISCALE = '" + CodiceFiscale + "'");
+    }
 }
 
