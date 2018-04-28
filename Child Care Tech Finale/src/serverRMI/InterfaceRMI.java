@@ -35,4 +35,5 @@ public interface InterfaceRMI extends Remote {
 
 
     void modifyChild(String CodicefiscaleOld, String CodicefiscaleNew, String Nome, String Cognome, String Luogo, LocalDate data) throws Exception;
+    void deleteChild (String CodiceFiscale) throws Exception;
 }

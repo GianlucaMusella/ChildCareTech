@@ -87,5 +87,14 @@ public class SearchPerson implements Initializable {
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
         tableBambini.setItems(FXCollections.observableArrayList(childrenGS));
     }
+    public void deleteChild (ActionEvent actionEvent) throws Exception {
+
+        ChildGS DeletableChild = tableBambini.getSelectionModel().getSelectedItem();
+        String CodiceFiscale = DeletableChild.getCodiceFiscale();
+
+        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        interfaceRMI.deleteChild(CodiceFiscale);
+
+    }
 
 }
