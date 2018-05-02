@@ -41,6 +41,19 @@ public class AddDoctor {
     @FXML
     private RadioButton radioFemmina;
 
+    public void initialize(){
+        System.out.println("sto inizilizzando");
+        radioMaschio.setOnAction(event -> {
+            if (radioMaschio.isSelected() && radioFemmina.isSelected())
+                radioFemmina.setSelected(false);
+        });
+
+        radioFemmina.setOnAction(event -> {
+            if (radioFemmina.isSelected() && radioMaschio.isSelected())
+                radioMaschio.setSelected(false);
+        });
+    }
+
 
     public void addDoctor(ActionEvent actionEvent) throws Exception {
         String sesso;
@@ -53,10 +66,13 @@ public class AddDoctor {
         String sessoM = radioMaschio.getText();
         String sessoF = radioFemmina.getText();
 
-        if(radioMaschio.isSelected())
+        if(radioMaschio.isSelected()) {
+
             sesso = sessoM;
-        else
+        }else {
+
             sesso = sessoF;
+        }
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
         boolean success = interfaceRMI.addDoctor(codiceFiscale, nome, cognome, data, luogo, sesso);
@@ -71,8 +87,6 @@ public class AddDoctor {
 
         txtSesso.clear();
     }
-
-
 
 
     public void back_method(ActionEvent actionEvent) throws Exception{

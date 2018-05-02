@@ -575,7 +575,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         rs.close();
         return values;
 
-
     }
 
     @Override
@@ -609,10 +608,34 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public void deleteChild(String CodiceFiscale) throws Exception {
-       ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-       Statement stmt = connectionDatabase.initializeConnection().createStatement();
-       int i = stmt.executeUpdate("DELETE * FROM mydb.bambini WHERE CODICE FISCALE = '" + CodiceFiscale + "'");
+    public boolean deleteChild(String idBambino) throws Exception {
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.bambini WHERE idBambino = '" + idBambino + "';";
+
+        try{
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from bambini.");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
     }
+
+
 }
 
