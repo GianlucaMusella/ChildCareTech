@@ -23,5 +23,6 @@
         <TextField id="codicefiscale" fx:id="txtCodicefiscale" layoutX="487.0" layoutY="29.0" promptText="Codice fiscale" />
         <Button layoutX="590.0" layoutY="398.0" mnemonicParsing="false" onAction="#searchChild" text="Cerca" />
       <Button layoutX="28.0" layoutY="398.0" mnemonicParsing="false" onAction="#viewChild" text="Carica Dati" />
+      <Button layoutX="305.0" layoutY="398.0" mnemonicParsing="false" onAction="#deleteChild" text="Elimina" />
     </children>
 </Pane>
