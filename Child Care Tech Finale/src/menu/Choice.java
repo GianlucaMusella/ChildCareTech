@@ -27,6 +27,15 @@ public class Choice{
         stage.show();
     }
 
+    public void inserisciMenu(ActionEvent actionEvent) throws Exception {
+        ((Node) actionEvent.getSource()).getScene().getWindow().hide();
+        Parent root = FXMLLoader.load(getClass().getResource("/menuFood/AllergyTable.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void inserisciFornitore(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
         Parent root = FXMLLoader.load(getClass().getResource("/menu/InsertSupplier.fxml"));

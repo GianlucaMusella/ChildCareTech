@@ -9,13 +9,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.RadioButton;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import loginScreen.Singleton;
 import serverRMI.InterfaceRMI;
 
-import java.io.Serializable;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -112,8 +112,6 @@ public class AddChild implements Initializable{
     private TableColumn<Doctor, String> colonnaCfP;
 
 
-
-
     public void addChild(ActionEvent actionEvent) throws Exception {
 
         String sesso;
@@ -155,6 +153,55 @@ public class AddChild implements Initializable{
         txtIDBambino.clear();
         txtContatto.clear();
 
+    }
+
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        columnCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        columnCodicefiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+        columnDatadinascita.setCellValueFactory(new PropertyValueFactory<>("data"));
+        columnLuogodinascita.setCellValueFactory(new PropertyValueFactory<>("luogoDiNascita"));
+        columnID.setCellValueFactory(new PropertyValueFactory<>("idBambino"));
+
+        colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCF.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+
+        colonnaNomeC.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCfC.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+
+        colonnaNomeP.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCfP.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+
+        tableBambini.getItems().clear();
+        tabellaGenitori.getItems().clear();
+        tabellaContatti.getItems().clear();
+        tabellaPediatra.getItems().clear();
+
+    }
+
+    public void viewChild(ActionEvent actionEvent) throws Exception {
+
+        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
+        ArrayList<Parents> parents = interfaceRMI.viewParents();
+        ArrayList<Contact> contacts = interfaceRMI.viewContacts();
+        ArrayList<Doctor> doctors = interfaceRMI.viewDoctors();
+
+        tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
+        tableBambini.setItems(FXCollections.observableArrayList(childrenGS));
+
+        tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
+        tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
+
+        tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
+        tabellaContatti.setItems(FXCollections.observableArrayList(contacts));
+
+        tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);
+        tabellaPediatra.setItems(FXCollections.observableArrayList(doctors));
     }
 
     public void inserisciGenitore(ActionEvent actionEvent) throws Exception{
@@ -206,53 +253,6 @@ public class AddChild implements Initializable{
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        columnCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
-        columnCodicefiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
-        columnDatadinascita.setCellValueFactory(new PropertyValueFactory<>("data"));
-        columnLuogodinascita.setCellValueFactory(new PropertyValueFactory<>("luogoDiNascita"));
-        columnID.setCellValueFactory(new PropertyValueFactory<>("idBambino"));
-
-        colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colonnaCF.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
-
-        colonnaNomeC.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colonnaCfC.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
-
-        colonnaNomeP.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colonnaCfP.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
-
-        tableBambini.getItems().clear();
-        tabellaGenitori.getItems().clear();
-        tabellaContatti.getItems().clear();
-        tabellaPediatra.getItems().clear();
-
-    }
-
-    public void viewChild(ActionEvent actionEvent) throws Exception {
-
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
-        ArrayList<Parents> parents = interfaceRMI.viewParents();
-        ArrayList<Contact> contacts = interfaceRMI.viewContacts();
-        ArrayList<Doctor> doctors = interfaceRMI.viewDoctors();
-
-        tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
-        tableBambini.setItems(FXCollections.observableArrayList(childrenGS));
-
-        tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
-        tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
-
-        tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
-        tabellaContatti.setItems(FXCollections.observableArrayList(contacts));
-
-        tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);
-        tabellaPediatra.setItems(FXCollections.observableArrayList(doctors));
     }
 
 }

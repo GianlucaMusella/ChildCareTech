@@ -42,7 +42,6 @@ public class AddDoctor {
     private RadioButton radioFemmina;
 
     public void initialize(){
-        System.out.println("sto inizilizzando");
         radioMaschio.setOnAction(event -> {
             if (radioMaschio.isSelected() && radioFemmina.isSelected())
                 radioFemmina.setSelected(false);

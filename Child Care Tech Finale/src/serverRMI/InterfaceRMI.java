@@ -5,6 +5,7 @@ import dataEntry.Contact;
 import dataEntry.Doctor;
 import dataEntry.Parents;
 import javafx.collections.ObservableList;
+import menuFood.MenuGS;
 
 import java.rmi.Remote;
 import java.sql.SQLException;
@@ -37,5 +38,5 @@ public interface InterfaceRMI extends Remote {
     ArrayList<Doctor> viewDoctors() throws Exception;
 
 
-
+    ArrayList<MenuGS> viewAlletgy() throws Exception;
 }
