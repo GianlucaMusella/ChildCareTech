@@ -1,7 +1,6 @@
 package menuFood;
 
 
-import dataEntry.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,13 +24,13 @@ import java.util.ResourceBundle;
 public class AllergyTable implements Initializable{
 
     @FXML
-    private TableView<MenuGS> tabellaAllergie;
+    private TableView<AllergyGS> tabellaAllergie;
 
     @FXML
-    private TableColumn<MenuGS, String> allergieBambini;
+    private TableColumn<AllergyGS, String> allergieBambini;
 
     @FXML
-    private TableColumn<MenuGS, String> allergiePersonale;
+    private TableColumn<AllergyGS, String> allergiePersonale;
 
 
     @Override
@@ -46,11 +45,11 @@ public class AllergyTable implements Initializable{
     public void viewMenu(ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        ArrayList<MenuGS> menuGS = interfaceRMI.viewAlletgy();
+        ArrayList<AllergyGS> allergyGS = interfaceRMI.viewAlletgy();
 
 
         tabellaAllergie.setColumnResizePolicy(tabellaAllergie.CONSTRAINED_RESIZE_POLICY);
-        tabellaAllergie.setItems(FXCollections.observableArrayList(menuGS));
+        tabellaAllergie.setItems(FXCollections.observableArrayList(allergyGS));
 
     }
 

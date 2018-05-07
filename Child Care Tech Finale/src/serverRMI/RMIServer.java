@@ -5,7 +5,9 @@ import dataEntry.ChildGS;
 import dataEntry.Contact;
 import dataEntry.Doctor;
 import dataEntry.Parents;
-import menuFood.MenuGS;
+import menuFood.AllergyGS;
+import menuFood.FirstDishesGS;
+import menuFood.SecondDishesGS;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -23,8 +25,8 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     @Override
     public boolean login(String username,String password) throws Exception {
 
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
 
         String login = "SELECT Username,Password FROM mydb.personaleconaccesso WHERE Username = " + '"' + username + '"' + "AND Password = " + '"' + password + '"';
 
@@ -579,9 +581,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public ArrayList<MenuGS> viewAlletgy() throws Exception {
+    public ArrayList<AllergyGS> viewAlletgy() throws Exception {
 
-        ArrayList<MenuGS> values = new ArrayList<>();
+        ArrayList<AllergyGS> values = new ArrayList<>();
         String sql = ("SELECT * FROM mydb.bambini ");
         String sql1 = ("SELECT * FROM mydb.personaleinterno");
 
@@ -597,13 +599,226 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             String allergieBambini = rs.getString("Allergie");
             String allergiePersonale = rs1.getString("Allergie");
 
-            values.add(new MenuGS(allergieBambini, allergiePersonale));
+            values.add(new AllergyGS(allergieBambini, allergiePersonale));
         }
 
         statement.close();
         statement1.close();
 
         return values;
+    }
+
+    @Override
+    public boolean addMenu(String nome, String primo, String secondo) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        PreparedStatement preparedStatement3 = null;
+        PreparedStatement preparedStatement4 = null;
+        PreparedStatement preparedStatement5 = null;
+
+
+        String nomeMenu = "INSERT INTO mydb.menu (Nome) VALUES (?)";
+        String primoPiatto = "INSERT INTO mydb.primi (Nome) VALUES (?)";
+        String secondoPiatto = "INSERT INTO mydb.secondi (Nome) VALUES (?)";
+        /*String tabellaIntermediaPrimi = "INSERT INTO mydb.menu_has_primi (Menu_idMenu, Primi_Nome) (?,?)";
+        String tabellaIntermediaSecondi = "INSERT INTO mydb.menu_has_secondi (Menu_idMenu, Secondi_Nome) (?,?)";
+        String sql = ("SELECT * FROM mydb.menu ");
+*/
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        /*Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+        int Menu = 0;
+        
+        while (rs.next()){
+
+            int idMenu = rs.getInt("idMenu");
+            Menu = idMenu;
+        }
+*/
+
+        try{
+
+            //ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(nomeMenu);
+            preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(primoPiatto);
+            preparedStatement3 = connectionDatabase.initializeConnection().prepareStatement(secondoPiatto);
+            /*preparedStatement4 = connectionDatabase.initializeConnection().prepareStatement(tabellaIntermediaPrimi);
+            preparedStatement5 = connectionDatabase.initializeConnection().prepareStatement(tabellaIntermediaSecondi);*/
+
+
+            preparedStatement.setString(1,nome);
+            preparedStatement.executeUpdate();
+
+            preparedStatement2.setString(1,primo);
+            preparedStatement2.executeUpdate();
+
+            preparedStatement3.setString(1,secondo);
+            preparedStatement3.executeUpdate();
+
+            /*preparedStatement4.setInt(1,Menu);
+            preparedStatement4.setString(2,secondo);
+            preparedStatement4.executeUpdate();*/
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+
+                if(preparedStatement != null && preparedStatement2 != null && preparedStatement3 != null){
+                    preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
+                    preparedStatement2.close();
+                    preparedStatement3.close();
+                    return true;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+
+    }
+
+    @Override
+    public ArrayList<FirstDishesGS> viewFirst() throws Exception {
+
+        ArrayList<FirstDishesGS> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.allergeni_has_primi ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()){
+            String colonnaPrimi = rs.getString("Allergeni_Nome");
+            String colonnaAllergene = rs.getString("Primi_Nome");
+
+            values.add(new FirstDishesGS(colonnaAllergene, colonnaPrimi));
+        }
+
+        rs.close();
+        return values;
+
+    }
+
+    @Override
+    public ArrayList<SecondDishesGS> viewSecond() throws Exception{
+
+        ArrayList<SecondDishesGS> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.allergeni_has_secondi ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()){
+            String colonnaAllergeni = rs.getString("Allergeni_nome");
+            String colonnaSecondi = rs.getString("Secondi_Nome");
+
+            values.add(new SecondDishesGS(colonnaSecondi, colonnaAllergeni));
+        }
+
+        rs.close();
+        return values;
+
+    }
+
+    @Override
+    public boolean addPrimo(String nome, String allergeni) throws Exception {
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement1 = null;
+        PreparedStatement preparedStatement2 = null;
+
+
+        String primoPiatto = "INSERT INTO mydb.primi (Nome) VALUES (?)";
+        String sqlAllergeni = "INSERT INTO mydb.allergeni (Nome) VALUES (?)";
+        String primiEAllergeni = "INSERT INTO mydb.allergeni_has_primi (Allergeni_Nome, Primi_Nome) VALUES (?,?)";
+
+        try{
+
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(primoPiatto);
+            preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(sqlAllergeni);
+            preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(primiEAllergeni);
+
+            preparedStatement.setString(1,nome);
+            preparedStatement.executeUpdate();
+
+            preparedStatement1.setString(1,allergeni);
+            preparedStatement1.executeUpdate();
+
+            preparedStatement2.setString(1,allergeni);
+            preparedStatement2.setString(2,nome);
+            preparedStatement2.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+
+                if(preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null){
+                    preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
+                    preparedStatement1.close();
+                    preparedStatement2.close();
+                    return true;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+
+    }
+
+    @Override
+    public boolean addSecondo(String nome, String allergeni) throws Exception {
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement1 = null;
+        PreparedStatement preparedStatement2 = null;
+
+        String secondoPiatto = "INSERT INTO mydb.secondi (Nome) VALUES (?)";
+        String sqlAllergeni = "INSERT INTO mydb.allergeni (Nome) VALUES (?)";
+        String primiEAllergeni = "INSERT INTO mydb.allergeni_has_secondi (Allergeni_Nome, Secondi_Nome) VALUES (?,?)";
+
+        try{
+
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(secondoPiatto);
+            preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(sqlAllergeni);
+            preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(primiEAllergeni);
+
+            preparedStatement.setString(1,nome);
+            preparedStatement.executeUpdate();
+
+            preparedStatement1.setString(1,allergeni);
+            preparedStatement1.executeUpdate();
+
+            preparedStatement2.setString(1,allergeni);
+            preparedStatement2.setString(2,nome);
+            preparedStatement2.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+
+                if(preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null){
+                    preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
+                    preparedStatement1.close();
+                    preparedStatement2.close();
+                    return true;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+
     }
 
     @Override

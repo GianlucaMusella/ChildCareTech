@@ -4,11 +4,11 @@ import dataEntry.ChildGS;
 import dataEntry.Contact;
 import dataEntry.Doctor;
 import dataEntry.Parents;
-import javafx.collections.ObservableList;
-import menuFood.MenuGS;
+import menuFood.AllergyGS;
+import menuFood.FirstDishesGS;
+import menuFood.SecondDishesGS;
 
 import java.rmi.Remote;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -38,5 +38,13 @@ public interface InterfaceRMI extends Remote {
     ArrayList<Doctor> viewDoctors() throws Exception;
 
 
-    ArrayList<MenuGS> viewAlletgy() throws Exception;
+    ArrayList<AllergyGS> viewAlletgy() throws Exception;
+
+    boolean addMenu(String nome, String primo, String secondo) throws Exception;
+    ArrayList<FirstDishesGS> viewFirst() throws Exception;
+    ArrayList<SecondDishesGS> viewSecond() throws Exception;
+    boolean addPrimo(String nome, String allergeni) throws Exception;
+    boolean addSecondo(String nome, String allergeni) throws Exception;
+
+
 }

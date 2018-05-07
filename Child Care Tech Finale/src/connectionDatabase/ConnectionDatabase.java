@@ -12,29 +12,11 @@ public class ConnectionDatabase{
     private static final String PASSWORD = "Giantusso956";
 
     // jdbc url per MySql.
-    private static final String URL = "jdbc:mysql://localhost:3306/mydb";
+    private static final String URL = "jdbc:mysql://localhost:3306/mydb?autoReconnect=true&useSSL=false";
 
     private Connection conn = null;
 
-    /*static{
-        String driver = "com.mysql.jdbc.Driver";
-        try {
-            Class.forName(driver);
-        } catch (ClassNotFoundException e1) {
-            e1.printStackTrace();
-        }
-        try {
-            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        }catch(Exception e) {
-            System.out.println(e);
-            conn = null;
-        }
-    }
 
-    public static Connection getConnection(){
-        return conn;
-    }
-*/
     public ConnectionDatabase() {
         conn = initializeConnection();
 
