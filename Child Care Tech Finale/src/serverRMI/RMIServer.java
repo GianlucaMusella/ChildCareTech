@@ -621,22 +621,16 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         String nomeMenu = "INSERT INTO mydb.menu (Nome) VALUES (?)";
         String primoPiatto = "INSERT INTO mydb.primi (Nome) VALUES (?)";
         String secondoPiatto = "INSERT INTO mydb.secondi (Nome) VALUES (?)";
-        /*String tabellaIntermediaPrimi = "INSERT INTO mydb.menu_has_primi (Menu_idMenu, Primi_Nome) (?,?)";
+        String tabellaIntermediaPrimi = "INSERT INTO mydb.menu_has_primi (Menu_idMenu, Primi_Nome) (?,?)";
         String tabellaIntermediaSecondi = "INSERT INTO mydb.menu_has_secondi (Menu_idMenu, Secondi_Nome) (?,?)";
         String sql = ("SELECT * FROM mydb.menu ");
-*/
+
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        /*Statement statement = connectionDatabase.initializeConnection().createStatement();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
 
         ResultSet rs = statement.executeQuery(sql);
-        int Menu = 0;
-        
-        while (rs.next()){
 
-            int idMenu = rs.getInt("idMenu");
-            Menu = idMenu;
-        }
-*/
+        rs.last();
 
         try{
 
@@ -657,9 +651,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             preparedStatement3.setString(1,secondo);
             preparedStatement3.executeUpdate();
 
-            /*preparedStatement4.setInt(1,Menu);
+            preparedStatement4.setInt(1, rs.getInt("idMenu"));
             preparedStatement4.setString(2,secondo);
-            preparedStatement4.executeUpdate();*/
+            preparedStatement4.executeUpdate();
 
 
         }catch (SQLException e){
