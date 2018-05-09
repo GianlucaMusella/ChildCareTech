@@ -76,6 +76,7 @@ public class AddTeacher {
         txtInsegnante.clear();
         txtUsername.clear();
         txtPassword.clear();
+        dateData.getEditor().clear();
 
     }
 

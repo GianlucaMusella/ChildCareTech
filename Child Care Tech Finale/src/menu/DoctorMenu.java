@@ -8,48 +8,30 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import loginScreen.Controller;
 
-
-public class InsertPerson {
-
-    public void inserisciGenitore(ActionEvent actionEvent) throws Exception {
-        ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/ParentsMenu.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-    }
+public class DoctorMenu {
 
     public void inserisciPediatra(ActionEvent actionEvent) throws Exception {
+
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/DoctorMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/dataEntry/AddDoctor.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
-    public void inserisciBambino(ActionEvent actionEvent) throws Exception {
+    public void cercaPediatra(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/ChildMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/searchModifyDelete/SearchAndDeleteDoctor.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
-    public void inserisciContatto(ActionEvent actionEvent) throws Exception {
+    public void modificaPediatra(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/dataEntry/AddContact.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void inserisciStaff(ActionEvent actionEvent) throws Exception {
-        ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/InsertStaff.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/searchModifyDelete/ModifyDoctor.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -58,7 +40,7 @@ public class InsertPerson {
 
     public void back_method(ActionEvent actionEvent) throws Exception{
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/Choice.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/menu/InsertPerson.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -71,5 +53,4 @@ public class InsertPerson {
         Stage stage = new Stage();
         controller.initialize(stage);
     }
-
 }

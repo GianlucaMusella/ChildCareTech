@@ -152,10 +152,9 @@ public class AddChild implements Initializable{
         txtAllergia.clear();
         txtIDBambino.clear();
         txtContatto.clear();
+        dateData.getEditor().clear();
 
     }
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -227,7 +226,7 @@ public class AddChild implements Initializable{
     public void back_method(ActionEvent actionEvent) throws Exception{
 
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/InsertPeople.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/menu/ChildMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

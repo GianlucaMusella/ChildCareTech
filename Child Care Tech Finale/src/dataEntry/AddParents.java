@@ -71,6 +71,7 @@ public class AddParents {
         txtCognome.clear();
         txtCodiceFiscale.clear();
         txtLuogo.clear();
+        dateData.getEditor().clear();
         txtTelefono.clear();
         txtSesso.clear();
 
@@ -80,7 +81,7 @@ public class AddParents {
     public void back_method(ActionEvent actionEvent) throws Exception{
 
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/InsertPeople.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/menu/ParentsMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

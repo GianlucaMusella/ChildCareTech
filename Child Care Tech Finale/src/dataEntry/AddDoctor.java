@@ -83,7 +83,7 @@ public class AddDoctor {
         txtCognome.clear();
         txtCodiceFiscale.clear();
         txtLuogo.clear();
-
+        dataData.getEditor().clear();
         txtSesso.clear();
     }
 
@@ -91,7 +91,7 @@ public class AddDoctor {
     public void back_method(ActionEvent actionEvent) throws Exception{
 
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/InsertPeople.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/menu/DoctorMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

@@ -537,6 +537,102 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
+    public ArrayList<Parents> searchParents(String name, String cod) throws Exception {
+
+        ArrayList<Parents> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.genitori WHERE ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+        if (cod.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "Nome = '" + name + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+
+                values.add(new Parents(colonnanome, colonnacodicefiscale));
+
+            }
+        } else if (name.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+
+                values.add(new Parents(colonnanome, colonnacodicefiscale));
+
+            }
+
+            rs.close();
+        }
+
+        return values;
+
+    }
+
+    @Override
+    public void modifyParents(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data, String telefono) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+        String SQL = ("UPDATE mydb.genitori SET ");
+        String equal = ("WHERE CodiceFiscale = '" + codiceFiscale + "'");
+        if (!nome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Nome = '" + nome + "'" + equal);
+            // System.out.println(Nome);
+        }
+        if (!cognome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
+            // System.out.println(Cognome);
+        }
+        if (!luogo.isEmpty()) {
+            stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + luogo + "'" + equal);
+            // System.out.println(Luogo);
+        }
+        if (data != null ) {
+            stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
+            // System.out.println(data);
+        }
+        if (telefono != null ) {
+            stmt.executeUpdate(SQL + "Telefono = '" + telefono + "'" + equal);
+            // System.out.println(data);
+        }
+
+    }
+
+    @Override
+    public boolean deleteParents(String codiceFiscale) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.genitori WHERE CodiceFiscale = '" + codiceFiscale + "';";
+
+        try{
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from Genitori.");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
+
+    }
+
+    @Override
     public ArrayList<Contact> viewContacts() throws Exception {
 
         ArrayList<Contact> values = new ArrayList<>();
@@ -577,6 +673,99 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         rs.close();
         return values;
+
+    }
+
+    @Override
+    public ArrayList<Doctor> searchDoctors(String name, String cod) throws Exception {
+
+        ArrayList<Doctor> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.pediatra WHERE ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+        if (cod.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "Nome = '" + name + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+
+                values.add(new Doctor(colonnanome, colonnacodicefiscale));
+
+            }
+        } else if (name.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+
+                values.add(new Doctor(colonnanome, colonnacodicefiscale));
+
+            }
+
+            rs.close();
+        }
+
+        return values;
+
+    }
+
+    @Override
+    public void modifyDoctor(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+        String SQL = ("UPDATE mydb.pediatra SET ");
+        String equal = ("WHERE CodiceFiscale = '" + codiceFiscale + "'");
+        if (!nome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Nome = '" + nome + "'" + equal);
+            // System.out.println(Nome);
+        }
+        if (!cognome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
+            // System.out.println(Cognome);
+        }
+        if (!luogo.isEmpty()) {
+            stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + luogo + "'" + equal);
+            // System.out.println(Luogo);
+        }
+        if (data != null ) {
+            stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
+            // System.out.println(data);
+        }
+
+
+    }
+
+    @Override
+    public boolean deleteDoctors(String codiceFiscale) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.pediatra WHERE CodiceFiscale = '" + codiceFiscale + "';";
+
+        try{
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from Pediatra.");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
 
     }
 
@@ -622,25 +811,42 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         String primoPiatto = "INSERT INTO mydb.primi (Nome) VALUES (?)";
         String secondoPiatto = "INSERT INTO mydb.secondi (Nome) VALUES (?)";
         String tabellaIntermediaPrimi = "INSERT INTO mydb.menu_has_primi (Menu_idMenu, Primi_Nome) (?,?)";
-        String tabellaIntermediaSecondi = "INSERT INTO mydb.menu_has_secondi (Menu_idMenu, Secondi_Nome) (?,?)";
-        String sql = ("SELECT * FROM mydb.menu ");
+        /*String tabellaIntermediaSecondi = "INSERT INTO mydb.menu_has_secondi (Menu_idMenu, Secondi_Nome) (?,?)";*/
 
-        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        //ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        /*Statement statement = connectionDatabase.initializeConnection().createStatement();
 
         ResultSet rs = statement.executeQuery(sql);
+        int Menu = 0;
+        
+        while (rs.next()){
 
-        rs.last();
+            int idMenu = rs.getInt("idMenu");
+            Menu = idMenu;
+        }
+*/
+
+       /* ResultSet getKeyRs = preparedStatement4.executeQuery("SELECT LAST_INSERT_ID()");
+        if (getKeyRs != null) {
+            if (getKeyRs.next()) {
+                int lastInsertedId = getKeyRs.getInt(1);
+            }
+            getKeyRs.close();
+        }
+        */
+        //Statement statement = connectionDatabase.initializeConnection().createStatement();
+
 
         try{
-
-            //ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            Integer idMenu = null;
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(nomeMenu);
             preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(primoPiatto);
             preparedStatement3 = connectionDatabase.initializeConnection().prepareStatement(secondoPiatto);
-            /*preparedStatement4 = connectionDatabase.initializeConnection().prepareStatement(tabellaIntermediaPrimi);
-            preparedStatement5 = connectionDatabase.initializeConnection().prepareStatement(tabellaIntermediaSecondi);*/
-
+            preparedStatement4 = connectionDatabase.initializeConnection().prepareStatement(tabellaIntermediaPrimi);
+           /* preparedStatement5 = connectionDatabase.initializeConnection().prepareStatement(tabellaIntermediaSecondi);*/
+            Statement statement = connectionDatabase.initializeConnection().createStatement();
 
             preparedStatement.setString(1,nome);
             preparedStatement.executeUpdate();
@@ -651,8 +857,18 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             preparedStatement3.setString(1,secondo);
             preparedStatement3.executeUpdate();
 
-            preparedStatement4.setInt(1, rs.getInt("idMenu"));
-            preparedStatement4.setString(2,secondo);
+            //String sql = ("select idMenu FROM mydb.menu where idMenu = (select max(idMenu) from mydb.menu)");
+
+
+
+
+            String prova = ("SELECT idMenu FROM mydb.menu WHERE Nome = '" + nome + "'");
+            ResultSet resultSet = statement.executeQuery(prova);
+            idMenu = Integer.parseInt((String) resultSet.getObject(1));
+            System.out.println(idMenu);
+
+            preparedStatement4.setInt(1, idMenu);
+            preparedStatement4.setString(2, primo);
             preparedStatement4.executeUpdate();
 
 

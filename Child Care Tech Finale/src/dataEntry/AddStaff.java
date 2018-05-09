@@ -64,6 +64,7 @@ public class AddStaff {
         txtLuogo.clear();
         txtSesso.clear();
         txtMansione.clear();
+        dateData.getEditor().clear();
 
     }
 
