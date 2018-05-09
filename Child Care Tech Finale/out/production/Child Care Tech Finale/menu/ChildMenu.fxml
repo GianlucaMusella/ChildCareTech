@@ -20,7 +20,7 @@
       </Button>
       <Button layoutX="56.0" layoutY="80.0" mnemonicParsing="false" onAction="#inserisciBambino" prefHeight="46.0" prefWidth="176.0" text="Inserisci" />
       <Button layoutX="56.0" layoutY="177.0" mnemonicParsing="false" onAction="#cercaBambino" prefHeight="46.0" prefWidth="176.0" text="Cerca o Rimuovi" />
-      <Button layoutX="56.0" layoutY="263.0" mnemonicParsing="false" onAction="#modificaBambino" prefHeight="46.0" prefWidth="176.0" text="Modifica" />
+      <Button layoutX="56.0" layoutY="274.0" mnemonicParsing="false" onAction="#modificaBambino" prefHeight="46.0" prefWidth="176.0" text="Modifica" />
       <Hyperlink layoutX="227.0" layoutY="363.0" onAction="#logout" text="Logout">
          <font>
             <Font name="System Bold Italic" size="12.0" />
