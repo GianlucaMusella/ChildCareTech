@@ -30,7 +30,7 @@ public class SupplierMenu {
 
     public void cercaFornitori(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/searchAndDelete/SearchAndDeleteSupplier.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/searchAndDelete/SearchAndDeleteSupplier.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

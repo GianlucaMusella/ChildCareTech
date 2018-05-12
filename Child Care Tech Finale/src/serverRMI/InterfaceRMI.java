@@ -15,8 +15,10 @@ public interface InterfaceRMI extends Remote {
 
     boolean addSupplier(String name, String surname, String azienda, String fornitura, String partitaIva) throws Exception;
     ArrayList<SupplierGS> viewSupplier() throws Exception;
+    ArrayList<SupplierGS> searchSupplier(String azienda, String fornitura, String partitaIva) throws Exception;
     void modifySupplier(String azienda, String nome, String cognome, String fornitura, String partitaIva) throws Exception;
     boolean addOrder(String azienda, String ordini, String quantità) throws Exception;
+    boolean deleteSupplier(String azienda) throws Exception;
 
     boolean addChild(String codiceFiscale, String idBambino, String nome, String cognome, LocalDate data, String luogo, String allergie, String genitore1, String genitore2, String sesso, String pediatra, String Contatto) throws Exception;
     ArrayList<ChildGS> searchC(String name, String surname, String cod) throws Exception;

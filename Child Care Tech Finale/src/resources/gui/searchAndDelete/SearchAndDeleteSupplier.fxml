@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="426.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="searchAndDelete.SearchAndDeleteSupplier">
+   <children>
+      <TextField fx:id="txtAzienda" layoutX="25.0" layoutY="50.0" promptText="Azienda" />
+      <TextField fx:id="txtFornitura" layoutX="226.0" layoutY="50.0" promptText="Fornitura" />
+      <TextField fx:id="txtPartitaIva" layoutX="426.0" layoutY="50.0" promptText="Partita IVA" />
+      <TableView fx:id="tabellaAzienda" layoutX="25.0" layoutY="91.0" prefHeight="244.0" prefWidth="551.0">
+        <columns>
+          <TableColumn fx:id="colonnaAzienda" prefWidth="190.0" text="Azienda" />
+          <TableColumn fx:id="colonnaFornitura" minWidth="0.0" prefWidth="181.0" text="Fornitura" />
+            <TableColumn fx:id="colonnaPartitaIva" minWidth="0.0" prefWidth="179.0" text="Partiva IVA" />
+        </columns>
+      </TableView>
+      <Button layoutX="25.0" layoutY="348.0" mnemonicParsing="false" onAction="#viewSupplier" text="Carica Tabella" />
+      <Button layoutX="277.0" layoutY="348.0" mnemonicParsing="false" onAction="#searchSupplier" text="Cerca" />
+      <Button layoutX="521.0" layoutY="348.0" mnemonicParsing="false" onAction="#deleteSupplier" text="Elimina" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Hyperlink layoutX="530.0" layoutY="389.0" onAction="#logout" text="Logout">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Hyperlink>
+   </children>
+</AnchorPane>

@@ -138,6 +138,85 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
+    public ArrayList<SupplierGS> searchSupplier(String azienda, String fornitura, String partitaIva) throws Exception {
+
+        ArrayList<SupplierGS> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.fornitori WHERE ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+
+        if (fornitura.isEmpty() && partitaIva.isEmpty()) {
+
+            ResultSet rs = stmt.executeQuery(sql + "Azienda = '" + azienda + "'");
+            while (rs.next()) {
+                String colonnaAzienda = rs.getString("Azienda");
+                String colonnaFornitura = rs.getString("TipoDiFornitura");
+                String colonnaPartitaIva = rs.getString("PartitaIVA");
+
+                values.add(new SupplierGS(colonnaAzienda, colonnaFornitura, colonnaPartitaIva));
+
+            }
+        } else if (azienda.isEmpty() && partitaIva.isEmpty()) {
+
+            ResultSet rs = stmt.executeQuery(sql + "TipoDiFornitura = '" + fornitura + "'");
+            while (rs.next()) {
+                String colonnaAzienda = rs.getString("Azienda");
+                String colonnaFornitura = rs.getString("TipoDiFornitura");
+                String colonnaPartitaIva = rs.getString("PartitaIVA");
+
+                values.add(new SupplierGS(colonnaAzienda, colonnaFornitura, colonnaPartitaIva));
+
+            }
+        } else if (azienda.isEmpty() && fornitura.isEmpty()) {
+
+            ResultSet rs = stmt.executeQuery(sql + "PartitaIVA = '" + partitaIva + "'");
+            while (rs.next()) {
+                String colonnaAzienda = rs.getString("Azienda");
+                String colonnaFornitura = rs.getString("TipoDiFornitura");
+                String colonnaPartitaIva = rs.getString("PartitaIVA");
+
+                values.add(new SupplierGS(colonnaAzienda, colonnaFornitura, colonnaPartitaIva));
+
+            }
+        } else if (azienda.isEmpty()) {
+
+            ResultSet rs = stmt.executeQuery(sql + "TipoDiFornitura = '" + fornitura + "' AND PartitaIVA = '" + partitaIva + "'");
+            while (rs.next()) {
+                String colonnaAzienda = rs.getString("Azienda");
+                String colonnaFornitura = rs.getString("TipoDiFornitura");
+                String colonnaPartitaIva = rs.getString("PartitaIVA");
+
+                values.add(new SupplierGS(colonnaAzienda, colonnaFornitura, colonnaPartitaIva));
+
+            }
+        } else if (fornitura.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "PartitaIVA = '" + partitaIva + "' AND Azienda = '" + azienda + "'");
+            while (rs.next()) {
+                String colonnaAzienda = rs.getString("Azienda");
+                String colonnaFornitura = rs.getString("TipoDiFornitura");
+                String colonnaPartitaIva = rs.getString("PartitaIVA");
+
+                values.add(new SupplierGS(colonnaAzienda, colonnaFornitura, colonnaPartitaIva));
+
+            }
+        } else if (partitaIva.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "Azienda = '" + azienda + "' AND TipoDiFornitura = '" + fornitura + "'");
+            while (rs.next()) {
+                String colonnaAzienda = rs.getString("Azienda");
+                String colonnaFornitura = rs.getString("TipoDiFornitura");
+                String colonnaPartitaIva = rs.getString("PartitaIVA");
+
+                values.add(new SupplierGS(colonnaAzienda, colonnaFornitura, colonnaPartitaIva));
+
+            }
+            rs.close();
+        }
+
+        return values;
+    }
+
+    @Override
     public void modifySupplier(String azienda, String nome, String cognome, String fornitura, String partitaIva) throws Exception {
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
@@ -202,6 +281,36 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         }
 
         return false;
+    }
+
+    @Override
+    public boolean deleteSupplier(String azienda) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.fornitori WHERE Azienda = '" + azienda + "';";
+
+        try{
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from Fornitori.");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -1138,74 +1247,28 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement2 = null;
         PreparedStatement preparedStatement3 = null;
-        PreparedStatement preparedStatement4 = null;
-        PreparedStatement preparedStatement5 = null;
-
 
         String nomeMenu = "INSERT INTO mydb.menu (Nome) VALUES (?)";
-        String primoPiatto = "INSERT INTO mydb.primi (Nome) VALUES (?)";
-        String secondoPiatto = "INSERT INTO mydb.secondi (Nome) VALUES (?)";
-        String tabellaIntermediaPrimi = "INSERT INTO mydb.menu_has_primi (Menu_idMenu, Primi_Nome) (?,?)";
-        /*String tabellaIntermediaSecondi = "INSERT INTO mydb.menu_has_secondi (Menu_idMenu, Secondi_Nome) (?,?)";*/
-
-
-        //ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        /*Statement statement = connectionDatabase.initializeConnection().createStatement();
-
-        ResultSet rs = statement.executeQuery(sql);
-        int Menu = 0;
-        
-        while (rs.next()){
-
-            int idMenu = rs.getInt("idMenu");
-            Menu = idMenu;
-        }
-*/
-
-       /* ResultSet getKeyRs = preparedStatement4.executeQuery("SELECT LAST_INSERT_ID()");
-        if (getKeyRs != null) {
-            if (getKeyRs.next()) {
-                int lastInsertedId = getKeyRs.getInt(1);
-            }
-            getKeyRs.close();
-        }
-        */
-        //Statement statement = connectionDatabase.initializeConnection().createStatement();
+        String primoPiatto = "INSERT INTO mydb.menu_has_primi (Menu_Nome, Primi_Nome) VALUES (?,?)";
+        String secondoPiatto = "INSERT INTO mydb.menu_has_secondi (Menu_Nome, Secondi_Nome) VALUES (?,?)";
 
 
         try{
-            Integer idMenu = null;
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(nomeMenu);
             preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(primoPiatto);
             preparedStatement3 = connectionDatabase.initializeConnection().prepareStatement(secondoPiatto);
-            preparedStatement4 = connectionDatabase.initializeConnection().prepareStatement(tabellaIntermediaPrimi);
-           /* preparedStatement5 = connectionDatabase.initializeConnection().prepareStatement(tabellaIntermediaSecondi);*/
-            Statement statement = connectionDatabase.initializeConnection().createStatement();
 
             preparedStatement.setString(1,nome);
             preparedStatement.executeUpdate();
 
-            preparedStatement2.setString(1,primo);
+            preparedStatement2.setString(1,nome);
+            preparedStatement2.setString(2,primo);
             preparedStatement2.executeUpdate();
 
-            preparedStatement3.setString(1,secondo);
+            preparedStatement3.setString(1,nome);
+            preparedStatement3.setString(2,secondo);
             preparedStatement3.executeUpdate();
-
-            //String sql = ("select idMenu FROM mydb.menu where idMenu = (select max(idMenu) from mydb.menu)");
-
-
-
-
-            String prova = ("SELECT idMenu FROM mydb.menu WHERE Nome = '" + nome + "'");
-            ResultSet resultSet = statement.executeQuery(prova);
-            idMenu = Integer.parseInt((String) resultSet.getObject(1));
-            System.out.println(idMenu);
-
-            preparedStatement4.setInt(1, idMenu);
-            preparedStatement4.setString(2, primo);
-            preparedStatement4.executeUpdate();
-
 
         }catch (SQLException e){
             e.printStackTrace();

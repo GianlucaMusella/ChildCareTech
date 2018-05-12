@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -59,6 +60,20 @@ public class AddMenu implements Initializable{
 
         colonnaSecondi.setCellValueFactory(new PropertyValueFactory<>("nomeSecondo"));
         colonnaAllergeniSecondi.setCellValueFactory(new PropertyValueFactory<>("allergene"));
+
+        tabellaPrimi.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        tabellaPrimi.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if(newSelection != null){
+                primoPiatto.setText(newSelection.getNomePrimo());
+            }
+        });
+
+        tabellaSecondi.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if(newSelection != null){
+                secondoPiatto.setText(newSelection.getNomeSecondo());
+            }
+        });
 
         tabellaPrimi.getItems().clear();
         tabellaSecondi.getItems().clear();
