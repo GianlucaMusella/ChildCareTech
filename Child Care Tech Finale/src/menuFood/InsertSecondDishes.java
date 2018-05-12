@@ -3,7 +3,7 @@ package menuFood;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import loginScreen.Singleton;
+import main.Singleton;
 import serverRMI.InterfaceRMI;
 
 public class InsertSecondDishes {

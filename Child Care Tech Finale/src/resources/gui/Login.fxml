@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #90EE90;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="loginScreen.Controller">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #90EE90;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
     <Text layoutX="102.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Child Care Tech" textAlignment="CENTER" wrappingWidth="396.552734375">
         <font>
             <Font name="Britannic Bold" size="48.0" />
@@ -30,7 +30,7 @@
                     <Font name="Berlin Sans FB" size="15.0" />
                 </font>
             </PasswordField>
-            <Button fx:id="bastardo" layoutX="84.0" layoutY="189.0" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="107.0" text="Login">
+            <Button layoutX="84.0" layoutY="189.0" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="107.0" text="Login">
                 <font>
                     <Font name="Berlin Sans FB" size="19.0" />
                 </font>

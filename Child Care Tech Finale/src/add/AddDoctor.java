@@ -10,7 +10,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import loginScreen.Singleton;
+import main.Singleton;
 import serverRMI.InterfaceRMI;
 
 import java.time.LocalDate;

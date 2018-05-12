@@ -8,7 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import loginScreen.Singleton;
+import main.Singleton;
 import serverRMI.InterfaceRMI;
 
 import java.time.LocalDate;

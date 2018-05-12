@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import loginScreen.Singleton;
+import main.Singleton;
 import serverRMI.InterfaceRMI;
 
 import java.net.URL;
