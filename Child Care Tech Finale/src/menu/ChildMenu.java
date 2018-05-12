@@ -13,7 +13,7 @@ public class ChildMenu {
     public void inserisciBambino(ActionEvent actionEvent) throws Exception {
 
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/dataEntry/AddChild.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddChild.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -22,7 +22,7 @@ public class ChildMenu {
 
     public void cercaBambino(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/searchModifyDelete/SearchAndDeleteChild.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/searchAndDelete/SearchAndDeleteChild.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -31,7 +31,7 @@ public class ChildMenu {
 
     public void modificaBambino(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/searchModifyDelete/ModifyChild.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/modify/ModifyChild.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -40,7 +40,7 @@ public class ChildMenu {
 
     public void back_method(ActionEvent actionEvent) throws Exception{
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/InsertPerson.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/PeopleMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

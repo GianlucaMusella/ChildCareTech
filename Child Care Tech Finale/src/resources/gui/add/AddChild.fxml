@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="994.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddChild">
+   <children>
+      <TextField id="txtNome" fx:id="txtNome" layoutX="36.0" layoutY="68.0" promptText="Nome" />
+      <TextField id="txtCognme" fx:id="txtCognome" layoutX="36.0" layoutY="102.0" promptText="Cognome" />
+      <TextField id="txtCodiceFiscale" fx:id="txtCodiceFiscale" layoutX="36.0" layoutY="136.0" promptText="Codice Fiscale" />
+      <TextField fx:id="txtIDBambino" layoutX="36.0" layoutY="168.0" promptText="ID Bambino" />
+      <TextField id="txtLuogo" fx:id="txtLuogo" layoutX="36.0" layoutY="203.0" promptText="Luogo di Nascita" />
+      <DatePicker id="dateData" fx:id="dateData" layoutX="36.0" layoutY="243.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di Nascita" />
+      <TextField id="txtSesso" fx:id="txtAllergia" layoutX="36.0" layoutY="277.0" promptText="Allergia" />
+      <RadioButton fx:id="radioMaschio" layoutX="36.0" layoutY="313.0" mnemonicParsing="false" text="Maschio">
+         <toggleGroup>
+            <ToggleGroup fx:id="choice" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="radioFemmina" layoutX="115.0" layoutY="313.0" mnemonicParsing="false" text="Femmina" toggleGroup="$choice" />
+      <Button layoutX="36.0" layoutY="343.0" mnemonicParsing="false" onAction="#inserisciGenitore" prefHeight="25.0" prefWidth="149.0" text="Inserisci Genitore" />
+      <TextField id="txtGenitore1" fx:id="txtGenitore1" layoutX="36.0" layoutY="377.0" promptText="Codice Fiscale Genitore" />
+      <TextField id="txtGenitore2" fx:id="txtGenitore2" layoutX="36.0" layoutY="410.0" promptText="Codice Fiscale Genitore" />
+      <Button layoutX="36.0" layoutY="444.0" mnemonicParsing="false" onAction="#inserisciContatto" prefHeight="23.0" prefWidth="149.0" text="Inserisci Contatto" />
+      <TextField id="txtGenitore2" fx:id="txtContatto" layoutX="36.0" layoutY="480.0" promptText="Codice Fiscale Contatto" />
+      <Button layoutX="36.0" layoutY="517.0" mnemonicParsing="false" onAction="#inserisciPediatra" prefHeight="25.0" prefWidth="149.0" text="Inserisci Pediatra" />
+      <TextField id="txtPediatra" fx:id="txtPediatra" layoutX="36.0" layoutY="554.0" promptText="Codice Fiscale Pediatra" />
+      <Button layoutX="912.0" layoutY="627.0" mnemonicParsing="false" onAction="#addChild" text="Conferma" />
+      <TableView id="tableBambini" fx:id="tableBambini" layoutX="290.0" layoutY="54.0" prefHeight="242.0" prefWidth="430.0">
+         <columns>
+            <TableColumn id="columnNome" fx:id="columnNome" prefWidth="78.0" text="Nome" />
+            <TableColumn id="columnCognome" fx:id="columnCognome" prefWidth="87.0" text="Cognome" />
+            <TableColumn id="columnCodiceFiscale" fx:id="columnCodicefiscale" minWidth="0.0" prefWidth="0.0" text="Codice fiscale" />
+            <TableColumn id="columnDatadinascita" fx:id="columnDatadinascita" minWidth="0.0" prefWidth="102.0" text="Data di nascita" />
+            <TableColumn id="columnLuogodinascita" fx:id="columnLuogodinascita" minWidth="0.0" prefWidth="110.0" text="Luogo di nascita" />
+            <TableColumn id="columnNome" fx:id="columnID" minWidth="0.0" prefWidth="52.0" text="ID" />
+         </columns>
+      </TableView>
+      <Hyperlink layoutX="886.0" layoutY="652.0" onAction="#menuPrincipale" text="Menù principale" />
+      <Button layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="290.0" layoutY="627.0" mnemonicParsing="false" onAction="#viewChild" text="Load Data" />
+      <TableView fx:id="tabellaGenitori" layoutX="773.0" layoutY="55.0" prefHeight="242.0" prefWidth="182.0">
+        <columns>
+          <TableColumn fx:id="colonnaNome" prefWidth="86.0" text="Nome" />
+          <TableColumn fx:id="colonnaCF" prefWidth="95.0" text="Codice Fiscale" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tabellaContatti" layoutX="290.0" layoutY="348.0" prefHeight="242.0" prefWidth="206.0">
+        <columns>
+          <TableColumn fx:id="colonnaNomeC" prefWidth="88.0" text="Nome" />
+          <TableColumn fx:id="colonnaCfC" prefWidth="117.0" text="Codice Fiscale" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tabellaPediatra" layoutX="565.0" layoutY="344.0" prefHeight="242.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="colonnaNomeP" prefWidth="96.0" text="Nome" />
+          <TableColumn fx:id="colonnaCfP" prefWidth="103.0" text="Codice Fiscale" />
+        </columns>
+      </TableView>
+      <Label layoutX="290.0" layoutY="31.0" text="Bambini presenti nel database" />
+      <Label layoutX="773.0" layoutY="31.0" text="Genitori presenti nel database" />
+      <Label layoutX="290.0" layoutY="322.0" text="Contatti presenti nel database" />
+      <Label layoutX="565.0" layoutY="322.0" text="Pediatri presenti nel database" />
+   </children>
+</AnchorPane>

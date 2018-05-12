@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modify.ModifySupplier">
+    <children>
+        <TextField fx:id="txtAzienda" layoutX="35.0" layoutY="76.0" promptText="Azienda" />
+        <TextField fx:id="txtNome" layoutX="35.0" layoutY="111.0" promptText="Nome" />
+        <TextField fx:id="txtCognome" layoutX="35.0" layoutY="146.0" promptText="Cognome" />
+        <TextField fx:id="txtFornitura" layoutX="35.0" layoutY="181.0" promptText="Fornitura" />
+        <TextField fx:id="txtPartitaIva" layoutX="35.0" layoutY="216.0" promptText="Partita IVA" />
+        <Button layoutX="489.0" layoutY="355.0" mnemonicParsing="false" onAction="#modifySupplier" prefHeight="25.0" prefWidth="74.0" text="Conferma" />
+        <TableView fx:id="tabellaFornitori" layoutX="232.0" layoutY="73.0" prefHeight="217.0" prefWidth="331.0">
+            <columns>
+                <TableColumn fx:id="colonnaAzienda" prefWidth="111.0" text="Azienda" />
+                <TableColumn fx:id="colonnaPartitaIva" prefWidth="108.0" text="Partita IVA" />
+                <TableColumn fx:id="colonnaFornitura" prefWidth="110.0" text="Fornitura" />
+            </columns>
+        </TableView>
+        <Button layoutX="489.0" layoutY="310.0" mnemonicParsing="false" onAction="#viewSupplier" text="Carica Dati" />
+        <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="29.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+        </Button>
+    </children>
+</AnchorPane>

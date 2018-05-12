@@ -1,5 +1,6 @@
 package menu;
 
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -8,30 +9,38 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import loginScreen.Controller;
 
-public class DoctorMenu {
+public class StaffMenu {
 
-    public void inserisciPediatra(ActionEvent actionEvent) throws Exception {
-
+    public void inserisciInsegnante(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddDoctor.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddTeacher.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
-    public void cercaPediatra(ActionEvent actionEvent) throws Exception {
+    public void inserisciStaff(ActionEvent actionEvent) throws Exception{
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/searchAndDelete/SearchAndDeleteDoctor.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddStaff.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
-    public void modificaPediatra(ActionEvent actionEvent) throws Exception {
+    public void cercaStaff(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/modify/ModifyDoctor.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/searchAndDelete/SearchAndDeleteStaff.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void modificaStaff(ActionEvent actionEvent) throws Exception {
+        ((Node) actionEvent.getSource()).getScene().getWindow().hide();
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/modify/ModifyStaff.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -53,4 +62,5 @@ public class DoctorMenu {
         Stage stage = new Stage();
         controller.initialize(stage);
     }
+
 }

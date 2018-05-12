@@ -8,30 +8,30 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import loginScreen.Controller;
 
-public class DoctorMenu {
+public class ContactMenu {
 
-    public void inserisciPediatra(ActionEvent actionEvent) throws Exception {
+    public void inserisciContatto(ActionEvent actionEvent) throws Exception {
 
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddDoctor.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddContact.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
-    public void cercaPediatra(ActionEvent actionEvent) throws Exception {
+    public void cercaContatto(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/searchAndDelete/SearchAndDeleteDoctor.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/searchAndDelete/SearchAndDeleteContact.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
-    public void modificaPediatra(ActionEvent actionEvent) throws Exception {
+    public void modificaContatto(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/modify/ModifyDoctor.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/modify/ModifyContact.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

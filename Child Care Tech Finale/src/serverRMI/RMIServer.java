@@ -1,10 +1,7 @@
 package serverRMI;
 
 import connectionDatabase.ConnectionDatabase;
-import dataEntry.ChildGS;
-import dataEntry.Contact;
-import dataEntry.Doctor;
-import dataEntry.Parents;
+import getterAndSetter.*;
 import menuFood.AllergyGS;
 import menuFood.FirstDishesGS;
 import menuFood.SecondDishesGS;
@@ -86,7 +83,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     public boolean addSupplier(String name, String surname, String azienda, String fornitura, String partitaIva) throws Exception {
 
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
 
         String supplier = "INSERT INTO mydb.fornitori (Nome,Cognome,Azienda,TipoDiFornitura,PartitaIVA) VALUES (?,?,?,?,?)";
 
@@ -109,6 +105,95 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
                 if(preparedStatement != null){
                     preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
+                    return true;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public ArrayList<SupplierGS> viewSupplier() throws Exception {
+
+        ArrayList<SupplierGS> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.fornitori ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()){
+            String colonnaAzienda = rs.getString("Azienda");
+            String colonnaPartita = rs.getString("PartitaIVA");
+            String colonnaFornitura = rs.getString("TipoDiFornitura");
+
+
+            values.add(new SupplierGS(colonnaAzienda, colonnaPartita, colonnaFornitura));
+        }
+        rs.close();
+        return values;
+    }
+
+    @Override
+    public void modifySupplier(String azienda, String nome, String cognome, String fornitura, String partitaIva) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+        String SQL = ("UPDATE mydb.fornitori SET ");
+        String equal = ("WHERE Azienda = '" + azienda + "'");
+        if (!nome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Nome = '" + nome + "'" + equal);
+            // System.out.println(Nome);
+        }
+        if (!cognome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
+            // System.out.println(Cognome);
+        }
+        if (!fornitura.isEmpty()) {
+            stmt.executeUpdate(SQL + "TipoDiFornitura = '" + fornitura + "'" + equal);
+            // System.out.println(Luogo);
+        }
+        if (partitaIva != null ) {
+            stmt.executeUpdate(SQL + "PartitaIVA = '" + partitaIva + "'" + equal);
+            // System.out.println(data);
+        }
+    }
+
+    @Override
+    public boolean addOrder(String azienda, String ordini, String quantità) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement1 = null;
+
+        String order = "INSERT INTO mydb.ordine (Nome, Quantità) VALUES (?,?)";
+        String fornitura = "INSERT INTO mydb.fornitori_has_ordine (Fornitori_Azienda, Ordine_Nome) VALUES (?,?)";
+
+        try{
+
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(order);
+            preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(fornitura);
+
+            preparedStatement.setString(1,ordini);
+            preparedStatement.setInt(2, Integer.parseInt(quantità));
+            preparedStatement.executeUpdate();
+
+            preparedStatement1.setString(1, azienda);
+            preparedStatement1.setString(2, ordini);
+            preparedStatement1.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+
+                if(preparedStatement != null && preparedStatement1 != null){
+                    preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
+                    preparedStatement1.close();
                     return true;
                 }
             }catch (Exception e){
@@ -272,6 +357,171 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         return false;
     }
+
+    @Override
+    public ArrayList<StaffGS> viewStaff() throws Exception {
+
+        ArrayList<StaffGS> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.personaleinterno ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()){
+            String colonnaNome = rs.getString("Nome");
+            String colonnaCognome = rs.getString("Cognome");
+            String colonnaCodiceFiscale = rs.getString("CodiceFiscale");
+            String colonnaMansione = rs.getString("Mansione");
+
+            values.add(new StaffGS(colonnaNome, colonnaCognome, colonnaCodiceFiscale, colonnaMansione));
+        }
+
+        rs.close();
+        return values;
+    }
+
+    @Override
+    public ArrayList<StaffGS> searchStaff(String nome, String cognome, String cod) throws Exception {
+
+        ArrayList<StaffGS> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.personaleinterno WHERE ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+
+        if (cognome.isEmpty() && cod.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "Nome = '" + nome + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaMansione = rs.getString("Mansione");
+
+                values.add(new StaffGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaMansione));
+
+            }
+        } else if (nome.isEmpty() && cod.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "Cognome = '" + cognome + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaMansione = rs.getString("Mansione");
+
+                values.add(new StaffGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaMansione));
+
+            }
+        } else if (nome.isEmpty() && cognome.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaMansione = rs.getString("Mansione");
+
+                values.add(new StaffGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaMansione));
+
+            }
+        } else if (nome.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "' AND Cognome = '" + cognome + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaMansione = rs.getString("Mansione");
+
+                values.add(new StaffGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaMansione));
+
+            }
+        } else if (cognome.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "' AND Nome = '" + nome + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaMansione = rs.getString("Mansione");
+
+                values.add(new StaffGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaMansione));
+
+            }
+        } else if (cod.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "Nome = '" + nome + "' AND Cognome = '" + cognome + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaMansione = rs.getString("Mansione");
+
+                values.add(new StaffGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaMansione));
+
+            }
+            rs.close();
+        }
+
+        return values;
+    }
+
+    @Override
+    public void modifyStaff(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data, String mansione) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+        String SQL = ("UPDATE mydb.personaleinterno SET ");
+        String equal = ("WHERE CodiceFiscale = '" + codiceFiscale + "'");
+        if (!nome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Nome = '" + nome + "'" + equal);
+            // System.out.println(Nome);
+        }
+        if (!cognome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
+            // System.out.println(Cognome);
+        }
+        if (!luogo.isEmpty()) {
+            stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + luogo + "'" + equal);
+            // System.out.println(Luogo);
+        }
+        if (data != null ) {
+            stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
+            // System.out.println(data);
+        }
+        if (mansione != null ) {
+            stmt.executeUpdate(SQL + "Mansione = '" + mansione + "'" + equal);
+            // System.out.println(data);
+        }
+
+    }
+
+    @Override
+    public boolean deleteStaff(String codiceFiscale) throws Exception {
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.personaleinterno WHERE CodiceFiscale = '" + codiceFiscale + "';";
+
+        try{
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from personale interno.");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
+    }
+
 
     @Override
     public ArrayList<ChildGS> searchC(String name, String surname, String cod) throws Exception {
@@ -651,6 +901,91 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         rs.close();
         return values;
+
+    }
+
+    @Override
+    public ArrayList<Contact> searchContacts(String nome, String cod) throws Exception {
+
+        ArrayList<Contact> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.contatti WHERE ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+        if (cod.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "Nome = '" + nome + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+
+                values.add(new Contact(colonnanome, colonnacodicefiscale));
+
+            }
+        } else if (nome.isEmpty()) {
+            ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "'");
+            while (rs.next()) {
+                String colonnanome = rs.getString("Nome");
+                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+
+                values.add(new Contact(colonnanome, colonnacodicefiscale));
+
+            }
+
+            rs.close();
+        }
+
+        return values;
+
+    }
+
+    @Override
+    public void modifyContact(String codiceFiscale, String nome, String cognome, String telefono) throws Exception {
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+        String SQL = ("UPDATE mydb.contatti SET ");
+        String equal = ("WHERE CodiceFiscale = '" + codiceFiscale + "'");
+        if (!nome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Nome = '" + nome + "'" + equal);
+            // System.out.println(Nome);
+        }
+        if (!cognome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
+            // System.out.println(Cognome);
+        }
+        if (telefono != null ) {
+            stmt.executeUpdate(SQL + "Telefono = '" + telefono + "'" + equal);
+            // System.out.println(data);
+        }
+    }
+
+    @Override
+    public boolean deleteContacts(String codiceFiscale) throws Exception {
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.contatti WHERE CodiceFiscale = '" + codiceFiscale + "';";
+
+        try{
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from Contatti.");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
 
     }
 
@@ -1040,23 +1375,23 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         String SQL = ("UPDATE mydb.bambini SET ");
         String equal = ("WHERE CodiceFiscale = '" + CodicefiscaleOld + "'");
         if (!Nome.isEmpty()) {
-            int s = stmt.executeUpdate(SQL + "Nome = '" + Nome + "'" + equal);
+            stmt.executeUpdate(SQL + "Nome = '" + Nome + "'" + equal);
             // System.out.println(Nome);
         }
         if (!Cognome.isEmpty()) {
-            int p = stmt.executeUpdate(SQL + "Cognome = '" + Cognome + "'" + equal);
+            stmt.executeUpdate(SQL + "Cognome = '" + Cognome + "'" + equal);
             // System.out.println(Cognome);
         }
         if (!Luogo.isEmpty()) {
-            int x = stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + Luogo + "'" + equal);
+            stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + Luogo + "'" + equal);
             // System.out.println(Luogo);
         }
         if (data != null ) {
-            int z = stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
+            stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
             // System.out.println(data);
         }
         if (!CodicefiscaleNew.isEmpty()) {
-            int n = stmt.executeUpdate(SQL + "CodiceFiscale = '" + CodicefiscaleNew + "'" + equal);
+            stmt.executeUpdate(SQL + "CodiceFiscale = '" + CodicefiscaleNew + "'" + equal);
             // System.out.println(CodicefiscaleNew);
         }
     }
@@ -1089,7 +1424,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         return true;
     }
-
 
 }
 

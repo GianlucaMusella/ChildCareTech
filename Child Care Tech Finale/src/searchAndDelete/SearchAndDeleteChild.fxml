@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="663.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="searchAndDelete.SearchAndDeleteChild">
+    <children>
+        <TableView id="tableBambini" fx:id="tableBambini" layoutX="27.0" layoutY="92.0" prefHeight="321.0" prefWidth="608.0">
+            <columns>
+                <TableColumn id="columnNome" fx:id="columnNome" prefWidth="99.0" text="Nome" />
+                <TableColumn id="columnCognome" fx:id="columnCognome" prefWidth="104.0" text="Cognome" />
+                <TableColumn id="columnCodicefiscale" fx:id="columnCodicefiscale" prefWidth="134.0" text="Codice Fiscale" />
+                <TableColumn id="columnDatadinascita" fx:id="columnDatadinascita" prefWidth="117.0" text="Data di nascita" />
+                <TableColumn id="columnLuogodinascita" fx:id="columnLuogodinascita" prefWidth="113.0" text="Luogo di nascita" />
+            <TableColumn id="columnNome" fx:id="columnID" prefWidth="40.0" text="ID" />
+            </columns>
+        </TableView>
+        <TextField id="nome" fx:id="txtNome" layoutX="27.0" layoutY="54.0" promptText="Nome" />
+        <TextField id="cognome" fx:id="txtCognome" layoutX="257.0" layoutY="54.0" promptText="Cognome" />
+        <TextField id="codicefiscale" fx:id="txtCodicefiscale" layoutX="487.0" layoutY="54.0" promptText="Codice fiscale" />
+        <Button layoutX="590.0" layoutY="433.0" mnemonicParsing="false" onAction="#searchChild" text="Cerca" />
+      <Button layoutX="28.0" layoutY="433.0" mnemonicParsing="false" onAction="#viewChild" text="Carica Dati" />
+      <Button layoutX="304.0" layoutY="433.0" mnemonicParsing="false" onAction="#deleteChild" text="Elimina" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Hyperlink layoutX="590.0" layoutY="471.0" onAction="#logout" text="Logout">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Hyperlink>
+    </children>
+</Pane>

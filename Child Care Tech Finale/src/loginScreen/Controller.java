@@ -43,7 +43,7 @@ public class Controller {
 
     public void initialize(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/loginScreen/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/Login.fxml"));
         Scene scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -67,7 +67,7 @@ public class Controller {
                     //se il login ha avuto successo nascono il login
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
                     //apro la schermata del menù
-                    Parent root = FXMLLoader.load(getClass().getResource("/menu/Choice.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
                     stage.setScene(scene);
@@ -86,7 +86,7 @@ public class Controller {
                     System.out.println("E' stata scelta la connessione Socket");
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
                     //apro la schermata del menù
-                    Parent root = FXMLLoader.load(getClass().getResource("/menu/Choice.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
                     stage.setScene(scene);

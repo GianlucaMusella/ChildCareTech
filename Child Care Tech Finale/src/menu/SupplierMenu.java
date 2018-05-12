@@ -8,30 +8,38 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import loginScreen.Controller;
 
-public class DoctorMenu {
+public class SupplierMenu {
 
-    public void inserisciPediatra(ActionEvent actionEvent) throws Exception {
-
+    public void inserisciFornitore(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddDoctor.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddSupplier.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
-    public void cercaPediatra(ActionEvent actionEvent) throws Exception {
+    public void effettuaOrdine(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/searchAndDelete/SearchAndDeleteDoctor.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddOrder.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
-    public void modificaPediatra(ActionEvent actionEvent) throws Exception {
+    public void cercaFornitori(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/modify/ModifyDoctor.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/searchAndDelete/SearchAndDeleteSupplier.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void modificaFornitori(ActionEvent actionEvent) throws Exception {
+        ((Node) actionEvent.getSource()).getScene().getWindow().hide();
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/modify/ModifySupplier.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -40,7 +48,7 @@ public class DoctorMenu {
 
     public void back_method(ActionEvent actionEvent) throws Exception{
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/PeopleMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -53,4 +61,5 @@ public class DoctorMenu {
         Stage stage = new Stage();
         controller.initialize(stage);
     }
+
 }

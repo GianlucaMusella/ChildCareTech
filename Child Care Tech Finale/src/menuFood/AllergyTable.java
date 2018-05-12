@@ -56,7 +56,7 @@ public class AllergyTable implements Initializable{
 
     public void back_method(ActionEvent actionEvent) throws Exception{
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/Choice.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

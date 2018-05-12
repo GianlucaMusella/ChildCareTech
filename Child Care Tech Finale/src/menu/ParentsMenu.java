@@ -13,7 +13,7 @@ public class ParentsMenu {
     public void inserisciGenitore(ActionEvent actionEvent) throws Exception {
 
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/dataEntry/AddParents.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddParents.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -22,7 +22,7 @@ public class ParentsMenu {
 
     public void cercaGenitore(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/searchModifyDelete/SearchAndDeleteParents.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/searchAndDelete/SearchAndDeleteParents.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -31,7 +31,7 @@ public class ParentsMenu {
 
     public void modificaGenitore(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/searchModifyDelete/ModifyParents.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/modify/ModifyParents.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -40,7 +40,7 @@ public class ParentsMenu {
 
     public void back_method(ActionEvent actionEvent) throws Exception{
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/menu/InsertPerson.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/PeopleMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

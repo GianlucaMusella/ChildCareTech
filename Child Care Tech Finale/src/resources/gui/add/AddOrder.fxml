@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddOrder">
+   <children>
+      <TextField fx:id="txtAzienda" layoutX="43.0" layoutY="66.0" promptText="Azienda" />
+      <TextField fx:id="txtOrdine" layoutX="43.0" layoutY="103.0" promptText="Ordine" />
+      <TextField fx:id="txtQuantità" layoutX="43.0" layoutY="141.0" promptText="Quantità" />
+      <TableView fx:id="tabellaFornitori" layoutX="242.0" layoutY="66.0" prefHeight="200.0" prefWidth="334.0">
+        <columns>
+          <TableColumn fx:id="colonnaAzienda" prefWidth="114.0" text="Azienda" />
+          <TableColumn fx:id="colonnaPartitaIVA" prefWidth="109.0" text="Partita IVA" />
+            <TableColumn fx:id="colonnaFornitura" prefWidth="109.0" text="Fornitura" />
+        </columns>
+      </TableView>
+      <Button layoutX="288.0" layoutY="284.0" mnemonicParsing="false" onAction="#viewSupplier" text="Carica Dati" />
+      <Button layoutX="463.0" layoutY="330.0" mnemonicParsing="false" onAction="#addOrder" text="Salva Ordine" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>
