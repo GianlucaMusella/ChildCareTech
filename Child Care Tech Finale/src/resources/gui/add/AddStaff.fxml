@@ -10,7 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="462.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddStaff">
+<AnchorPane prefHeight="462.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddStaff">
    <children>
       <TextField fx:id="txtNome" layoutX="41.0" layoutY="50.0" promptText="Nome" />
       <TextField fx:id="txtCognome" layoutX="41.0" layoutY="82.0" promptText="Cognome" />

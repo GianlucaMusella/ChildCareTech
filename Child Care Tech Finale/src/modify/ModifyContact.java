@@ -1,6 +1,6 @@
 package modify;
 
-import getterAndSetter.Contact;
+import getterAndSetter.people.Contact;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

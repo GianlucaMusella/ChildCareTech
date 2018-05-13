@@ -1,6 +1,6 @@
 package modify;
 
-import getterAndSetter.Parents;
+import getterAndSetter.people.Parents;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

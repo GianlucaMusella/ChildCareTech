@@ -1,6 +1,6 @@
 package modify;
 
-import getterAndSetter.Doctor;
+import getterAndSetter.people.Doctor;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

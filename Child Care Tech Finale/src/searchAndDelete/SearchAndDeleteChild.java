@@ -1,6 +1,6 @@
 package searchAndDelete;
 
-import getterAndSetter.ChildGS;
+import getterAndSetter.people.ChildGS;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

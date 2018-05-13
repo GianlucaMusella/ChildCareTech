@@ -1,10 +1,11 @@
 package serverRMI;
 
 import connectionDatabase.ConnectionDatabase;
-import getterAndSetter.*;
-import menuFood.AllergyGS;
-import menuFood.FirstDishesGS;
-import menuFood.SecondDishesGS;
+import getterAndSetter.people.*;
+import getterAndSetter.food.AllergyPeopleGS;
+import getterAndSetter.food.FirstDishGS;
+import getterAndSetter.food.MenuGS;
+import getterAndSetter.food.SecondDishGS;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -1214,9 +1215,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public ArrayList<AllergyGS> viewAlletgy() throws Exception {
+    public ArrayList<AllergyPeopleGS> viewAllergy() throws Exception {
 
-        ArrayList<AllergyGS> values = new ArrayList<>();
+        ArrayList<AllergyPeopleGS> values = new ArrayList<>();
         String sql = ("SELECT * FROM mydb.bambini ");
         String sql1 = ("SELECT * FROM mydb.personaleinterno");
 
@@ -1232,7 +1233,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             String allergieBambini = rs.getString("Allergie");
             String allergiePersonale = rs1.getString("Allergie");
 
-            values.add(new AllergyGS(allergieBambini, allergiePersonale));
+            values.add(new AllergyPeopleGS(allergieBambini, allergiePersonale));
         }
 
         statement.close();
@@ -1242,43 +1243,52 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public boolean addMenu(String nome, String primo, String secondo) throws Exception {
+    public ArrayList<MenuGS> viewMenu() throws Exception {
+
+        ArrayList<MenuGS> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.menumensa ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()){
+            String colonnaNome = rs.getString("Nome");
+            String colonnaPrimo = rs.getString("Primi_Nome");
+            String colonnaSecondi = rs.getString("Secondi_Nome");
+            Date colonnaGiorno = rs.getDate("Giorno");
+
+            values.add(new MenuGS(colonnaNome, colonnaPrimo, colonnaSecondi, colonnaGiorno));
+        }
+        rs.close();
+        return values;
+    }
+
+    @Override
+    public boolean addMenu(String nome, String primo, String secondo, LocalDate giorno) throws Exception {
 
         PreparedStatement preparedStatement = null;
-        PreparedStatement preparedStatement2 = null;
-        PreparedStatement preparedStatement3 = null;
 
-        String nomeMenu = "INSERT INTO mydb.menu (Nome) VALUES (?)";
-        String primoPiatto = "INSERT INTO mydb.menu_has_primi (Menu_Nome, Primi_Nome) VALUES (?,?)";
-        String secondoPiatto = "INSERT INTO mydb.menu_has_secondi (Menu_Nome, Secondi_Nome) VALUES (?,?)";
-
+        String nomeMenu = "INSERT INTO mydb.menumensa (Nome, Giorno, Secondi_Nome, Primi_Nome) VALUES (?,?,?,?)";
 
         try{
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(nomeMenu);
-            preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(primoPiatto);
-            preparedStatement3 = connectionDatabase.initializeConnection().prepareStatement(secondoPiatto);
 
             preparedStatement.setString(1,nome);
+            preparedStatement.setDate(2, java.sql.Date.valueOf(giorno));
+            preparedStatement.setString(3,secondo);
+            preparedStatement.setString(4,primo);
             preparedStatement.executeUpdate();
-
-            preparedStatement2.setString(1,nome);
-            preparedStatement2.setString(2,primo);
-            preparedStatement2.executeUpdate();
-
-            preparedStatement3.setString(1,nome);
-            preparedStatement3.setString(2,secondo);
-            preparedStatement3.executeUpdate();
 
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
             try {
 
-                if(preparedStatement != null && preparedStatement2 != null && preparedStatement3 != null){
+                if(preparedStatement != null){
                     preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
-                    preparedStatement2.close();
-                    preparedStatement3.close();
+
                     return true;
                 }
             }catch (Exception e){
@@ -1291,9 +1301,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public ArrayList<FirstDishesGS> viewFirst() throws Exception {
+    public ArrayList<FirstDishGS> viewFirst() throws Exception {
 
-        ArrayList<FirstDishesGS> values = new ArrayList<>();
+        ArrayList<FirstDishGS> values = new ArrayList<>();
         String sql = ("SELECT * FROM mydb.allergeni_has_primi ");
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement statement = connectionDatabase.initializeConnection().createStatement();
@@ -1304,7 +1314,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             String colonnaPrimi = rs.getString("Allergeni_Nome");
             String colonnaAllergene = rs.getString("Primi_Nome");
 
-            values.add(new FirstDishesGS(colonnaAllergene, colonnaPrimi));
+            values.add(new FirstDishGS(colonnaAllergene, colonnaPrimi));
         }
 
         rs.close();
@@ -1313,9 +1323,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public ArrayList<SecondDishesGS> viewSecond() throws Exception{
+    public ArrayList<SecondDishGS> viewSecond() throws Exception{
 
-        ArrayList<SecondDishesGS> values = new ArrayList<>();
+        ArrayList<SecondDishGS> values = new ArrayList<>();
         String sql = ("SELECT * FROM mydb.allergeni_has_secondi ");
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement statement = connectionDatabase.initializeConnection().createStatement();
@@ -1326,7 +1336,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             String colonnaAllergeni = rs.getString("Allergeni_nome");
             String colonnaSecondi = rs.getString("Secondi_Nome");
 
-            values.add(new SecondDishesGS(colonnaSecondi, colonnaAllergeni));
+            values.add(new SecondDishGS(colonnaSecondi, colonnaAllergeni));
         }
 
         rs.close();
@@ -1426,6 +1436,37 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         }
 
         return false;
+
+    }
+
+    @Override
+    public boolean deleteMenu(String nomeMenu) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.menumensa WHERE Nome = '" + nomeMenu + "';";
+
+        try{
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from Menù.");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
 
     }
 

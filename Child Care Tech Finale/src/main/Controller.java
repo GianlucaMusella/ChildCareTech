@@ -43,7 +43,7 @@ public class Controller {
 
     public void initialize(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/login/Login.fxml"));
         Scene scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.show();

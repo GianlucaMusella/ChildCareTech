@@ -8,7 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddOrder">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddOrder">
    <children>
       <TextField fx:id="txtAzienda" layoutX="43.0" layoutY="66.0" promptText="Azienda" />
       <TextField fx:id="txtOrdine" layoutX="43.0" layoutY="103.0" promptText="Ordine" />

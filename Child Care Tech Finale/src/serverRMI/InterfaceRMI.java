@@ -1,9 +1,10 @@
 package serverRMI;
 
-import getterAndSetter.*;
-import menuFood.AllergyGS;
-import menuFood.FirstDishesGS;
-import menuFood.SecondDishesGS;
+import getterAndSetter.people.*;
+import getterAndSetter.food.AllergyPeopleGS;
+import getterAndSetter.food.FirstDishGS;
+import getterAndSetter.food.MenuGS;
+import getterAndSetter.food.SecondDishGS;
 
 import java.rmi.Remote;
 import java.time.LocalDate;
@@ -51,13 +52,16 @@ public interface InterfaceRMI extends Remote {
     void modifyDoctor(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data) throws Exception;
     boolean deleteDoctors(String codiceFiscale) throws Exception;
 
-    ArrayList<AllergyGS> viewAlletgy() throws Exception;
 
-    boolean addMenu(String nome, String primo, String secondo) throws Exception;
-    ArrayList<FirstDishesGS> viewFirst() throws Exception;
-    ArrayList<SecondDishesGS> viewSecond() throws Exception;
+
+    boolean addMenu(String nome, String primo, String secondo, LocalDate giorno) throws Exception;
+    ArrayList<FirstDishGS> viewFirst() throws Exception;
+    ArrayList<SecondDishGS> viewSecond() throws Exception;
+    ArrayList<AllergyPeopleGS> viewAllergy() throws Exception;
+    ArrayList<MenuGS> viewMenu() throws Exception;
     boolean addPrimo(String nome, String allergeni) throws Exception;
     boolean addSecondo(String nome, String allergeni) throws Exception;
+    boolean deleteMenu(String nomeMenu) throws Exception;
 
 
 }

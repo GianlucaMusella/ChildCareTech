@@ -1,6 +1,6 @@
 package modify;
 
-import getterAndSetter.StaffGS;
+import getterAndSetter.people.StaffGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
