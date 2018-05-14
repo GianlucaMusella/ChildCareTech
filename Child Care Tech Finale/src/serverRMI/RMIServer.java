@@ -321,7 +321,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         PreparedStatement preparedStatement1 = null;
         PreparedStatement preparedStatement2 = null;
 
-        String child = "INSERT INTO mydb.bambini (CodiceFiscale,idBambino,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Allergie,Sesso,Pediatra_CodiceFiscale) VALUES (?,?,?,?,?,?,?,?,?)";
+        String child = "INSERT INTO mydb.bambini (idBambino,CodiceFiscale,,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Allergie,Sesso,Pediatra_CodiceFiscale) VALUES (?,?,?,?,?,?,?,?,?)";
         String parents = "INSERT INTO mydb.bambini_has_genitori (Bambini_idBambino,Genitori_CodiceFiscale) VALUES (?,?)";
         String contact = "INSERT INTO mydb.bambini_has_contatti (Bambini_idBambino,Contatti_CodiceFiscale) VALUES (?,?)";
 
@@ -332,9 +332,8 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(parents);
             preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(contact);
 
-
-            preparedStatement.setString(1,codiceFiscale);
-            preparedStatement.setString(2,idBambino);
+            preparedStatement.setInt(1, Integer.parseInt(idBambino));
+            preparedStatement.setString(2,codiceFiscale);
             preparedStatement.setString(3,nome);
             preparedStatement.setString(4, cognome);
             preparedStatement.setDate(5, java.sql.Date.valueOf(data));
@@ -344,11 +343,11 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             preparedStatement.setString(9, pediatra);
             preparedStatement.executeUpdate();
 
-            preparedStatement1.setString(1, idBambino);
+            preparedStatement1.setInt(1, Integer.parseInt(idBambino));
             preparedStatement1.setString(2, genitore1);
             preparedStatement1.executeUpdate();
 
-            preparedStatement2.setString(1, idBambino);
+            preparedStatement2.setInt(1, Integer.parseInt(idBambino));
             preparedStatement2.setString(2, contatto);
             preparedStatement2.executeUpdate();
 
