@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.appelloTrip">
+   <children>
+      <TableView layoutX="50.0" layoutY="74.0" prefHeight="200.0" prefWidth="484.0">
+        <columns>
+          <TableColumn prefWidth="118.39996337890625" text="Nome" />
+          <TableColumn prefWidth="115.2000732421875" text="Cognome" />
+            <TableColumn prefWidth="173.5999755859375" text="Codice fiscale" />
+            <TableColumn prefWidth="77.5999755859375" text="Presente" />
+        </columns>
+      </TableView>
+      <Button layoutX="482.0" layoutY="333.0" mnemonicParsing="false" onAction="#appelloTrip" text="Conferma" />
+   </children>
+</AnchorPane>
