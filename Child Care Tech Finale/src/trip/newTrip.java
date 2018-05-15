@@ -15,12 +15,16 @@ import serverRMI.InterfaceRMI;
 import java.time.LocalDate;
 
 public class newTrip {
+
     @FXML
     private TextField txtMetaa;
+
     @FXML
     private TextField txtID;
+
     @FXML
     private DatePicker datePartenza;
+
     @FXML
     private DatePicker dateRitorno;
 
