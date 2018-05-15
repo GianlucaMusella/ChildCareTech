@@ -6,6 +6,7 @@ import getterAndSetter.food.AllergyPeopleGS;
 import getterAndSetter.food.FirstDishGS;
 import getterAndSetter.food.MenuGS;
 import getterAndSetter.food.SecondDishGS;
+import trip.AppelloGS;
 import trip.TripGS;
 
 import java.rmi.RemoteException;
@@ -1563,6 +1564,43 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         }
         rs.close();
         return values;
+    }
+
+    @Override
+    public ArrayList<AppelloGS> loadDataServer(int idGita) throws Exception {
+
+        ArrayList<AppelloGS> values = new ArrayList<>();
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+        String SQL = ("SELECT mydb.bambini.Nome, mydb.bambini.Cognome, mydb.bambini,CodiceFiscale, mydb.bambini_has_gita.Presenza ((FROM mydb.bambini_has_gita" +
+                "INNER JOIN mydb.bambini ON mydb.bambini.idBambino = mydb.bambini_has_gita.Bambini_idBambino)" +
+                "INNER JOIN mydb.gita ON mydb.gita.idGita = mydb.bambini_has_gita.Gita_idGita = ");
+        ResultSet rs = stmt.executeQuery(SQL + idGita + ")");
+        while (rs.next()){
+            String colonnaNome = rs.getString("Nome");
+            String colonnaCognome = rs.getString ("Cognome");
+            String colonnaCodicefiscale = rs.getString("CodiceFiscale");
+            String colonnaPresenza;
+            if (rs.getBoolean("Presenza"))
+                colonnaPresenza = ("Presente");
+            else
+                colonnaPresenza = ("Assente");
+
+            values.add(new AppelloGS(colonnaNome, colonnaCognome, colonnaCodicefiscale, colonnaPresenza));
+        }
+        return values;
+    }
+
+    @Override
+    public void bambinoPresenteServer(String codiceBambino) throws Exception {
+        /*ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+        int idBambino;
+        String JoinSQL = ("SELECT * FROM mydb.bambini WHERE CodiceFiscale = '");
+        ResultSet rs = stmt.executeQuery(JoinSQL + CodiceBambino + "')");
+        idBambino = rs.getInt("idBambino");
+        String SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 1 WHERE mydb.bambini_has_gita.Bambini_idBambino = ");
+        int n = stmt.executeUpdate(SQL + idBambino + ")");*/
     }
 
     @Override
