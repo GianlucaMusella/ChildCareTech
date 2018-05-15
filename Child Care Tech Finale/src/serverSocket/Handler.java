@@ -27,6 +27,7 @@ public class Handler extends Thread implements SocketInterface {
         boolean risposta;
 
         try{
+
             bufferedReader = new BufferedReader(new InputStreamReader(client.getInputStream()));
             username = bufferedReader.readLine();
             password = bufferedReader.readLine();
@@ -77,7 +78,6 @@ public class Handler extends Thread implements SocketInterface {
                         if(!utente.isEmpty())
 
                             return true;
-
                     }
 
                 }

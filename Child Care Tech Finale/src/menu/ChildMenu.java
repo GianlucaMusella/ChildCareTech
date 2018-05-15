@@ -31,7 +31,7 @@ public class ChildMenu {
 
     public void modificaBambino(ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/modify/ModifyChild.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/modify/ModifyChild.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

@@ -1,6 +1,6 @@
 package modify;
 
-import getterAndSetter.people.Doctor;
+import getterAndSetter.people.DoctorGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,13 +37,13 @@ public class ModifyDoctor implements Initializable {
     private DatePicker dateData;
 
     @FXML
-    private TableView<Doctor> tabellaPediatra;
+    private TableView<DoctorGS> tabellaPediatra;
 
     @FXML
-    private TableColumn<Doctor, String> colonnaNome;
+    private TableColumn<DoctorGS, String> colonnaNome;
 
     @FXML
-    private TableColumn<Doctor, String> colonnaCodiceFiscale;
+    private TableColumn<DoctorGS, String> colonnaCodiceFiscale;
 
     public void modifyDoctor (ActionEvent actionEvent) throws Exception {
 
@@ -77,10 +77,10 @@ public class ModifyDoctor implements Initializable {
     public void viewDoctor(ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        ArrayList<Doctor> doctors = interfaceRMI.viewDoctors();
+        ArrayList<DoctorGS> doctorGS = interfaceRMI.viewDoctors();
 
         tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);
-        tabellaPediatra.setItems(FXCollections.observableArrayList(doctors));
+        tabellaPediatra.setItems(FXCollections.observableArrayList(doctorGS));
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{

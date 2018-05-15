@@ -1,6 +1,6 @@
 package modify;
 
-import getterAndSetter.people.Parents;
+import getterAndSetter.people.ParentsGS;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,13 +43,17 @@ public class ModifyParents implements Initializable {
     private TextField txtTelefono;
 
     @FXML
-    private TableView<Parents> tabellaGenitori;
+    private TableView<ParentsGS> tabellaGenitori;
 
     @FXML
-    private TableColumn<Parents, String> colonnaNome;
+    private TableColumn<ParentsGS, String> colonnaNome;
 
     @FXML
-    private TableColumn<Parents, String> colonnaCodiceFiscale;
+    private TableColumn<ParentsGS, String> colonnaCognome;
+
+    @FXML
+    private TableColumn<ParentsGS, String> colonnaCodiceFiscale;
+
 
     public void modifyParents (ActionEvent actionEvent) throws Exception {
 
@@ -67,6 +71,7 @@ public class ModifyParents implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         colonnaCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
 
         tabellaGenitori.getItems().clear();
@@ -75,7 +80,7 @@ public class ModifyParents implements Initializable {
     public void viewParents(ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        ArrayList<Parents> parents = interfaceRMI.viewParents();
+        ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
 
         tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
         tabellaGenitori.setItems(FXCollections.observableArrayList(parents));

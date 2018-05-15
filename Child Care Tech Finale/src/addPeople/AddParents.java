@@ -1,19 +1,26 @@
 package addPeople;
 
+import getterAndSetter.people.ParentsGS;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class AddParents {
+public class AddParents implements Initializable{
 
     @FXML
     private TextField txtNome;
@@ -40,16 +47,35 @@ public class AddParents {
     private RadioButton radioFemmina;
 
     @FXML
-    private TableView tableBambini;
+    private TableView<ParentsGS> tabellaGenitori;
 
     @FXML
-    private TableColumn columnNome;
+    private TableColumn<ParentsGS, String> colonnaNome;
 
     @FXML
-    private TableColumn columnCognome;
+    private TableColumn<ParentsGS, String> colonnaCognome;
 
     @FXML
-    private TableColumn columnCodiceFiscale;
+    private TableColumn <ParentsGS, String> colonnaCodiceFiscale;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        colonnaCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+
+        tabellaGenitori.getItems().clear();
+    }
+
+    public void viewParents(ActionEvent actionEvent) throws Exception {
+
+        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
+
+        tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
+        tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
+    }
 
     public void addParents(ActionEvent actionEvent) throws Exception {
 
@@ -106,5 +132,6 @@ public class AddParents {
         stage.show();
 
     }
+
 
 }

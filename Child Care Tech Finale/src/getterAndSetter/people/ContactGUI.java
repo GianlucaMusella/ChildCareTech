@@ -6,11 +6,13 @@ import javafx.beans.property.StringProperty;
 public class ContactGUI {
 
     private StringProperty nome;
+    private StringProperty cognome;
     private StringProperty codiceFiscale;
 
-    public ContactGUI(Contact contact){
-        this.nome = new SimpleStringProperty(contact.getNome());
-        this.codiceFiscale = new SimpleStringProperty(contact.getCodiceFiscale());
+    public ContactGUI(ContactGS contactGS){
+        this.nome = new SimpleStringProperty(contactGS.getNome());
+        this.cognome = new SimpleStringProperty(contactGS.getCognome());
+        this.codiceFiscale = new SimpleStringProperty(contactGS.getCodiceFiscale());
     }
 
     public String getNome() {

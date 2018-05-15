@@ -14,14 +14,15 @@
         <TextField fx:id="txtNome" layoutX="35.0" layoutY="111.0" promptText="Nome" />
         <TextField fx:id="txtCognome" layoutX="35.0" layoutY="146.0" promptText="Cognome" />
         <TextField fx:id="txtTelefono" layoutX="35.0" layoutY="181.0" promptText="Telefono" />
-        <Button layoutX="477.0" layoutY="355.0" mnemonicParsing="false" onAction="#modifyContact" text="Conferma" />
-        <TableView fx:id="tabellaContatti" layoutX="300.0" layoutY="73.0" prefHeight="217.0" prefWidth="245.0">
+        <Button layoutX="477.0" layoutY="338.0" mnemonicParsing="false" onAction="#modifyContact" text="Conferma" />
+        <TableView fx:id="tabellaContatti" layoutX="222.0" layoutY="73.0" prefHeight="217.0" prefWidth="323.0">
             <columns>
-                <TableColumn fx:id="colonnaNome" prefWidth="123.0" text="Nome" />
-                <TableColumn fx:id="colonnaCodiceFiscale" prefWidth="121.0" text="Codice Fiscale" />
+                <TableColumn fx:id="colonnaNome" prefWidth="97.0" text="Nome" />
+            <TableColumn fx:id="colonnaCognome" prefWidth="97.0" text="Cognome" />
+                <TableColumn fx:id="colonnaCodiceFiscale" prefWidth="128.0" text="Codice Fiscale" />
             </columns>
         </TableView>
-        <Button layoutX="474.0" layoutY="300.0" mnemonicParsing="false" onAction="#viewContact" text="Carica Dati" />
+        <Button layoutX="222.0" layoutY="303.0" mnemonicParsing="false" onAction="#viewContact" text="Carica Dati" />
         <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">

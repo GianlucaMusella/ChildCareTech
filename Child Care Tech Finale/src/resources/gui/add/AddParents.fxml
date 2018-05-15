@@ -26,15 +26,15 @@
       </RadioButton>
       <RadioButton fx:id="radioFemmina" layoutX="111.0" layoutY="245.0" mnemonicParsing="false" text="Femmina" toggleGroup="$choice" />
       <TextField fx:id="txtTelefono" layoutX="36.0" layoutY="275.0" promptText="Telefono" />
-      <Button layoutX="428.0" layoutY="365.0" mnemonicParsing="false" onAction="#addParents" text="Conferma" />
-      <TableView id="tableBambini" layoutX="260.0" layoutY="23.0" prefHeight="322.0" prefWidth="290.0">
+      <Button layoutX="482.0" layoutY="337.0" mnemonicParsing="false" onAction="#addParents" text="Conferma" />
+      <TableView id="tableBambini" fx:id="tabellaGenitori" layoutX="260.0" layoutY="68.0" prefHeight="233.0" prefWidth="290.0">
          <columns>
-            <TableColumn id="columnNome" prefWidth="88.0" text="Nome" />
-            <TableColumn id="columnCognome" prefWidth="77.0" text="Cognome" />
-            <TableColumn id="columnCodiceFiscale" prefWidth="124.0" text="Codice Fiscale" />
+            <TableColumn id="columnNome" fx:id="colonnaNome" prefWidth="88.0" text="Nome" />
+            <TableColumn id="columnCognome" fx:id="colonnaCognome" prefWidth="77.0" text="Cognome" />
+            <TableColumn id="columnCodiceFiscale" fx:id="colonnaCodiceFiscale" prefWidth="124.0" text="Codice Fiscale" />
          </columns>
       </TableView>
-      <Hyperlink layoutX="496.0" layoutY="366.0" onAction="#menuPrincipale" text="Menù principale" />
+      <Hyperlink layoutX="456.0" layoutY="366.0" onAction="#menuPrincipale" text="Menù principale" />
       <Button layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
@@ -44,5 +44,6 @@
             </ImageView>
          </graphic>
       </Button>
+      <Button layoutX="260.0" layoutY="312.0" mnemonicParsing="false" onAction="#viewParents" text="Mostra Persone" />
    </children>
 </AnchorPane>

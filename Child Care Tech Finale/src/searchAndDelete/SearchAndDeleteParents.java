@@ -1,6 +1,6 @@
 package searchAndDelete;
 
-import getterAndSetter.people.Parents;
+import getterAndSetter.people.ParentsGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,13 +31,16 @@ public class SearchAndDeleteParents implements Initializable{
     private TextField txtNome;
 
     @FXML
-    private TableView<Parents> tabellaGenitori;
+    private TableView<ParentsGS> tabellaGenitori;
 
     @FXML
-    private TableColumn<Parents, String> columnNome;
+    private TableColumn<ParentsGS, String> columnNome;
 
     @FXML
-    private TableColumn<Parents, String> columnCodicefiscale;
+    private TableColumn<ParentsGS, String> columnCognome;
+
+    @FXML
+    private TableColumn<ParentsGS, String> columnCodicefiscale;
 
 
 
@@ -45,6 +48,7 @@ public class SearchAndDeleteParents implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
 
         columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        columnCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         columnCodicefiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
 
         tabellaGenitori.getItems().clear();
@@ -54,7 +58,7 @@ public class SearchAndDeleteParents implements Initializable{
     public void viewParents(ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        ArrayList<Parents> parents = interfaceRMI.viewParents();
+        ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
 
         tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
         tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
@@ -64,7 +68,7 @@ public class SearchAndDeleteParents implements Initializable{
     public void searchParents(ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        ArrayList<Parents> parents = interfaceRMI.searchParents(txtNome.getText(), txtCodicefiscale.getText());
+        ArrayList<ParentsGS> parents = interfaceRMI.searchParents(txtNome.getText(), txtCodicefiscale.getText());
 
         tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
         tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
@@ -73,14 +77,13 @@ public class SearchAndDeleteParents implements Initializable{
 
     public void deleteParents (ActionEvent actionEvent) throws Exception {
 
-        Parents deletableParents = tabellaGenitori.getSelectionModel().getSelectedItem();
-        String codiceFiscale = deletableParents.getCodiceFiscale();
+        ParentsGS deletableParentsGS = tabellaGenitori.getSelectionModel().getSelectedItem();
+        String codiceFiscale = deletableParentsGS.getCodiceFiscale();
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
         interfaceRMI.deleteParents(codiceFiscale);
-
 
     }
 

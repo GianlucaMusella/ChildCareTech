@@ -17,14 +17,15 @@
         <TextField fx:id="txtLuogo" layoutX="35.0" layoutY="181.0" promptText="Luogo di nascita" />
         <DatePicker fx:id="dateData" layoutX="35.0" layoutY="215.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di nascita" />
       <TextField fx:id="txtTelefono" layoutX="35.0" layoutY="253.0" promptText="Telefono" />
-        <Button layoutX="477.0" layoutY="355.0" mnemonicParsing="false" onAction="#modifyParents" text="Conferma" />
-      <TableView fx:id="tabellaGenitori" layoutX="300.0" layoutY="73.0" prefHeight="217.0" prefWidth="245.0">
+        <Button layoutX="504.0" layoutY="342.0" mnemonicParsing="false" onAction="#modifyParents" text="Conferma" />
+      <TableView fx:id="tabellaGenitori" layoutX="236.0" layoutY="73.0" prefHeight="217.0" prefWidth="336.0">
         <columns>
-          <TableColumn fx:id="colonnaNome" prefWidth="123.0" text="Nome" />
-          <TableColumn fx:id="colonnaCodiceFiscale" prefWidth="121.0" text="Codice Fiscale" />
+          <TableColumn fx:id="colonnaNome" prefWidth="106.0" text="Nome" />
+            <TableColumn fx:id="colonnaCognome" prefWidth="103.0" text="Cognome" />
+          <TableColumn fx:id="colonnaCodiceFiscale" prefWidth="126.0" text="Codice Fiscale" />
         </columns>
       </TableView>
-      <Button layoutX="474.0" layoutY="300.0" mnemonicParsing="false" onAction="#viewParents" text="Carica Dati" />
+      <Button layoutX="236.0" layoutY="300.0" mnemonicParsing="false" onAction="#viewParents" text="Mostra Genitori" />
       <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="21.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">

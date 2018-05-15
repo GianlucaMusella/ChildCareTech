@@ -8,9 +8,9 @@ public class DoctorGUI {
     private StringProperty nome;
     private StringProperty codiceFiscale;
 
-    public DoctorGUI(Doctor doctor){
-        this.nome = new SimpleStringProperty(doctor.getNome());
-        this.codiceFiscale = new SimpleStringProperty(doctor.getCodiceFiscale());
+    public DoctorGUI(DoctorGS doctorGS){
+        this.nome = new SimpleStringProperty(doctorGS.getNome());
+        this.codiceFiscale = new SimpleStringProperty(doctorGS.getCodiceFiscale());
     }
 
     public String getNome() {

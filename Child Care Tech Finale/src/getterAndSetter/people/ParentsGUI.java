@@ -6,11 +6,13 @@ import javafx.beans.property.StringProperty;
 public class ParentsGUI {
 
     private StringProperty nome;
+    private StringProperty cognome;
     private StringProperty codiceFiscale;
 
-    public ParentsGUI(Parents parents){
-        this.nome = new SimpleStringProperty(parents.getNome());
-        this.codiceFiscale = new SimpleStringProperty(parents.getCodiceFiscale());
+    public ParentsGUI(ParentsGS parentsGS){
+        this.nome = new SimpleStringProperty(parentsGS.getNome());
+        this.cognome = new SimpleStringProperty(parentsGS.getCognome());
+        this.codiceFiscale = new SimpleStringProperty(parentsGS.getCodiceFiscale());
     }
 
     public String getNome() {

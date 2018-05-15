@@ -46,12 +46,6 @@ public class SearchAndDeleteChild implements Initializable {
     private TableColumn<ChildGS, String> columnCodicefiscale;
 
     @FXML
-    private TableColumn<ChildGS, String> columnDatadinascita;
-
-    @FXML
-    private TableColumn<ChildGS, String> columnLuogodinascita;
-
-    @FXML
     private TableColumn<ChildGS, String> columnID;
 
 
@@ -61,8 +55,6 @@ public class SearchAndDeleteChild implements Initializable {
         columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         columnCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         columnCodicefiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
-        columnDatadinascita.setCellValueFactory(new PropertyValueFactory<>("data"));
-        columnLuogodinascita.setCellValueFactory(new PropertyValueFactory<>("luogoDiNascita"));
         columnID.setCellValueFactory(new PropertyValueFactory<>("idBambino"));
 
         tableBambini.getItems().clear();

@@ -1,6 +1,6 @@
 package modify;
 
-import getterAndSetter.people.Contact;
+import getterAndSetter.people.ContactGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,29 +34,21 @@ public class ModifyContact implements Initializable{
     private TextField txtTelefono;
 
     @FXML
-    private TableView<Contact> tabellaContatti;
+    private TableView<ContactGS> tabellaContatti;
 
     @FXML
-    private TableColumn<Contact, String> colonnaNome;
+    private TableColumn<ContactGS, String> colonnaNome;
 
     @FXML
-    private TableColumn<Contact, String> colonnaCodiceFiscale;
+    private TableColumn<ContactGS, String> colonnaCognome;
 
-    public void modifyContact(ActionEvent actionEvent) throws Exception {
-
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        interfaceRMI.modifyContact(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtTelefono.getText());
-
-        txtCodicefiscaleOld.clear();
-        txtNome.clear();
-        txtCognome.clear();
-        txtTelefono.clear();
-
-    }
+    @FXML
+    private TableColumn<ContactGS, String> colonnaCodiceFiscale;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         colonnaCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
 
         tabellaContatti.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -70,13 +62,25 @@ public class ModifyContact implements Initializable{
         tabellaContatti.getItems().clear();
     }
 
+    public void modifyContact(ActionEvent actionEvent) throws Exception {
+
+        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        interfaceRMI.modifyContact(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtTelefono.getText());
+
+        txtCodicefiscaleOld.clear();
+        txtNome.clear();
+        txtCognome.clear();
+        txtTelefono.clear();
+
+    }
+
     public void viewContact(ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        ArrayList<Contact> contacts = interfaceRMI.viewContacts();
+        ArrayList<ContactGS> contactGS = interfaceRMI.viewContacts();
 
         tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
-        tabellaContatti.setItems(FXCollections.observableArrayList(contacts));
+        tabellaContatti.setItems(FXCollections.observableArrayList(contactGS));
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{

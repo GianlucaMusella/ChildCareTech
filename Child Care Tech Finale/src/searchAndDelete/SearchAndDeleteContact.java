@@ -1,6 +1,6 @@
 package searchAndDelete;
 
-import getterAndSetter.people.Contact;
+import getterAndSetter.people.ContactGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,13 +31,16 @@ public class SearchAndDeleteContact implements Initializable{
     private TextField txtNome;
 
     @FXML
-    private TableView<Contact> tabellaContatti;
+    private TableView<ContactGS> tabellaContatti;
 
     @FXML
-    private TableColumn<Contact, String> columnNome;
+    private TableColumn<ContactGS, String> columnNome;
 
     @FXML
-    private TableColumn<Contact, String> columnCodicefiscale;
+    private TableColumn<ContactGS, String> columnCognome;
+
+    @FXML
+    private TableColumn<ContactGS, String> columnCodicefiscale;
 
 
 
@@ -45,6 +48,7 @@ public class SearchAndDeleteContact implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
 
         columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        columnCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         columnCodicefiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
 
         tabellaContatti.getItems().clear();
@@ -54,26 +58,26 @@ public class SearchAndDeleteContact implements Initializable{
     public void viewContact(ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        ArrayList<Contact> contacts = interfaceRMI.viewContacts();
+        ArrayList<ContactGS> contactGS = interfaceRMI.viewContacts();
 
         tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
-        tabellaContatti.setItems(FXCollections.observableArrayList(contacts));
+        tabellaContatti.setItems(FXCollections.observableArrayList(contactGS));
     }
 
 
     public void searchContacts(ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        ArrayList<Contact> contacts = interfaceRMI.searchContacts(txtNome.getText(), txtCodicefiscale.getText());
+        ArrayList<ContactGS> contactGS = interfaceRMI.searchContacts(txtNome.getText(), txtCodicefiscale.getText());
 
         tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
-        tabellaContatti.setItems(FXCollections.observableArrayList(contacts));
+        tabellaContatti.setItems(FXCollections.observableArrayList(contactGS));
     }
 
 
     public void deleteContacts(ActionEvent actionEvent) throws Exception {
 
-        Contact deletableContacts = tabellaContatti.getSelectionModel().getSelectedItem();
+        ContactGS deletableContacts = tabellaContatti.getSelectionModel().getSelectedItem();
         String codiceFiscale = deletableContacts.getCodiceFiscale();
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto

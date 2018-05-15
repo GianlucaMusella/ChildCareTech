@@ -53,28 +53,30 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="290.0" layoutY="627.0" mnemonicParsing="false" onAction="#viewChild" text="Load Data" />
-      <TableView fx:id="tabellaGenitori" layoutX="773.0" layoutY="55.0" prefHeight="242.0" prefWidth="182.0">
+      <Button layoutX="290.0" layoutY="627.0" mnemonicParsing="false" onAction="#viewChild" text="Mostra Persone" />
+      <TableView fx:id="tabellaGenitori" layoutX="674.0" layoutY="54.0" prefHeight="242.0" prefWidth="285.0">
         <columns>
           <TableColumn fx:id="colonnaNome" prefWidth="86.0" text="Nome" />
-          <TableColumn fx:id="colonnaCF" prefWidth="95.0" text="Codice Fiscale" />
+            <TableColumn fx:id="colonnaCognome" prefWidth="84.0" text="Cognome" />
+          <TableColumn fx:id="colonnaCF" prefWidth="114.0" text="Codice Fiscale" />
         </columns>
       </TableView>
-      <TableView fx:id="tabellaContatti" layoutX="290.0" layoutY="348.0" prefHeight="242.0" prefWidth="206.0">
+      <TableView fx:id="tabellaContatti" layoutX="290.0" layoutY="348.0" prefHeight="242.0" prefWidth="304.0">
         <columns>
           <TableColumn fx:id="colonnaNomeC" prefWidth="88.0" text="Nome" />
-          <TableColumn fx:id="colonnaCfC" prefWidth="117.0" text="Codice Fiscale" />
+            <TableColumn fx:id="colonnaCognomeC" prefWidth="85.0" text="Cognome" />
+          <TableColumn fx:id="colonnaCfC" prefWidth="130.0" text="Codice Fiscale" />
         </columns>
       </TableView>
-      <TableView fx:id="tabellaPediatra" layoutX="565.0" layoutY="344.0" prefHeight="242.0" prefWidth="200.0">
+      <TableView fx:id="tabellaPediatra" layoutX="675.0" layoutY="348.0" prefHeight="242.0" prefWidth="200.0">
         <columns>
           <TableColumn fx:id="colonnaNomeP" prefWidth="96.0" text="Nome" />
           <TableColumn fx:id="colonnaCfP" prefWidth="103.0" text="Codice Fiscale" />
         </columns>
       </TableView>
       <Label layoutX="290.0" layoutY="31.0" text="Bambini presenti nel database" />
-      <Label layoutX="773.0" layoutY="31.0" text="Genitori presenti nel database" />
+      <Label layoutX="674.0" layoutY="31.0" text="Genitori presenti nel database" />
       <Label layoutX="290.0" layoutY="322.0" text="Contatti presenti nel database" />
-      <Label layoutX="565.0" layoutY="322.0" text="Pediatri presenti nel database" />
+      <Label layoutX="675.0" layoutY="322.0" text="Pediatri presenti nel database" />
    </children>
 </AnchorPane>

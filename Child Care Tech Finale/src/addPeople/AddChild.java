@@ -1,9 +1,9 @@
 package addPeople;
 
 import getterAndSetter.people.ChildGS;
-import getterAndSetter.people.Contact;
-import getterAndSetter.people.Doctor;
-import getterAndSetter.people.Parents;
+import getterAndSetter.people.ContactGS;
+import getterAndSetter.people.DoctorGS;
+import getterAndSetter.people.ParentsGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -83,31 +83,37 @@ public class AddChild implements Initializable{
     private RadioButton radioFemmina;
 
     @FXML
-    private TableView<Parents> tabellaGenitori;
+    private TableView<ParentsGS> tabellaGenitori;
 
     @FXML
-    private TableColumn<Parents, String> colonnaNome;
+    private TableColumn<ParentsGS, String> colonnaNome;
 
     @FXML
-    private TableColumn<Parents, String> colonnaCF;
+    private TableColumn<ParentsGS, String> colonnaCognome;
 
     @FXML
-    private TableView<Contact> tabellaContatti;
+    private TableColumn<ParentsGS, String> colonnaCF;
 
     @FXML
-    private TableColumn<Contact, String> colonnaNomeC;
+    private TableView<ContactGS> tabellaContatti;
 
     @FXML
-    private TableColumn<Contact, String> colonnaCfC;
+    private TableColumn<ContactGS, String> colonnaNomeC;
 
     @FXML
-    private TableView<Doctor> tabellaPediatra;
+    private TableColumn<ContactGS, String> colonnaCognomeC;
 
     @FXML
-    private TableColumn<Doctor, String> colonnaNomeP;
+    private TableColumn<ContactGS, String> colonnaCfC;
 
     @FXML
-    private TableColumn<Doctor, String> colonnaCfP;
+    private TableView<DoctorGS> tabellaPediatra;
+
+    @FXML
+    private TableColumn<DoctorGS, String> colonnaNomeP;
+
+    @FXML
+    private TableColumn<DoctorGS, String> colonnaCfP;
 
 
     public void addChild(ActionEvent actionEvent) throws Exception {
@@ -163,9 +169,11 @@ public class AddChild implements Initializable{
         columnID.setCellValueFactory(new PropertyValueFactory<>("idBambino"));
 
         colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         colonnaCF.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
 
         colonnaNomeC.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCognomeC.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         colonnaCfC.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
 
         colonnaNomeP.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -206,9 +214,9 @@ public class AddChild implements Initializable{
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
         ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
-        ArrayList<Parents> parents = interfaceRMI.viewParents();
-        ArrayList<Contact> contacts = interfaceRMI.viewContacts();
-        ArrayList<Doctor> doctors = interfaceRMI.viewDoctors();
+        ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
+        ArrayList<ContactGS> contactGS = interfaceRMI.viewContacts();
+        ArrayList<DoctorGS> doctorGS = interfaceRMI.viewDoctors();
 
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
         tableBambini.setItems(FXCollections.observableArrayList(childrenGS));
@@ -217,10 +225,10 @@ public class AddChild implements Initializable{
         tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
 
         tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
-        tabellaContatti.setItems(FXCollections.observableArrayList(contacts));
+        tabellaContatti.setItems(FXCollections.observableArrayList(contactGS));
 
         tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);
-        tabellaPediatra.setItems(FXCollections.observableArrayList(doctors));
+        tabellaPediatra.setItems(FXCollections.observableArrayList(doctorGS));
     }
 
     public void inserisciGenitore(ActionEvent actionEvent) throws Exception{

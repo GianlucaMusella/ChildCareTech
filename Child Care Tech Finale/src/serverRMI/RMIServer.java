@@ -859,7 +859,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
             st.executeUpdate(queryDelete);
             System.out.println("Deleted from bambini.");
 
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -886,7 +885,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(doctor);
 
-
             preparedStatement.setString(1, codiceFiscale);
             preparedStatement.setString(2, nome);
             preparedStatement.setString(3, cognome);
@@ -894,7 +892,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
             preparedStatement.setDate(5, java.sql.Date.valueOf(data));
             preparedStatement.setString(6, sesso);
             preparedStatement.executeUpdate();
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -915,9 +912,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
 
 
     @Override
-    public ArrayList<Parents> viewParents() throws Exception {
+    public ArrayList<ParentsGS> viewParents() throws Exception {
 
-        ArrayList<Parents> values = new ArrayList<>();
+        ArrayList<ParentsGS> values = new ArrayList<>();
         String sql = ("SELECT * FROM mydb.genitori ");
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement statement = connectionDatabase.initializeConnection().createStatement();
@@ -925,10 +922,11 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         ResultSet rs = statement.executeQuery(sql);
 
         while (rs.next()) {
-            String colonnanome = rs.getString("Nome");
-            String colonnacodicefiscale = rs.getString("CodiceFiscale");
+            String colonnaNome = rs.getString("Nome");
+            String colonnaCognome = rs.getString("Cognome");
+            String colonnaCodiceFiscale = rs.getString("CodiceFiscale");
 
-            values.add(new Parents(colonnanome, colonnacodicefiscale));
+            values.add(new ParentsGS(colonnaNome, colonnaCognome, colonnaCodiceFiscale));
         }
 
         rs.close();
@@ -936,9 +934,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
     }
 
     @Override
-    public ArrayList<Parents> searchParents(String name, String cod) throws Exception {
+    public ArrayList<ParentsGS> searchParents(String name, String cod) throws Exception {
 
-        ArrayList<Parents> values = new ArrayList<>();
+        ArrayList<ParentsGS> values = new ArrayList<>();
         String sql = ("SELECT * FROM mydb.genitori WHERE ");
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
@@ -946,19 +944,21 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         if (cod.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "Nome = '" + name + "'");
             while (rs.next()) {
-                String colonnanome = rs.getString("Nome");
-                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaNome = rs.getString("Nome");
+                String colonnaCognome = rs.getString("Cognome");
+                String colonnaCodiceFiscale = rs.getString("CodiceFiscale");
 
-                values.add(new Parents(colonnanome, colonnacodicefiscale));
+                values.add(new ParentsGS(colonnaNome, colonnaCognome, colonnaCodiceFiscale));
 
             }
         } else if (name.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "'");
             while (rs.next()) {
-                String colonnanome = rs.getString("Nome");
-                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaNome = rs.getString("Nome");
+                String colonnaCognome = rs.getString("Cognome");
+                String colonnaCodiceFiscale = rs.getString("CodiceFiscale");
 
-                values.add(new Parents(colonnanome, colonnacodicefiscale));
+                values.add(new ParentsGS(colonnaNome, colonnaCognome, colonnaCodiceFiscale));
 
             }
 
@@ -966,7 +966,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         }
 
         return values;
-
     }
 
     @Override
@@ -1032,9 +1031,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
     }
 
     @Override
-    public ArrayList<Contact> viewContacts() throws Exception {
+    public ArrayList<ContactGS> viewContacts() throws Exception {
 
-        ArrayList<Contact> values = new ArrayList<>();
+        ArrayList<ContactGS> values = new ArrayList<>();
         String sql = ("SELECT * FROM mydb.contatti ");
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement statement = connectionDatabase.initializeConnection().createStatement();
@@ -1042,10 +1041,11 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         ResultSet rs = statement.executeQuery(sql);
 
         while (rs.next()) {
-            String colonnanome = rs.getString("Nome");
-            String colonnacodicefiscale = rs.getString("CodiceFiscale");
+            String colonnaNome = rs.getString("Nome");
+            String colonnaCognome = rs.getString("Cognome");
+            String colonnaCodiceFiscale = rs.getString("CodiceFiscale");
 
-            values.add(new Contact(colonnanome, colonnacodicefiscale));
+            values.add(new ContactGS(colonnaNome, colonnaCognome, colonnaCodiceFiscale));
         }
 
         rs.close();
@@ -1054,9 +1054,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
     }
 
     @Override
-    public ArrayList<Contact> searchContacts(String nome, String cod) throws Exception {
+    public ArrayList<ContactGS> searchContacts(String nome, String cod) throws Exception {
 
-        ArrayList<Contact> values = new ArrayList<>();
+        ArrayList<ContactGS> values = new ArrayList<>();
         String sql = ("SELECT * FROM mydb.contatti WHERE ");
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
@@ -1064,19 +1064,21 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         if (cod.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "Nome = '" + nome + "'");
             while (rs.next()) {
-                String colonnanome = rs.getString("Nome");
-                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaNome = rs.getString("Nome");
+                String colonnaCognome = rs.getString("Cognome");
+                String colonnaCodiceFiscale = rs.getString("CodiceFiscale");
 
-                values.add(new Contact(colonnanome, colonnacodicefiscale));
+                values.add(new ContactGS(colonnaNome, colonnaCognome, colonnaCodiceFiscale));
 
             }
         } else if (nome.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "'");
             while (rs.next()) {
-                String colonnanome = rs.getString("Nome");
-                String colonnacodicefiscale = rs.getString("CodiceFiscale");
+                String colonnaNome = rs.getString("Nome");
+                String colonnaCognome = rs.getString("Cognome");
+                String colonnaCodiceFiscale = rs.getString("CodiceFiscale");
 
-                values.add(new Contact(colonnanome, colonnacodicefiscale));
+                values.add(new ContactGS(colonnaNome, colonnaCognome, colonnaCodiceFiscale));
 
             }
 
@@ -1139,9 +1141,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
     }
 
     @Override
-    public ArrayList<Doctor> viewDoctors() throws Exception {
+    public ArrayList<DoctorGS> viewDoctors() throws Exception {
 
-        ArrayList<Doctor> values = new ArrayList<>();
+        ArrayList<DoctorGS> values = new ArrayList<>();
         String sql = ("SELECT * FROM mydb.pediatra ");
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement statement = connectionDatabase.initializeConnection().createStatement();
@@ -1152,7 +1154,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
             String colonnanome = rs.getString("Nome");
             String colonnacodicefiscale = rs.getString("CodiceFiscale");
 
-            values.add(new Doctor(colonnanome, colonnacodicefiscale));
+            values.add(new DoctorGS(colonnanome, colonnacodicefiscale));
         }
 
         rs.close();
@@ -1161,9 +1163,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
     }
 
     @Override
-    public ArrayList<Doctor> searchDoctors(String name, String cod) throws Exception {
+    public ArrayList<DoctorGS> searchDoctors(String name, String cod) throws Exception {
 
-        ArrayList<Doctor> values = new ArrayList<>();
+        ArrayList<DoctorGS> values = new ArrayList<>();
         String sql = ("SELECT * FROM mydb.pediatra WHERE ");
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
@@ -1174,7 +1176,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
                 String colonnanome = rs.getString("Nome");
                 String colonnacodicefiscale = rs.getString("CodiceFiscale");
 
-                values.add(new Doctor(colonnanome, colonnacodicefiscale));
+                values.add(new DoctorGS(colonnanome, colonnacodicefiscale));
 
             }
         } else if (name.isEmpty()) {
@@ -1183,7 +1185,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
                 String colonnanome = rs.getString("Nome");
                 String colonnacodicefiscale = rs.getString("CodiceFiscale");
 
-                values.add(new Doctor(colonnanome, colonnacodicefiscale));
+                values.add(new DoctorGS(colonnanome, colonnacodicefiscale));
 
             }
 

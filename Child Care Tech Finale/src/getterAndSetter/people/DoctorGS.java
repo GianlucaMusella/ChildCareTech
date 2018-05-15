@@ -1,14 +1,18 @@
 package getterAndSetter.people;
 
 import java.io.Serializable;
+import java.util.Date;
 
-public class Contact implements Serializable{
+public class DoctorGS implements Serializable{
+
     private String nome;
     private String cognome;
     private String codiceFiscale;
-    private int telefono;
+    private String luogoDiNascita;
+    private Date data;
+    private String sesso;
 
-    public Contact(String nome, String codiceFiscale){
+    public DoctorGS(String nome, String codiceFiscale){
 
         this.nome = nome;
         this.codiceFiscale = codiceFiscale;
@@ -39,11 +43,27 @@ public class Contact implements Serializable{
         this.codiceFiscale = codiceFiscale;
     }
 
-    public int getTelefono() {
-        return telefono;
+    public String getLuogoDiNascita() {
+        return luogoDiNascita;
     }
 
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
+    public void setLuogoDiNascita(String luogoDiNascita) {
+        this.luogoDiNascita = luogoDiNascita;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public String getSesso() {
+        return sesso;
+    }
+
+    public void setSesso(String sesso) {
+        this.sesso = sesso;
     }
 }
