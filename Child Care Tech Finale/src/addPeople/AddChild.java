@@ -71,13 +71,7 @@ public class AddChild implements Initializable{
     private TableColumn<ChildGS, String> columnCognome;
 
     @FXML
-    private TableColumn<ChildGS, String> columnCodicefiscale;
-
-    @FXML
-    private TableColumn<ChildGS, String> columnDatadinascita;
-
-    @FXML
-    private TableColumn<ChildGS, String> columnLuogodinascita;
+    private TableColumn<ChildGS, String> columnCodiceFiscale;
 
     @FXML
     private TableColumn<ChildGS, String> columnID;
@@ -165,9 +159,7 @@ public class AddChild implements Initializable{
 
         columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         columnCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
-        columnCodicefiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
-        columnDatadinascita.setCellValueFactory(new PropertyValueFactory<>("data"));
-        columnLuogodinascita.setCellValueFactory(new PropertyValueFactory<>("luogoDiNascita"));
+        columnCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
         columnID.setCellValueFactory(new PropertyValueFactory<>("idBambino"));
 
         colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));

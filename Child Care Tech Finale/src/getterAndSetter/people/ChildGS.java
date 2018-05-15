@@ -17,13 +17,13 @@ public class ChildGS implements Serializable{
     private String codicefiscalepediatra;
     private String idBambino;
 
-    public ChildGS(String nome, String cognome, String codiceFiscale, String luogoDiNascita, Date data, String idBambino){
+    public ChildGS(String nome, String cognome, String codiceFiscale,/* String luogoDiNascita, Date data, */String idBambino){
 
         this.nome = nome;
         this.cognome = cognome;
         this.codiceFiscale = codiceFiscale;
-        this.luogoDiNascita = luogoDiNascita;
-        this.data = data;
+        //this.luogoDiNascita = luogoDiNascita;
+        //this.data = data;
         this.idBambino = idBambino;
 
     }
@@ -68,48 +68,51 @@ public class ChildGS implements Serializable{
         this.data = data;
     }
 
-    public String getIdBambino() {
-        return idBambino;
-    }
-
-    public void setIdBambino(String idBambino) {
-        this.idBambino = idBambino;
+    public String getAllergie() {
+        return allergie;
     }
 
     public void setAllergie(String allergie) {
         this.allergie = allergie;
     }
 
-    public void setCodicefiscalegen1(String codicefiscalegen1) {
-        this.codicefiscalegen1 = codicefiscalegen1;
-    }
-
-    public void setCodicefiscalegen2(String codicefiscalegen2){ this.codicefiscalegen2 = codicefiscalegen2;}
-
-    public void setCodicefiscalecontatto (String codicefiscalecontatto) {this.codicefiscalecontatto = codicefiscalecontatto;}
-
-    public void setIdbambino(String idbambino) {
-        this.idBambino = idbambino;
-    }
-
-    public void setCodicefiscalepediatra(String codicefiscalepediatrapediatra) { this.codicefiscalepediatra = codicefiscalepediatrapediatra;    }
-
-    public String getAllergie() {
-        return allergie;
-    }
-
     public String getCodicefiscalegen1() {
         return codicefiscalegen1;
     }
 
-    public String getCodicefiscalegen2 () {return codicefiscalegen2;}
+    public void setCodicefiscalegen1(String codicefiscalegen1) {
+        this.codicefiscalegen1 = codicefiscalegen1;
+    }
 
-    public String getCodicefiscalecontatto () {return codicefiscalecontatto;}
+    public String getCodicefiscalegen2() {
+        return codicefiscalegen2;
+    }
 
-    public String getIdbambino() {
+    public void setCodicefiscalegen2(String codicefiscalegen2) {
+        this.codicefiscalegen2 = codicefiscalegen2;
+    }
+
+    public String getCodicefiscalecontatto() {
+        return codicefiscalecontatto;
+    }
+
+    public void setCodicefiscalecontatto(String codicefiscalecontatto) {
+        this.codicefiscalecontatto = codicefiscalecontatto;
+    }
+
+    public String getCodicefiscalepediatra() {
+        return codicefiscalepediatra;
+    }
+
+    public void setCodicefiscalepediatra(String codicefiscalepediatra) {
+        this.codicefiscalepediatra = codicefiscalepediatra;
+    }
+
+    public String getIdBambino() {
         return idBambino;
     }
 
-    public String getCodicefiscalepediatra () { return codicefiscalepediatra;
+    public void setIdBambino(String idBambino) {
+        this.idBambino = idBambino;
     }
 }

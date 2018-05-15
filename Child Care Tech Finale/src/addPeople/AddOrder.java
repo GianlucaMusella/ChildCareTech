@@ -78,7 +78,7 @@ public class AddOrder implements Initializable{
         String quantità = txtQuantità.getText();
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        boolean success = interfaceRMI.addOrder(azienda,  ordini, quantità);
+        boolean success = interfaceRMI.addOrder(azienda, ordini, quantità);
 
         txtAzienda.clear();
         txtOrdine.clear();

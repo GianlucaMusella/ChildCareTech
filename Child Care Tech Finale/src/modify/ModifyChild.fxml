@@ -15,7 +15,7 @@
         <TextField fx:id="txtCognome" layoutX="35.0" layoutY="175.0" promptText="Cognome" />
         <TextField fx:id="txtLuogo" layoutX="35.0" layoutY="206.0" promptText="Luogo di nascita" />
         <DatePicker fx:id="dateData" layoutX="35.0" layoutY="240.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di nascita" />
-        <Button layoutX="527.0" layoutY="354.0" mnemonicParsing="false" onAction="#modifyClient" text="Conferma" />
+        <Button layoutX="504.0" layoutY="344.0" mnemonicParsing="false" onAction="#modifyClient" text="Conferma" />
       <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="21.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">

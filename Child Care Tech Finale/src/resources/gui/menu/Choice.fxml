@@ -13,7 +13,7 @@
         </font>
     </Text>
     <Button layoutX="120.0" layoutY="128.0" mnemonicParsing="false" onAction="#inserisciPersona" prefHeight="53.0" prefWidth="180.0" text="Gestisci Persona" textAlignment="CENTER" />
-    <Button fx:id="organizzaGita" layoutX="120.0" layoutY="200.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="180.0" text="Organizza una Gita" />
+    <Button fx:id="organizzaGita" layoutX="120.0" layoutY="200.0" mnemonicParsing="false" onAction="#gestisciGita" prefHeight="53.0" prefWidth="180.0" text="Organizza una Gita" />
     <Button fx:id="menuMensa" layoutX="120.0" layoutY="269.0" mnemonicParsing="false" onAction="#inserisciMenu" prefHeight="53.0" prefWidth="180.0" text="Gestisci Mensa" />
     <Button fx:id="fornitore" layoutX="120.0" layoutY="338.0" mnemonicParsing="false" onAction="#inserisciFornitore" prefHeight="53.0" prefWidth="180.0" text="Gestisci Fornitore" />
    <Hyperlink layoutX="360.0" layoutY="415.0" onAction="#logout" text="Logout">

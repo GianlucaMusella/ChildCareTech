@@ -1,19 +1,38 @@
 package trip;
 
-import connectionDatabase.ConnectionDatabase;
+import getterAndSetter.people.ChildGS;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.fxml.FXML;
+import javafx.scene.control.cell.PropertyValueFactory;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class partecipantiTrip {
+public class partecipantiTrip implements Initializable{
 
-    // PARTE CLIENT
+    @FXML
+    private TableView<ChildGS> tableBambini;
+
+    @FXML
+    private TableColumn<ChildGS, String> columnNome;
+
+    @FXML
+    private TableColumn<ChildGS, String> columnCognome;
+
+    @FXML
+    private TableColumn<ChildGS, String> columnCodiceFiscale;
+
+    @FXML
+    private TableColumn<ChildGS, String> columnID;
 
     @FXML
     private TextField txtCodicefiscale;
@@ -21,33 +40,43 @@ public class partecipantiTrip {
     @FXML
     private TextField txtIDgita;
 
-    public void partecipantiTripC (ActionEvent actionEvent){
+    @FXML
+    private TextField idBambino;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        columnCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        columnCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+        columnID.setCellValueFactory(new PropertyValueFactory<>("idBambino"));
+
+        tableBambini.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        tableBambini.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if(newSelection != null){
+                txtCodicefiscale.setText(newSelection.getCodiceFiscale());
+                idBambino.setText(newSelection.getIdBambino());
+            }
+        });
+
+        tableBambini.getItems().clear();
+    }
+
+    public void partecipantiTrip (ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        boolean success = interfaceRMI.newpartecipanteTrip(txtCodicefiscale.getText(), txtIDgita.getText());
+        interfaceRMI.newpartecipanteTrip(txtCodicefiscale.getText(), txtIDgita.getText(), idBambino.getText());
 
     }
 
+    public void viewInfo(ActionEvent actionEvent) throws Exception {
 
-    // PARTE SERVER
+        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
 
-    public void newpartecipanteTrip (String codicefiscale, String idGita) throws SQLException {
-        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        Statement stmt = connectionDatabase.initializeConnection().createStatement();
-        String SelectSQL = ("SELECT * FROM mydb.bambini WHERE CodiceFiscale = '");
-        ResultSet rs = stmt.executeQuery(SelectSQL + codicefiscale + "')");
-        int idBambino = rs.getInt("idBambino");
-        String InsertSQL = ("INSERTO INTO mydb.bambini_has_gita (Bambini_IdBambino, Gita_idGita) VALUES (");
-        int n = stmt.executeUpdate(InsertSQL + idBambino + "," + Integer.parseInt(idGita) + ")");
-
-
-        // E fino a qui era la parte di inserimento, ora faccio il conto per sapere quanti pullman mi servono
-
-        String CountSQL = ("SELECT COUNT (Bambini_idBambino) FROM mydb.bambini_has_gita");
-        ResultSet rsbis = stmt.executeQuery(CountSQL);
-        float x = (52/rsbis.getInt(1));
-        int NumPullman = (int) Math.ceil(x);
-        int i = stmt.executeUpdate("INSERTO INTO mydb.gita (NumPullman) VALUES (" + NumPullman + ")");
+        tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
+        tableBambini.setItems(FXCollections.observableArrayList(childrenGS));
 
     }
 

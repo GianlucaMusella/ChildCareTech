@@ -35,14 +35,12 @@
       <Button layoutX="36.0" layoutY="517.0" mnemonicParsing="false" onAction="#inserisciPediatra" prefHeight="25.0" prefWidth="149.0" text="Inserisci Pediatra" />
       <TextField id="txtPediatra" fx:id="txtPediatra" layoutX="36.0" layoutY="554.0" promptText="Codice Fiscale Pediatra" />
       <Button layoutX="912.0" layoutY="627.0" mnemonicParsing="false" onAction="#addChild" text="Conferma" />
-      <TableView id="tableBambini" fx:id="tableBambini" layoutX="290.0" layoutY="54.0" prefHeight="242.0" prefWidth="430.0">
+      <TableView id="tableBambini" fx:id="tableBambini" layoutX="290.0" layoutY="54.0" prefHeight="242.0" prefWidth="348.0">
          <columns>
-            <TableColumn id="columnNome" fx:id="columnNome" prefWidth="78.0" text="Nome" />
-            <TableColumn id="columnCognome" fx:id="columnCognome" prefWidth="87.0" text="Cognome" />
-            <TableColumn id="columnCodiceFiscale" fx:id="columnCodicefiscale" minWidth="0.0" prefWidth="0.0" text="Codice fiscale" />
-            <TableColumn id="columnDatadinascita" fx:id="columnDatadinascita" minWidth="0.0" prefWidth="102.0" text="Data di nascita" />
-            <TableColumn id="columnLuogodinascita" fx:id="columnLuogodinascita" minWidth="0.0" prefWidth="110.0" text="Luogo di nascita" />
-            <TableColumn id="columnNome" fx:id="columnID" minWidth="0.0" prefWidth="52.0" text="ID" />
+            <TableColumn id="columnNome" fx:id="columnNome" prefWidth="90.0" text="Nome" />
+            <TableColumn id="columnCognome" fx:id="columnCognome" prefWidth="83.0" text="Cognome" />
+            <TableColumn id="columnDatadinascita" fx:id="columnCodiceFiscale" minWidth="0.0" prefWidth="128.0" text="Codice Fiscale" />
+            <TableColumn id="columnNome" fx:id="columnID" minWidth="0.0" prefWidth="46.0" text="ID" />
          </columns>
       </TableView>
       <Hyperlink layoutX="886.0" layoutY="652.0" onAction="#menuPrincipale" text="Menù principale" />

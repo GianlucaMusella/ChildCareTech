@@ -16,9 +16,9 @@ public class ChildGUI {
         this.nome = new SimpleStringProperty(childGS.getNome());
         this.cognome = new SimpleStringProperty(childGS.getCognome());
         this.codiceFiscale = new SimpleStringProperty(childGS.getCodiceFiscale());
-        this.luogoDiNascita = new SimpleStringProperty(childGS.getLuogoDiNascita());
+        //this.luogoDiNascita = new SimpleStringProperty(childGS.getLuogoDiNascita());
         //this.data = new SimpleStringProperty(generality.());
-        this.idBambino = new SimpleStringProperty(childGS.getIdbambino());
+        this.idBambino = new SimpleStringProperty(childGS.getIdBambino());
 
     }
 

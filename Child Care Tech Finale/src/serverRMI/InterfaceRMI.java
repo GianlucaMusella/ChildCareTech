@@ -52,8 +52,6 @@ public interface InterfaceRMI extends Remote {
     void modifyDoctor(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data) throws Exception;
     boolean deleteDoctors(String codiceFiscale) throws Exception;
 
-
-
     boolean addMenu(String nome, String primo, String secondo, LocalDate giorno) throws Exception;
     ArrayList<FirstDishGS> viewFirst() throws Exception;
     ArrayList<SecondDishGS> viewSecond() throws Exception;
@@ -63,5 +61,8 @@ public interface InterfaceRMI extends Remote {
     boolean addSecondo(String nome, String allergeni) throws Exception;
     boolean deleteMenu(String nomeMenu) throws Exception;
 
+
+    boolean newTrip(String id, String meta, LocalDate andata, LocalDate ritorno) throws Exception;
+    boolean newpartecipanteTrip(String codiceFiscale, String idGita, String idBambino) throws Exception;
 
 }

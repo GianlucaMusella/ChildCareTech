@@ -13,22 +13,23 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
+public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
 
     protected RMIServer() throws RemoteException {
         super();
     }
+
     private static final long serialVersionUID = 1L;
 
     @Override
-    public boolean login(String username,String password) throws Exception {
+    public boolean login(String username, String password) throws Exception {
 
         PreparedStatement preparedStatement;
         ResultSet resultSet;
 
         String login = "SELECT Username,Password FROM mydb.personaleconaccesso WHERE Username = " + '"' + username + '"' + "AND Password = " + '"' + password + '"';
 
-        try{
+        try {
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(login);
             resultSet = preparedStatement.executeQuery();
@@ -36,43 +37,43 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             ArrayList<String> utente = new ArrayList<>();
 
             try {
-                if(!resultSet.next()){
+                if (!resultSet.next()) {
                     System.out.println("Utente non registrato nel database");
                     return false;
-                }else {
+                } else {
 
                     resultSet.beforeFirst();
-                    while(resultSet.next()){
+                    while (resultSet.next()) {
 
                         utente.add(resultSet.getString("Username"));
                         System.out.println(resultSet.getString("Username"));
                         System.out.println(resultSet.getString("Password"));
-                        if(!utente.isEmpty())
+                        if (!utente.isEmpty())
 
                             return true;
 
                     }
 
                 }
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
-            }finally {
+            } finally {
                 try {
                     if (resultSet != null)
                         resultSet.close();      //chiudo le connessioni al db una volta effettuato il controllo
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 try {
-                    if(preparedStatement != null)
+                    if (preparedStatement != null)
                         preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
 
@@ -87,28 +88,28 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String supplier = "INSERT INTO mydb.fornitori (Nome,Cognome,Azienda,TipoDiFornitura,PartitaIVA) VALUES (?,?,?,?,?)";
 
-        try{
+        try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(supplier);
 
-            preparedStatement.setString(1,name);
-            preparedStatement.setString(2,surname);
-            preparedStatement.setString(3,azienda);
-            preparedStatement.setString(4,fornitura);
-            preparedStatement.setString(5,partitaIva);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, surname);
+            preparedStatement.setString(3, azienda);
+            preparedStatement.setString(4, fornitura);
+            preparedStatement.setString(5, partitaIva);
             preparedStatement.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
 
-                if(preparedStatement != null){
+                if (preparedStatement != null) {
                     preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
                     return true;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -126,7 +127,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         ResultSet rs = statement.executeQuery(sql);
 
-        while (rs.next()){
+        while (rs.next()) {
             String colonnaAzienda = rs.getString("Azienda");
             String colonnaPartita = rs.getString("PartitaIVA");
             String colonnaFornitura = rs.getString("TipoDiFornitura");
@@ -237,7 +238,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             stmt.executeUpdate(SQL + "TipoDiFornitura = '" + fornitura + "'" + equal);
             // System.out.println(Luogo);
         }
-        if (partitaIva != null ) {
+        if (partitaIva != null) {
             stmt.executeUpdate(SQL + "PartitaIVA = '" + partitaIva + "'" + equal);
             // System.out.println(data);
         }
@@ -252,13 +253,13 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         String order = "INSERT INTO mydb.ordine (Nome, Quantità) VALUES (?,?)";
         String fornitura = "INSERT INTO mydb.fornitori_has_ordine (Fornitori_Azienda, Ordine_Nome) VALUES (?,?)";
 
-        try{
+        try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(order);
             preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(fornitura);
 
-            preparedStatement.setString(1,ordini);
+            preparedStatement.setString(1, ordini);
             preparedStatement.setInt(2, Integer.parseInt(quantità));
             preparedStatement.executeUpdate();
 
@@ -266,17 +267,17 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             preparedStatement1.setString(2, ordini);
             preparedStatement1.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
 
-                if(preparedStatement != null && preparedStatement1 != null){
+                if (preparedStatement != null && preparedStatement1 != null) {
                     preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
                     preparedStatement1.close();
                     return true;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -293,12 +294,11 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String queryDelete = "DELETE FROM mydb.fornitori WHERE Azienda = '" + azienda + "';";
 
-        try{
+        try {
 
             st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
             st.executeUpdate(queryDelete);
             System.out.println("Deleted from Fornitori.");
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -321,11 +321,11 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         PreparedStatement preparedStatement1 = null;
         PreparedStatement preparedStatement2 = null;
 
-        String child = "INSERT INTO mydb.bambini (idBambino,CodiceFiscale,,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Allergie,Sesso,Pediatra_CodiceFiscale) VALUES (?,?,?,?,?,?,?,?,?)";
+        String child = "INSERT INTO mydb.bambini (idBambino,CodiceFiscale,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Allergie,Sesso,Pediatra_CodiceFiscale) VALUES (?,?,?,?,?,?,?,?,?)";
         String parents = "INSERT INTO mydb.bambini_has_genitori (Bambini_idBambino,Genitori_CodiceFiscale) VALUES (?,?)";
         String contact = "INSERT INTO mydb.bambini_has_contatti (Bambini_idBambino,Contatti_CodiceFiscale) VALUES (?,?)";
 
-        try{
+        try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(child);
@@ -333,14 +333,15 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(contact);
 
             preparedStatement.setInt(1, Integer.parseInt(idBambino));
-            preparedStatement.setString(2,codiceFiscale);
-            preparedStatement.setString(3,nome);
+            preparedStatement.setString(2, codiceFiscale);
+            preparedStatement.setString(3, nome);
             preparedStatement.setString(4, cognome);
-            preparedStatement.setDate(5, java.sql.Date.valueOf(data));
+            preparedStatement.setDate(5, Date.valueOf(data));
             preparedStatement.setString(6, luogo);
             preparedStatement.setString(7, allergie);
             preparedStatement.setString(8, sesso);
             preparedStatement.setString(9, pediatra);
+            System.out.println(preparedStatement.toString());
             preparedStatement.executeUpdate();
 
             preparedStatement1.setInt(1, Integer.parseInt(idBambino));
@@ -351,20 +352,18 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             preparedStatement2.setString(2, contatto);
             preparedStatement2.executeUpdate();
 
-
-
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
 
-                if(preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null){
+                if (preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null) {
                     preparedStatement.close();
                     preparedStatement1.close(); //chiudo le connessioni al db una volta effettuato il controllo
                     preparedStatement2.close();
                     return true;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -380,16 +379,15 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String teacher = "INSERT INTO mydb.personaleinterno (CodiceFiscale,Nome,Cognome,Data_di_Nascita,Allergie,Luogo_di_Nascita,Sesso,Mansione) VALUES (?,?,?,?,?,?,?,?)";
         String teacherCredentials = "INSERT INTO mydb.personaleconaccesso(Username,Password,PersonaleInterno_CodiceFiscale) VALUES (?,?,?)";
-        try{
+        try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(teacher);
             preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(teacherCredentials);
 
-
-            preparedStatement.setString(1,codiceFiscale);
-            preparedStatement.setString(2,nome);
-            preparedStatement.setString(3,cognome);
+            preparedStatement.setString(1, codiceFiscale);
+            preparedStatement.setString(2, nome);
+            preparedStatement.setString(3, cognome);
             preparedStatement.setDate(4, java.sql.Date.valueOf(data));
             preparedStatement.setString(5, allergie);
             preparedStatement.setString(6, luogo);
@@ -397,29 +395,26 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             preparedStatement.setString(8, insegnante);
             preparedStatement.executeUpdate();
 
-
             preparedStatement1.setString(1, username);
             preparedStatement1.setString(2, password);
             preparedStatement1.setString(3, codiceFiscale);
             preparedStatement1.executeUpdate();
 
 
-
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
 
-                if(preparedStatement != null && preparedStatement1 != null){
+                if (preparedStatement != null && preparedStatement1 != null) {
                     preparedStatement.close();
                     preparedStatement1.close(); //chiudo le connessioni al db una volta effettuato il controllo
                     return true;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
 
         return false;
     }
@@ -428,19 +423,17 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     public boolean addStaff(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String mansione) throws Exception {
 
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
 
         String teacher = "INSERT INTO mydb.personaleinterno (CodiceFiscale,Nome,Cognome,Data_di_Nascita,Allergie,Luogo_di_Nascita,Sesso,Mansione) VALUES (?,?,?,?,?,?,?,?)";
 
-        try{
+        try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(teacher);
 
-
-            preparedStatement.setString(1,codiceFiscale);
-            preparedStatement.setString(2,nome);
-            preparedStatement.setString(3,cognome);
+            preparedStatement.setString(1, codiceFiscale);
+            preparedStatement.setString(2, nome);
+            preparedStatement.setString(3, cognome);
             preparedStatement.setDate(4, java.sql.Date.valueOf(data));
             preparedStatement.setString(5, allergie);
             preparedStatement.setString(6, luogo);
@@ -449,16 +442,16 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             preparedStatement.executeUpdate();
 
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
 
-                if(preparedStatement != null){
+                if (preparedStatement != null) {
                     preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
                     return true;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -477,7 +470,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         ResultSet rs = statement.executeQuery(sql);
 
-        while (rs.next()){
+        while (rs.next()) {
             String colonnaNome = rs.getString("Nome");
             String colonnaCognome = rs.getString("Cognome");
             String colonnaCodiceFiscale = rs.getString("CodiceFiscale");
@@ -591,11 +584,11 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + luogo + "'" + equal);
             // System.out.println(Luogo);
         }
-        if (data != null ) {
+        if (data != null) {
             stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
             // System.out.println(data);
         }
-        if (mansione != null ) {
+        if (mansione != null) {
             stmt.executeUpdate(SQL + "Mansione = '" + mansione + "'" + equal);
             // System.out.println(data);
         }
@@ -610,12 +603,11 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String queryDelete = "DELETE FROM mydb.personaleinterno WHERE CodiceFiscale = '" + codiceFiscale + "';";
 
-        try{
+        try {
 
             st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
             st.executeUpdate(queryDelete);
             System.out.println("Deleted from personale interno.");
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -651,9 +643,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
                 String colonnaID = rs.getString("idBambino");
 
-
-                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
-
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaID));
             }
         } else if (name.isEmpty() && cod.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "Cognome = '" + surname + "'");
@@ -663,12 +653,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 String colonnacodicefiscale = rs.getString("CodiceFiscale");
                 String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
                 Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
-
                 String colonnaID = rs.getString("idBambino");
 
-
-                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
-
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaID));
 
             }
         } else if (name.isEmpty() && surname.isEmpty()) {
@@ -681,9 +668,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
                 String colonnaID = rs.getString("idBambino");
 
-
-                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
-
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaID));
             }
         } else if (name.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "' AND Cognome = '" + surname + "'");
@@ -695,9 +680,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
                 String colonnaID = rs.getString("idBambino");
 
-
-                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
-
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaID));
             }
         } else if (surname.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "' AND Nome = '" + name + "'");
@@ -709,9 +692,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
                 String colonnaID = rs.getString("idBambino");
 
-
-                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
-
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaID));
             }
         } else if (cod.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "Nome = '" + name + "' AND Cognome = '" + surname + "'");
@@ -723,9 +704,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
                 Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
                 String colonnaID = rs.getString("idBambino");
 
-
-                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
-
+                values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaID));
             }
             rs.close();
         }
@@ -740,15 +719,15 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String parents = "INSERT INTO mydb.genitori (CodiceFiscale,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Telefono,Sesso) VALUES (?,?,?,?,?,?,?)";
 
-        try{
+        try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(parents);
 
 
-            preparedStatement.setString(1,codiceFiscale);
-            preparedStatement.setString(2,nome);
-            preparedStatement.setString(3,cognome);
+            preparedStatement.setString(1, codiceFiscale);
+            preparedStatement.setString(2, nome);
+            preparedStatement.setString(3, cognome);
             preparedStatement.setDate(4, java.sql.Date.valueOf(data));
             preparedStatement.setString(5, luogo);
             preparedStatement.setString(6, telefono);
@@ -756,16 +735,16 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             preparedStatement.executeUpdate();
 
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
 
-                if(preparedStatement != null){
+                if (preparedStatement != null) {
                     preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
                     return true;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -780,29 +759,29 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String contact = "INSERT INTO mydb.contatti (CodiceFiscale,Nome,Cognome,Telefono) VALUES (?,?,?,?)";
 
-        try{
+        try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(contact);
 
 
-            preparedStatement.setString(1,codiceFiscale);
-            preparedStatement.setString(2,nome);
-            preparedStatement.setString(3,cognome);
-            preparedStatement.setString(4,telefono);
+            preparedStatement.setString(1, codiceFiscale);
+            preparedStatement.setString(2, nome);
+            preparedStatement.setString(3, cognome);
+            preparedStatement.setString(4, telefono);
             preparedStatement.executeUpdate();
 
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
 
-                if(preparedStatement != null){
+                if (preparedStatement != null) {
                     preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
                     return true;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -820,18 +799,77 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         ResultSet rs = statement.executeQuery(sql);
 
-        while (rs.next()){
+        while (rs.next()) {
             String colonnanome = rs.getString("Nome");
             String colonnacognome = rs.getString("Cognome");
             String colonnacodicefiscale = rs.getString("CodiceFiscale");
-            String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
-            Date colonnadatadinascita = rs.getDate("Data_di_Nascita");
+            /*String colonnaluogodinascita = rs.getString("Luogo_di_Nascita");
+            Date colonnadatadinascita = rs.getDate("Data_di_Nascita");*/
             String colonnaID = rs.getString("idBambino");
 
-            values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaluogodinascita, colonnadatadinascita, colonnaID));
+            values.add(new ChildGS(colonnanome, colonnacognome, colonnacodicefiscale, colonnaID));
         }
         rs.close();
         return values;
+    }
+
+    @Override
+    public void modifyChild(String CodicefiscaleOld, String CodicefiscaleNew, String Nome, String Cognome, String Luogo, LocalDate data) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+        String SQL = ("UPDATE mydb.bambini SET ");
+        String equal = ("WHERE CodiceFiscale = '" + CodicefiscaleOld + "'");
+        if (!Nome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Nome = '" + Nome + "'" + equal);
+            // System.out.println(Nome);
+        }
+        if (!Cognome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Cognome = '" + Cognome + "'" + equal);
+            // System.out.println(Cognome);
+        }
+        if (!Luogo.isEmpty()) {
+            stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + Luogo + "'" + equal);
+            // System.out.println(Luogo);
+        }
+        if (data != null ) {
+            stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
+            // System.out.println(data);
+        }
+        if (!CodicefiscaleNew.isEmpty()) {
+            stmt.executeUpdate(SQL + "CodiceFiscale = '" + CodicefiscaleNew + "'" + equal);
+            // System.out.println(CodicefiscaleNew);
+        }
+    }
+
+    @Override
+    public boolean deleteChild(String idBambino) throws Exception {
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.bambini WHERE idBambino = '" + idBambino + "';";
+
+        try{
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from bambini.");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -841,31 +879,31 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String doctor = "INSERT INTO mydb.pediatra (CodiceFiscale,Nome,Cognome,Luogo_di_Nascita, Data_di_Nascita,Sesso) VALUES (?,?,?,?,?,?)";
 
-        try{
+        try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(doctor);
 
 
-            preparedStatement.setString(1,codiceFiscale);
-            preparedStatement.setString(2,nome);
-            preparedStatement.setString(3,cognome);
+            preparedStatement.setString(1, codiceFiscale);
+            preparedStatement.setString(2, nome);
+            preparedStatement.setString(3, cognome);
             preparedStatement.setString(4, luogo);
             preparedStatement.setDate(5, java.sql.Date.valueOf(data));
             preparedStatement.setString(6, sesso);
             preparedStatement.executeUpdate();
 
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
 
-                if(preparedStatement != null){
+                if (preparedStatement != null) {
                     preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
                     return true;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -884,7 +922,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         ResultSet rs = statement.executeQuery(sql);
 
-        while (rs.next()){
+        while (rs.next()) {
             String colonnanome = rs.getString("Nome");
             String colonnacodicefiscale = rs.getString("CodiceFiscale");
 
@@ -949,11 +987,11 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + luogo + "'" + equal);
             // System.out.println(Luogo);
         }
-        if (data != null ) {
+        if (data != null) {
             stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
             // System.out.println(data);
         }
-        if (telefono != null ) {
+        if (telefono != null) {
             stmt.executeUpdate(SQL + "Telefono = '" + telefono + "'" + equal);
             // System.out.println(data);
         }
@@ -969,7 +1007,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String queryDelete = "DELETE FROM mydb.genitori WHERE CodiceFiscale = '" + codiceFiscale + "';";
 
-        try{
+        try {
 
             st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
             st.executeUpdate(queryDelete);
@@ -1001,7 +1039,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         ResultSet rs = statement.executeQuery(sql);
 
-        while (rs.next()){
+        while (rs.next()) {
             String colonnanome = rs.getString("Nome");
             String colonnacodicefiscale = rs.getString("CodiceFiscale");
 
@@ -1062,7 +1100,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
             // System.out.println(Cognome);
         }
-        if (telefono != null ) {
+        if (telefono != null) {
             stmt.executeUpdate(SQL + "Telefono = '" + telefono + "'" + equal);
             // System.out.println(data);
         }
@@ -1076,7 +1114,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String queryDelete = "DELETE FROM mydb.contatti WHERE CodiceFiscale = '" + codiceFiscale + "';";
 
-        try{
+        try {
 
             st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
             st.executeUpdate(queryDelete);
@@ -1108,7 +1146,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         ResultSet rs = statement.executeQuery(sql);
 
-        while (rs.next()){
+        while (rs.next()) {
             String colonnanome = rs.getString("Nome");
             String colonnacodicefiscale = rs.getString("CodiceFiscale");
 
@@ -1174,7 +1212,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
             stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + luogo + "'" + equal);
             // System.out.println(Luogo);
         }
-        if (data != null ) {
+        if (data != null) {
             stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
             // System.out.println(data);
         }
@@ -1191,7 +1229,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String queryDelete = "DELETE FROM mydb.pediatra WHERE CodiceFiscale = '" + codiceFiscale + "';";
 
-        try{
+        try {
 
             st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
             st.executeUpdate(queryDelete);
@@ -1228,7 +1266,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         ResultSet rs = statement.executeQuery(sql);
         ResultSet rs1 = statement1.executeQuery(sql1);
 
-        while (rs.next() && rs1.next()){
+        while (rs.next() && rs1.next()) {
             String allergieBambini = rs.getString("Allergie");
             String allergiePersonale = rs1.getString("Allergie");
 
@@ -1251,7 +1289,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         ResultSet rs = statement.executeQuery(sql);
 
-        while (rs.next()){
+        while (rs.next()) {
             String colonnaNome = rs.getString("Nome");
             String colonnaPrimo = rs.getString("Primi_Nome");
             String colonnaSecondi = rs.getString("Secondi_Nome");
@@ -1270,27 +1308,27 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String nomeMenu = "INSERT INTO mydb.menumensa (Nome, Giorno, Secondi_Nome, Primi_Nome) VALUES (?,?,?,?)";
 
-        try{
+        try {
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(nomeMenu);
 
-            preparedStatement.setString(1,nome);
+            preparedStatement.setString(1, nome);
             preparedStatement.setDate(2, java.sql.Date.valueOf(giorno));
-            preparedStatement.setString(3,secondo);
-            preparedStatement.setString(4,primo);
+            preparedStatement.setString(3, secondo);
+            preparedStatement.setString(4, primo);
             preparedStatement.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
 
-                if(preparedStatement != null){
+                if (preparedStatement != null) {
                     preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
 
                     return true;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -1309,7 +1347,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         ResultSet rs = statement.executeQuery(sql);
 
-        while (rs.next()){
+        while (rs.next()) {
             String colonnaPrimi = rs.getString("Allergeni_Nome");
             String colonnaAllergene = rs.getString("Primi_Nome");
 
@@ -1322,7 +1360,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public ArrayList<SecondDishGS> viewSecond() throws Exception{
+    public ArrayList<SecondDishGS> viewSecond() throws Exception {
 
         ArrayList<SecondDishGS> values = new ArrayList<>();
         String sql = ("SELECT * FROM mydb.allergeni_has_secondi ");
@@ -1331,7 +1369,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         ResultSet rs = statement.executeQuery(sql);
 
-        while (rs.next()){
+        while (rs.next()) {
             String colonnaAllergeni = rs.getString("Allergeni_nome");
             String colonnaSecondi = rs.getString("Secondi_Nome");
 
@@ -1354,35 +1392,35 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         String sqlAllergeni = "INSERT INTO mydb.allergeni (Nome) VALUES (?)";
         String primiEAllergeni = "INSERT INTO mydb.allergeni_has_primi (Allergeni_Nome, Primi_Nome) VALUES (?,?)";
 
-        try{
+        try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(primoPiatto);
             preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(sqlAllergeni);
             preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(primiEAllergeni);
 
-            preparedStatement.setString(1,nome);
+            preparedStatement.setString(1, nome);
             preparedStatement.executeUpdate();
 
-            preparedStatement1.setString(1,allergeni);
+            preparedStatement1.setString(1, allergeni);
             preparedStatement1.executeUpdate();
 
-            preparedStatement2.setString(1,allergeni);
-            preparedStatement2.setString(2,nome);
+            preparedStatement2.setString(1, allergeni);
+            preparedStatement2.setString(2, nome);
             preparedStatement2.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
 
-                if(preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null){
+                if (preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null) {
                     preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
                     preparedStatement1.close();
                     preparedStatement2.close();
                     return true;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -1401,35 +1439,35 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
         String sqlAllergeni = "INSERT INTO mydb.allergeni (Nome) VALUES (?)";
         String primiEAllergeni = "INSERT INTO mydb.allergeni_has_secondi (Allergeni_Nome, Secondi_Nome) VALUES (?,?)";
 
-        try{
+        try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(secondoPiatto);
             preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(sqlAllergeni);
             preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(primiEAllergeni);
 
-            preparedStatement.setString(1,nome);
+            preparedStatement.setString(1, nome);
             preparedStatement.executeUpdate();
 
-            preparedStatement1.setString(1,allergeni);
+            preparedStatement1.setString(1, allergeni);
             preparedStatement1.executeUpdate();
 
-            preparedStatement2.setString(1,allergeni);
-            preparedStatement2.setString(2,nome);
+            preparedStatement2.setString(1, allergeni);
+            preparedStatement2.setString(2, nome);
             preparedStatement2.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
 
-                if(preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null){
+                if (preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null) {
                     preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
                     preparedStatement1.close();
                     preparedStatement2.close();
                     return true;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -1447,7 +1485,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
 
         String queryDelete = "DELETE FROM mydb.menumensa WHERE Nome = '" + nomeMenu + "';";
 
-        try{
+        try {
 
             st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
             st.executeUpdate(queryDelete);
@@ -1470,63 +1508,87 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI{
     }
 
     @Override
-    public void modifyChild(String CodicefiscaleOld, String CodicefiscaleNew, String Nome, String Cognome, String Luogo, LocalDate data) throws Exception {
+    public boolean newTrip(String id, String meta, LocalDate andata, LocalDate ritorno) throws Exception {
 
-        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+        PreparedStatement preparedStatement = null;
 
-        String SQL = ("UPDATE mydb.bambini SET ");
-        String equal = ("WHERE CodiceFiscale = '" + CodicefiscaleOld + "'");
-        if (!Nome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Nome = '" + Nome + "'" + equal);
-            // System.out.println(Nome);
-        }
-        if (!Cognome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Cognome = '" + Cognome + "'" + equal);
-            // System.out.println(Cognome);
-        }
-        if (!Luogo.isEmpty()) {
-            stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + Luogo + "'" + equal);
-            // System.out.println(Luogo);
-        }
-        if (data != null ) {
-            stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
-            // System.out.println(data);
-        }
-        if (!CodicefiscaleNew.isEmpty()) {
-            stmt.executeUpdate(SQL + "CodiceFiscale = '" + CodicefiscaleNew + "'" + equal);
-            // System.out.println(CodicefiscaleNew);
-        }
-    }
+        String trip = "INSERT INTO mydb.gita (idGita,Meta,Data_Partenza,Data_Ritorno) VALUES (?,?,?,?)";
 
-    @Override
-    public boolean deleteChild(String idBambino) throws Exception {
-        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        try {
 
-        PreparedStatement st = null;
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(trip);
 
-        String queryDelete = "DELETE FROM mydb.bambini WHERE idBambino = '" + idBambino + "';";
-
-        try{
-
-            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
-            st.executeUpdate(queryDelete);
-            System.out.println("Deleted from bambini.");
-
+            preparedStatement.setInt(1, Integer.parseInt(id));
+            preparedStatement.setString(2, meta);
+            preparedStatement.setDate(3, Date.valueOf(andata));
+            preparedStatement.setDate(4, Date.valueOf(ritorno));
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-                if (st != null)
-                    st.close();
+
+                if (preparedStatement != null) {
+                    preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
+                    return true;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        return true;
+        return false;
+    }
+
+    @Override
+    public boolean newpartecipanteTrip(String codiceFiscale, String idGita, String idBambino) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+        Statement statement = null;
+
+        String childTrip = "INSERT INTO mydb.bambini_has_gita (Bambini_IdBambino, Gita_idGita) VALUES (?,?)";
+       // String bit = "UPDATE mydb.bambini_has_gita  SET Presenza = '1' ";
+
+        String SQL = ("UPDATE mydb.bambini_has_gita SET ");
+        String equal = ("WHERE Bambini_IdBambino = '" + idBambino + "'");
+
+        try {
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(childTrip);
+
+
+            preparedStatement.setInt(1, Integer.parseInt(idBambino));
+            preparedStatement.setInt(2, Integer.parseInt(idGita));
+            preparedStatement.executeUpdate();
+
+            statement = connectionDatabase.initializeConnection().createStatement();
+            statement.executeUpdate(SQL + "Presenza = '1'" + equal);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+
+                if (preparedStatement != null) {
+                    preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+
+        // E fino a qui era la parte di inserimento, ora faccio il conto per sapere quanti pullman mi servono
+
+      /* String CountSQL = ("SELECT COUNT (Bambini_idBambino) FROM mydb.bambini_has_gita");
+        ResultSet rsbis = stmt.executeQuery(CountSQL);
+        float x = (52 / rsbis.getInt(1));
+        int NumPullman = (int) Math.ceil(x);
+        int i = stmt.executeUpdate("INSERTO INTO mydb.gita (NumPullman) VALUES (" + NumPullman + ")");*/
     }
 
 }
-
