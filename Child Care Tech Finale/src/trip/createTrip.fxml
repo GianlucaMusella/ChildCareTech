@@ -3,14 +3,25 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.newTrip">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="271.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.newTrip">
    <children>
-      <TextField fx:id="txtMetaa" layoutX="36.0" layoutY="87.0" promptText="Meta" />
-      <DatePicker fx:id="datePartenza" layoutX="36.0" layoutY="124.0" promptText="Partenza" />
-      <DatePicker fx:id="dateRitorno" layoutX="36.0" layoutY="159.0" promptText="Ritorno" />
-      <Button layoutX="523.0" layoutY="350.0" mnemonicParsing="false" onAction="#newTrip" text="Conferma" />
-      <TextField fx:id="txtID" layoutX="36.0" layoutY="194.0" promptText="ID gita" />
+      <TextField fx:id="txtMetaa" layoutX="53.0" layoutY="75.0" prefHeight="36.0" prefWidth="166.0" promptText="Meta" />
+      <DatePicker fx:id="datePartenza" layoutX="53.0" layoutY="123.0" prefHeight="36.0" prefWidth="166.0" promptText="Partenza" />
+      <DatePicker fx:id="dateRitorno" layoutX="53.0" layoutY="175.0" prefHeight="36.0" prefWidth="166.0" promptText="Ritorno" />
+      <Button layoutX="151.0" layoutY="326.0" mnemonicParsing="false" onAction="#newTrip" text="Conferma" />
+      <TextField fx:id="txtID" layoutX="53.0" layoutY="226.0" prefHeight="36.0" prefWidth="166.0" promptText="ID gita" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

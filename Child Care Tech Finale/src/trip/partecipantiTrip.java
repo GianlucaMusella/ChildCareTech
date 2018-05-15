@@ -3,13 +3,18 @@ package trip;
 import getterAndSetter.people.ChildGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -35,6 +40,21 @@ public class partecipantiTrip implements Initializable{
     private TableColumn<ChildGS, String> columnID;
 
     @FXML
+    private TableView<TripGS> tableGita;
+
+    @FXML
+    private TableColumn<TripGS, String> columnIDGita;
+
+    @FXML
+    private TableColumn<TripGS, String> columnMeta;
+
+    @FXML
+    private TableColumn<TripGS, String> columnAndata;
+
+    @FXML
+    private TableColumn<TripGS, String> columnRitorno;
+
+    @FXML
     private TextField txtCodicefiscale;
 
     @FXML
@@ -51,6 +71,11 @@ public class partecipantiTrip implements Initializable{
         columnCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
         columnID.setCellValueFactory(new PropertyValueFactory<>("idBambino"));
 
+        columnIDGita.setCellValueFactory(new PropertyValueFactory<>("id"));
+        columnMeta.setCellValueFactory(new PropertyValueFactory<>("meta"));
+        columnAndata.setCellValueFactory(new PropertyValueFactory<>("andata"));
+        columnRitorno.setCellValueFactory(new PropertyValueFactory<>("ritorno"));
+
         tableBambini.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tableBambini.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
@@ -60,7 +85,16 @@ public class partecipantiTrip implements Initializable{
             }
         });
 
+        tableGita.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        tableGita.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if(newSelection != null){
+                txtIDgita.setText(newSelection.getId());
+            }
+        });
+
         tableBambini.getItems().clear();
+        tableGita.getItems().clear();
     }
 
     public void partecipantiTrip (ActionEvent actionEvent) throws Exception {
@@ -68,15 +102,34 @@ public class partecipantiTrip implements Initializable{
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
         interfaceRMI.newpartecipanteTrip(txtCodicefiscale.getText(), txtIDgita.getText(), idBambino.getText());
 
+        txtCodicefiscale.clear();
+        idBambino.clear();
+        txtIDgita.clear();
+
     }
 
     public void viewInfo(ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
         ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
+        ArrayList<TripGS> tripGS = interfaceRMI.viewTrip();
 
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
         tableBambini.setItems(FXCollections.observableArrayList(childrenGS));
+
+        tableGita.setColumnResizePolicy(tableGita.CONSTRAINED_RESIZE_POLICY);
+        tableGita.setItems(FXCollections.observableArrayList(tripGS));
+
+    }
+
+    public void back_method(ActionEvent actionEvent) throws Exception{
+
+        ((Node) actionEvent.getSource()).getScene().getWindow().hide();
+        Parent root = FXMLLoader.load(getClass().getResource("/trip/TripMenu.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
 
     }
 

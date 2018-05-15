@@ -5,6 +5,7 @@ import getterAndSetter.food.AllergyPeopleGS;
 import getterAndSetter.food.FirstDishGS;
 import getterAndSetter.food.MenuGS;
 import getterAndSetter.food.SecondDishGS;
+import trip.TripGS;
 
 import java.rmi.Remote;
 import java.time.LocalDate;
@@ -63,6 +64,7 @@ public interface InterfaceRMI extends Remote {
 
 
     boolean newTrip(String id, String meta, LocalDate andata, LocalDate ritorno) throws Exception;
+    ArrayList<TripGS> viewTrip() throws Exception;
     boolean newpartecipanteTrip(String codiceFiscale, String idGita, String idBambino) throws Exception;
 
 }

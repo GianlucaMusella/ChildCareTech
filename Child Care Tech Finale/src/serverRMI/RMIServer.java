@@ -6,6 +6,7 @@ import getterAndSetter.food.AllergyPeopleGS;
 import getterAndSetter.food.FirstDishGS;
 import getterAndSetter.food.MenuGS;
 import getterAndSetter.food.SecondDishGS;
+import trip.TripGS;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -1540,6 +1541,28 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         }
 
         return false;
+    }
+
+    @Override
+    public ArrayList<TripGS> viewTrip() throws Exception {
+
+        ArrayList<TripGS> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.gita");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()) {
+            String colonnaId = rs.getString("idGita");
+            String colonnaMeta = rs.getString("Meta");
+            Date colonnaAndata = rs.getDate("Data_Partenza");
+            Date colonnaRitorno = rs.getDate("Data_Ritorno");
+
+            values.add(new TripGS(colonnaId, colonnaMeta, colonnaAndata, colonnaRitorno));
+        }
+        rs.close();
+        return values;
     }
 
     @Override
