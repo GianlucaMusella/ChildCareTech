@@ -1546,13 +1546,8 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
     public boolean newpartecipanteTrip(String codiceFiscale, String idGita, String idBambino) throws Exception {
 
         PreparedStatement preparedStatement = null;
-        Statement statement = null;
 
         String childTrip = "INSERT INTO mydb.bambini_has_gita (Bambini_IdBambino, Gita_idGita) VALUES (?,?)";
-       // String bit = "UPDATE mydb.bambini_has_gita  SET Presenza = '1' ";
-
-        String SQL = ("UPDATE mydb.bambini_has_gita SET ");
-        String equal = ("WHERE Bambini_IdBambino = '" + idBambino + "'");
 
         try {
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
@@ -1563,8 +1558,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
             preparedStatement.setInt(2, Integer.parseInt(idGita));
             preparedStatement.executeUpdate();
 
-            statement = connectionDatabase.initializeConnection().createStatement();
-            statement.executeUpdate(SQL + "Presenza = '1'" + equal);
 
         } catch (SQLException e) {
             e.printStackTrace();
