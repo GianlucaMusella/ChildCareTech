@@ -11,19 +11,20 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.TripMenu">
    <children>
-      <TableView fx:id="tableGita" layoutX="95.0" layoutY="75.0" prefHeight="200.0" prefWidth="411.0">
+      <TableView fx:id="tableGita" layoutX="51.0" layoutY="57.0" prefHeight="246.0" prefWidth="499.0">
         <columns>
-          <TableColumn fx:id="columnIDGita" prefWidth="68.0" text="ID" />
-          <TableColumn fx:id="columnMeta" prefWidth="138.0" text="Meta" />
-            <TableColumn fx:id="columnAndata" prefWidth="101.0" text="Andata" />
-            <TableColumn fx:id="columnRitorno" prefWidth="103.0" text="Ritorno" />
+          <TableColumn fx:id="columnIDGita" prefWidth="56.0" text="ID" />
+          <TableColumn fx:id="columnMeta" prefWidth="194.0" text="Meta" />
+            <TableColumn fx:id="columnAndata" prefWidth="112.0" text="Andata" />
+            <TableColumn fx:id="columnRitorno" prefWidth="136.0" text="Ritorno" />
         </columns>
       </TableView>
-      <Button layoutX="86.0" layoutY="324.0" mnemonicParsing="false" onAction="#viewInfo" text="Mostra Gite" />
-      <Button layoutX="176.0" layoutY="324.0" mnemonicParsing="false" onAction="#createTrip" text="Crea gita" />
-      <Button layoutX="255.0" layoutY="324.0" mnemonicParsing="false" onAction="#partecipantiTrip" text="Partecipanti" />
-      <Button layoutX="365.0" layoutY="324.0" mnemonicParsing="false" onAction="#appelloTrip" text="Appello" />
-      <Button layoutX="430.0" layoutY="324.0" mnemonicParsing="false" onAction="#reportTrip" text="Report gita" />
+      <Button layoutX="51.0" layoutY="324.0" mnemonicParsing="false" onAction="#viewInfo" text="Mostra Gite" />
+      <Button layoutX="146.0" layoutY="324.0" mnemonicParsing="false" onAction="#createTrip" text="Crea Gita" />
+      <Button layoutX="229.0" layoutY="324.0" mnemonicParsing="false" onAction="#deleteTrip" text="Rimuovi" />
+      <Button layoutX="307.0" layoutY="324.0" mnemonicParsing="false" onAction="#partecipantiTrip" text="Partecipanti" />
+      <Button layoutX="406.0" layoutY="324.0" mnemonicParsing="false" onAction="#appelloTrip" text="Appello" />
+      <Button layoutX="476.0" layoutY="324.0" mnemonicParsing="false" onAction="#reportTrip" text="Tappe Gita" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="29.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">

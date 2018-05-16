@@ -12,18 +12,18 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modify.ModifyChild">
     <children>
         <TextField fx:id="txtCodicefiscaleOld" layoutX="35.0" layoutY="76.0" promptText="Codice Fiscale Vecchio" />
-        <TextField fx:id="txtCodicefiscaleNew" layoutX="35.0" layoutY="110.0" promptText="Codice Fiscale Nuovo" />
-        <TextField fx:id="txtNome" layoutX="35.0" layoutY="142.0" promptText="Nome" />
-        <TextField fx:id="txtCognome" layoutX="35.0" layoutY="175.0" promptText="Cognome" />
-        <TextField fx:id="txtLuogo" layoutX="35.0" layoutY="206.0" promptText="Luogo di nascita" />
-        <DatePicker fx:id="dateData" layoutX="35.0" layoutY="240.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di nascita" />
-      <Button layoutX="246.0" layoutY="287.0" mnemonicParsing="false" onAction="#viewChild" text="Mostra Bambini" />
-      <TableView fx:id="tableBambini" layoutX="246.0" layoutY="75.0" prefHeight="200.0" prefWidth="309.0">
+        <TextField fx:id="txtNome" layoutX="35.0" layoutY="109.0" promptText="Nome" />
+        <TextField fx:id="txtCognome" layoutX="35.0" layoutY="143.0" promptText="Cognome" />
+        <TextField fx:id="txtLuogo" layoutX="35.0" layoutY="175.0" promptText="Luogo di nascita" />
+      <TextField fx:id="idBambino" layoutX="35.0" layoutY="243.0" promptText="ID Bambino" />
+        <DatePicker fx:id="dateData" layoutX="35.0" layoutY="208.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di nascita" />
+      <Button layoutX="224.0" layoutY="290.0" mnemonicParsing="false" onAction="#viewChild" text="Mostra Bambini" />
+      <TableView fx:id="tableBambini" layoutX="224.0" layoutY="75.0" prefHeight="200.0" prefWidth="333.0">
         <columns>
-          <TableColumn fx:id="columnNome" prefWidth="75.0" text="Nome" />
-          <TableColumn fx:id="columnCognome" text="Cognome" />
-            <TableColumn fx:id="columnCodiceFiscale" prefWidth="110.0" text="Codice Fiscale" />
-            <TableColumn fx:id="columnID" prefWidth="43.0" text="ID" />
+          <TableColumn fx:id="columnNome" prefWidth="84.0" text="Nome" />
+          <TableColumn fx:id="columnCognome" prefWidth="77.0" text="Cognome" />
+            <TableColumn fx:id="columnCodiceFiscale" prefWidth="123.0" text="Codice Fiscale" />
+            <TableColumn fx:id="columnID" prefWidth="48.0" text="ID" />
         </columns>
       </TableView>
         <Button layoutX="487.0" layoutY="343.0" mnemonicParsing="false" onAction="#modifyClient" text="Conferma" />

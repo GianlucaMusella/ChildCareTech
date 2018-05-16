@@ -324,8 +324,8 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         PreparedStatement preparedStatement2 = null;
 
         String child = "INSERT INTO mydb.bambini (idBambino,CodiceFiscale,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Allergie,Sesso,Pediatra_CodiceFiscale) VALUES (?,?,?,?,?,?,?,?,?)";
-        String parents = "INSERT INTO mydb.bambini_has_genitori (Bambini_idBambino,Genitori_CodiceFiscale) VALUES (?,?)";
-        String contact = "INSERT INTO mydb.bambini_has_contatti (Bambini_idBambino,Contatti_CodiceFiscale) VALUES (?,?)";
+        String parents = "INSERT INTO mydb.bambini_has_genitori (Bambini_CodiceFiscale,Genitori_CodiceFiscale) VALUES (?,?)";
+        String contact = "INSERT INTO mydb.bambini_has_contatti (Bambini_CodiceFiscale,Contatti_CodiceFiscale) VALUES (?,?)";
 
         try {
 
@@ -346,11 +346,11 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
             System.out.println(preparedStatement.toString());
             preparedStatement.executeUpdate();
 
-            preparedStatement1.setInt(1, Integer.parseInt(idBambino));
+            preparedStatement1.setString(1, codiceFiscale);
             preparedStatement1.setString(2, genitore1);
             preparedStatement1.executeUpdate();
 
-            preparedStatement2.setInt(1, Integer.parseInt(idBambino));
+            preparedStatement2.setString(1, codiceFiscale);
             preparedStatement2.setString(2, contatto);
             preparedStatement2.executeUpdate();
 
@@ -816,42 +816,42 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
     }
 
     @Override
-    public void modifyChild(String CodicefiscaleOld, String CodicefiscaleNew, String Nome, String Cognome, String Luogo, LocalDate data) throws Exception {
-
+    public void modifyChild(String codiceFiscale, String Nome, String cognome, String luogo, LocalDate data, String idBambino) throws Exception {
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
         String SQL = ("UPDATE mydb.bambini SET ");
-        String equal = ("WHERE CodiceFiscale = '" + CodicefiscaleOld + "'");
+        String equal = ("WHERE CodiceFiscale = '" + codiceFiscale + "'");
         if (!Nome.isEmpty()) {
             stmt.executeUpdate(SQL + "Nome = '" + Nome + "'" + equal);
             // System.out.println(Nome);
         }
-        if (!Cognome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Cognome = '" + Cognome + "'" + equal);
+        if (!cognome.isEmpty()) {
+            stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
             // System.out.println(Cognome);
         }
-        if (!Luogo.isEmpty()) {
-            stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + Luogo + "'" + equal);
+        if (!luogo.isEmpty()) {
+            stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + luogo + "'" + equal);
             // System.out.println(Luogo);
         }
         if (data != null ) {
             stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
             // System.out.println(data);
         }
-        if (!CodicefiscaleNew.isEmpty()) {
-            stmt.executeUpdate(SQL + "CodiceFiscale = '" + CodicefiscaleNew + "'" + equal);
-            // System.out.println(CodicefiscaleNew);
+        if (idBambino != null ) {
+            stmt.executeUpdate(SQL + "idBambino = '" + Integer.parseInt(idBambino) + "'" + equal);
+            // System.out.println(data);
         }
+
     }
 
     @Override
-    public boolean deleteChild(String idBambino) throws Exception {
+    public boolean deleteChild(String codiceFiscale) throws Exception {
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
 
         PreparedStatement st = null;
 
-        String queryDelete = "DELETE FROM mydb.bambini WHERE idBambino = '" + idBambino + "';";
+        String queryDelete = "DELETE FROM mydb.bambini WHERE CodiceFiscale = '" + codiceFiscale + "';";
 
         try{
 
@@ -1576,9 +1576,8 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
         String SQL = ("SELECT mydb.bambini.Nome, mydb.bambini.Cognome, mydb.bambini.CodiceFiscale, mydb.bambini_has_gita.Presenza " +
                 "FROM ((mydb.bambini_has_gita " +
-                "INNER JOIN mydb.bambini ON mydb.bambini.CodiceFiscale = mydb.bambini_has_gita.Bambini_CodiceFiscale) " +
-                "INNER JOIN mydb.gita ON mydb.gita.idGita = mydb.bambini_has_gita.Gita_idGita = ");
-        ResultSet rs = stmt.executeQuery(SQL + idGita + ")");
+                "INNER JOIN mydb.bambini ON mydb.bambini.CodiceFiscale = mydb.bambini_has_gita.Bambini_CodiceFiscale AND mydb.bambini_has_gita.Gita_idGita = ");
+        ResultSet rs = stmt.executeQuery(SQL + idGita + "))");
         while (rs.next()){
             String colonnaNome = rs.getString("Nome");
             String colonnaCognome = rs.getString ("Cognome");
@@ -1596,16 +1595,28 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
     }
 
     @Override
-    public void bambinoPresenteServer(String codiceBambino, int idGita) throws Exception {
+    public void bambinoPresenteServer(String codiceFiscale, int idGita) throws Exception {
+
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
         String SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 1 WHERE (mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
-                + codiceBambino + "' AND mydb.bambini_has_gita.Gita_idGita = " + idGita + ")");
-        int n = stmt.executeUpdate(SQL);
+                + codiceFiscale + "' AND mydb.bambini_has_gita.Gita_idGita = " + idGita + ")");
+        stmt.executeUpdate(SQL);
+
     }
 
     @Override
-    public boolean newpartecipanteTrip(String codiceFiscale, String idGita, String idBambino) throws Exception {
+    public void bambinoAssenteServer(String codiceFiscale, int idGita) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+        String SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 0 WHERE (mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
+                + codiceFiscale + "' AND mydb.bambini_has_gita.Gita_idGita = " + idGita + ")");
+        stmt.executeUpdate(SQL);
+    }
+
+    @Override
+    public boolean newpartecipanteTrip(String codiceFiscale, String idGita) throws Exception {
 
         PreparedStatement preparedStatement = null;
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
@@ -1616,7 +1627,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         try {
 
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(childTrip);
-
 
             preparedStatement.setString(1, codiceFiscale);
             preparedStatement.setInt(2, Integer.parseInt(idGita));
@@ -1649,6 +1659,34 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         int i = stmt.executeUpdate("INSERTO INTO mydb.gita (NumPullman) VALUES (" + NumPullman + ")");
         */
         return false;
+    }
+
+    @Override
+    public boolean deleteTrip(String idGita) throws Exception {
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.gita WHERE idGita = '" + idGita + "';";
+
+        try{
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from Gita.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
     }
 
 }

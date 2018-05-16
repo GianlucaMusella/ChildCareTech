@@ -26,9 +26,6 @@ public class ModifyChild implements Initializable{
     private TextField txtCodicefiscaleOld;
 
     @FXML
-    private TextField txtCodicefiscaleNew;
-
-    @FXML
     private TextField txtNome;
 
     @FXML
@@ -36,6 +33,9 @@ public class ModifyChild implements Initializable{
 
     @FXML
     private TextField txtLuogo;
+
+    @FXML
+    private TextField idBambino;
 
     @FXML
     private DatePicker dateData;
@@ -58,7 +58,7 @@ public class ModifyChild implements Initializable{
     public void modifyClient (javafx.event.ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        interfaceRMI.modifyChild(txtCodicefiscaleOld.getText(), txtCodicefiscaleNew.getText(), txtNome.getText(), txtCognome.getText(), txtLuogo.getText(), dateData.getValue());
+        interfaceRMI.modifyChild(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtLuogo.getText(), dateData.getValue(), idBambino.getText());
 
     }
 

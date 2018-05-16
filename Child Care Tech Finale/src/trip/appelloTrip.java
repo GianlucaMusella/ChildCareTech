@@ -7,11 +7,16 @@ import connectionDatabase.ConnectionDatabase;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -69,12 +74,36 @@ public class appelloTrip implements Initializable{
         SI RIUSCISSE A FARE CON LA MULTISELECT SAREBBE MOLTO MEGLIO, MA DOVREI PROVARE PER CAPIRE COME FUNZIONA
          */
         AppelloGS bambinoPresente = tableAppello.getSelectionModel().getSelectedItem();
-        String CodiceBambino = bambinoPresente.getCodiceFiscale();
+        String codiceFiscale = bambinoPresente.getCodiceFiscale();
 
-        System.out.println(CodiceBambino); // Ho messo questo per capire se prende il codice fiscale giusto
+        System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        interfaceRMI.bambinoPresenteServer(CodiceBambino, Integer.parseInt(idGita.getText()));
+        interfaceRMI.bambinoPresenteServer(codiceFiscale, Integer.parseInt(idGita.getText()));
+    }
+
+    public void assenza (ActionEvent actionEvent) throws Exception {
+        /*
+        ArrayList<AppelloGS> modificaPresenza = tableAppello.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        SI RIUSCISSE A FARE CON LA MULTISELECT SAREBBE MOLTO MEGLIO, MA DOVREI PROVARE PER CAPIRE COME FUNZIONA
+         */
+        AppelloGS bambinoAssente = tableAppello.getSelectionModel().getSelectedItem();
+        String codiceFiscale = bambinoAssente.getCodiceFiscale();
+
+        System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
+
+        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        interfaceRMI.bambinoAssenteServer(codiceFiscale, Integer.parseInt(idGita.getText()));
+    }
+
+    public void back_method(ActionEvent actionEvent) throws Exception{
+        ((Node) actionEvent.getSource()).getScene().getWindow().hide();
+        Parent root = FXMLLoader.load(getClass().getResource("/trip/TripMenu.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
 
