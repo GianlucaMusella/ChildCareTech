@@ -14,7 +14,7 @@ public class ParentsGS implements Serializable{
     private Date data;
     private String sesso;
 
-    public ParentsGS(String nome, String codiceFiscale, String cognome){
+    public ParentsGS(String nome, String cognome, String codiceFiscale){
 
         this.nome = nome;
         this.cognome = cognome;

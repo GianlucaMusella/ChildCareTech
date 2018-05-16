@@ -60,8 +60,6 @@ public class partecipantiTrip implements Initializable{
     @FXML
     private TextField txtIDgita;
 
-    @FXML
-    private TextField idBambino;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -76,12 +74,11 @@ public class partecipantiTrip implements Initializable{
         columnAndata.setCellValueFactory(new PropertyValueFactory<>("andata"));
         columnRitorno.setCellValueFactory(new PropertyValueFactory<>("ritorno"));
 
-        tableBambini.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableBambini.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         tableBambini.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
             if(newSelection != null){
                 txtCodicefiscale.setText(newSelection.getCodiceFiscale());
-                idBambino.setText(newSelection.getIdBambino());
             }
         });
 
@@ -100,10 +97,9 @@ public class partecipantiTrip implements Initializable{
     public void partecipantiTrip (ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        interfaceRMI.newpartecipanteTrip(txtCodicefiscale.getText(), txtIDgita.getText(), idBambino.getText());
+        interfaceRMI.newpartecipanteTrip(txtCodicefiscale.getText(), txtIDgita.getText());
 
         txtCodicefiscale.clear();
-        idBambino.clear();
         txtIDgita.clear();
 
     }

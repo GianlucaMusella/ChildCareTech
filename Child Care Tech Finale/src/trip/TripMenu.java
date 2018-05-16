@@ -1,6 +1,7 @@
 package trip;
 
 import getterAndSetter.people.ChildGS;
+import getterAndSetter.people.ContactGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -70,6 +71,17 @@ public class TripMenu implements Initializable{
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    public void deleteTrip(ActionEvent actionEvent) throws Exception {
+
+        TripGS deletableTrips = tableGita.getSelectionModel().getSelectedItem();
+        String idGita = deletableTrips.getId();
+
+        System.out.println(idGita); // Ho messo questo per capire se prende il codice fiscale giusto
+
+        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        interfaceRMI.deleteTrip(idGita);
     }
 
     public void appelloTrip (ActionEvent actionEvent) throws Exception {

@@ -26,8 +26,8 @@ public interface InterfaceRMI extends Remote {
     boolean addChild(String codiceFiscale, String idBambino, String nome, String cognome, LocalDate data, String luogo, String allergie, String genitore1, String genitore2, String sesso, String pediatra, String Contatto) throws Exception;
     ArrayList<ChildGS> searchC(String name, String surname, String cod) throws Exception;
     ArrayList<ChildGS> viewChild() throws Exception;
-    void modifyChild(String CodicefiscaleOld, String CodicefiscaleNew, String Nome, String Cognome, String Luogo, LocalDate data) throws Exception;
-    boolean deleteChild (String idBambino) throws Exception;
+    void modifyChild(String codiceFiscale, String Nome, String cognome, String luogo, LocalDate data, String idBambino) throws Exception;
+    boolean deleteChild (String codiceFiscale) throws Exception;
 
     boolean addTeacher(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String insegnante, String username, String password) throws Exception;
     boolean addStaff(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String mansione) throws Exception;
@@ -67,10 +67,10 @@ public interface InterfaceRMI extends Remote {
     boolean newTrip(String id, String meta, LocalDate andata, LocalDate ritorno) throws Exception;
     ArrayList<TripGS> viewTrip() throws Exception;
     ArrayList<AppelloGS> loadDataServer(int idGita) throws Exception;
-    void bambinoPresenteServer(String codiceBambino, int idGita) throws Exception;
-
-    boolean newpartecipanteTrip(String codiceFiscale, String idGita, String idBambino) throws Exception;
-
+    void bambinoPresenteServer(String codiceFiscale, int idGita) throws Exception;
+    void bambinoAssenteServer(String codiceFiscale, int idGita) throws Exception;
+    boolean newpartecipanteTrip(String codiceFiscale, String idGita) throws Exception;
+    boolean deleteTrip(String idGita) throws Exception;
 
 
 }

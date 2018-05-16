@@ -144,7 +144,6 @@ public class AddChild implements Initializable{
 
         //se metti il cambio del label serve la try catch con remoteexception
 
-
         txtNome.clear();
         txtCognome.clear();
         txtCodiceFiscale.clear();
