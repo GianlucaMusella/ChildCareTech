@@ -1574,8 +1574,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         ArrayList<AppelloGS> values = new ArrayList<>();
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
-        String SQL = ("SELECT mydb.bambini.Nome, mydb.bambini.Cognome, mydb.bambini,CodiceFiscale, mydb.bambini_has_gita.Presenza ((FROM mydb.bambini_has_gita" +
-                "INNER JOIN mydb.bambini ON mydb.bambini.idBambino = mydb.bambini_has_gita.Bambini_idBambino)" +
+        String SQL = ("SELECT mydb.bambini.Nome, mydb.bambini.Cognome, mydb.bambini.CodiceFiscale, mydb.bambini_has_gita.Presenza " +
+                "FROM ((mydb.bambini_has_gita " +
+                "INNER JOIN mydb.bambini ON mydb.bambini.CodiceFiscale = mydb.bambini_has_gita.Bambini_CodiceFiscale) " +
                 "INNER JOIN mydb.gita ON mydb.gita.idGita = mydb.bambini_has_gita.Gita_idGita = ");
         ResultSet rs = stmt.executeQuery(SQL + idGita + ")");
         while (rs.next()){
@@ -1583,6 +1584,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
             String colonnaCognome = rs.getString ("Cognome");
             String colonnaCodicefiscale = rs.getString("CodiceFiscale");
             String colonnaPresenza;
+
             if (rs.getBoolean("Presenza"))
                 colonnaPresenza = ("Presente");
             else
@@ -1594,30 +1596,29 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
     }
 
     @Override
-    public void bambinoPresenteServer(String codiceBambino) throws Exception {
-        /*ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+    public void bambinoPresenteServer(String codiceBambino, int idGita) throws Exception {
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
-        int idBambino;
-        String JoinSQL = ("SELECT * FROM mydb.bambini WHERE CodiceFiscale = '");
-        ResultSet rs = stmt.executeQuery(JoinSQL + CodiceBambino + "')");
-        idBambino = rs.getInt("idBambino");
-        String SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 1 WHERE mydb.bambini_has_gita.Bambini_idBambino = ");
-        int n = stmt.executeUpdate(SQL + idBambino + ")");*/
+        String SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 1 WHERE (mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
+                + codiceBambino + "' AND mydb.bambini_has_gita.Gita_idGita = " + idGita + ")");
+        int n = stmt.executeUpdate(SQL);
     }
 
     @Override
     public boolean newpartecipanteTrip(String codiceFiscale, String idGita, String idBambino) throws Exception {
 
         PreparedStatement preparedStatement = null;
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
-        String childTrip = "INSERT INTO mydb.bambini_has_gita (Bambini_IdBambino, Gita_idGita) VALUES (?,?)";
+        String childTrip = "INSERT INTO mydb.bambini_has_gita (Bambini_CodiceFiscale, Gita_idGita) VALUES (?,?)";
 
         try {
-            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(childTrip);
 
 
-            preparedStatement.setInt(1, Integer.parseInt(idBambino));
+            preparedStatement.setString(1, codiceFiscale);
             preparedStatement.setInt(2, Integer.parseInt(idGita));
             preparedStatement.executeUpdate();
 
@@ -1636,15 +1637,18 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
             }
         }
 
-        return false;
+
 
         // E fino a qui era la parte di inserimento, ora faccio il conto per sapere quanti pullman mi servono
 
-      /* String CountSQL = ("SELECT COUNT (Bambini_idBambino) FROM mydb.bambini_has_gita");
+        /*
+        String CountSQL = ("SELECT COUNT (Bambini_CodiceFiscale) FROM mydb.bambini_has_gita");
         ResultSet rsbis = stmt.executeQuery(CountSQL);
         float x = (52 / rsbis.getInt(1));
         int NumPullman = (int) Math.ceil(x);
-        int i = stmt.executeUpdate("INSERTO INTO mydb.gita (NumPullman) VALUES (" + NumPullman + ")");*/
+        int i = stmt.executeUpdate("INSERTO INTO mydb.gita (NumPullman) VALUES (" + NumPullman + ")");
+        */
+        return false;
     }
 
 }

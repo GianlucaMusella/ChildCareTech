@@ -6,31 +6,46 @@ public class AppelloGS implements Serializable {
 
     private String nome;
     private String cognome;
-    private String codicefiscale;
+    private String codiceFiscale;
     private String presenza;
+
+
+    public AppelloGS(String nome, String cognome, String codiceFiscale, String presenza){
+        this.nome = nome;
+        this.cognome = cognome;
+        this.codiceFiscale = codiceFiscale;
+        this.presenza = presenza;
+    }
 
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getCognome() {
         return cognome;
     }
 
-    public String getCodicefiscale() {
-        return codicefiscale;
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
+    public String getCodiceFiscale() {
+        return codiceFiscale;
+    }
+
+    public void setCodiceFiscale(String codiceFiscale) {
+        this.codiceFiscale = codiceFiscale;
     }
 
     public String getPresenza() {
         return presenza;
     }
 
-    public AppelloGS(String nome, String cognome, String codicefiscale, String presenza){
-        this.nome = nome;
-        this.cognome = cognome;
-        this.codicefiscale = codicefiscale;
-
+    public void setPresenza(String presenza) {
         this.presenza = presenza;
     }
-
 }

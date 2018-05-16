@@ -69,12 +69,12 @@ public class appelloTrip implements Initializable{
         SI RIUSCISSE A FARE CON LA MULTISELECT SAREBBE MOLTO MEGLIO, MA DOVREI PROVARE PER CAPIRE COME FUNZIONA
          */
         AppelloGS bambinoPresente = tableAppello.getSelectionModel().getSelectedItem();
-        String CodiceBambino = bambinoPresente.getCodicefiscale();
+        String CodiceBambino = bambinoPresente.getCodiceFiscale();
 
         System.out.println(CodiceBambino); // Ho messo questo per capire se prende il codice fiscale giusto
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        interfaceRMI.bambinoPresenteServer(CodiceBambino);
+        interfaceRMI.bambinoPresenteServer(CodiceBambino, Integer.parseInt(idGita.getText()));
     }
 
 

@@ -14,7 +14,7 @@ public class AppelloGUI {
 
         this.nome = new SimpleStringProperty(appelloGS.getNome());
         this.cognome = new SimpleStringProperty(appelloGS.getCognome());
-        this.codiceFiscale = new SimpleStringProperty(appelloGS.getCodicefiscale());
+        this.codiceFiscale = new SimpleStringProperty(appelloGS.getCodiceFiscale());
         this.presenza = new SimpleStringProperty(appelloGS.getPresenza());
     }
 
