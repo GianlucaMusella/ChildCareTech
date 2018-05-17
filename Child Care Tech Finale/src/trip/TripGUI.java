@@ -13,6 +13,8 @@ public class TripGUI {
     private StringProperty meta;
     private ObjectProperty<LocalDate> andata;
     private ObjectProperty<LocalDate> ritorno;
+    private StringProperty pullman;
+
 
     public void TripGUI(TripGS tripGS){
 
@@ -20,7 +22,7 @@ public class TripGUI {
         this.meta = new SimpleStringProperty(tripGS.getMeta());
         this.andata = new SimpleObjectProperty(tripGS.getAndata());
         this.ritorno = new SimpleObjectProperty(tripGS.getRitorno());
-
+        this.pullman = new SimpleStringProperty(tripGS.getPullman());
     }
 
     public String getId() {

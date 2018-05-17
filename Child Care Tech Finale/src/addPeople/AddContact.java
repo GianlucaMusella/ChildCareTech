@@ -1,7 +1,6 @@
 package addPeople;
 
 import getterAndSetter.people.ContactGS;
-import getterAndSetter.people.ParentsGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

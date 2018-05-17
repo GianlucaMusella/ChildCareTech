@@ -6,7 +6,7 @@ import getterAndSetter.food.AllergyPeopleGS;
 import getterAndSetter.food.FirstDishGS;
 import getterAndSetter.food.MenuGS;
 import getterAndSetter.food.SecondDishGS;
-import trip.AppelloGS;
+import trip.AppealGS;
 import trip.TripGS;
 
 import java.rmi.RemoteException;
@@ -1561,17 +1561,18 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
             String colonnaMeta = rs.getString("Meta");
             Date colonnaAndata = rs.getDate("Data_Partenza");
             Date colonnaRitorno = rs.getDate("Data_Ritorno");
+            String pullman = rs.getString("NumPullman");
 
-            values.add(new TripGS(colonnaId, colonnaMeta, colonnaAndata, colonnaRitorno));
+            values.add(new TripGS(colonnaId, colonnaMeta, colonnaAndata, colonnaRitorno, pullman));
         }
         rs.close();
         return values;
     }
 
     @Override
-    public ArrayList<AppelloGS> loadDataServer(int idGita) throws Exception {
+    public ArrayList<AppealGS> loadDataServer(int idGita) throws Exception {
 
-        ArrayList<AppelloGS> values = new ArrayList<>();
+        ArrayList<AppealGS> values = new ArrayList<>();
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
         String SQL = ("SELECT mydb.bambini.Nome, mydb.bambini.Cognome, mydb.bambini.CodiceFiscale, mydb.bambini_has_gita.Presenza " +
@@ -1589,7 +1590,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
             else
                 colonnaPresenza = ("Assente");
 
-            values.add(new AppelloGS(colonnaNome, colonnaCognome, colonnaCodicefiscale, colonnaPresenza));
+            values.add(new AppealGS(colonnaNome, colonnaCognome, colonnaCodicefiscale, colonnaPresenza));
         }
         return values;
     }
@@ -1616,11 +1617,47 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
     }
 
     @Override
+    public boolean newTappaServer(String numeroTappa, String tappa, String idGita, LocalDate giorno, String ora) throws Exception {
+
+
+        PreparedStatement preparedStatement = null;
+
+        String trip = "INSERT INTO mydb.tappe (idTappa,Nome,Data,Gita_idGita) VALUES (?,?,?,?)";
+
+        try {
+
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(trip);
+
+            preparedStatement.setInt(1, Integer.parseInt(numeroTappa));
+            preparedStatement.setString(2, tappa);
+            preparedStatement.setDate(3, Date.valueOf(giorno));
+            //preparedStatement.setTime(4, Time.valueOf(ora));
+            preparedStatement.setInt(4, Integer.parseInt(idGita));
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+
+                if (preparedStatement != null) {
+                    preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
+    @Override
     public boolean newpartecipanteTrip(String codiceFiscale, String idGita) throws Exception {
 
         PreparedStatement preparedStatement = null;
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
         String childTrip = "INSERT INTO mydb.bambini_has_gita (Bambini_CodiceFiscale, Gita_idGita) VALUES (?,?)";
 
@@ -1647,17 +1684,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
             }
         }
 
-
-
-        // E fino a qui era la parte di inserimento, ora faccio il conto per sapere quanti pullman mi servono
-
-        /*
-        String CountSQL = ("SELECT COUNT (Bambini_CodiceFiscale) FROM mydb.bambini_has_gita");
-        ResultSet rsbis = stmt.executeQuery(CountSQL);
-        float x = (52 / rsbis.getInt(1));
-        int NumPullman = (int) Math.ceil(x);
-        int i = stmt.executeUpdate("INSERTO INTO mydb.gita (NumPullman) VALUES (" + NumPullman + ")");
-        */
         return false;
     }
 
@@ -1687,6 +1713,23 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
         }
 
         return true;
+    }
+
+    @Override
+    public void pullmanCount(String idGita) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+        String CountSQL = ("SELECT * FROM mydb.bambini_has_gita WHERE mydb.bambini_has_gita.Gita_idGIta = ");
+        ResultSet rsbis = stmt.executeQuery(CountSQL + idGita);
+        float count = 0.0f;
+        while (rsbis.next()){
+            count = count + 1;
+        }
+        float x = (float) (count / 1.00);
+        int NumPullman = (int) Math.ceil(x);
+        stmt.executeUpdate("UPDATE mydb.gita SET NumPullman = " + NumPullman + " WHERE mydb.gita.idGita = " + idGita);
+
     }
 
 }

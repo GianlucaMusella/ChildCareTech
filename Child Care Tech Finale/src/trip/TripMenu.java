@@ -1,7 +1,6 @@
 package trip;
 
-import getterAndSetter.people.ChildGS;
-import getterAndSetter.people.ContactGS;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,6 +39,9 @@ public class TripMenu implements Initializable{
     @FXML
     private TableColumn<TripGS, String> columnRitorno;
 
+    @FXML
+    private TableColumn<TripGS, String> colonnaPullman;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -47,6 +49,7 @@ public class TripMenu implements Initializable{
         columnMeta.setCellValueFactory(new PropertyValueFactory<>("meta"));
         columnAndata.setCellValueFactory(new PropertyValueFactory<>("andata"));
         columnRitorno.setCellValueFactory(new PropertyValueFactory<>("ritorno"));
+        colonnaPullman.setCellValueFactory(new PropertyValueFactory<>("pullman"));
 
         tableGita.getItems().clear();
 
@@ -65,7 +68,7 @@ public class TripMenu implements Initializable{
     public void createTrip (ActionEvent actionEvent) throws Exception {
 
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/trip/createTrip.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/trip/AddTrip.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -86,21 +89,32 @@ public class TripMenu implements Initializable{
 
     public void appelloTrip (ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/trip/appelloTrip.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/trip/AppealTrip.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
-    public void reportTrip (ActionEvent actionEvent) throws Exception {
+    public void pullman (ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/PeopleMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/trip/Pullman.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
     }
+
+
+    public void tappe (ActionEvent actionEvent) throws Exception {
+        ((Node) actionEvent.getSource()).getScene().getWindow().hide();
+        Parent root = FXMLLoader.load(getClass().getResource("/trip/Stage.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     public void partecipantiTrip (ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
@@ -128,6 +142,5 @@ public class TripMenu implements Initializable{
         Stage stage = new Stage();
         controller.initialize(stage);
     }
-
 
 }

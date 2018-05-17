@@ -1,9 +1,5 @@
 package trip;
 
-// Database sistemato con relazione 1 a n tra bambini_partecipanti e presenti
-
-
-import connectionDatabase.ConnectionDatabase;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,31 +17,28 @@ import main.Singleton;
 import serverRMI.InterfaceRMI;
 
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class appelloTrip implements Initializable{
+public class AppealTrip implements Initializable{
 
     @FXML
     private TextField idGita;
 
     @FXML
-    private TableView<AppelloGS> tableAppello;
+    private TableView<AppealGS> tableAppello;
 
     @FXML
-    private TableColumn<AppelloGS, String> columnNome;
+    private TableColumn<AppealGS, String> columnNome;
 
     @FXML
-    private TableColumn<AppelloGS, String> columnCognome;
+    private TableColumn<AppealGS, String> columnCognome;
 
     @FXML
-    private TableColumn<AppelloGS, String> columnCodicefiscale;
+    private TableColumn<AppealGS, String> columnCodicefiscale;
 
     @FXML
-    private TableColumn<AppelloGS, String> columnPresenza;
+    private TableColumn<AppealGS, String> columnPresenza;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -60,20 +53,20 @@ public class appelloTrip implements Initializable{
     public void loadData(ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        ArrayList<AppelloGS> appelloGSArrayList = interfaceRMI.loadDataServer(Integer.parseInt(idGita.getText()));  //Qui vado a chiamare la parte Server che scrivo in fondo al codice come ieri
+        ArrayList<AppealGS> appealGSArrayList = interfaceRMI.loadDataServer(Integer.parseInt(idGita.getText()));  //Qui vado a chiamare la parte Server che scrivo in fondo al codice come ieri
 
         tableAppello.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableAppello.setItems(FXCollections.observableArrayList(appelloGSArrayList));
+        tableAppello.setItems(FXCollections.observableArrayList(appealGSArrayList));
 
     }
 
     public void appelloTrip (ActionEvent actionEvent) throws Exception {
         /*
-        ArrayList<AppelloGS> modificaPresenza = tableAppello.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        ArrayList<AppealGS> modificaPresenza = tableAppello.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         SI RIUSCISSE A FARE CON LA MULTISELECT SAREBBE MOLTO MEGLIO, MA DOVREI PROVARE PER CAPIRE COME FUNZIONA
          */
-        AppelloGS bambinoPresente = tableAppello.getSelectionModel().getSelectedItem();
+        AppealGS bambinoPresente = tableAppello.getSelectionModel().getSelectedItem();
         String codiceFiscale = bambinoPresente.getCodiceFiscale();
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
@@ -84,11 +77,11 @@ public class appelloTrip implements Initializable{
 
     public void assenza (ActionEvent actionEvent) throws Exception {
         /*
-        ArrayList<AppelloGS> modificaPresenza = tableAppello.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        ArrayList<AppealGS> modificaPresenza = tableAppello.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         SI RIUSCISSE A FARE CON LA MULTISELECT SAREBBE MOLTO MEGLIO, MA DOVREI PROVARE PER CAPIRE COME FUNZIONA
          */
-        AppelloGS bambinoAssente = tableAppello.getSelectionModel().getSelectedItem();
+        AppealGS bambinoAssente = tableAppello.getSelectionModel().getSelectedItem();
         String codiceFiscale = bambinoAssente.getCodiceFiscale();
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
@@ -114,8 +107,8 @@ public class appelloTrip implements Initializable{
 /*
 
     // PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA
-     public ArrayList<AppelloGS> loadDataServer (int idGita) throws SQLException {
-         ArrayList<AppelloGS> values = new ArrayList<>();
+     public ArrayList<AppealGS> loadDataServer (int idGita) throws SQLException {
+         ArrayList<AppealGS> values = new ArrayList<>();
          ConnectionDatabase connectionDatabase = new ConnectionDatabase();
          Statement stmt = connectionDatabase.initializeConnection().createStatement();
          String SQL = ("SELECT mydb.bambini.Nome, mydb.bambini.Cognome, mydb.bambini,CodiceFiscale, mydb.bambini_has_gita.Presenza ((FROM mydb.bambini_has_gita" +
@@ -132,7 +125,7 @@ public class appelloTrip implements Initializable{
              else
                  colonnaPresenza = ("Assente");
 
-             values.add(new AppelloGS(colonnaNome, colonnaCognome, colonnaCodicefiscale, colonnaPresenza));
+             values.add(new AppealGS(colonnaNome, colonnaCognome, colonnaCodicefiscale, colonnaPresenza));
          }
          return values;
      }

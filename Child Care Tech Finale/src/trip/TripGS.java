@@ -9,14 +9,24 @@ public class TripGS implements Serializable{
     private String meta;
     private Date andata;
     private Date ritorno;
+    private String pullman;
 
-    public TripGS(String id, String meta, Date andata, Date ritorno){
+    public TripGS(String id, String meta, Date andata, Date ritorno, String pullman){
 
         this.id = id;
         this.meta = meta;
         this.andata = andata;
         this.ritorno = ritorno;
+        this.pullman = pullman;
 
+    }
+
+    public String getPullman() {
+        return pullman;
+    }
+
+    public void setPullman(String pullman) {
+        this.pullman = pullman;
     }
 
     public String getId() {

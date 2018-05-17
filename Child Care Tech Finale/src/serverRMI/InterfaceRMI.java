@@ -5,7 +5,7 @@ import getterAndSetter.food.AllergyPeopleGS;
 import getterAndSetter.food.FirstDishGS;
 import getterAndSetter.food.MenuGS;
 import getterAndSetter.food.SecondDishGS;
-import trip.AppelloGS;
+import trip.AppealGS;
 import trip.TripGS;
 
 import java.rmi.Remote;
@@ -63,14 +63,13 @@ public interface InterfaceRMI extends Remote {
     boolean addSecondo(String nome, String allergeni) throws Exception;
     boolean deleteMenu(String nomeMenu) throws Exception;
 
-
     boolean newTrip(String id, String meta, LocalDate andata, LocalDate ritorno) throws Exception;
     ArrayList<TripGS> viewTrip() throws Exception;
-    ArrayList<AppelloGS> loadDataServer(int idGita) throws Exception;
+    ArrayList<AppealGS> loadDataServer(int idGita) throws Exception;
     void bambinoPresenteServer(String codiceFiscale, int idGita) throws Exception;
     void bambinoAssenteServer(String codiceFiscale, int idGita) throws Exception;
+    boolean newTappaServer(String numeroTappa, String tappa, String idGita, LocalDate giorno, String ora) throws Exception;
     boolean newpartecipanteTrip(String codiceFiscale, String idGita) throws Exception;
     boolean deleteTrip(String idGita) throws Exception;
-
-
+    void pullmanCount(String idGita) throws Exception;
 }
