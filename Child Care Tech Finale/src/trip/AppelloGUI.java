@@ -10,7 +10,7 @@ public class AppelloGUI {
     private StringProperty codiceFiscale;
     private StringProperty presenza;
 
-    public void AppelloGUI(AppelloGS appelloGS){
+    public void AppelloGUI(AppealGS appelloGS){
 
         this.nome = new SimpleStringProperty(appelloGS.getNome());
         this.cognome = new SimpleStringProperty(appelloGS.getCognome());

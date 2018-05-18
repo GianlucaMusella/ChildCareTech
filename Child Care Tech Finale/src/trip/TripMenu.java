@@ -68,7 +68,7 @@ public class TripMenu implements Initializable{
     public void createTrip (ActionEvent actionEvent) throws Exception {
 
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/trip/AddTrip.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/trip/createTrip.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -89,7 +89,7 @@ public class TripMenu implements Initializable{
 
     public void appelloTrip (ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/trip/AppealTrip.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/trip/appelloTrip.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

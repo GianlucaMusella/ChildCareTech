@@ -2,7 +2,7 @@ package trip;
 
 import java.io.Serializable;
 
-public class AppelloGS implements Serializable {
+public class AppealGS implements Serializable {
 
     private String nome;
     private String cognome;
@@ -10,7 +10,7 @@ public class AppelloGS implements Serializable {
     private String presenza;
 
 
-    public AppelloGS(String nome, String cognome, String codiceFiscale, String presenza){
+    public AppealGS(String nome, String cognome, String codiceFiscale, String presenza){
         this.nome = nome;
         this.cognome = cognome;
         this.codiceFiscale = codiceFiscale;

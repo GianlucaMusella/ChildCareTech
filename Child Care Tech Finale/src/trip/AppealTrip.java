@@ -53,16 +53,16 @@ public class AppealTrip implements Initializable{
     public void loadData(ActionEvent actionEvent) throws Exception {
 
         InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        ArrayList<AppealGS> appealGSArrayList = interfaceRMI.loadDataServer(Integer.parseInt(idGita.getText()));  //Qui vado a chiamare la parte Server che scrivo in fondo al codice come ieri
+        ArrayList<AppealGS> appelloGSArrayList = interfaceRMI.loadDataServer(Integer.parseInt(idGita.getText()));  //Qui vado a chiamare la parte Server che scrivo in fondo al codice come ieri
 
         tableAppello.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableAppello.setItems(FXCollections.observableArrayList(appealGSArrayList));
+        tableAppello.setItems(FXCollections.observableArrayList(appelloGSArrayList));
 
     }
 
     public void appelloTrip (ActionEvent actionEvent) throws Exception {
         /*
-        ArrayList<AppealGS> modificaPresenza = tableAppello.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        ArrayList<AppelloGS> modificaPresenza = tableAppello.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         SI RIUSCISSE A FARE CON LA MULTISELECT SAREBBE MOLTO MEGLIO, MA DOVREI PROVARE PER CAPIRE COME FUNZIONA
          */
@@ -77,7 +77,7 @@ public class AppealTrip implements Initializable{
 
     public void assenza (ActionEvent actionEvent) throws Exception {
         /*
-        ArrayList<AppealGS> modificaPresenza = tableAppello.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        ArrayList<AppelloGS> modificaPresenza = tableAppello.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         SI RIUSCISSE A FARE CON LA MULTISELECT SAREBBE MOLTO MEGLIO, MA DOVREI PROVARE PER CAPIRE COME FUNZIONA
          */
@@ -107,8 +107,8 @@ public class AppealTrip implements Initializable{
 /*
 
     // PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA
-     public ArrayList<AppealGS> loadDataServer (int idGita) throws SQLException {
-         ArrayList<AppealGS> values = new ArrayList<>();
+     public ArrayList<AppelloGS> loadDataServer (int idGita) throws SQLException {
+         ArrayList<AppelloGS> values = new ArrayList<>();
          ConnectionDatabase connectionDatabase = new ConnectionDatabase();
          Statement stmt = connectionDatabase.initializeConnection().createStatement();
          String SQL = ("SELECT mydb.bambini.Nome, mydb.bambini.Cognome, mydb.bambini,CodiceFiscale, mydb.bambini_has_gita.Presenza ((FROM mydb.bambini_has_gita" +
@@ -125,7 +125,7 @@ public class AppealTrip implements Initializable{
              else
                  colonnaPresenza = ("Assente");
 
-             values.add(new AppealGS(colonnaNome, colonnaCognome, colonnaCodicefiscale, colonnaPresenza));
+             values.add(new AppelloGS(colonnaNome, colonnaCognome, colonnaCodicefiscale, colonnaPresenza));
          }
          return values;
      }
