@@ -15,14 +15,12 @@ import javafx.stage.Stage;
 import serverRMI.InterfaceRMI;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 
 
 public class Controller {
-    private static Socket socket = null;
-    private static PrintWriter printWriter;
 
+    public static String selection = null;
 
     @FXML
     private Label lblStatus;
@@ -33,13 +31,13 @@ public class Controller {
     @FXML
     private TextField txtPassword;
 
-
-
     @FXML
     private ChoiceBox menuConnessione;
 
     //JSONObject txt;
     public String remoteObjectName = "MainFrame";
+
+
 
     public void initialize(Stage primaryStage) throws Exception {
 
@@ -56,12 +54,10 @@ public class Controller {
 
 
     public void login(ActionEvent actionEvent) throws Exception {
+        selection = (String) menuConnessione.getSelectionModel().getSelectedItem();
 
-            if(menuConnessione.getValue().equals("RMI")){
+        if(selection.equals("RMI")){
                 System.out.println("E' stata scelta la connessione RMI");
-               // Registry registry = LocateRegistry.getRegistry();
-                //InterfaceRMI Mainframe = (InterfaceRMI) registry.lookup(remoteObjectName);
-               // InterfaceRMI Mainframe = rmiInt();
                 InterfaceRMI Mainframe = Singleton.getInstance().rmiLookup();
                 if(Mainframe.login(txtUsername.getText(), txtPassword.getText())) {
                     //se il login ha avuto successo nascono il login
@@ -76,7 +72,7 @@ public class Controller {
                 else
                     lblStatus.setText("Login fallito");
 
-            } else {
+            } else if(selection.equals("SOCKET")){
                 System.out.println("Scelta connessione Socket");
                 InterfaceRMI interfaceRMI = Singleton.getInstance().methodSocket();
 
@@ -98,31 +94,4 @@ public class Controller {
 
     }
 
-
-
-
-/*
-    private boolean loginServerSocket() throws Exception{
-
-        printWriter = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-
-        //mando username al server
-        printWriter.println(txtUsername.getText());
-
-        //mando psw al server
-        printWriter.println(txtPassword.getText());
-
-        //pulisco
-        printWriter.flush();
-
-        InputStream inputStream = socket.getInputStream();
-        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-        String risultato = (String) objectInputStream.readObject();
-
-        if(risultato.equals("true")) {
-            return true;
-        }
-
-        return false;
-    }*/
 }

@@ -17,6 +17,7 @@ import javafx.scene.control.RadioButton;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -133,13 +134,18 @@ public class AddChild implements Initializable{
         String sessoM = radioMaschio.getText();
         String sessoF = radioFemmina.getText();
 
-
         if(radioMaschio.isSelected())
             sesso = sessoM;
         else
             sesso = sessoF;
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         boolean success = interfaceRMI.addChild(codiceFiscale, idBambino,  nome,  cognome,  data,  luogo,  allergie,  genitore1,  genitore2, sesso, pediatra, contatto);
 
         //se metti il cambio del label serve la try catch con remoteexception

@@ -10,6 +10,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -62,7 +63,12 @@ public class AddStaff {
             sesso = sessoF;
         }
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         boolean success = interfaceRMI.addStaff(nome, cognome, codiceFiscale, data, luogo, allergie, sesso, mansione);
 
         //se metti il cambio del label serve la try catch con remoteexception

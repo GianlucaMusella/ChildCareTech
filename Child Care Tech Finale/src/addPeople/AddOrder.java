@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -77,7 +78,12 @@ public class AddOrder implements Initializable{
         String ordini = txtOrdine.getText();
         String quantità = txtQuantità.getText();
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         boolean success = interfaceRMI.addOrder(azienda, ordini, quantità);
 
         txtAzienda.clear();

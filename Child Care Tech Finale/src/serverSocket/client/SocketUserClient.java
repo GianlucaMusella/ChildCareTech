@@ -30,7 +30,7 @@ public class SocketUserClient implements InterfaceRMI{
             fromServer = new ObjectInputStream(s.getInputStream());
 
         }catch (IOException e){
-            System.out.println("Errore IO nel server");
+            System.out.println("Errore di tipo IO nel server");
         }
     }
 
@@ -48,7 +48,6 @@ public class SocketUserClient implements InterfaceRMI{
             toServer.flush();
             toServer.writeUTF(password);
             toServer.flush();
-            System.out.println("Client " + username);
 
         }catch (IOException e){
             e.printStackTrace();
@@ -67,7 +66,34 @@ public class SocketUserClient implements InterfaceRMI{
 
     @Override
     public boolean addSupplier(String name, String surname, String azienda, String fornitura, String partitaIva) throws Exception {
-        return false;
+
+        boolean success = false;
+
+        try{
+            toServer.writeUTF("addSupplier");
+            toServer.flush();
+            toServer.writeUTF(name);
+            toServer.flush();
+            toServer.writeUTF(surname);
+            toServer.flush();
+            toServer.writeUTF(azienda);
+            toServer.flush();
+            toServer.writeUTF(fornitura);
+            toServer.flush();
+            toServer.writeUTF(partitaIva);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return success;
     }
 
     @Override
@@ -97,7 +123,50 @@ public class SocketUserClient implements InterfaceRMI{
 
     @Override
     public boolean addChild(String codiceFiscale, String idBambino, String nome, String cognome, LocalDate data, String luogo, String allergie, String genitore1, String genitore2, String sesso, String pediatra, String Contatto) throws Exception {
-        return false;
+
+        boolean success = false;
+
+        try{
+
+            toServer.writeUTF("addChild");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+            toServer.writeUTF(idBambino);
+            toServer.flush();
+            toServer.writeUTF(nome);
+            toServer.flush();
+            toServer.writeUTF(cognome);
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(data));
+            toServer.flush();
+            toServer.writeUTF(luogo);
+            toServer.flush();
+            toServer.writeUTF(allergie);
+            toServer.flush();
+            toServer.writeUTF(genitore1);
+            toServer.flush();
+            toServer.writeUTF(genitore2);
+            toServer.flush();
+            toServer.writeUTF(sesso);
+            toServer.flush();
+            toServer.writeUTF(pediatra);
+            toServer.flush();
+            toServer.writeUTF(Contatto);
+            toServer.flush();
+
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return success;
     }
 
     @Override
@@ -122,12 +191,81 @@ public class SocketUserClient implements InterfaceRMI{
 
     @Override
     public boolean addTeacher(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String insegnante, String username, String password) throws Exception {
-        return false;
+
+        boolean success = false;
+
+        try{
+
+            toServer.writeUTF("addTeacher");
+            toServer.flush();
+            toServer.writeUTF(nome);
+            toServer.flush();
+            toServer.writeUTF(cognome);
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(data));
+            toServer.flush();
+            toServer.writeUTF(luogo);
+            toServer.flush();
+            toServer.writeUTF(allergie);
+            toServer.flush();
+            toServer.writeUTF(sesso);
+            toServer.flush();
+            toServer.writeUTF(insegnante);
+            toServer.flush();
+            toServer.writeUTF(username);
+            toServer.flush();
+            toServer.writeUTF(password);
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return success;
+
     }
 
     @Override
     public boolean addStaff(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String mansione) throws Exception {
-        return false;
+
+        boolean success = false;
+
+        try{
+
+            toServer.writeUTF("addTeacher");
+            toServer.flush();
+            toServer.writeUTF(nome);
+            toServer.flush();
+            toServer.writeUTF(cognome);
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(data));
+            toServer.flush();
+            toServer.writeUTF(luogo);
+            toServer.flush();
+            toServer.writeUTF(allergie);
+            toServer.flush();
+            toServer.writeUTF(sesso);
+            toServer.flush();
+            toServer.writeUTF(mansione);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return success;
+
     }
 
     @Override

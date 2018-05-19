@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -35,9 +36,17 @@ public class AddSupplier {
         String fornitura = txtFornitura.getText();
         String partitaIva = txtPiva.getText();
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        boolean success = interfaceRMI.addSupplier(name, surname, azienda, fornitura, partitaIva);
+        //InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
 
+        InterfaceRMI interfaceRMI;
+
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
+
+        boolean success = interfaceRMI.addSupplier(name, surname, azienda, fornitura, partitaIva);
         //se metti il cambio del label serve la try catch con remoteexception
 
 

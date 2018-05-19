@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -95,7 +96,12 @@ public class AddParents implements Initializable{
             sesso = sessoF;
         }
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         boolean success = interfaceRMI.addParents(codiceFiscale,  nome,  cognome,  data,  luogo, telefono, sesso);
 
         //se metti il cambio del label serve la try catch con remoteexception

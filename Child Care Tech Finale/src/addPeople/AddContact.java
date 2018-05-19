@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -74,7 +75,14 @@ public class AddContact implements Initializable{
         String codiceFiscale = txtCodiceFiscale.getText();
         String telefono = txtTelefono.getText();
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
+
         boolean success = interfaceRMI.addContact(codiceFiscale, nome, cognome, telefono);
 
         //se metti il cambio del label serve la try catch con remoteexception
