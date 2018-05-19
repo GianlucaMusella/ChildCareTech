@@ -77,12 +77,12 @@ public class Controller {
                     lblStatus.setText("Login fallito");
 
             } else {
-
+                System.out.println("Scelta connessione Socket");
                 InterfaceRMI interfaceRMI = Singleton.getInstance().methodSocket();
 
-                boolean success = interfaceRMI.login(txtUsername.getText(), txtPassword.getText());
-
-                if(success) {
+               boolean success = interfaceRMI.login(txtUsername.getText(), txtPassword.getText());
+               System.out.println(success);
+                if (success) {
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
                     //apro la schermata del menù
                     Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
@@ -91,8 +91,8 @@ public class Controller {
                     stage.setScene(scene);
                     stage.show();
 
-                }
-
+                } else
+                    lblStatus.setText("Login fallito");
 
             }
 

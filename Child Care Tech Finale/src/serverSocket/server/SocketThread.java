@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.sql.SQLException;
 
 public class SocketThread extends Thread{
 
@@ -42,9 +43,9 @@ public class SocketThread extends Thread{
                 System.out.println("Received " + command);
 
                 boolean responce = method(command);  //passo il messaggio al doAction che decide cosa fare
-
-                //outputToClient.writeBoolean(responce);  //manda al socket client la risposta
-                //outputToClient.flush();
+                System.out.println(responce);
+                outputToClient.writeBoolean(responce);  //manda al socket client la risposta
+                outputToClient.flush();
             }
 
         } catch (IOException e) {
@@ -81,10 +82,13 @@ public class SocketThread extends Thread{
     public boolean method(String commandMethod) throws Exception {
 
         if (commandMethod.equals("login")){
+            System.out.println("Sto loggando");
             String user = inputFromClient.readUTF();
             String password = inputFromClient.readUTF();
+            System.out.println(user + password);
             boolean success = rmiServer.login(user, password);
             outputToClient.writeBoolean(success);
+            System.out.println("Server " + success);
             return success;
         }
 

@@ -16,11 +16,12 @@ import java.util.ArrayList;
 
 public class SocketUserClient implements InterfaceRMI{
     
-    private final Socket socket;
+    protected final Socket socket;
     private ObjectOutputStream toServer;
     private ObjectInputStream fromServer;
 
     public SocketUserClient(Socket s) {
+
         this.socket = s;
 
         try{
@@ -47,7 +48,7 @@ public class SocketUserClient implements InterfaceRMI{
             toServer.flush();
             toServer.writeUTF(password);
             toServer.flush();
-            System.out.println(username);
+            System.out.println("Client " + username);
 
         }catch (IOException e){
             e.printStackTrace();
@@ -56,7 +57,7 @@ public class SocketUserClient implements InterfaceRMI{
         try{
 
             success = fromServer.readBoolean();
-            System.out.println(success);
+            System.out.println("Client " + success);
 
         }catch (IOException e){
             e.printStackTrace();

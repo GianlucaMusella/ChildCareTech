@@ -22,6 +22,7 @@ public class SocketListener extends Thread{
             try{
                 socket = serverSocket.accept();
                 SocketThread socketThread = new SocketThread(socket, new RMIServer());
+                socketThread.start();
 
             }catch (Exception e){
                 e.printStackTrace();

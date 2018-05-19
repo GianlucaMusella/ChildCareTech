@@ -3,6 +3,7 @@ package serverSocket.client;
 import serverRMI.InterfaceRMI;
 import serverRMI.User;
 
+
 import java.net.Socket;
 
 public class SocketClient implements User {
@@ -21,6 +22,7 @@ public class SocketClient implements User {
 
             System.out.println("Creazione User");
             interfaceRMI = new SocketUserClient(socket);
+
 
         }catch (Exception e){
 

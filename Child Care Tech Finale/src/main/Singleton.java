@@ -33,6 +33,7 @@ public class Singleton {
     }
 
     public InterfaceRMI methodSocket() {
+
         User user;
         user = new SocketClient();
 
