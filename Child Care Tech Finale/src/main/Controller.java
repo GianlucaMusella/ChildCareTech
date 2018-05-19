@@ -47,7 +47,7 @@ public class Controller {
         Scene scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
-        ObservableList<String> C = FXCollections.observableArrayList("RMI", "Socket");
+        ObservableList<String> C = FXCollections.observableArrayList("RMI", "SOCKET");
         menuConnessione = (ChoiceBox<String>) root.lookup("#menuConnessione");
         menuConnessione.setItems(C);
         menuConnessione.setValue("RMI");
@@ -62,7 +62,7 @@ public class Controller {
                // Registry registry = LocateRegistry.getRegistry();
                 //InterfaceRMI Mainframe = (InterfaceRMI) registry.lookup(remoteObjectName);
                // InterfaceRMI Mainframe = rmiInt();
-                InterfaceRMI Mainframe =Singleton.getInstance().rmiLookup();
+                InterfaceRMI Mainframe = Singleton.getInstance().rmiLookup();
                 if(Mainframe.login(txtUsername.getText(), txtPassword.getText())) {
                     //se il login ha avuto successo nascono il login
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
@@ -78,12 +78,11 @@ public class Controller {
 
             } else {
 
-                final InetAddress URL = InetAddress.getLocalHost();
-                final int porta = 3365;
-                socket = new Socket(URL, porta);
+                InterfaceRMI interfaceRMI = Singleton.getInstance().methodSocket();
 
-                if (loginServerSocket()) {
-                    System.out.println("E' stata scelta la connessione Socket");
+                boolean success = interfaceRMI.login(txtUsername.getText(), txtPassword.getText());
+
+                if(success) {
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
                     //apro la schermata del menù
                     Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
@@ -93,12 +92,16 @@ public class Controller {
                     stage.show();
 
                 }
-                else {
-                    lblStatus.setText("Login fallito");
-                }
+
+
             }
+
     }
 
+
+
+
+/*
     private boolean loginServerSocket() throws Exception{
 
         printWriter = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -121,5 +124,5 @@ public class Controller {
         }
 
         return false;
-    }
+    }*/
 }

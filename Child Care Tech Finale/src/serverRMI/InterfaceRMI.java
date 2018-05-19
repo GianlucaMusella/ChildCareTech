@@ -12,7 +12,7 @@ import java.rmi.Remote;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public interface InterfaceRMI extends Remote {
+public interface InterfaceRMI extends Remote{
 
     boolean login(String username, String password) throws Exception;
 

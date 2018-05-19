@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class RMIServer extends UnicastRemoteObject implements InterfaceRMI {
 
-    protected RMIServer() throws RemoteException {
+    public RMIServer() throws RemoteException {
         super();
     }
 
