@@ -290,7 +290,40 @@ public class SocketUserClient implements InterfaceRMI{
 
     @Override
     public boolean addParents(String codiceFiscale, String nome, String cognome, LocalDate data, String luogo, String telefono, String sesso) throws Exception {
-        return false;
+
+        boolean success = false;
+
+        try{
+
+            toServer.writeUTF("addParents");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+            toServer.writeUTF(nome);
+            toServer.flush();
+            toServer.writeUTF(cognome);
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(data));
+            toServer.flush();
+            toServer.writeUTF(luogo);
+            toServer.flush();
+            toServer.writeUTF(telefono);
+            toServer.flush();
+            toServer.writeUTF(sesso);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return success;
+
     }
 
     @Override
@@ -315,7 +348,34 @@ public class SocketUserClient implements InterfaceRMI{
 
     @Override
     public boolean addContact(String codiceFiscale, String nome, String cognome, String telefono) throws Exception {
-        return false;
+
+        boolean success = false;
+
+        try{
+
+            toServer.writeUTF("addContact");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+            toServer.writeUTF(nome);
+            toServer.flush();
+            toServer.writeUTF(cognome);
+            toServer.flush();
+            toServer.writeUTF(telefono);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return success;
+
     }
 
     @Override
@@ -340,7 +400,38 @@ public class SocketUserClient implements InterfaceRMI{
 
     @Override
     public boolean addDoctor(String codiceFiscale, String nome, String cognome, LocalDate data, String luogo, String sesso) throws Exception {
-        return false;
+
+        boolean success = false;
+
+        try{
+
+            toServer.writeUTF("addDoctor");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+            toServer.writeUTF(nome);
+            toServer.flush();
+            toServer.writeUTF(cognome);
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(data));
+            toServer.flush();
+            toServer.writeUTF(luogo);
+            toServer.flush();
+            toServer.writeUTF(sesso);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return success;
+
     }
 
     @Override

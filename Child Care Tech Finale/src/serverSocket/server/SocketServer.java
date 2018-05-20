@@ -194,6 +194,20 @@ public class SocketServer extends Thread{
 
         else if(commandMethod.equals("addParents")){
 
+            String codiceFiscale = inputFromClient.readUTF();
+            String nome = inputFromClient.readUTF();
+            String cognome = inputFromClient.readUTF();
+            LocalDate date = LocalDate.parse(inputFromClient.readUTF());
+            String luogo = inputFromClient.readUTF();
+            String telefono = inputFromClient.readUTF();
+            String sesso = inputFromClient.readUTF();
+
+            boolean success = rmiServer.addParents(codiceFiscale, nome, cognome, date, luogo, telefono, sesso);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
+
         }else if(commandMethod.equals("viewParents")){
 
         }else if(commandMethod.equals("searchParents")){
@@ -207,6 +221,18 @@ public class SocketServer extends Thread{
 
         else if(commandMethod.equals("addContact")){
 
+            String codiceFiscale = inputFromClient.readUTF();
+            String nome = inputFromClient.readUTF();
+            String cognome = inputFromClient.readUTF();
+            String telefono = inputFromClient.readUTF();
+
+            boolean success = rmiServer.addContact(codiceFiscale, nome, cognome, telefono);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
+
+
         }else if(commandMethod.equals("viewContact")){
 
         }else if(commandMethod.equals("searchContact")){
@@ -219,6 +245,19 @@ public class SocketServer extends Thread{
 
 
         else if(commandMethod.equals("addDoctor")){
+
+            String codiceFiscale = inputFromClient.readUTF();
+            String nome = inputFromClient.readUTF();
+            String cognome = inputFromClient.readUTF();
+            LocalDate date = LocalDate.parse(inputFromClient.readUTF());
+            String luogo = inputFromClient.readUTF();
+            String sesso = inputFromClient.readUTF();
+
+            boolean success = rmiServer.addDoctor(codiceFiscale, nome, cognome, date, luogo, sesso);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
 
         }else if(commandMethod.equals("viewDoctor")){
 
