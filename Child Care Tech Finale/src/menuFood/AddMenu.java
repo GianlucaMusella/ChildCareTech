@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -99,7 +100,12 @@ public class AddMenu implements Initializable{
 
     public void viewFirstAndSecond(ActionEvent actionEvent) throws Exception{
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<FirstDishGS> firstDishGS = interfaceRMI.viewFirst();
         ArrayList<SecondDishGS> secondDishGS = interfaceRMI.viewSecond();
         ArrayList<AllergyPeopleGS> allergyPeopleGS = interfaceRMI.viewAllergy();
@@ -122,7 +128,12 @@ public class AddMenu implements Initializable{
         String secondo = secondoPiatto.getText();
         LocalDate giorno = txtGiorno.getValue();
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         boolean success = interfaceRMI.addMenu(nome, primo, secondo, giorno);
 
         nomeMenu.clear();

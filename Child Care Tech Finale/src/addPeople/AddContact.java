@@ -61,7 +61,12 @@ public class AddContact implements Initializable{
 
     public void viewContact(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<ContactGS> contactGS = interfaceRMI.viewContacts();
 
         tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
@@ -76,7 +81,6 @@ public class AddContact implements Initializable{
         String telefono = txtTelefono.getText();
 
         InterfaceRMI interfaceRMI;
-
         if (Controller.selection.equals("RMI")) {
             interfaceRMI = Singleton.getInstance().rmiLookup();
         } else {

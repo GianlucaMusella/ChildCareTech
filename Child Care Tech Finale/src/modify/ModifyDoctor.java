@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -47,7 +48,12 @@ public class ModifyDoctor implements Initializable {
 
     public void modifyDoctor (ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         interfaceRMI.modifyDoctor(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtLuogo.getText(), dateData.getValue());
 
         txtCodicefiscaleOld.clear();
@@ -60,6 +66,7 @@ public class ModifyDoctor implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colonnaCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
 
@@ -76,7 +83,12 @@ public class ModifyDoctor implements Initializable {
 
     public void viewDoctor(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<DoctorGS> doctorGS = interfaceRMI.viewDoctors();
 
         tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);

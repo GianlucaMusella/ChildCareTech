@@ -3,6 +3,7 @@ package trip;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -36,7 +37,12 @@ public class Stage {
         LocalDate giorno = giornoTappa.getValue();
         String ora = txtOra.getText();
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         interfaceRMI.newTappaServer(numeroTappa, tappa, idGita, giorno, ora);
 
 

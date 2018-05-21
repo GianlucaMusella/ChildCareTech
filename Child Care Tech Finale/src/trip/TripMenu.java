@@ -57,11 +57,33 @@ public class TripMenu implements Initializable{
 
     public void viewInfo(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<TripGS> tripGS = interfaceRMI.viewTrip();
 
         tableGita.setColumnResizePolicy(tableGita.CONSTRAINED_RESIZE_POLICY);
         tableGita.setItems(FXCollections.observableArrayList(tripGS));
+
+    }
+
+    public void deleteTrip(ActionEvent actionEvent) throws Exception {
+
+        TripGS deletableTrips = tableGita.getSelectionModel().getSelectedItem();
+        String idGita = deletableTrips.getId();
+
+        System.out.println(idGita); // Ho messo questo per capire se prende il codice fiscale giusto
+
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
+        interfaceRMI.deleteTrip(idGita);
 
     }
 
@@ -74,17 +96,6 @@ public class TripMenu implements Initializable{
         stage.setScene(scene);
         stage.show();
 
-    }
-
-    public void deleteTrip(ActionEvent actionEvent) throws Exception {
-
-        TripGS deletableTrips = tableGita.getSelectionModel().getSelectedItem();
-        String idGita = deletableTrips.getId();
-
-        System.out.println(idGita); // Ho messo questo per capire se prende il codice fiscale giusto
-
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        interfaceRMI.deleteTrip(idGita);
     }
 
     public void appelloTrip (ActionEvent actionEvent) throws Exception {

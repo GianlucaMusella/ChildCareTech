@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -96,7 +97,12 @@ public class partecipantiTrip implements Initializable{
 
     public void partecipantiTrip (ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         interfaceRMI.newpartecipanteTrip(txtCodicefiscale.getText(), txtIDgita.getText());
 
         txtCodicefiscale.clear();
@@ -106,7 +112,13 @@ public class partecipantiTrip implements Initializable{
 
     public void viewInfo(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
+        
         ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
         ArrayList<TripGS> tripGS = interfaceRMI.viewTrip();
 

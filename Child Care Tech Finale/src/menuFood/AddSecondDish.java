@@ -3,6 +3,7 @@ package menuFood;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -19,7 +20,12 @@ public class AddSecondDish {
         String nome = nomeSecondo.getText();
         String allergeni = txtAllergeni.getText();
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         boolean success = interfaceRMI.addSecondo(nome, allergeni);
 
         nomeSecondo.clear();

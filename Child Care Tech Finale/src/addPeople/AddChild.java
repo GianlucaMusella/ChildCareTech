@@ -140,7 +140,6 @@ public class AddChild implements Initializable{
             sesso = sessoF;
 
         InterfaceRMI interfaceRMI;
-
         if (Controller.selection.equals("RMI")) {
             interfaceRMI = Singleton.getInstance().rmiLookup();
         } else {
@@ -161,7 +160,6 @@ public class AddChild implements Initializable{
         txtAllergia.clear();
         txtIDBambino.clear();
         txtContatto.clear();
-
 
     }
 
@@ -217,7 +215,13 @@ public class AddChild implements Initializable{
 
     public void viewChild(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
+
         ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
         ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
         ArrayList<ContactGS> contactGS = interfaceRMI.viewContacts();

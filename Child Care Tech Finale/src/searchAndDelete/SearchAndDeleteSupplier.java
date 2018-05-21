@@ -61,7 +61,12 @@ public class SearchAndDeleteSupplier implements Initializable{
 
     public void viewSupplier(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<SupplierGS> supplierGS = interfaceRMI.viewSupplier();
 
         tabellaAzienda.setColumnResizePolicy(tabellaAzienda.CONSTRAINED_RESIZE_POLICY);
@@ -71,7 +76,12 @@ public class SearchAndDeleteSupplier implements Initializable{
 
     public void searchSupplier(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<SupplierGS> supplierGS = interfaceRMI.searchSupplier(txtAzienda.getText(), txtFornitura.getText(), txtPartitaIva.getText());
 
         tabellaAzienda.setColumnResizePolicy(tabellaAzienda.CONSTRAINED_RESIZE_POLICY);
@@ -86,7 +96,12 @@ public class SearchAndDeleteSupplier implements Initializable{
 
         System.out.println(azienda); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         interfaceRMI.deleteSupplier(azienda);
 
 

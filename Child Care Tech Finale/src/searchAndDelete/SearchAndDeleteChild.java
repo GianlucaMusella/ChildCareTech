@@ -63,7 +63,12 @@ public class SearchAndDeleteChild implements Initializable {
 
     public void viewChild(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
 
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
@@ -74,8 +79,12 @@ public class SearchAndDeleteChild implements Initializable {
 
     public void searchChild(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        // ObservableList<ChildGS> valuess = interfaceRMI.searchC(txtNome.getText(), txtCognome.getText(), txtCodicefiscale.getText());
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<ChildGS> childrenGS = interfaceRMI.searchC(txtNome.getText(), txtCognome.getText(), txtCodicefiscale.getText());
 
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
@@ -90,7 +99,12 @@ public class SearchAndDeleteChild implements Initializable {
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         interfaceRMI.deleteChild(codiceFiscale);
 
 

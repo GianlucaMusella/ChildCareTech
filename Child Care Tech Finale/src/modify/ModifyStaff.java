@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -56,7 +57,12 @@ public class ModifyStaff implements Initializable{
 
     public void modifyStaff(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         interfaceRMI.modifyStaff(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtLuogo.getText(), dateData.getValue(), txtMansione.getText());
 
         txtCodicefiscaleOld.clear();
@@ -69,6 +75,7 @@ public class ModifyStaff implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         colonnaCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
@@ -87,7 +94,12 @@ public class ModifyStaff implements Initializable{
 
     public void viewStaff(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<StaffGS> staffGS = interfaceRMI.viewStaff();
 
         tabellaStaff.setColumnResizePolicy(tabellaStaff.CONSTRAINED_RESIZE_POLICY);

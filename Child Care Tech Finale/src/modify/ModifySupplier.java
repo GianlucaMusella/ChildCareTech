@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 
@@ -50,7 +51,12 @@ public class ModifySupplier implements Initializable{
 
     public void modifySupplier(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         interfaceRMI.modifySupplier(txtAzienda.getText(), txtNome.getText(), txtCognome.getText(), txtFornitura.getText(), txtPartitaIva.getText());
 
         txtAzienda.clear();
@@ -79,7 +85,12 @@ public class ModifySupplier implements Initializable{
 
     public void viewSupplier(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<SupplierGS> supplierGS = interfaceRMI.viewSupplier();
 
         tabellaFornitori.setColumnResizePolicy(tabellaFornitori.CONSTRAINED_RESIZE_POLICY);
@@ -87,6 +98,7 @@ public class ModifySupplier implements Initializable{
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
+
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/SupplierMenu.fxml"));
         Scene scene = new Scene(root);

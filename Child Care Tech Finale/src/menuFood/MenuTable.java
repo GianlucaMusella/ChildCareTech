@@ -52,7 +52,12 @@ public class MenuTable implements Initializable{
 
     public void viewMenu(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<MenuGS> menuGS = interfaceRMI.viewMenu();
 
         tabellaMenu.setColumnResizePolicy(tabellaMenu.CONSTRAINED_RESIZE_POLICY);
@@ -67,7 +72,12 @@ public class MenuTable implements Initializable{
 
         System.out.println(nomeMenu); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         interfaceRMI.deleteMenu(nomeMenu);
 
 

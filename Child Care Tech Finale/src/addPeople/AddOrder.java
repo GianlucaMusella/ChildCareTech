@@ -48,6 +48,7 @@ public class AddOrder implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         colonnaAzienda.setCellValueFactory(new PropertyValueFactory<>("azienda"));
         colonnaFornitura.setCellValueFactory(new PropertyValueFactory<>("fornitura"));
         colonnaPartitaIVA.setCellValueFactory(new PropertyValueFactory<>("partitaIva"));
@@ -65,7 +66,12 @@ public class AddOrder implements Initializable{
 
     public void viewSupplier(ActionEvent actionEvent) throws Exception{
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<SupplierGS> supplierGS = interfaceRMI.viewSupplier();
 
         tabellaFornitori.setColumnResizePolicy(tabellaFornitori.CONSTRAINED_RESIZE_POLICY);

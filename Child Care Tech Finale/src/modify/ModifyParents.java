@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.Controller;
 import main.Singleton;
 import serverRMI.InterfaceRMI;
 import javafx.event.ActionEvent;
@@ -57,7 +58,12 @@ public class ModifyParents implements Initializable {
 
     public void modifyParents (ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         interfaceRMI.modifyParents(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtLuogo.getText(), dateData.getValue(), txtTelefono.getText());
 
         txtCodicefiscaleOld.clear();
@@ -70,6 +76,7 @@ public class ModifyParents implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         colonnaCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
@@ -79,7 +86,12 @@ public class ModifyParents implements Initializable {
 
     public void viewParents(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
+        InterfaceRMI interfaceRMI;
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
         ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
 
         tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
@@ -87,12 +99,14 @@ public class ModifyParents implements Initializable {
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
+
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/ParentsMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+
     }
 
 
