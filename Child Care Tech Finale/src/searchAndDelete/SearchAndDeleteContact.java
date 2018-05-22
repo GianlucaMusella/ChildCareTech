@@ -88,6 +88,7 @@ public class SearchAndDeleteContact implements Initializable{
     public void deleteContacts(ActionEvent actionEvent) throws Exception {
 
         ContactGS deletableContacts = tabellaContatti.getSelectionModel().getSelectedItem();
+        int index = tabellaContatti.getSelectionModel().getSelectedIndex();
         String codiceFiscale = deletableContacts.getCodiceFiscale();
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
@@ -99,6 +100,7 @@ public class SearchAndDeleteContact implements Initializable{
             interfaceRMI = Singleton.getInstance().methodSocket();
         }
         interfaceRMI.deleteContacts(codiceFiscale);
+        tabellaContatti.getItems().remove(index);
 
 
     }

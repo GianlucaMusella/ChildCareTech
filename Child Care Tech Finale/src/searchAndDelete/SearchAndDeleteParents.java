@@ -88,6 +88,7 @@ public class SearchAndDeleteParents implements Initializable{
     public void deleteParents (ActionEvent actionEvent) throws Exception {
 
         ParentsGS deletableParentsGS = tabellaGenitori.getSelectionModel().getSelectedItem();
+        int index = tabellaGenitori.getSelectionModel().getSelectedIndex();
         String codiceFiscale = deletableParentsGS.getCodiceFiscale();
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
@@ -99,6 +100,7 @@ public class SearchAndDeleteParents implements Initializable{
             interfaceRMI = Singleton.getInstance().methodSocket();
         }
         interfaceRMI.deleteParents(codiceFiscale);
+        tabellaGenitori.getItems().remove(index);
 
     }
 
