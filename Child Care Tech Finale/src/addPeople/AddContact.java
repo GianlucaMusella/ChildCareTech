@@ -9,10 +9,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
@@ -48,6 +50,9 @@ public class AddContact implements Initializable{
     @FXML
     private TableColumn<ContactGS, String> colonnaCodiceFiscale;
 
+    @FXML
+    private Label lblStatus;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,31 +79,32 @@ public class AddContact implements Initializable{
     }
 
     public void addContact(ActionEvent actionEvent) throws Exception {
+        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty())
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        else {
+            String nome = txtNome.getText();
+            String cognome = txtCognome.getText();
+            String codiceFiscale = txtCodiceFiscale.getText();
+            String telefono = txtTelefono.getText();
 
-        String nome = txtNome.getText();
-        String cognome = txtCognome.getText();
-        String codiceFiscale = txtCodiceFiscale.getText();
-        String telefono = txtTelefono.getText();
+            InterfaceRMI interfaceRMI;
+            if (Controller.selection.equals("RMI")) {
+                interfaceRMI = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceRMI = Singleton.getInstance().methodSocket();
+            }
 
-        InterfaceRMI interfaceRMI;
-        if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            boolean success = interfaceRMI.addContact(codiceFiscale, nome, cognome, telefono);
+
+            if (success){
+                lblStatus.setTextFill(Color.BLACK);
+                lblStatus.setText("Inserimento riuscito");
+            }
+            txtNome.clear();
+            txtCognome.clear();
+            txtCodiceFiscale.clear();
+            txtTelefono.clear();
         }
-
-        boolean success = interfaceRMI.addContact(codiceFiscale, nome, cognome, telefono);
-
-        //se metti il cambio del label serve la try catch con remoteexception
-        /*if(success == true)
-            JOptionPane.showMessageDialog(null, "Inserimento avvenuto con successo", "Risultato", JOptionPane.INFORMATION_MESSAGE);
-        else
-            JOptionPane.showMessageDialog(null, "Inserimento fallito", "Risultato", JOptionPane.INFORMATION_MESSAGE);
-*/
-        txtNome.clear();
-        txtCognome.clear();
-        txtCodiceFiscale.clear();
-        txtTelefono.clear();
 
 
     }
