@@ -23,6 +23,7 @@ import main.Singleton;
 import serverRMI.InterfaceRMI;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -123,55 +124,62 @@ public class AddChild implements Initializable{
 
     public void addChild(ActionEvent actionEvent) throws Exception {
 
+        String sesso;
+        String nome = txtNome.getText();
+        String cognome = txtCognome.getText();
+        String codiceFiscale = txtCodiceFiscale.getText();
+        String luogo = txtLuogo.getText();
+        LocalDate data = dateData.getValue();
+        String genitore1 = txtGenitore1.getText();
+        String genitore2 = txtGenitore2.getText();
+        String pediatra = txtPediatra.getText();
+        String allergie = txtAllergia.getText();
+        String idBambino = txtIDBambino.getText();
+        String contatto = txtContatto.getText();
+        String sessoM = radioMaschio.getText();
+        String sessoF = radioFemmina.getText();
+
+        if (radioMaschio.isSelected())
+            sesso = sessoM;
+        else
+            sesso = sessoF;
+
         if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16 ||
                 txtLuogo.getText().isEmpty() || txtPediatra.getText().isEmpty() || txtIDBambino.getText().isEmpty() || txtContatto.getText().isEmpty() || txtGenitore1.getText().isEmpty() ) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         }
         else {
-            String sesso;
-            String nome = txtNome.getText();
-            String cognome = txtCognome.getText();
-            String codiceFiscale = txtCodiceFiscale.getText();
-            String luogo = txtLuogo.getText();
-            LocalDate data = dateData.getValue();
-            String genitore1 = txtGenitore1.getText();
-            String genitore2 = txtGenitore2.getText();
-            String pediatra = txtPediatra.getText();
-            String allergie = txtAllergia.getText();
-            String idBambino = txtIDBambino.getText();
-            String contatto = txtContatto.getText();
-            String sessoM = radioMaschio.getText();
-            String sessoF = radioFemmina.getText();
+            try{
 
-            if (radioMaschio.isSelected())
-                sesso = sessoM;
-            else
-                sesso = sessoF;
+                InterfaceRMI interfaceRMI;
+                if (Controller.selection.equals("RMI")) {
+                    interfaceRMI = Singleton.getInstance().rmiLookup();
+                } else {
+                    interfaceRMI = Singleton.getInstance().methodSocket();
+                }
+                boolean success = interfaceRMI.addChild(codiceFiscale, idBambino, nome, cognome, data, luogo, allergie, genitore1, genitore2, sesso, pediatra, contatto);
 
-            InterfaceRMI interfaceRMI;
-            if (Controller.selection.equals("RMI")) {
-                interfaceRMI = Singleton.getInstance().rmiLookup();
-            } else {
-                interfaceRMI = Singleton.getInstance().methodSocket();
+                if(success){
+                    txtNome.clear();
+                    txtCognome.clear();
+                    txtCodiceFiscale.clear();
+                    txtLuogo.clear();
+                    dateData.getEditor().clear();
+                    txtGenitore1.clear();
+                    txtGenitore2.clear();
+                    txtPediatra.clear();
+                    txtAllergia.clear();
+                    txtIDBambino.clear();
+                    txtContatto.clear();
+                    lblStatus.setTextFill(Color.BLACK);
+                    lblStatus.setText("Inserimento riuscito");
+                }
+
+
+
+            }catch (RemoteException e){
+                e.printStackTrace();
             }
-            boolean success = interfaceRMI.addChild(codiceFiscale, idBambino, nome, cognome, data, luogo, allergie, genitore1, genitore2, sesso, pediatra, contatto);
-
-            if(success){
-                lblStatus.setTextFill(Color.BLACK);
-                lblStatus.setText("Inserimento riuscito");
-            }
-
-            txtNome.clear();
-            txtCognome.clear();
-            txtCodiceFiscale.clear();
-            txtLuogo.clear();
-            dateData.getEditor().clear();
-            txtGenitore1.clear();
-            txtGenitore2.clear();
-            txtPediatra.clear();
-            txtAllergia.clear();
-            txtIDBambino.clear();
-            txtContatto.clear();
         }
     }
 
