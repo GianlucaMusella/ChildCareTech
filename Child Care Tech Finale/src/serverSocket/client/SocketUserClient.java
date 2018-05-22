@@ -186,7 +186,26 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public boolean deleteSupplier(String azienda) throws Exception {
-        return false;
+
+        try{
+
+            toServer.writeUTF("deleteSupplier");
+            toServer.flush();
+            toServer.writeUTF(azienda);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            return fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return true;
+
     }
 
     @Override
@@ -293,7 +312,28 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public boolean deleteChild(String codiceFiscale) throws Exception {
-        return false;
+
+        boolean success = false;
+
+        try{
+
+            toServer.writeUTF("deleteChild");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return success;
+
     }
 
     @Override
@@ -432,7 +472,26 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public boolean deleteStaff(String codiceFiscale) throws Exception {
-        return false;
+
+        try{
+
+            toServer.writeUTF("deleteStaff");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            return fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return true;
+
     }
 
     @Override
@@ -528,7 +587,26 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public boolean deleteParents(String codiceFiscale) throws Exception {
-        return false;
+
+        try{
+
+            toServer.writeUTF("deleteParents");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            return fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return true;
+
     }
 
     @Override
@@ -619,7 +697,26 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public boolean deleteContacts(String codiceFiscale) throws Exception {
-        return false;
+
+        try{
+
+            toServer.writeUTF("deleteContacts");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            return fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return true;
+
     }
 
     @Override
@@ -715,7 +812,26 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public boolean deleteDoctors(String codiceFiscale) throws Exception {
-        return false;
+
+        try{
+
+            toServer.writeUTF("deleteDoctor");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            return fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return true;
+
     }
 
     @Override
@@ -895,7 +1011,25 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public boolean deleteMenu(String nomeMenu) throws Exception {
-        return false;
+
+        try{
+
+            toServer.writeUTF("deleteMenu");
+            toServer.flush();
+            toServer.writeUTF(nomeMenu);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            return fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return true;
     }
 
     @Override
@@ -1050,7 +1184,25 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public boolean deleteTrip(String idGita) throws Exception {
-        return false;
+
+        try{
+
+            toServer.writeUTF("deleteTrip");
+            toServer.flush();
+            toServer.writeUTF(idGita);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            return fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return true;
     }
 
     @Override

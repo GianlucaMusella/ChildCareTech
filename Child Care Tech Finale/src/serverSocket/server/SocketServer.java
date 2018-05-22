@@ -133,6 +133,14 @@ public class SocketServer extends Thread{
 
         }else if(commandMethod.equals("deleteSupplier")){
 
+            System.out.println("Sto eseguendo da Socket");
+            String azienda = inputFromClient.readUTF();
+
+            boolean success = rmiServer.deleteSupplier(azienda);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
         }
 
 
@@ -177,6 +185,15 @@ public class SocketServer extends Thread{
         }else if(commandMethod.equals("modifyChild")){
 
         }else if(commandMethod.equals("deleteChild")){
+
+            System.out.println("Sto eseguendo da Socket");
+            String codiceFiscale = inputFromClient.readUTF();
+
+            Boolean success = rmiServer.deleteChild(codiceFiscale);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
 
         }
 
@@ -238,6 +255,15 @@ public class SocketServer extends Thread{
 
         }else if(commandMethod.equals("deleteStaff")){
 
+            System.out.println("Sto eseguendo da Socket");
+            String codiceFiscale = inputFromClient.readUTF();
+
+            Boolean success = rmiServer.deleteStaff(codiceFiscale);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
+
         }
 
 
@@ -278,6 +304,15 @@ public class SocketServer extends Thread{
 
         }else if(commandMethod.equals("deleteParents")){
 
+            System.out.println("Sto eseguendo da Socket");
+            String codiceFiscale = inputFromClient.readUTF();
+
+            Boolean success = rmiServer.deleteParents(codiceFiscale);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
+
         }
 
 
@@ -314,6 +349,15 @@ public class SocketServer extends Thread{
         }else if(commandMethod.equals("modifyContacts")){
 
         }else if(commandMethod.equals("deleteContacts")){
+
+            System.out.println("Sto eseguendo da Socket");
+            String codiceFiscale = inputFromClient.readUTF();
+
+            Boolean success = rmiServer.deleteContacts(codiceFiscale);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
 
         }
 
@@ -353,6 +397,15 @@ public class SocketServer extends Thread{
         }else if(commandMethod.equals("modifyDoctor")){
 
         }else if(commandMethod.equals("deleteDoctor")){
+
+            System.out.println("Sto eseguendo da Socket");
+            String codiceFiscale = inputFromClient.readUTF();
+
+            Boolean success = rmiServer.deleteDoctors(codiceFiscale);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
 
         }
 
@@ -422,6 +475,14 @@ public class SocketServer extends Thread{
 
         }else if(commandMethod.equals("deleteMenu")){
 
+            System.out.println("Sto eseguendo da Socket");
+            String nomeMenu = inputFromClient.readUTF();
+
+            Boolean success = rmiServer.deleteMenu(nomeMenu);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
         }
 
 
@@ -484,6 +545,15 @@ public class SocketServer extends Thread{
 
 
         }else if(commandMethod.equals("deleteTrip")){
+
+            System.out.println("Sto eseguendo da Socket");
+            String idGita = inputFromClient.readUTF();
+
+            Boolean success = rmiServer.deleteTrip(idGita);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
 
         }else if(commandMethod.equals("pullmanCount")){
 
