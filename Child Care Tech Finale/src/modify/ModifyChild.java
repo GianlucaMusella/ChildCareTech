@@ -17,6 +17,7 @@ import main.Singleton;
 import serverRMI.InterfaceRMI;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -56,16 +57,34 @@ public class ModifyChild implements Initializable{
     @FXML
     private TableColumn<ChildGS, String> columnID;
 
+    @FXML
+    private Label lblStatus;
+
     public void modifyClient (ActionEvent actionEvent) throws Exception {
+        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodicefiscaleOld.getText().isEmpty() || txtCodicefiscaleOld.getText().length() != 16 ||
+                txtLuogo.getText().isEmpty() || idBambino.getText().isEmpty())
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        else {
+            String nome = txtNome.getText();
+            String cognome = txtCognome.getText();
+            String codiceFiscale = txtCodicefiscaleOld.getText();
+            String luogo = txtLuogo.getText();
+            LocalDate data = dateData.getValue();
+            String id = idBambino.getText();
+            InterfaceRMI interfaceRMI;
+            if (Controller.selection.equals("RMI")) {
+                interfaceRMI = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceRMI = Singleton.getInstance().methodSocket();
+            }
+            interfaceRMI.modifyChild(codiceFiscale, nome, cognome, luogo, data, id);
 
-        InterfaceRMI interfaceRMI;
-        if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            txtCodicefiscaleOld.clear();
+            txtCognome.clear();
+            txtNome.clear();
+            txtLuogo.clear();
+            idBambino.clear();
         }
-        interfaceRMI.modifyChild(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtLuogo.getText(), dateData.getValue(), idBambino.getText());
-
     }
 
 

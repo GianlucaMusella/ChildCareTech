@@ -8,10 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
@@ -20,6 +17,7 @@ import serverRMI.InterfaceRMI;
 import javafx.event.ActionEvent;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -55,23 +53,35 @@ public class ModifyParents implements Initializable {
     @FXML
     private TableColumn<ParentsGS, String> colonnaCodiceFiscale;
 
+    @FXML
+    private Label lblStatus;
+
 
     public void modifyParents (ActionEvent actionEvent) throws Exception {
+        if (txtCodicefiscaleOld.getText().isEmpty() || txtCodicefiscaleOld.getText().length() != 16 || txtCognome.getText().isEmpty() || txtNome.getText().isEmpty() || txtTelefono.getText().isEmpty())
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        else {
+            String codiceFiscale = txtCodicefiscaleOld.getText();
+            String nome = txtNome.getText();
+            String cognome = txtCognome.getText();
+            String luogo = txtLuogo.getText();
+            LocalDate data = dateData.getValue();
+            String telefono = txtTelefono.getText();
+            InterfaceRMI interfaceRMI;
+            if (Controller.selection.equals("RMI")) {
+                interfaceRMI = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceRMI = Singleton.getInstance().methodSocket();
+            }
+            interfaceRMI.modifyParents(codiceFiscale, nome, cognome, luogo, data, telefono);
 
-        InterfaceRMI interfaceRMI;
-        if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            txtCodicefiscaleOld.clear();
+            txtNome.clear();
+            txtCognome.clear();
+            txtLuogo.clear();
+            dateData.getEditor().clear();
+            txtTelefono.clear();
         }
-        interfaceRMI.modifyParents(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtLuogo.getText(), dateData.getValue(), txtTelefono.getText());
-
-        txtCodicefiscaleOld.clear();
-        txtNome.clear();
-        txtCognome.clear();
-        txtLuogo.clear();
-        dateData.getEditor().clear();
-        txtTelefono.clear();
     }
 
     @Override

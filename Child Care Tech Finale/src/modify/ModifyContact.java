@@ -46,6 +46,9 @@ public class ModifyContact implements Initializable{
     @FXML
     private TableColumn<ContactGS, String> colonnaCodiceFiscale;
 
+    @FXML
+    private Label lblStatus;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -64,20 +67,27 @@ public class ModifyContact implements Initializable{
     }
 
     public void modifyContact(ActionEvent actionEvent) throws Exception {
+        if (txtCodicefiscaleOld.getText().isEmpty() || txtCodicefiscaleOld.getText().length() != 16 || txtCognome.getText().isEmpty() || txtNome.getText().isEmpty() || txtTelefono.getText().isEmpty())
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        else {
+            String codiceFiscale = txtCodicefiscaleOld.getText();
+            String nome = txtNome.getText();
+            String cognome = txtCognome.getText();
+            String telefono = txtTelefono.getText();
 
-        InterfaceRMI interfaceRMI;
-        if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            InterfaceRMI interfaceRMI;
+            if (Controller.selection.equals("RMI")) {
+                interfaceRMI = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceRMI = Singleton.getInstance().methodSocket();
+            }
+            interfaceRMI.modifyContact(codiceFiscale, nome, cognome, telefono);
+
+            txtCodicefiscaleOld.clear();
+            txtNome.clear();
+            txtCognome.clear();
+            txtTelefono.clear();
         }
-        interfaceRMI.modifyContact(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtTelefono.getText());
-
-        txtCodicefiscaleOld.clear();
-        txtNome.clear();
-        txtCognome.clear();
-        txtTelefono.clear();
-
     }
 
     public void viewContact(ActionEvent actionEvent) throws Exception {
