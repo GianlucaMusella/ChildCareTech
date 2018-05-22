@@ -17,7 +17,9 @@ import main.Singleton;
 import serverRMI.InterfaceRMI;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ModifyDoctor implements Initializable {
@@ -46,22 +48,32 @@ public class ModifyDoctor implements Initializable {
     @FXML
     private TableColumn<DoctorGS, String> colonnaCodiceFiscale;
 
+    @FXML
+    private Label lblStatus;
+
     public void modifyDoctor (ActionEvent actionEvent) throws Exception {
+        if (txtCodicefiscaleOld.getText().isEmpty() || txtCodicefiscaleOld.getText().length() != 16 || txtCognome.getText().isEmpty() || txtNome.getText().isEmpty() || txtLuogo.getText().isEmpty())
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        else {
+            String codiceFiscale = txtCodicefiscaleOld.getText();
+            String nome = txtNome.getText();
+            String cognome = txtCognome.getText();
+            String luogo = txtLuogo.getText();
+            LocalDate data = dateData.getValue();
+            InterfaceRMI interfaceRMI;
+            if (Controller.selection.equals("RMI")) {
+                interfaceRMI = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceRMI = Singleton.getInstance().methodSocket();
+            }
+            interfaceRMI.modifyDoctor(codiceFiscale, nome, cognome, luogo, data);
 
-        InterfaceRMI interfaceRMI;
-        if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            txtCodicefiscaleOld.clear();
+            txtNome.clear();
+            txtCognome.clear();
+            txtLuogo.clear();
+            dateData.getEditor().clear();
         }
-        interfaceRMI.modifyDoctor(txtCodicefiscaleOld.getText(), txtNome.getText(), txtCognome.getText(), txtLuogo.getText(), dateData.getValue());
-
-        txtCodicefiscaleOld.clear();
-        txtNome.clear();
-        txtCognome.clear();
-        txtLuogo.clear();
-        dateData.getEditor().clear();
-
     }
 
     @Override

@@ -49,21 +49,33 @@ public class ModifySupplier implements Initializable{
     @FXML
     private TableColumn<SupplierGS, String> colonnaPartitaIva;
 
+    @FXML
+    private Label lblStatus;
+
     public void modifySupplier(ActionEvent actionEvent) throws Exception {
+        if (txtAzienda.getText().isEmpty() || txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtFornitura.getText().isEmpty()
+                || txtPartitaIva.getText().isEmpty() || txtPartitaIva.getText().length() != 11)
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        else {
+            String azienda = txtAzienda.getText();
+            String nome = txtNome.getText();
+            String cognome = txtCognome.getText();
+            String fornitura = txtFornitura.getText();
+            String partitaIVA = txtPartitaIva.getText();
+            InterfaceRMI interfaceRMI;
+            if (Controller.selection.equals("RMI")) {
+                interfaceRMI = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceRMI = Singleton.getInstance().methodSocket();
+            }
+            interfaceRMI.modifySupplier(azienda, nome, cognome, fornitura, partitaIVA);
 
-        InterfaceRMI interfaceRMI;
-        if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            txtAzienda.clear();
+            txtNome.clear();
+            txtCognome.clear();
+            txtFornitura.clear();
+            txtPartitaIva.clear();
         }
-        interfaceRMI.modifySupplier(txtAzienda.getText(), txtNome.getText(), txtCognome.getText(), txtFornitura.getText(), txtPartitaIva.getText());
-
-        txtAzienda.clear();
-        txtNome.clear();
-        txtCognome.clear();
-        txtFornitura.clear();
-        txtPartitaIva.clear();
     }
 
     @Override
