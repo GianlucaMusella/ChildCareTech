@@ -116,51 +116,59 @@ public class AddChild implements Initializable{
     @FXML
     private TableColumn<DoctorGS, String> colonnaCfP;
 
+    @FXML
+    private Label lblStatus;
+
 
     public void addChild(ActionEvent actionEvent) throws Exception {
 
-        String sesso;
-        String nome = txtNome.getText();
-        String cognome = txtCognome.getText();
-        String codiceFiscale = txtCodiceFiscale.getText();
-        String luogo = txtLuogo.getText();
-        LocalDate data = dateData.getValue();
-        String genitore1 = txtGenitore1.getText();
-        String genitore2 = txtGenitore2.getText();
-        String pediatra = txtPediatra.getText();
-        String allergie = txtAllergia.getText();
-        String idBambino = txtIDBambino.getText();
-        String contatto = txtContatto.getText();
-        String sessoM = radioMaschio.getText();
-        String sessoF = radioFemmina.getText();
-
-        if(radioMaschio.isSelected())
-            sesso = sessoM;
-        else
-            sesso = sessoF;
-
-        InterfaceRMI interfaceRMI;
-        if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() || txtLuogo.getText().isEmpty() ||
+        txtPediatra.getText().isEmpty() || txtIDBambino.getText().isEmpty() || txtContatto.getText().isEmpty() || txtGenitore1.getText().isEmpty() ) {
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         }
-        boolean success = interfaceRMI.addChild(codiceFiscale, idBambino,  nome,  cognome,  data,  luogo,  allergie,  genitore1,  genitore2, sesso, pediatra, contatto);
+        else {
+            String sesso;
+            String nome = txtNome.getText();
+            String cognome = txtCognome.getText();
+            String codiceFiscale = txtCodiceFiscale.getText();
+            String luogo = txtLuogo.getText();
+            LocalDate data = dateData.getValue();
+            String genitore1 = txtGenitore1.getText();
+            String genitore2 = txtGenitore2.getText();
+            String pediatra = txtPediatra.getText();
+            String allergie = txtAllergia.getText();
+            String idBambino = txtIDBambino.getText();
+            String contatto = txtContatto.getText();
+            String sessoM = radioMaschio.getText();
+            String sessoF = radioFemmina.getText();
 
-        //se metti il cambio del label serve la try catch con remoteexception
+            if (radioMaschio.isSelected())
+                sesso = sessoM;
+            else
+                sesso = sessoF;
 
-        txtNome.clear();
-        txtCognome.clear();
-        txtCodiceFiscale.clear();
-        txtLuogo.clear();
-        dateData.getEditor().clear();
-        txtGenitore1.clear();
-        txtGenitore2.clear();
-        txtPediatra.clear();
-        txtAllergia.clear();
-        txtIDBambino.clear();
-        txtContatto.clear();
+            InterfaceRMI interfaceRMI;
+            if (Controller.selection.equals("RMI")) {
+                interfaceRMI = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceRMI = Singleton.getInstance().methodSocket();
+            }
+            boolean success = interfaceRMI.addChild(codiceFiscale, idBambino, nome, cognome, data, luogo, allergie, genitore1, genitore2, sesso, pediatra, contatto);
 
+            //se metti il cambio del label serve la try catch con remoteexception
+
+            txtNome.clear();
+            txtCognome.clear();
+            txtCodiceFiscale.clear();
+            txtLuogo.clear();
+            dateData.getEditor().clear();
+            txtGenitore1.clear();
+            txtGenitore2.clear();
+            txtPediatra.clear();
+            txtAllergia.clear();
+            txtIDBambino.clear();
+            txtContatto.clear();
+        }
     }
 
     @Override

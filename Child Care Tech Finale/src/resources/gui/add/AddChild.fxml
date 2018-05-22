@@ -78,5 +78,6 @@
       <Label layoutX="674.0" layoutY="31.0" text="Genitori presenti nel database" />
       <Label layoutX="290.0" layoutY="322.0" text="Contatti presenti nel database" />
       <Label layoutX="675.0" layoutY="322.0" text="Pediatri presenti nel database" />
+      <Label fx:id="lblStatus" layoutX="88.0" layoutY="619.0" textFill="RED" />
    </children>
 </AnchorPane>
