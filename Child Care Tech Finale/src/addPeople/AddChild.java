@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.RadioButton;
 
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
@@ -122,8 +123,8 @@ public class AddChild implements Initializable{
 
     public void addChild(ActionEvent actionEvent) throws Exception {
 
-        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() || txtLuogo.getText().isEmpty() ||
-        txtPediatra.getText().isEmpty() || txtIDBambino.getText().isEmpty() || txtContatto.getText().isEmpty() || txtGenitore1.getText().isEmpty() ) {
+        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16 ||
+                txtLuogo.getText().isEmpty() || txtPediatra.getText().isEmpty() || txtIDBambino.getText().isEmpty() || txtContatto.getText().isEmpty() || txtGenitore1.getText().isEmpty() ) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         }
         else {
@@ -155,7 +156,10 @@ public class AddChild implements Initializable{
             }
             boolean success = interfaceRMI.addChild(codiceFiscale, idBambino, nome, cognome, data, luogo, allergie, genitore1, genitore2, sesso, pediatra, contatto);
 
-            //se metti il cambio del label serve la try catch con remoteexception
+            if(success){
+                lblStatus.setTextFill(Color.BLACK);
+                lblStatus.setText("Inserimento riuscito");
+            }
 
             txtNome.clear();
             txtCognome.clear();
