@@ -86,21 +86,24 @@ public class AddOrder implements Initializable{
             String azienda = txtAzienda.getText();
             String ordini = txtOrdine.getText();
             String quantità = txtQuantità.getText();
-
-            InterfaceRMI interfaceRMI;
-            if (Controller.selection.equals("RMI")) {
-                interfaceRMI = Singleton.getInstance().rmiLookup();
-            } else {
-                interfaceRMI = Singleton.getInstance().methodSocket();
+            try {
+                InterfaceRMI interfaceRMI;
+                if (Controller.selection.equals("RMI")) {
+                    interfaceRMI = Singleton.getInstance().rmiLookup();
+                } else {
+                    interfaceRMI = Singleton.getInstance().methodSocket();
+                }
+                boolean success = interfaceRMI.addOrder(azienda, ordini, quantità);
+                if (success) {
+                    txtAzienda.clear();
+                    txtOrdine.clear();
+                    txtQuantità.clear();
+                    lblStatus.setTextFill(Color.BLACK);
+                    lblStatus.setText("Ordine registrato");
+                }
+            } catch (Exception e){
+                e.printStackTrace();
             }
-            boolean success = interfaceRMI.addOrder(azienda, ordini, quantità);
-            if (success){
-                lblStatus.setTextFill(Color.BLACK);
-                lblStatus.setText("Ordine registrato");
-            }
-            txtAzienda.clear();
-            txtOrdine.clear();
-            txtQuantità.clear();
         }
     }
 

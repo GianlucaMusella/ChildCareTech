@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -12,5 +13,6 @@
       <TextField fx:id="txtFornitura" layoutX="64.0" layoutY="194.0" prefHeight="35.0" prefWidth="149.0" promptText="Fornitura" />
       <TextField fx:id="txtPiva" layoutX="64.0" layoutY="240.0" prefHeight="35.0" prefWidth="149.0" promptText="Partita IVA" />
       <Button fx:id="save" layoutX="169.0" layoutY="303.0" mnemonicParsing="false" onAction="#addSupplier" text="Salva" />
+      <Label fx:id="lblStatus" layoutX="50.0" layoutY="307.0" textFill="RED" />
    </children>
 </AnchorPane>

@@ -108,24 +108,27 @@ public class AddParents implements Initializable{
             } else {
                 sesso = sessoF;
             }
-
-            InterfaceRMI interfaceRMI;
-            if (Controller.selection.equals("RMI")) {
-                interfaceRMI = Singleton.getInstance().rmiLookup();
-            } else {
-                interfaceRMI = Singleton.getInstance().methodSocket();
+            try {
+                InterfaceRMI interfaceRMI;
+                if (Controller.selection.equals("RMI")) {
+                    interfaceRMI = Singleton.getInstance().rmiLookup();
+                } else {
+                    interfaceRMI = Singleton.getInstance().methodSocket();
+                }
+                boolean success = interfaceRMI.addParents(codiceFiscale, nome, cognome, data, luogo, telefono, sesso);
+                if (success) {
+                    txtNome.clear();
+                    txtCognome.clear();
+                    txtCodiceFiscale.clear();
+                    txtLuogo.clear();
+                    dateData.getEditor().clear();
+                    txtTelefono.clear();
+                    lblStatus.setTextFill(Color.BLACK);
+                    lblStatus.setText("Inserimento riuscito");
+                }
+            } catch (Exception e){
+                e.printStackTrace();
             }
-            boolean success = interfaceRMI.addParents(codiceFiscale, nome, cognome, data, luogo, telefono, sesso);
-            if (success){
-                lblStatus.setTextFill(Color.BLACK);
-                lblStatus.setText("Inserimento riuscito");
-            }
-            txtNome.clear();
-            txtCognome.clear();
-            txtCodiceFiscale.clear();
-            txtLuogo.clear();
-            dateData.getEditor().clear();
-            txtTelefono.clear();
         }
     }
 

@@ -7,8 +7,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
@@ -44,44 +46,55 @@ public class AddStaff {
     @FXML
     private TextField txtMansione;
 
+    @FXML
+    private Label lblStatus;
+
+
     public void addStaff(ActionEvent actionEvent) throws Exception {
+        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16 ||
+                txtLuogo.getText().isEmpty() || txtMansione.getText().isEmpty())
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        else {
+            String nome = txtNome.getText();
+            String cognome = txtCognome.getText();
+            String codiceFiscale = txtCodiceFiscale.getText();
+            LocalDate data = dateData.getValue();
+            String luogo = txtLuogo.getText();
+            String allergie = txtAllergie.getText();
+            String mansione = txtMansione.getText();
+            String sesso;
+            String sessoM = radioMaschio.getText();
+            String sessoF = radioFemmina.getText();
 
-        String nome = txtNome.getText();
-        String cognome = txtCognome.getText();
-        String codiceFiscale = txtCodiceFiscale.getText();
-        LocalDate data = dateData.getValue();
-        String luogo = txtLuogo.getText();
-        String allergie = txtAllergie.getText();
-        String mansione = txtMansione.getText();
-        String sesso;
-        String sessoM = radioMaschio.getText();
-        String sessoF = radioFemmina.getText();
+            if (radioMaschio.isSelected()) {
+                sesso = sessoM;
+            } else {
+                sesso = sessoF;
+            }
+            try {
+                InterfaceRMI interfaceRMI;
+                if (Controller.selection.equals("RMI")) {
+                    interfaceRMI = Singleton.getInstance().rmiLookup();
+                } else {
+                    interfaceRMI = Singleton.getInstance().methodSocket();
+                }
+                boolean success = interfaceRMI.addStaff(nome, cognome, codiceFiscale, data, luogo, allergie, sesso, mansione);
 
-        if(radioMaschio.isSelected()) {
-            sesso = sessoM;
-        }else {
-            sesso = sessoF;
+                if (success) {
+                    txtNome.clear();
+                    txtCognome.clear();
+                    txtCodiceFiscale.clear();
+                    txtAllergie.clear();
+                    txtLuogo.clear();
+                    txtMansione.clear();
+                    dateData.getEditor().clear();
+                    lblStatus.setText("Inserimento riuscito");
+                    lblStatus.setTextFill(Color.BLACK);
+                }
+            } catch (Exception e ){
+                e.printStackTrace();
+            }
         }
-
-        InterfaceRMI interfaceRMI;
-        if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
-        }
-        boolean success = interfaceRMI.addStaff(nome, cognome, codiceFiscale, data, luogo, allergie, sesso, mansione);
-
-        //se metti il cambio del label serve la try catch con remoteexception
-
-
-        txtNome.clear();
-        txtCognome.clear();
-        txtCodiceFiscale.clear();
-        txtAllergie.clear();
-        txtLuogo.clear();
-        txtMansione.clear();
-        dateData.getEditor().clear();
-
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
