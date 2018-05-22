@@ -9,6 +9,7 @@ import trip.AppealGS;
 import trip.TripGS;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 

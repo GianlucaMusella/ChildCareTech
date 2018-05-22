@@ -11,10 +11,13 @@ import trip.TripGS;
 
 import java.io.*;
 import java.net.Socket;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 
-public class SocketUserClient implements InterfaceRMI{
+public class SocketUserClient implements InterfaceRMI {
 
     protected final Socket socket;
     private ObjectOutputStream toServer;
@@ -97,7 +100,7 @@ public class SocketUserClient implements InterfaceRMI{
     }
 
     @Override
-    public ArrayList<SupplierGS> viewSupplier() throws Exception {
+    public ArrayList<SupplierGS> viewSupplier() throws RemoteException, SQLException {
 
         try{
 
@@ -446,7 +449,7 @@ public class SocketUserClient implements InterfaceRMI{
     }
 
     @Override
-    public ArrayList<ContactGS> viewContacts() throws Exception {
+    public ArrayList<ContactGS> viewContacts() throws RemoteException, SQLException {
 
         try{
 
@@ -529,14 +532,15 @@ public class SocketUserClient implements InterfaceRMI{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        ArrayList<DoctorGS> response = null;
         try{
-            return (ArrayList<DoctorGS>) fromServer.readObject();
+            response = (ArrayList<DoctorGS>) fromServer.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return response;
 
     }
 
