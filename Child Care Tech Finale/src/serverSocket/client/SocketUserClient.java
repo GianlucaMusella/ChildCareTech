@@ -156,7 +156,32 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public boolean addOrder(String azienda, String ordini, String quantità) throws Exception {
-        return false;
+
+        boolean success = false;
+
+        try{
+
+            toServer.writeUTF("addOrder");
+            toServer.flush();
+            toServer.writeUTF(azienda);
+            toServer.flush();
+            toServer.writeUTF(ordini);
+            toServer.flush();
+            toServer.writeUTF(quantità);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return success;
+
     }
 
     @Override
