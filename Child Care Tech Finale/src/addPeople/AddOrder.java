@@ -9,11 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
@@ -45,6 +43,9 @@ public class AddOrder implements Initializable{
 
     @FXML
     private TableColumn<SupplierGS, String> colonnaFornitura;
+
+    @FXML
+    private Label lblStatus;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -79,23 +80,28 @@ public class AddOrder implements Initializable{
     }
 
     public void addOrder(ActionEvent actionEvent) throws Exception{
+        if (txtAzienda.getText().isEmpty() || txtOrdine.getText().isEmpty() || txtQuantità.getText().isEmpty())
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        else {
+            String azienda = txtAzienda.getText();
+            String ordini = txtOrdine.getText();
+            String quantità = txtQuantità.getText();
 
-        String azienda = txtAzienda.getText();
-        String ordini = txtOrdine.getText();
-        String quantità = txtQuantità.getText();
-
-        InterfaceRMI interfaceRMI;
-        if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            InterfaceRMI interfaceRMI;
+            if (Controller.selection.equals("RMI")) {
+                interfaceRMI = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceRMI = Singleton.getInstance().methodSocket();
+            }
+            boolean success = interfaceRMI.addOrder(azienda, ordini, quantità);
+            if (success){
+                lblStatus.setTextFill(Color.BLACK);
+                lblStatus.setText("Ordine registrato");
+            }
+            txtAzienda.clear();
+            txtOrdine.clear();
+            txtQuantità.clear();
         }
-        boolean success = interfaceRMI.addOrder(azienda, ordini, quantità);
-
-        txtAzienda.clear();
-        txtOrdine.clear();
-        txtQuantità.clear();
-
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
