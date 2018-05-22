@@ -84,6 +84,7 @@ public class SearchAndDeleteDoctor implements Initializable{
     public void deleteDoctor(ActionEvent actionEvent) throws Exception {
 
         DoctorGS deletableDoctors = tabellaPediatra.getSelectionModel().getSelectedItem();
+        int index = tabellaPediatra.getSelectionModel().getSelectedIndex();
         String codiceFiscale = deletableDoctors.getCodiceFiscale();
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
@@ -95,6 +96,7 @@ public class SearchAndDeleteDoctor implements Initializable{
             interfaceRMI = Singleton.getInstance().methodSocket();
         }
         interfaceRMI.deleteDoctors(codiceFiscale);
+        tabellaPediatra.getItems().remove(index);
 
 
     }

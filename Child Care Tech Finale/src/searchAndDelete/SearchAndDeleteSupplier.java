@@ -92,6 +92,7 @@ public class SearchAndDeleteSupplier implements Initializable{
     public void deleteSupplier (ActionEvent actionEvent) throws Exception {
 
         SupplierGS deletableSupplier = tabellaAzienda.getSelectionModel().getSelectedItem();
+        int index = tabellaAzienda.getSelectionModel().getSelectedIndex();
         String azienda = deletableSupplier.getAzienda();
 
         System.out.println(azienda); // Ho messo questo per capire se prende il codice fiscale giusto
@@ -103,8 +104,7 @@ public class SearchAndDeleteSupplier implements Initializable{
             interfaceRMI = Singleton.getInstance().methodSocket();
         }
         interfaceRMI.deleteSupplier(azienda);
-
-
+        tabellaAzienda.getItems().remove(index);
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{

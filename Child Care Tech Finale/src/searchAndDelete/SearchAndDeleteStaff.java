@@ -94,6 +94,7 @@ public class SearchAndDeleteStaff implements Initializable{
     public void deleteStaff (ActionEvent actionEvent) throws Exception {
 
         StaffGS deletableStaff = tabellaStaff.getSelectionModel().getSelectedItem();
+        int index = tabellaStaff.getSelectionModel().getSelectedIndex();
         String codiceFiscale = deletableStaff.getCodiceFiscale();
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
@@ -105,6 +106,7 @@ public class SearchAndDeleteStaff implements Initializable{
             interfaceRMI = Singleton.getInstance().methodSocket();
         }
         interfaceRMI.deleteStaff(codiceFiscale);
+        tabellaStaff.getItems().remove(index);
 
 
     }
