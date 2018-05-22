@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -151,13 +151,13 @@ public class AddChild implements Initializable{
         else {
             try{
 
-                InterfaceRMI interfaceRMI;
+                InterfaceServer interfaceServer;
                 if (Controller.selection.equals("RMI")) {
-                    interfaceRMI = Singleton.getInstance().rmiLookup();
+                    interfaceServer = Singleton.getInstance().rmiLookup();
                 } else {
-                    interfaceRMI = Singleton.getInstance().methodSocket();
+                    interfaceServer = Singleton.getInstance().methodSocket();
                 }
-                boolean success = interfaceRMI.addChild(codiceFiscale, idBambino, nome, cognome, data, luogo, allergie, genitore1, genitore2, sesso, pediatra, contatto);
+                boolean success = interfaceServer.addChild(codiceFiscale, idBambino, nome, cognome, data, luogo, allergie, genitore1, genitore2, sesso, pediatra, contatto);
 
                 if(success){
                     txtNome.clear();
@@ -235,17 +235,17 @@ public class AddChild implements Initializable{
 
     public void viewChild(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
 
-        ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
-        /*ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
-        ArrayList<ContactGS> contactGS = interfaceRMI.viewContacts();
-        ArrayList<DoctorGS> doctorGS = interfaceRMI.viewDoctors();*/
+        ArrayList<ChildGS> childrenGS = interfaceServer.viewChild();
+        /*ArrayList<ParentsGS> parents = interfaceServer.viewParents();
+        ArrayList<ContactGS> contactGS = interfaceServer.viewContacts();
+        ArrayList<DoctorGS> doctorGS = interfaceServer.viewDoctors();*/
 
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
         tableBambini.setItems(FXCollections.observableArrayList(childrenGS));
@@ -261,14 +261,14 @@ public class AddChild implements Initializable{
     }
 
     public void viewParents(ActionEvent actionEvent) throws Exception {
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
 
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
+        ArrayList<ParentsGS> parents = interfaceServer.viewParents();
 
         tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
         tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
@@ -276,15 +276,15 @@ public class AddChild implements Initializable{
     }
 
     public void viewDoctor(ActionEvent actionEvent) throws Exception {
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
 
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
 
-        ArrayList<DoctorGS> doctorGS = interfaceRMI.viewDoctors();
+        ArrayList<DoctorGS> doctorGS = interfaceServer.viewDoctors();
 
         tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);
         tabellaPediatra.setItems(FXCollections.observableArrayList(doctorGS));
@@ -292,15 +292,15 @@ public class AddChild implements Initializable{
     }
 
     public void viewContact(ActionEvent actionEvent) throws Exception {
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
 
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
 
-        ArrayList<ContactGS> contactGS = interfaceRMI.viewContacts();
+        ArrayList<ContactGS> contactGS = interfaceServer.viewContacts();
 
         tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
         tabellaContatti.setItems(FXCollections.observableArrayList(contactGS));

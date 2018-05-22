@@ -11,12 +11,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -67,38 +69,48 @@ public class ModifyContact implements Initializable{
     }
 
     public void modifyContact(ActionEvent actionEvent) throws Exception {
+
+        String codiceFiscale = txtCodicefiscaleOld.getText();
+        String nome = txtNome.getText();
+        String cognome = txtCognome.getText();
+        String telefono = txtTelefono.getText();
+
         if (txtCodicefiscaleOld.getText().isEmpty() || txtCodicefiscaleOld.getText().length() != 16 || txtCognome.getText().isEmpty() || txtNome.getText().isEmpty() || txtTelefono.getText().isEmpty())
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         else {
-            String codiceFiscale = txtCodicefiscaleOld.getText();
-            String nome = txtNome.getText();
-            String cognome = txtCognome.getText();
-            String telefono = txtTelefono.getText();
 
-            InterfaceRMI interfaceRMI;
-            if (Controller.selection.equals("RMI")) {
-                interfaceRMI = Singleton.getInstance().rmiLookup();
-            } else {
-                interfaceRMI = Singleton.getInstance().methodSocket();
+            try{
+                InterfaceServer interfaceServer;
+                if (Controller.selection.equals("RMI")) {
+                    interfaceServer = Singleton.getInstance().rmiLookup();
+                } else {
+                    interfaceServer = Singleton.getInstance().methodSocket();
+                }
+                interfaceServer.modifyContact(codiceFiscale, nome, cognome, telefono);
+
+                lblStatus.setTextFill(Color.BLACK);
+                lblStatus.setText("Inserimento riuscito");
+                txtCodicefiscaleOld.clear();
+                txtNome.clear();
+                txtCognome.clear();
+                txtTelefono.clear();
+
+            }catch (RemoteException e){
+                e.printStackTrace();
             }
-            interfaceRMI.modifyContact(codiceFiscale, nome, cognome, telefono);
 
-            txtCodicefiscaleOld.clear();
-            txtNome.clear();
-            txtCognome.clear();
-            txtTelefono.clear();
         }
     }
 
     public void viewContact(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<ContactGS> contactGS = interfaceRMI.viewContacts();
+        ArrayList<ContactGS> contactGS = interfaceServer.viewContacts();
 
         tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
         tabellaContatti.setItems(FXCollections.observableArrayList(contactGS));

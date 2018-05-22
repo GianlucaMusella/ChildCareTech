@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 public class AddFirstDish {
 
@@ -21,12 +21,12 @@ public class AddFirstDish {
         String nome = nomePrimo.getText();
         String allergeni = txtAllergeni.getText();
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
-        }        boolean success = interfaceRMI.addPrimo(nome, allergeni);
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }        boolean success = interfaceServer.addPrimo(nome, allergeni);
 
         nomePrimo.clear();
         txtAllergeni.clear();

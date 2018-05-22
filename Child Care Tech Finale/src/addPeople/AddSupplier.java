@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 
 public class AddSupplier {
@@ -46,15 +46,15 @@ public class AddSupplier {
             String partitaIva = txtPiva.getText();
 
             try {
-                InterfaceRMI interfaceRMI;
+                InterfaceServer interfaceServer;
 
                 if (Controller.selection.equals("RMI")) {
-                    interfaceRMI = Singleton.getInstance().rmiLookup();
+                    interfaceServer = Singleton.getInstance().rmiLookup();
                 } else {
-                    interfaceRMI = Singleton.getInstance().methodSocket();
+                    interfaceServer = Singleton.getInstance().methodSocket();
                 }
 
-                boolean success = interfaceRMI.addSupplier(name, surname, azienda, fornitura, partitaIva);
+                boolean success = interfaceServer.addSupplier(name, surname, azienda, fornitura, partitaIva);
                 if (success) {
                     txtName.clear();
                     txtSurname.clear();

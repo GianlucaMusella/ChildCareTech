@@ -26,7 +26,7 @@
          <graphic>
             <ImageView fitHeight="27.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
                </image>
             </ImageView>
          </graphic>

@@ -11,11 +11,11 @@ import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.time.LocalDate;
 
-public class newTrip {
+public class AddTrip {
 
     @FXML
     private TextField txtMetaa;
@@ -36,14 +36,14 @@ public class newTrip {
         LocalDate andata = datePartenza.getValue();
         LocalDate ritorno = dateRitorno.getValue();
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
 
-        boolean success = interfaceRMI.newTrip(id, meta, andata, ritorno);
+        boolean success = interfaceServer.newTrip(id, meta, andata, ritorno);
 
         txtID.clear();
         txtMetaa.clear();
@@ -55,7 +55,7 @@ public class newTrip {
     public void back_method(ActionEvent actionEvent) throws Exception{
 
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/trip/TripMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

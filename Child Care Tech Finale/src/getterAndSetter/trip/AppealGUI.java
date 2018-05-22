@@ -1,9 +1,10 @@
-package trip;
+package getterAndSetter.trip;
 
+import getterAndSetter.trip.AppealGS;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class AppelloGUI {
+public class AppealGUI {
 
     private StringProperty nome;
     private StringProperty cognome;

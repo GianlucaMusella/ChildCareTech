@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import javafx.scene.control.TextField;
 
@@ -37,13 +37,13 @@ public class Stage {
         LocalDate giorno = giornoTappa.getValue();
         String ora = txtOra.getText();
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        interfaceRMI.newTappaServer(numeroTappa, tappa, idGita, giorno, ora);
+        interfaceServer.newTappaServer(numeroTappa, tappa, idGita, giorno, ora);
 
 
         txtidGita.clear();

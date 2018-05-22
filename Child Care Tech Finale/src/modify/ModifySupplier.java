@@ -14,9 +14,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -53,28 +54,34 @@ public class ModifySupplier implements Initializable{
     private Label lblStatus;
 
     public void modifySupplier(ActionEvent actionEvent) throws Exception {
+
+        String azienda = txtAzienda.getText();
+        String nome = txtNome.getText();
+        String cognome = txtCognome.getText();
+        String fornitura = txtFornitura.getText();
+        String partitaIVA = txtPartitaIva.getText();
+
         if (txtAzienda.getText().isEmpty() || txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtFornitura.getText().isEmpty()
                 || txtPartitaIva.getText().isEmpty() || txtPartitaIva.getText().length() != 11)
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         else {
-            String azienda = txtAzienda.getText();
-            String nome = txtNome.getText();
-            String cognome = txtCognome.getText();
-            String fornitura = txtFornitura.getText();
-            String partitaIVA = txtPartitaIva.getText();
-            InterfaceRMI interfaceRMI;
-            if (Controller.selection.equals("RMI")) {
-                interfaceRMI = Singleton.getInstance().rmiLookup();
-            } else {
-                interfaceRMI = Singleton.getInstance().methodSocket();
-            }
-            interfaceRMI.modifySupplier(azienda, nome, cognome, fornitura, partitaIVA);
+            try {
+                InterfaceServer interfaceServer;
+                if (Controller.selection.equals("RMI")) {
+                    interfaceServer = Singleton.getInstance().rmiLookup();
+                } else {
+                    interfaceServer = Singleton.getInstance().methodSocket();
+                }
+                interfaceServer.modifySupplier(azienda, nome, cognome, fornitura, partitaIVA);
 
-            txtAzienda.clear();
-            txtNome.clear();
-            txtCognome.clear();
-            txtFornitura.clear();
-            txtPartitaIva.clear();
+                txtAzienda.clear();
+                txtNome.clear();
+                txtCognome.clear();
+                txtFornitura.clear();
+                txtPartitaIva.clear();
+            }catch (RemoteException e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -97,13 +104,13 @@ public class ModifySupplier implements Initializable{
 
     public void viewSupplier(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<SupplierGS> supplierGS = interfaceRMI.viewSupplier();
+        ArrayList<SupplierGS> supplierGS = interfaceServer.viewSupplier();
 
         tabellaFornitori.setColumnResizePolicy(tabellaFornitori.CONSTRAINED_RESIZE_POLICY);
         tabellaFornitori.setItems(FXCollections.observableArrayList(supplierGS));

@@ -16,7 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -57,13 +57,13 @@ public class SearchAndDeleteParents implements Initializable{
 
     public void viewParents(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
+        ArrayList<ParentsGS> parents = interfaceServer.viewParents();
 
         tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
         tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
@@ -72,13 +72,13 @@ public class SearchAndDeleteParents implements Initializable{
 
     public void searchParents(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<ParentsGS> parents = interfaceRMI.searchParents(txtNome.getText(), txtCodicefiscale.getText());
+        ArrayList<ParentsGS> parents = interfaceServer.searchParents(txtNome.getText(), txtCodicefiscale.getText());
 
         tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
         tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
@@ -93,13 +93,13 @@ public class SearchAndDeleteParents implements Initializable{
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        interfaceRMI.deleteParents(codiceFiscale);
+        interfaceServer.deleteParents(codiceFiscale);
         tabellaGenitori.getItems().remove(index);
 
     }

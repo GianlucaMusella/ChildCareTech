@@ -1,6 +1,7 @@
 package trip;
 
 import getterAndSetter.people.ChildGS;
+import getterAndSetter.trip.TripGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -17,13 +18,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class partecipantiTrip implements Initializable{
+public class TripPartecipant implements Initializable{
 
     @FXML
     private TableView<ChildGS> tableBambini;
@@ -97,13 +98,13 @@ public class partecipantiTrip implements Initializable{
 
     public void partecipantiTrip (ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        interfaceRMI.newpartecipanteTrip(txtCodicefiscale.getText(), txtIDgita.getText());
+        interfaceServer.newpartecipanteTrip(txtCodicefiscale.getText(), txtIDgita.getText());
 
         txtCodicefiscale.clear();
         txtIDgita.clear();
@@ -112,15 +113,15 @@ public class partecipantiTrip implements Initializable{
 
     public void viewInfo(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
         
-        ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
-        ArrayList<TripGS> tripGS = interfaceRMI.viewTrip();
+        ArrayList<ChildGS> childrenGS = interfaceServer.viewChild();
+        ArrayList<TripGS> tripGS = interfaceServer.viewTrip();
 
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
         tableBambini.setItems(FXCollections.observableArrayList(childrenGS));
@@ -133,7 +134,7 @@ public class partecipantiTrip implements Initializable{
     public void back_method(ActionEvent actionEvent) throws Exception{
 
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/trip/TripMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

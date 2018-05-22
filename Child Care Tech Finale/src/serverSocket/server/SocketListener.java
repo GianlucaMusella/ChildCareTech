@@ -1,6 +1,6 @@
 package serverSocket.server;
 
-import serverRMI.RMIServer;
+import serverRMI.server.RMIServer;
 
 import java.net.ServerSocket;
 import java.net.Socket;

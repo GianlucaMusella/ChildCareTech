@@ -1,5 +1,6 @@
 package trip;
 
+import getterAndSetter.trip.AppealGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -52,8 +53,8 @@ public class AppealTrip implements Initializable{
     }
     public void loadData(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        ArrayList<AppealGS> appelloGSArrayList = interfaceRMI.loadDataServer(Integer.parseInt(idGita.getText()));  //Qui vado a chiamare la parte Server che scrivo in fondo al codice come ieri
+        InterfaceServer interfaceServer = Singleton.getInstance().rmiLookup();
+        ArrayList<AppealGS> appelloGSArrayList = interfaceServer.loadDataServer(Integer.parseInt(idGita.getText()));  //Qui vado a chiamare la parte Server che scrivo in fondo al codice come ieri
 
         tableAppello.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableAppello.setItems(FXCollections.observableArrayList(appelloGSArrayList));
@@ -71,8 +72,8 @@ public class AppealTrip implements Initializable{
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        interfaceRMI.bambinoPresenteServer(codiceFiscale, Integer.parseInt(idGita.getText()));
+        InterfaceServer interfaceServer = Singleton.getInstance().rmiLookup();
+        interfaceServer.bambinoPresenteServer(codiceFiscale, Integer.parseInt(idGita.getText()));
     }
 
     public void assenza (ActionEvent actionEvent) throws Exception {
@@ -86,13 +87,13 @@ public class AppealTrip implements Initializable{
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceRMI interfaceRMI = Singleton.getInstance().rmiLookup();
-        interfaceRMI.bambinoAssenteServer(codiceFiscale, Integer.parseInt(idGita.getText()));
+        InterfaceServer interfaceServer = Singleton.getInstance().rmiLookup();
+        interfaceServer.bambinoAssenteServer(codiceFiscale, Integer.parseInt(idGita.getText()));
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/trip/TripMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

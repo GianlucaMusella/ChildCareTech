@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -66,13 +66,13 @@ public class AddContact implements Initializable{
 
     public void viewContact(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<ContactGS> contactGS = interfaceRMI.viewContacts();
+        ArrayList<ContactGS> contactGS = interfaceServer.viewContacts();
 
         tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
         tabellaContatti.setItems(FXCollections.observableArrayList(contactGS));
@@ -88,14 +88,14 @@ public class AddContact implements Initializable{
             String telefono = txtTelefono.getText();
 
             try {
-                InterfaceRMI interfaceRMI;
+                InterfaceServer interfaceServer;
                 if (Controller.selection.equals("RMI")) {
-                    interfaceRMI = Singleton.getInstance().rmiLookup();
+                    interfaceServer = Singleton.getInstance().rmiLookup();
                 } else {
-                    interfaceRMI = Singleton.getInstance().methodSocket();
+                    interfaceServer = Singleton.getInstance().methodSocket();
                 }
 
-                boolean success = interfaceRMI.addContact(codiceFiscale, nome, cognome, telefono);
+                boolean success = interfaceServer.addContact(codiceFiscale, nome, cognome, telefono);
 
                 if (success) {
                     txtNome.clear();

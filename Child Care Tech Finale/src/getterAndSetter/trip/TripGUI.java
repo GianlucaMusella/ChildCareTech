@@ -1,4 +1,4 @@
-package trip;
+package getterAndSetter.trip;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

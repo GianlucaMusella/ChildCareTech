@@ -12,10 +12,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import serverRMI.InterfaceRMI;
-
-import java.io.*;
-import java.net.Socket;
+import interfaces.InterfaceServer;
 
 
 public class Controller {
@@ -58,7 +55,7 @@ public class Controller {
 
         if(selection.equals("RMI")){
                 System.out.println("E' stata scelta la connessione RMI");
-                InterfaceRMI Mainframe = Singleton.getInstance().rmiLookup();
+                InterfaceServer Mainframe = Singleton.getInstance().rmiLookup();
                 if(Mainframe.login(txtUsername.getText(), txtPassword.getText())) {
                     //se il login ha avuto successo nascono il login
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
@@ -74,9 +71,9 @@ public class Controller {
 
             } else if(selection.equals("SOCKET")){
                 System.out.println("Scelta connessione Socket");
-                InterfaceRMI interfaceRMI = Singleton.getInstance().methodSocket();
+                InterfaceServer interfaceServer = Singleton.getInstance().methodSocket();
 
-               boolean success = interfaceRMI.login(txtUsername.getText(), txtPassword.getText());
+               boolean success = interfaceServer.login(txtUsername.getText(), txtPassword.getText());
                System.out.println(success);
                 if (success) {
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();

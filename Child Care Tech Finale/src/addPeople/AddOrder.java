@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -67,13 +67,13 @@ public class AddOrder implements Initializable{
 
     public void viewSupplier(ActionEvent actionEvent) throws Exception{
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<SupplierGS> supplierGS = interfaceRMI.viewSupplier();
+        ArrayList<SupplierGS> supplierGS = interfaceServer.viewSupplier();
 
         tabellaFornitori.setColumnResizePolicy(tabellaFornitori.CONSTRAINED_RESIZE_POLICY);
         tabellaFornitori.setItems(FXCollections.observableArrayList(supplierGS));
@@ -87,13 +87,13 @@ public class AddOrder implements Initializable{
             String ordini = txtOrdine.getText();
             String quantità = txtQuantità.getText();
             try {
-                InterfaceRMI interfaceRMI;
+                InterfaceServer interfaceServer;
                 if (Controller.selection.equals("RMI")) {
-                    interfaceRMI = Singleton.getInstance().rmiLookup();
+                    interfaceServer = Singleton.getInstance().rmiLookup();
                 } else {
-                    interfaceRMI = Singleton.getInstance().methodSocket();
+                    interfaceServer = Singleton.getInstance().methodSocket();
                 }
-                boolean success = interfaceRMI.addOrder(azienda, ordini, quantità);
+                boolean success = interfaceServer.addOrder(azienda, ordini, quantità);
                 if (success) {
                     txtAzienda.clear();
                     txtOrdine.clear();

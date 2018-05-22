@@ -1,4 +1,4 @@
-package trip;
+package getterAndSetter.trip;
 
 import java.io.Serializable;
 

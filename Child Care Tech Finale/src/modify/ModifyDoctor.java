@@ -11,15 +11,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ModifyDoctor implements Initializable {
@@ -52,27 +53,36 @@ public class ModifyDoctor implements Initializable {
     private Label lblStatus;
 
     public void modifyDoctor (ActionEvent actionEvent) throws Exception {
+
+        String codiceFiscale = txtCodicefiscaleOld.getText();
+        String nome = txtNome.getText();
+        String cognome = txtCognome.getText();
+        String luogo = txtLuogo.getText();
+        LocalDate data = dateData.getValue();
+
         if (txtCodicefiscaleOld.getText().isEmpty() || txtCodicefiscaleOld.getText().length() != 16 || txtCognome.getText().isEmpty() || txtNome.getText().isEmpty() || txtLuogo.getText().isEmpty())
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         else {
-            String codiceFiscale = txtCodicefiscaleOld.getText();
-            String nome = txtNome.getText();
-            String cognome = txtCognome.getText();
-            String luogo = txtLuogo.getText();
-            LocalDate data = dateData.getValue();
-            InterfaceRMI interfaceRMI;
-            if (Controller.selection.equals("RMI")) {
-                interfaceRMI = Singleton.getInstance().rmiLookup();
-            } else {
-                interfaceRMI = Singleton.getInstance().methodSocket();
-            }
-            interfaceRMI.modifyDoctor(codiceFiscale, nome, cognome, luogo, data);
 
-            txtCodicefiscaleOld.clear();
-            txtNome.clear();
-            txtCognome.clear();
-            txtLuogo.clear();
-            dateData.getEditor().clear();
+            try {
+                InterfaceServer interfaceServer;
+                if (Controller.selection.equals("RMI")) {
+                    interfaceServer = Singleton.getInstance().rmiLookup();
+                } else {
+                    interfaceServer = Singleton.getInstance().methodSocket();
+                }
+                interfaceServer.modifyDoctor(codiceFiscale, nome, cognome, luogo, data);
+
+                lblStatus.setTextFill(Color.BLACK);
+                lblStatus.setText("Inserimento riuscito");
+                txtCodicefiscaleOld.clear();
+                txtNome.clear();
+                txtCognome.clear();
+                txtLuogo.clear();
+                dateData.getEditor().clear();
+            }catch (RemoteException e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -95,13 +105,13 @@ public class ModifyDoctor implements Initializable {
 
     public void viewDoctor(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<DoctorGS> doctorGS = interfaceRMI.viewDoctors();
+        ArrayList<DoctorGS> doctorGS = interfaceServer.viewDoctors();
 
         tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);
         tabellaPediatra.setItems(FXCollections.observableArrayList(doctorGS));

@@ -31,7 +31,7 @@
          <graphic>
             <ImageView fitHeight="29.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
                </image>
             </ImageView>
          </graphic>

@@ -1,8 +1,8 @@
 package main;
 
-import serverRMI.ClientRMI;
-import serverRMI.InterfaceRMI;
-import serverRMI.User;
+import serverRMI.client.ClientRMI;
+import interfaces.InterfaceServer;
+import interfaces.User;
 import serverSocket.client.SocketClient;
 
 public class Singleton {
@@ -18,10 +18,10 @@ public class Singleton {
         return instance;
     }
 
-    public InterfaceRMI rmiLookup() {
+    public InterfaceServer rmiLookup() {
         User inte;
         inte = new ClientRMI();
-        InterfaceRMI rmi = null;
+        InterfaceServer rmi = null;
         try {
             rmi = inte.getUser();
 
@@ -32,18 +32,18 @@ public class Singleton {
         return rmi;
     }
 
-    public InterfaceRMI methodSocket() {
+    public InterfaceServer methodSocket() {
 
         User user;
         user = new SocketClient();
 
-        InterfaceRMI interfaceRMI = null;
+        InterfaceServer interfaceServer = null;
         try {
-            interfaceRMI = user.getUser();
+            interfaceServer = user.getUser();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return interfaceRMI;
+        return interfaceServer;
     }
 }

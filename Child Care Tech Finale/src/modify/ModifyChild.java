@@ -11,12 +11,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -61,29 +63,40 @@ public class ModifyChild implements Initializable{
     private Label lblStatus;
 
     public void modifyClient (ActionEvent actionEvent) throws Exception {
+
+        String nome = txtNome.getText();
+        String cognome = txtCognome.getText();
+        String codiceFiscale = txtCodicefiscaleOld.getText();
+        String luogo = txtLuogo.getText();
+        LocalDate data = dateData.getValue();
+        String id = idBambino.getText();
+
         if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodicefiscaleOld.getText().isEmpty() || txtCodicefiscaleOld.getText().length() != 16 ||
                 txtLuogo.getText().isEmpty() || idBambino.getText().isEmpty())
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         else {
-            String nome = txtNome.getText();
-            String cognome = txtCognome.getText();
-            String codiceFiscale = txtCodicefiscaleOld.getText();
-            String luogo = txtLuogo.getText();
-            LocalDate data = dateData.getValue();
-            String id = idBambino.getText();
-            InterfaceRMI interfaceRMI;
-            if (Controller.selection.equals("RMI")) {
-                interfaceRMI = Singleton.getInstance().rmiLookup();
-            } else {
-                interfaceRMI = Singleton.getInstance().methodSocket();
-            }
-            interfaceRMI.modifyChild(codiceFiscale, nome, cognome, luogo, data, id);
 
-            txtCodicefiscaleOld.clear();
-            txtCognome.clear();
-            txtNome.clear();
-            txtLuogo.clear();
-            idBambino.clear();
+            try {
+                InterfaceServer interfaceServer;
+                if (Controller.selection.equals("RMI")) {
+                    interfaceServer = Singleton.getInstance().rmiLookup();
+                } else {
+                    interfaceServer = Singleton.getInstance().methodSocket();
+                }
+                interfaceServer.modifyChild(codiceFiscale, nome, cognome, luogo, data, id);
+
+                lblStatus.setTextFill(Color.BLACK);
+                lblStatus.setText("Inserimento riuscito");
+                txtCodicefiscaleOld.clear();
+                txtCognome.clear();
+                txtNome.clear();
+                txtLuogo.clear();
+                idBambino.clear();
+
+            }catch (RemoteException e){
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -109,13 +122,13 @@ public class ModifyChild implements Initializable{
 
     public void viewChild(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
+        ArrayList<ChildGS> childrenGS = interfaceServer.viewChild();
 
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
         tableBambini.setItems(FXCollections.observableArrayList(childrenGS));

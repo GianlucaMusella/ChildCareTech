@@ -16,7 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -53,13 +53,13 @@ public class SearchAndDeleteDoctor implements Initializable{
 
     public void viewDoctor(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<DoctorGS> doctorGS = interfaceRMI.viewDoctors();
+        ArrayList<DoctorGS> doctorGS = interfaceServer.viewDoctors();
 
         tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);
         tabellaPediatra.setItems(FXCollections.observableArrayList(doctorGS));
@@ -68,13 +68,13 @@ public class SearchAndDeleteDoctor implements Initializable{
 
     public void searchDoctor(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<DoctorGS> doctorGS = interfaceRMI.searchDoctors(txtNome.getText(), txtCodicefiscale.getText());
+        ArrayList<DoctorGS> doctorGS = interfaceServer.searchDoctors(txtNome.getText(), txtCodicefiscale.getText());
 
         tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);
         tabellaPediatra.setItems(FXCollections.observableArrayList(doctorGS));
@@ -89,13 +89,13 @@ public class SearchAndDeleteDoctor implements Initializable{
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        interfaceRMI.deleteDoctors(codiceFiscale);
+        interfaceServer.deleteDoctors(codiceFiscale);
         tabellaPediatra.getItems().remove(index);
 
 

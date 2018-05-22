@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -76,13 +76,13 @@ public class AddParents implements Initializable{
 
     public void viewParents(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
+        ArrayList<ParentsGS> parents = interfaceServer.viewParents();
 
         tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
         tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
@@ -109,13 +109,13 @@ public class AddParents implements Initializable{
                 sesso = sessoF;
             }
             try {
-                InterfaceRMI interfaceRMI;
+                InterfaceServer interfaceServer;
                 if (Controller.selection.equals("RMI")) {
-                    interfaceRMI = Singleton.getInstance().rmiLookup();
+                    interfaceServer = Singleton.getInstance().rmiLookup();
                 } else {
-                    interfaceRMI = Singleton.getInstance().methodSocket();
+                    interfaceServer = Singleton.getInstance().methodSocket();
                 }
-                boolean success = interfaceRMI.addParents(codiceFiscale, nome, cognome, data, luogo, telefono, sesso);
+                boolean success = interfaceServer.addParents(codiceFiscale, nome, cognome, data, luogo, telefono, sesso);
                 if (success) {
                     txtNome.clear();
                     txtCognome.clear();

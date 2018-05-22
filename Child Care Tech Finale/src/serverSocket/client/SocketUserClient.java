@@ -5,9 +5,9 @@ import getterAndSetter.food.FirstDishGS;
 import getterAndSetter.food.MenuGS;
 import getterAndSetter.food.SecondDishGS;
 import getterAndSetter.people.*;
-import serverRMI.InterfaceRMI;
-import trip.AppealGS;
-import trip.TripGS;
+import interfaces.InterfaceServer;
+import getterAndSetter.trip.AppealGS;
+import getterAndSetter.trip.TripGS;
 
 import java.io.*;
 import java.net.Socket;
@@ -16,8 +16,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-
-public class SocketUserClient implements InterfaceRMI {
+public class SocketUserClient implements InterfaceServer {
 
     protected final Socket socket;
     private ObjectOutputStream toServer;
@@ -152,7 +151,26 @@ public class SocketUserClient implements InterfaceRMI {
     @Override
     public void modifySupplier(String azienda, String nome, String cognome, String fornitura, String partitaIva) throws Exception {
 
+        try{
+
+            toServer.writeUTF("modifySupplier");
+            toServer.flush();
+            toServer.writeUTF(azienda);
+            toServer.flush();
+            toServer.writeUTF(nome);
+            toServer.flush();
+            toServer.writeUTF(cognome);
+            toServer.flush();
+            toServer.writeUTF(fornitura);
+            toServer.flush();
+            toServer.writeUTF(partitaIva);
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public boolean addOrder(String azienda, String ordini, String quantità) throws Exception {
@@ -307,6 +325,27 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public void modifyChild(String codiceFiscale, String Nome, String cognome, String luogo, LocalDate data, String idBambino) throws Exception {
+
+        try{
+
+            toServer.writeUTF("modifyChild");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+            toServer.writeUTF(Nome);
+            toServer.flush();
+            toServer.writeUTF(cognome);
+            toServer.flush();
+            toServer.writeUTF(luogo);
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(data));
+            toServer.flush();
+            toServer.writeUTF(idBambino);
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -468,6 +507,27 @@ public class SocketUserClient implements InterfaceRMI {
     @Override
     public void modifyStaff(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data, String mansione) throws Exception {
 
+        try{
+
+            toServer.writeUTF("modifyStaff");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+            toServer.writeUTF(nome);
+            toServer.flush();
+            toServer.writeUTF(cognome);
+            toServer.flush();
+            toServer.writeUTF(luogo);
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(data));
+            toServer.flush();
+            toServer.writeUTF(mansione);
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -583,6 +643,27 @@ public class SocketUserClient implements InterfaceRMI {
     @Override
     public void modifyParents(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data, String telefono) throws Exception {
 
+        try{
+
+            toServer.writeUTF("modifyParents");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+            toServer.writeUTF(nome);
+            toServer.flush();
+            toServer.writeUTF(cognome);
+            toServer.flush();
+            toServer.writeUTF(luogo);
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(data));
+            toServer.flush();
+            toServer.writeUTF(telefono);
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -693,6 +774,22 @@ public class SocketUserClient implements InterfaceRMI {
     @Override
     public void modifyContact(String codiceFiscale, String nome, String cognome, String telefono) throws Exception {
 
+        try{
+
+            toServer.writeUTF("modifyContacts");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+            toServer.writeUTF(nome);
+            toServer.flush();
+            toServer.writeUTF(cognome);
+            toServer.flush();
+            toServer.writeUTF(telefono);
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -808,6 +905,24 @@ public class SocketUserClient implements InterfaceRMI {
     @Override
     public void modifyDoctor(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data) throws Exception {
 
+        try{
+
+            toServer.writeUTF("modifyDoctor");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+            toServer.writeUTF(nome);
+            toServer.flush();
+            toServer.writeUTF(cognome);
+            toServer.flush();
+            toServer.writeUTF(luogo);
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(data));
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -1039,7 +1154,7 @@ public class SocketUserClient implements InterfaceRMI {
 
         try{
 
-            toServer.writeUTF("newTrip");
+            toServer.writeUTF("AddTrip");
             toServer.flush();
             toServer.writeUTF(id);
             toServer.flush();
@@ -1112,12 +1227,35 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public void bambinoPresenteServer(String codiceFiscale, int idGita) throws Exception {
+        try{
 
+            toServer.writeUTF("bambinoPresenteServer");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(idGita));
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void bambinoAssenteServer(String codiceFiscale, int idGita) throws Exception {
 
+        try{
+
+            toServer.writeUTF("bambinoAssenteServer");
+            toServer.flush();
+            toServer.writeUTF(codiceFiscale);
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(idGita));
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -1207,6 +1345,15 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public void pullmanCount(String idGita) throws Exception {
+        try{
 
+            toServer.writeUTF("pullmanCount");
+            toServer.flush();
+            toServer.writeUTF(idGita);
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

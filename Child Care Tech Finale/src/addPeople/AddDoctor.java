@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.time.LocalDate;
 
@@ -70,16 +70,16 @@ public class AddDoctor {
             }
 
             try {
-                InterfaceRMI interfaceRMI;
+                InterfaceServer interfaceServer;
 
 
                 if (Controller.selection.equals("RMI")) {
-                    interfaceRMI = Singleton.getInstance().rmiLookup();
+                    interfaceServer = Singleton.getInstance().rmiLookup();
                 } else {
-                    interfaceRMI = Singleton.getInstance().methodSocket();
+                    interfaceServer = Singleton.getInstance().methodSocket();
                 }
 
-                boolean success = interfaceRMI.addDoctor(codiceFiscale, nome, cognome, data, luogo, sesso);
+                boolean success = interfaceServer.addDoctor(codiceFiscale, nome, cognome, data, luogo, sesso);
                 if (success) {
                     txtNome.clear();
                     txtCognome.clear();

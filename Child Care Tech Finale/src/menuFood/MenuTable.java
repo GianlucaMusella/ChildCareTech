@@ -15,7 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -52,13 +52,13 @@ public class MenuTable implements Initializable{
 
     public void viewMenu(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<MenuGS> menuGS = interfaceRMI.viewMenu();
+        ArrayList<MenuGS> menuGS = interfaceServer.viewMenu();
 
         tabellaMenu.setColumnResizePolicy(tabellaMenu.CONSTRAINED_RESIZE_POLICY);
         tabellaMenu.setItems(FXCollections.observableArrayList(menuGS));
@@ -72,13 +72,13 @@ public class MenuTable implements Initializable{
 
         System.out.println(nomeMenu); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        interfaceRMI.deleteMenu(nomeMenu);
+        interfaceServer.deleteMenu(nomeMenu);
 
 
     }

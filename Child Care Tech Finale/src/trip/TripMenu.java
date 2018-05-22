@@ -1,6 +1,7 @@
 package trip;
 
 
+import getterAndSetter.trip.TripGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -57,13 +58,13 @@ public class TripMenu implements Initializable{
 
     public void viewInfo(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<TripGS> tripGS = interfaceRMI.viewTrip();
+        ArrayList<TripGS> tripGS = interfaceServer.viewTrip();
 
         tableGita.setColumnResizePolicy(tableGita.CONSTRAINED_RESIZE_POLICY);
         tableGita.setItems(FXCollections.observableArrayList(tripGS));
@@ -77,20 +78,20 @@ public class TripMenu implements Initializable{
 
         System.out.println(idGita); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        interfaceRMI.deleteTrip(idGita);
+        interfaceServer.deleteTrip(idGita);
 
     }
 
     public void createTrip (ActionEvent actionEvent) throws Exception {
 
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/trip/createTrip.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/AddTrip.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -100,7 +101,7 @@ public class TripMenu implements Initializable{
 
     public void appelloTrip (ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/trip/appelloTrip.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripAppeal.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -109,7 +110,7 @@ public class TripMenu implements Initializable{
 
     public void pullman (ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/trip/Pullman.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/Pullman.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -119,7 +120,7 @@ public class TripMenu implements Initializable{
 
     public void tappe (ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/trip/Stage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/Stage.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -129,7 +130,7 @@ public class TripMenu implements Initializable{
 
     public void partecipantiTrip (ActionEvent actionEvent) throws Exception {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/trip/partecipantiTrip.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripPartecipant.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

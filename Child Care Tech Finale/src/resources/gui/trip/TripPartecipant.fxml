@@ -8,7 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="914.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.partecipantiTrip">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="914.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.TripPartecipant">
    <children>
       <TextField fx:id="txtCodicefiscale" layoutX="45.0" layoutY="64.0" prefHeight="26.0" prefWidth="158.0" promptText="Codice Fiscale Partecipante" />
       <TextField fx:id="txtIDgita" layoutX="45.0" layoutY="99.0" prefHeight="26.0" prefWidth="158.0" promptText="ID gita" />
@@ -32,7 +32,7 @@
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
                </image>
             </ImageView>
          </graphic>

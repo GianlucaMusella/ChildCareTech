@@ -1,14 +1,14 @@
 package serverSocket.client;
 
-import serverRMI.InterfaceRMI;
-import serverRMI.User;
+import interfaces.InterfaceServer;
+import interfaces.User;
 
 
 import java.net.Socket;
 
 public class SocketClient implements User {
 
-    private InterfaceRMI interfaceRMI;
+    private InterfaceServer interfaceServer;
 
     public SocketClient(){
         Socket socket;
@@ -16,7 +16,7 @@ public class SocketClient implements User {
         try{
 
             socket = new Socket("localhost", 3365);
-            interfaceRMI = new SocketUserClient(socket);
+            interfaceServer = new SocketUserClient(socket);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -25,7 +25,7 @@ public class SocketClient implements User {
     }
 
     @Override
-    public InterfaceRMI getUser() throws Exception {
-        return interfaceRMI;
+    public InterfaceServer getUser() throws Exception {
+        return interfaceServer;
     }
 }

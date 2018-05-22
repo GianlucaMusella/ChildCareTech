@@ -16,7 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -100,15 +100,15 @@ public class AddMenu implements Initializable{
 
     public void viewFirstAndSecond(ActionEvent actionEvent) throws Exception{
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<FirstDishGS> firstDishGS = interfaceRMI.viewFirst();
-        ArrayList<SecondDishGS> secondDishGS = interfaceRMI.viewSecond();
-        ArrayList<AllergyPeopleGS> allergyPeopleGS = interfaceRMI.viewAllergy();
+        ArrayList<FirstDishGS> firstDishGS = interfaceServer.viewFirst();
+        ArrayList<SecondDishGS> secondDishGS = interfaceServer.viewSecond();
+        ArrayList<AllergyPeopleGS> allergyPeopleGS = interfaceServer.viewAllergy();
 
         tabellaAllergie.setColumnResizePolicy(tabellaAllergie.CONSTRAINED_RESIZE_POLICY);
         tabellaAllergie.setItems(FXCollections.observableArrayList(allergyPeopleGS));
@@ -128,13 +128,13 @@ public class AddMenu implements Initializable{
         String secondo = secondoPiatto.getText();
         LocalDate giorno = txtGiorno.getValue();
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        boolean success = interfaceRMI.addMenu(nome, primo, secondo, giorno);
+        boolean success = interfaceServer.addMenu(nome, primo, secondo, giorno);
 
         nomeMenu.clear();
         primoPiatto.clear();

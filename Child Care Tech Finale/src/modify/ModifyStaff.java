@@ -11,12 +11,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -60,29 +62,37 @@ public class ModifyStaff implements Initializable{
     private Label lblStatus;
 
     public void modifyStaff(ActionEvent actionEvent) throws Exception {
+
+        String codiceFiscale = txtCodicefiscaleOld.getText();
+        String nome = txtNome.getText();
+        String cognome = txtCognome.getText();
+        String luogo = txtLuogo.getText();
+        LocalDate data = dateData.getValue();
+        String mansione = txtMansione.getText();
+
         if (txtCodicefiscaleOld.getText().isEmpty() || txtCodicefiscaleOld.getText().length() != 16 || txtCognome.getText().isEmpty() || txtNome.getText().isEmpty() || txtMansione.getText().isEmpty())
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         else {
-            String codiceFiscale = txtCodicefiscaleOld.getText();
-            String nome = txtNome.getText();
-            String cognome = txtCognome.getText();
-            String luogo = txtLuogo.getText();
-            LocalDate data = dateData.getValue();
-            String mansione = txtMansione.getText();
-            InterfaceRMI interfaceRMI;
-            if (Controller.selection.equals("RMI")) {
-                interfaceRMI = Singleton.getInstance().rmiLookup();
-            } else {
-                interfaceRMI = Singleton.getInstance().methodSocket();
-            }
-            interfaceRMI.modifyStaff(codiceFiscale, nome, cognome, luogo, data, mansione);
+            try {
+                InterfaceServer interfaceServer;
+                if (Controller.selection.equals("RMI")) {
+                    interfaceServer = Singleton.getInstance().rmiLookup();
+                } else {
+                    interfaceServer = Singleton.getInstance().methodSocket();
+                }
+                interfaceServer.modifyStaff(codiceFiscale, nome, cognome, luogo, data, mansione);
 
-            txtCodicefiscaleOld.clear();
-            txtNome.clear();
-            txtCognome.clear();
-            txtLuogo.clear();
-            dateData.getEditor().clear();
-            txtMansione.clear();
+                lblStatus.setTextFill(Color.BLACK);
+                lblStatus.setText("Inserimento riuscito");
+                txtCodicefiscaleOld.clear();
+                txtNome.clear();
+                txtCognome.clear();
+                txtLuogo.clear();
+                dateData.getEditor().clear();
+                txtMansione.clear();
+            }catch (RemoteException e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -107,13 +117,13 @@ public class ModifyStaff implements Initializable{
 
     public void viewStaff(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<StaffGS> staffGS = interfaceRMI.viewStaff();
+        ArrayList<StaffGS> staffGS = interfaceServer.viewStaff();
 
         tabellaStaff.setColumnResizePolicy(tabellaStaff.CONSTRAINED_RESIZE_POLICY);
         tabellaStaff.setItems(FXCollections.observableArrayList(staffGS));

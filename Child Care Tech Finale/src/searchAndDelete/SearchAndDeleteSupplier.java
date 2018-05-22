@@ -16,7 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -61,13 +61,13 @@ public class SearchAndDeleteSupplier implements Initializable{
 
     public void viewSupplier(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<SupplierGS> supplierGS = interfaceRMI.viewSupplier();
+        ArrayList<SupplierGS> supplierGS = interfaceServer.viewSupplier();
 
         tabellaAzienda.setColumnResizePolicy(tabellaAzienda.CONSTRAINED_RESIZE_POLICY);
         tabellaAzienda.setItems(FXCollections.observableArrayList(supplierGS));
@@ -76,13 +76,13 @@ public class SearchAndDeleteSupplier implements Initializable{
 
     public void searchSupplier(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<SupplierGS> supplierGS = interfaceRMI.searchSupplier(txtAzienda.getText(), txtFornitura.getText(), txtPartitaIva.getText());
+        ArrayList<SupplierGS> supplierGS = interfaceServer.searchSupplier(txtAzienda.getText(), txtFornitura.getText(), txtPartitaIva.getText());
 
         tabellaAzienda.setColumnResizePolicy(tabellaAzienda.CONSTRAINED_RESIZE_POLICY);
         tabellaAzienda.setItems(FXCollections.observableArrayList(supplierGS));
@@ -97,13 +97,13 @@ public class SearchAndDeleteSupplier implements Initializable{
 
         System.out.println(azienda); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        interfaceRMI.deleteSupplier(azienda);
+        interfaceServer.deleteSupplier(azienda);
         tabellaAzienda.getItems().remove(index);
     }
 

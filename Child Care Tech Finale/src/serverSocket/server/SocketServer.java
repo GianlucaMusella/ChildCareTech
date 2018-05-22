@@ -1,6 +1,6 @@
 package serverSocket.server;
 
-import serverRMI.RMIServer;
+import serverRMI.server.RMIServer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -119,6 +119,14 @@ public class SocketServer extends Thread{
 
         }else if(commandMethod.equals("modifySupplier")){
 
+            String azienda = inputFromClient.readUTF();
+            String nome = inputFromClient.readUTF();
+            String cognome = inputFromClient.readUTF();
+            String fornitura = inputFromClient.readUTF();
+            String partitaIva = inputFromClient.readUTF();
+            rmiServer.modifySupplier(azienda, nome, cognome, fornitura, partitaIva);
+            return true;
+
         }else if(commandMethod.equals("addOrder")){
 
             String azienda = inputFromClient.readUTF();
@@ -183,6 +191,15 @@ public class SocketServer extends Thread{
             return true;
 
         }else if(commandMethod.equals("modifyChild")){
+
+            String codiceFiscale = inputFromClient.readUTF();
+            String nome = inputFromClient.readUTF();
+            String cognome = inputFromClient.readUTF();
+            String luogo = inputFromClient.readUTF();
+            LocalDate data = LocalDate.parse(inputFromClient.readUTF());
+            String idBambino = inputFromClient.readUTF();
+            rmiServer.modifyChild(codiceFiscale, nome, cognome, luogo, data, idBambino);
+            return true;
 
         }else if(commandMethod.equals("deleteChild")){
 
@@ -253,6 +270,15 @@ public class SocketServer extends Thread{
 
         }else if(commandMethod.equals("modifyStaff")){
 
+            String codiceFiscale = inputFromClient.readUTF();
+            String nome = inputFromClient.readUTF();
+            String cognome = inputFromClient.readUTF();
+            String luogo = inputFromClient.readUTF();
+            LocalDate data = LocalDate.parse(inputFromClient.readUTF());
+            String mansione = inputFromClient.readUTF();
+            rmiServer.modifyStaff(codiceFiscale, nome, cognome, luogo, data, mansione);
+            return true;
+
         }else if(commandMethod.equals("deleteStaff")){
 
             System.out.println("Sto eseguendo da Socket");
@@ -302,6 +328,15 @@ public class SocketServer extends Thread{
 
         }else if(commandMethod.equals("modifyParents")){
 
+            String codiceFiscale = inputFromClient.readUTF();
+            String nome = inputFromClient.readUTF();
+            String cognome = inputFromClient.readUTF();
+            String luogo = inputFromClient.readUTF();
+            LocalDate data = LocalDate.parse(inputFromClient.readUTF());
+            String telefono = inputFromClient.readUTF();
+            rmiServer.modifyParents(codiceFiscale, nome, cognome, luogo, data, telefono);
+            return true;
+
         }else if(commandMethod.equals("deleteParents")){
 
             System.out.println("Sto eseguendo da Socket");
@@ -347,6 +382,13 @@ public class SocketServer extends Thread{
             return true;
 
         }else if(commandMethod.equals("modifyContacts")){
+
+            String codiceFiscale = inputFromClient.readUTF();
+            String nome = inputFromClient.readUTF();
+            String cognome = inputFromClient.readUTF();
+            String telefono = inputFromClient.readUTF();
+            rmiServer.modifyContact(codiceFiscale, nome, cognome, telefono);
+            return true;
 
         }else if(commandMethod.equals("deleteContacts")){
 
@@ -395,6 +437,14 @@ public class SocketServer extends Thread{
             return true;
 
         }else if(commandMethod.equals("modifyDoctor")){
+
+            String codiceFiscale = inputFromClient.readUTF();
+            String nome = inputFromClient.readUTF();
+            String cognome = inputFromClient.readUTF();
+            String luogo = inputFromClient.readUTF();
+            LocalDate data = LocalDate.parse(inputFromClient.readUTF());
+            rmiServer.modifyDoctor(codiceFiscale, nome, cognome, luogo, data);
+            return true;
 
         }else if(commandMethod.equals("deleteDoctor")){
 
@@ -486,7 +536,7 @@ public class SocketServer extends Thread{
         }
 
 
-        else if(commandMethod.equals("newTrip")){
+        else if(commandMethod.equals("AddTrip")){
 
             String id = inputFromClient.readUTF();
             String meta = inputFromClient.readUTF();
@@ -516,6 +566,20 @@ public class SocketServer extends Thread{
             return true;
 
         }else if(commandMethod.equals("bambinoPresenteServer")){
+
+            String codiceFiscale = inputFromClient.readUTF();
+            String idGita = inputFromClient.readUTF();
+
+            rmiServer.bambinoPresenteServer(codiceFiscale, Integer.parseInt(idGita));
+            return true;
+
+        }else if(commandMethod.equals("bambinoAssenteServer")){
+
+            String codiceFiscale = inputFromClient.readUTF();
+            String idGita = inputFromClient.readUTF();
+
+            rmiServer.bambinoAssenteServer(codiceFiscale, Integer.parseInt(idGita));
+            return true;
 
         }else if(commandMethod.equals("newTappa")){
 
@@ -556,6 +620,11 @@ public class SocketServer extends Thread{
             return success;
 
         }else if(commandMethod.equals("pullmanCount")){
+
+            String idGita = inputFromClient.readUTF();
+
+            rmiServer.pullmanCount(idGita);
+            return true;
 
         }
 

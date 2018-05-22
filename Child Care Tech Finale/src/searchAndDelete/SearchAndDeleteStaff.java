@@ -16,7 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import serverRMI.InterfaceRMI;
+import interfaces.InterfaceServer;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -63,13 +63,13 @@ public class SearchAndDeleteStaff implements Initializable{
 
     public void viewStaff(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<StaffGS> staffGS = interfaceRMI.viewStaff();
+        ArrayList<StaffGS> staffGS = interfaceServer.viewStaff();
 
         tabellaStaff.setColumnResizePolicy(tabellaStaff.CONSTRAINED_RESIZE_POLICY);
         tabellaStaff.setItems(FXCollections.observableArrayList(staffGS));
@@ -78,13 +78,13 @@ public class SearchAndDeleteStaff implements Initializable{
 
     public void searchStaff(ActionEvent actionEvent) throws Exception {
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<StaffGS> staffGS = interfaceRMI.searchStaff(txtNome.getText(), txtCognome.getText(), txtCodicefiscale.getText());
+        ArrayList<StaffGS> staffGS = interfaceServer.searchStaff(txtNome.getText(), txtCognome.getText(), txtCodicefiscale.getText());
 
         tabellaStaff.setColumnResizePolicy(tabellaStaff.CONSTRAINED_RESIZE_POLICY);
         tabellaStaff.setItems(FXCollections.observableArrayList(staffGS));
@@ -99,13 +99,13 @@ public class SearchAndDeleteStaff implements Initializable{
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceRMI interfaceRMI;
+        InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
+            interfaceServer = Singleton.getInstance().rmiLookup();
         } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
+            interfaceServer = Singleton.getInstance().methodSocket();
         }
-        interfaceRMI.deleteStaff(codiceFiscale);
+        interfaceServer.deleteStaff(codiceFiscale);
         tabellaStaff.getItems().remove(index);
 
 
