@@ -104,13 +104,32 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewSupplier());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("searchSupplier")){
 
+            System.out.println("Sto Eseguendo da Socket");
+            String azienda = inputFromClient.readUTF();
+            String fornitura = inputFromClient.readUTF();
+            String partitaIva = inputFromClient.readUTF();
+            outputToClient.writeObject(rmiServer.searchSupplier(azienda, fornitura, partitaIva));
+            outputToClient.reset();
+            return true;
+
         }else if(commandMethod.equals("modifySupplier")){
 
         }else if(commandMethod.equals("addOrder")){
+
+            String azienda = inputFromClient.readUTF();
+            String ordini = inputFromClient.readUTF();
+            String quantità = inputFromClient.readUTF();
+
+            boolean success = rmiServer.addOrder(azienda, ordini, quantità);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
 
         }else if(commandMethod.equals("deleteSupplier")){
 
@@ -140,11 +159,18 @@ public class SocketServer extends Thread{
 
         }else if(commandMethod.equals("searchChild")){
 
+            System.out.println("Sto Eseguendo da Socket");
+            String nome = inputFromClient.readUTF();
+            String cognome = inputFromClient.readUTF();
+            String codiceFiscale = inputFromClient.readUTF();
+            outputToClient.writeObject(rmiServer.searchC(nome, cognome, codiceFiscale));
+            outputToClient.reset();
+            return true;
+
         }else if(commandMethod.equals("viewChild")){
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewChild());
-            //outputToClient.flush();
             outputToClient.reset();
             return true;
 
@@ -195,9 +221,18 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewStaff());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("searchStaff")){
+
+            System.out.println("Sto Eseguendo da Socket");
+            String nome = inputFromClient.readUTF();
+            String cognome = inputFromClient.readUTF();
+            String codiceFiscale = inputFromClient.readUTF();
+            outputToClient.writeObject(rmiServer.searchStaff(nome, cognome, codiceFiscale));
+            outputToClient.reset();
+            return true;
 
         }else if(commandMethod.equals("modifyStaff")){
 
@@ -232,6 +267,13 @@ public class SocketServer extends Thread{
 
         }else if(commandMethod.equals("searchParents")){
 
+            System.out.println("Sto Eseguendo da Socket");
+            String nome = inputFromClient.readUTF();
+            String codiceFiscale = inputFromClient.readUTF();
+            outputToClient.writeObject(rmiServer.searchParents(nome, codiceFiscale));
+            outputToClient.reset();
+            return true;
+
         }else if(commandMethod.equals("modifyParents")){
 
         }else if(commandMethod.equals("deleteParents")){
@@ -257,13 +299,21 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewContacts());
+            outputToClient.reset();
             return true;
 
-        }else if(commandMethod.equals("searchContact")){
+        }else if(commandMethod.equals("searchContacts")){
 
-        }else if(commandMethod.equals("modifyContact")){
+            System.out.println("Sto Eseguendo da Socket");
+            String nome = inputFromClient.readUTF();
+            String codiceFiscale = inputFromClient.readUTF();
+            outputToClient.writeObject(rmiServer.searchContacts(nome, codiceFiscale));
+            outputToClient.reset();
+            return true;
 
-        }else if(commandMethod.equals("deleteContact")){
+        }else if(commandMethod.equals("modifyContacts")){
+
+        }else if(commandMethod.equals("deleteContacts")){
 
         }
 
@@ -293,6 +343,13 @@ public class SocketServer extends Thread{
 
         }else if(commandMethod.equals("searchDoctor")){
 
+            System.out.println("Sto Eseguendo da Socket");
+            String nome = inputFromClient.readUTF();
+            String codiceFiscale = inputFromClient.readUTF();
+            outputToClient.writeObject(rmiServer.searchDoctors(nome, codiceFiscale));
+            outputToClient.reset();
+            return true;
+
         }else if(commandMethod.equals("modifyDoctor")){
 
         }else if(commandMethod.equals("deleteDoctor")){
@@ -317,24 +374,28 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewFirst());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("viewSecond")){
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewSecond());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("viewAllergy")){
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewAllergy());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("viewMenu")){
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewMenu());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("addPrimo")){
@@ -382,6 +443,7 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewTrip());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("loadDataServer")){
@@ -389,6 +451,7 @@ public class SocketServer extends Thread{
             System.out.println("Sto Eseguendo da Socket");
             String idGita = inputFromClient.readUTF();
             outputToClient.writeObject(rmiServer.loadDataServer(Integer.parseInt(idGita)));
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("bambinoPresenteServer")){

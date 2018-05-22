@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
+
 
 public class SocketUserClient implements InterfaceRMI {
 
@@ -123,7 +123,30 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public ArrayList<SupplierGS> searchSupplier(String azienda, String fornitura, String partitaIva) throws Exception {
+
+        try{
+
+            toServer.writeUTF("searchSupplier");
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(azienda));
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(fornitura));
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(partitaIva));
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try{
+            return (ArrayList<SupplierGS>) fromServer.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return null;
+
     }
 
     @Override
@@ -133,7 +156,32 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public boolean addOrder(String azienda, String ordini, String quantità) throws Exception {
-        return false;
+
+        boolean success = false;
+
+        try{
+
+            toServer.writeUTF("addOrder");
+            toServer.flush();
+            toServer.writeUTF(azienda);
+            toServer.flush();
+            toServer.writeUTF(ordini);
+            toServer.flush();
+            toServer.writeUTF(quantità);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return success;
+
     }
 
     @Override
@@ -191,7 +239,30 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public ArrayList<ChildGS> searchC(String name, String surname, String cod) throws Exception {
+
+        try{
+
+            toServer.writeUTF("searchChild");
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(name));
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(surname));
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(cod));
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try{
+            return (ArrayList<ChildGS>) fromServer.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return null;
+
     }
 
     @Override
@@ -328,7 +399,30 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public ArrayList<StaffGS> searchStaff(String nome, String cognome, String cod) throws Exception {
+
+        try{
+
+            toServer.writeUTF("searchStaff");
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(nome));
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(cognome));
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(cod));
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try{
+            return (ArrayList<StaffGS>) fromServer.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return null;
+
     }
 
     @Override
@@ -403,7 +497,28 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public ArrayList<ParentsGS> searchParents(String name, String cod) throws Exception {
+
+        try{
+
+            toServer.writeUTF("searchParents");
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(name));
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(cod));
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try{
+            return (ArrayList<ParentsGS>) fromServer.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return null;
+
     }
 
     @Override
@@ -472,7 +587,29 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public ArrayList<ContactGS> searchContacts(String nome, String cod) throws Exception {
+
+        try{
+
+            toServer.writeUTF("searchContacts");
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(nome));
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(cod));
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try{
+            return (ArrayList<ContactGS>) fromServer.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return null;
+
+
     }
 
     @Override
@@ -546,7 +683,29 @@ public class SocketUserClient implements InterfaceRMI {
 
     @Override
     public ArrayList<DoctorGS> searchDoctors(String name, String cod) throws Exception {
+
+        try{
+
+            toServer.writeUTF("searchDoctor");
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(name));
+            toServer.flush();
+            toServer.writeUTF(String.valueOf(cod));
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try{
+            return (ArrayList<DoctorGS>) fromServer.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return null;
+
+
     }
 
     @Override
@@ -720,7 +879,6 @@ public class SocketUserClient implements InterfaceRMI {
             toServer.writeUTF(allergeni);
             toServer.flush();
 
-
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -875,7 +1033,6 @@ public class SocketUserClient implements InterfaceRMI {
             toServer.flush();
             toServer.writeUTF(idGita);
             toServer.flush();
-
 
         }catch (IOException e){
             e.printStackTrace();

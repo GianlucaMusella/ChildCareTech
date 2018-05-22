@@ -109,7 +109,6 @@ public class SearchAndDeleteChild implements Initializable {
         interfaceRMI.deleteChild(codiceFiscale);
         tableBambini.getItems().remove(index);
 
-
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
