@@ -3,7 +3,7 @@ package getterAndSetter.people;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ParentsGS implements Serializable{
+public class ParentsGS implements Serializable {
 
     private int numeroDiTelefono;
 

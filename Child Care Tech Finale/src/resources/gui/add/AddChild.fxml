@@ -53,7 +53,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="290.0" layoutY="627.0" mnemonicParsing="false" onAction="#viewChild" text="Mostra Persone" />
+      <Button layoutX="290.0" layoutY="627.0" mnemonicParsing="false" onAction="#viewChild" text="bambini" />
       <TableView fx:id="tabellaGenitori" layoutX="674.0" layoutY="54.0" prefHeight="242.0" prefWidth="285.0">
         <columns>
           <TableColumn fx:id="colonnaNome" prefWidth="86.0" text="Nome" />
@@ -79,5 +79,8 @@
       <Label layoutX="290.0" layoutY="322.0" text="Contatti presenti nel database" />
       <Label layoutX="675.0" layoutY="322.0" text="Pediatri presenti nel database" />
       <Label fx:id="lblStatus" layoutX="88.0" layoutY="619.0" textFill="RED" />
+      <Button layoutX="416.0" layoutY="627.0" mnemonicParsing="false" onAction="#viewParents" text="Genitori" />
+      <Button layoutX="523.0" layoutY="627.0" mnemonicParsing="false" onAction="#viewContact" text="Contatti" />
+      <Button layoutX="622.0" layoutY="627.0" mnemonicParsing="false" onAction="#viewDoctor" text="Pediatra" />
    </children>
 </AnchorPane>

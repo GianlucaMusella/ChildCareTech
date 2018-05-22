@@ -235,22 +235,70 @@ public class AddChild implements Initializable{
         }
 
         ArrayList<ChildGS> childrenGS = interfaceRMI.viewChild();
-        ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
+        /*ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
         ArrayList<ContactGS> contactGS = interfaceRMI.viewContacts();
-        ArrayList<DoctorGS> doctorGS = interfaceRMI.viewDoctors();
+        ArrayList<DoctorGS> doctorGS = interfaceRMI.viewDoctors();*/
 
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
         tableBambini.setItems(FXCollections.observableArrayList(childrenGS));
 
-        tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
+        /*tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
         tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
 
         tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
         tabellaContatti.setItems(FXCollections.observableArrayList(contactGS));
 
         tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);
-        tabellaPediatra.setItems(FXCollections.observableArrayList(doctorGS));
+        tabellaPediatra.setItems(FXCollections.observableArrayList(doctorGS));*/
     }
+
+    public void viewParents(ActionEvent actionEvent) throws Exception {
+        InterfaceRMI interfaceRMI;
+
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
+        ArrayList<ParentsGS> parents = interfaceRMI.viewParents();
+
+        tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
+        tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
+
+    }
+
+    public void viewDoctor(ActionEvent actionEvent) throws Exception {
+        InterfaceRMI interfaceRMI;
+
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
+
+        ArrayList<DoctorGS> doctorGS = interfaceRMI.viewDoctors();
+
+        tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);
+        tabellaPediatra.setItems(FXCollections.observableArrayList(doctorGS));
+
+    }
+
+    public void viewContact(ActionEvent actionEvent) throws Exception {
+        InterfaceRMI interfaceRMI;
+
+        if (Controller.selection.equals("RMI")) {
+            interfaceRMI = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceRMI = Singleton.getInstance().methodSocket();
+        }
+
+        ArrayList<ContactGS> contactGS = interfaceRMI.viewContacts();
+
+        tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
+        tabellaContatti.setItems(FXCollections.observableArrayList(contactGS));
+
+    }
+
 
     public void inserisciGenitore(ActionEvent actionEvent) throws Exception{
 

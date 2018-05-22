@@ -144,6 +144,8 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewChild());
+            //outputToClient.flush();
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("modifyChild")){
@@ -224,6 +226,8 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewParents());
+            outputToClient.reset();
+
             return true;
 
         }else if(commandMethod.equals("searchParents")){
@@ -283,6 +287,8 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewDoctors());
+            outputToClient.reset();
+
             return true;
 
         }else if(commandMethod.equals("searchDoctor")){
