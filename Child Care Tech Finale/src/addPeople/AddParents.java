@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
@@ -59,6 +60,9 @@ public class AddParents implements Initializable{
     @FXML
     private TableColumn <ParentsGS, String> colonnaCodiceFiscale;
 
+    @FXML
+    private Label lblStatus;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -85,41 +89,44 @@ public class AddParents implements Initializable{
     }
 
     public void addParents(ActionEvent actionEvent) throws Exception {
+        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() &&
+                txtCodiceFiscale.getText().length() == 16 || txtLuogo.getText().isEmpty() )
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        else {
+            String nome = txtNome.getText();
+            String cognome = txtCognome.getText();
+            String codiceFiscale = txtCodiceFiscale.getText();
+            String luogo = txtLuogo.getText();
+            LocalDate data = dateData.getValue();
+            String telefono = txtTelefono.getText();
+            String sesso;
+            String sessoM = radioMaschio.getText();
+            String sessoF = radioFemmina.getText();
 
-        String nome = txtNome.getText();
-        String cognome = txtCognome.getText();
-        String codiceFiscale = txtCodiceFiscale.getText();
-        String luogo = txtLuogo.getText();
-        LocalDate data = dateData.getValue();
-        String telefono = txtTelefono.getText();
-        String sesso;
-        String sessoM = radioMaschio.getText();
-        String sessoF = radioFemmina.getText();
+            if (radioMaschio.isSelected()) {
+                sesso = sessoM;
+            } else {
+                sesso = sessoF;
+            }
 
-        if(radioMaschio.isSelected()) {
-            sesso = sessoM;
-        }else {
-            sesso = sessoF;
+            InterfaceRMI interfaceRMI;
+            if (Controller.selection.equals("RMI")) {
+                interfaceRMI = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceRMI = Singleton.getInstance().methodSocket();
+            }
+            boolean success = interfaceRMI.addParents(codiceFiscale, nome, cognome, data, luogo, telefono, sesso);
+            if (success){
+                lblStatus.setTextFill(Color.BLACK);
+                lblStatus.setText("Inserimento riuscito");
+            }
+            txtNome.clear();
+            txtCognome.clear();
+            txtCodiceFiscale.clear();
+            txtLuogo.clear();
+            dateData.getEditor().clear();
+            txtTelefono.clear();
         }
-
-        InterfaceRMI interfaceRMI;
-        if (Controller.selection.equals("RMI")) {
-            interfaceRMI = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceRMI = Singleton.getInstance().methodSocket();
-        }
-        boolean success = interfaceRMI.addParents(codiceFiscale,  nome,  cognome,  data,  luogo, telefono, sesso);
-
-        //se metti il cambio del label serve la try catch con remoteexception
-
-
-        txtNome.clear();
-        txtCognome.clear();
-        txtCodiceFiscale.clear();
-        txtLuogo.clear();
-        dateData.getEditor().clear();
-        txtTelefono.clear();
-
     }
 
 
