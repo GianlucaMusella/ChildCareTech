@@ -95,6 +95,7 @@ public class SearchAndDeleteChild implements Initializable {
     public void deleteChild (ActionEvent actionEvent) throws Exception {
 
         ChildGS DeletableChild = tableBambini.getSelectionModel().getSelectedItem();
+        int index = tableBambini.getSelectionModel().getSelectedIndex();
         String codiceFiscale = DeletableChild.getCodiceFiscale();
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
@@ -106,6 +107,7 @@ public class SearchAndDeleteChild implements Initializable {
             interfaceRMI = Singleton.getInstance().methodSocket();
         }
         interfaceRMI.deleteChild(codiceFiscale);
+        tableBambini.getItems().remove(index);
 
     }
 
