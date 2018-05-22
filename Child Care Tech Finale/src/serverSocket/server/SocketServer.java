@@ -104,9 +104,18 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewSupplier());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("searchSupplier")){
+
+            System.out.println("Sto Eseguendo da Socket");
+            String azienda = inputFromClient.readUTF();
+            String fornitura = inputFromClient.readUTF();
+            String partitaIva = inputFromClient.readUTF();
+            outputToClient.writeObject(rmiServer.searchSupplier(azienda, fornitura, partitaIva));
+            outputToClient.reset();
+            return true;
 
         }else if(commandMethod.equals("modifySupplier")){
 
@@ -140,11 +149,18 @@ public class SocketServer extends Thread{
 
         }else if(commandMethod.equals("searchChild")){
 
+            System.out.println("Sto Eseguendo da Socket");
+            String nome = inputFromClient.readUTF();
+            String cognome = inputFromClient.readUTF();
+            String codiceFiscale = inputFromClient.readUTF();
+            outputToClient.writeObject(rmiServer.searchC(nome, cognome, codiceFiscale));
+            outputToClient.reset();
+            return true;
+
         }else if(commandMethod.equals("viewChild")){
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewChild());
-            //outputToClient.flush();
             outputToClient.reset();
             return true;
 
@@ -195,6 +211,7 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewStaff());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("searchStaff")){
@@ -257,13 +274,14 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewContacts());
+            outputToClient.reset();
             return true;
 
-        }else if(commandMethod.equals("searchContact")){
+        }else if(commandMethod.equals("searchContacts")){
 
-        }else if(commandMethod.equals("modifyContact")){
+        }else if(commandMethod.equals("modifyContacts")){
 
-        }else if(commandMethod.equals("deleteContact")){
+        }else if(commandMethod.equals("deleteContacts")){
 
         }
 
@@ -317,24 +335,28 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewFirst());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("viewSecond")){
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewSecond());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("viewAllergy")){
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewAllergy());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("viewMenu")){
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewMenu());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("addPrimo")){
@@ -382,6 +404,7 @@ public class SocketServer extends Thread{
 
             System.out.println("Sto Eseguendo da Socket");
             outputToClient.writeObject(rmiServer.viewTrip());
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("loadDataServer")){
@@ -389,6 +412,7 @@ public class SocketServer extends Thread{
             System.out.println("Sto Eseguendo da Socket");
             String idGita = inputFromClient.readUTF();
             outputToClient.writeObject(rmiServer.loadDataServer(Integer.parseInt(idGita)));
+            outputToClient.reset();
             return true;
 
         }else if(commandMethod.equals("bambinoPresenteServer")){
