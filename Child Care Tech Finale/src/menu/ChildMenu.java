@@ -16,6 +16,8 @@ public class ChildMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddChild.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Inserisci Bambino");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -25,6 +27,8 @@ public class ChildMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/searchAndDelete/SearchAndDeleteChild.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Cerca o Elimina un Bambino");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -34,6 +38,8 @@ public class ChildMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/modify/ModifyChild.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Modifica Bambino");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -43,6 +49,8 @@ public class ChildMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/PeopleMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -51,6 +59,8 @@ public class ChildMenu {
         ((Node) ev.getSource()).getScene().getWindow().hide();
         Controller controller = new Controller();
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         controller.initialize(stage);
     }
 

@@ -12,6 +12,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modify.ModifyChild">
     <children>
+      <ImageView fitHeight="422.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
         <TextField fx:id="txtCodicefiscaleOld" layoutX="35.0" layoutY="76.0" promptText="Codice Fiscale Vecchio" />
         <TextField fx:id="txtNome" layoutX="35.0" layoutY="109.0" promptText="Nome" />
         <TextField fx:id="txtCognome" layoutX="35.0" layoutY="143.0" promptText="Cognome" />

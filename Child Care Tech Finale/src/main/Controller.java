@@ -31,7 +31,6 @@ public class Controller {
     @FXML
     private ChoiceBox menuConnessione;
 
-    //JSONObject txt;
     public String remoteObjectName = "MainFrame";
 
 
@@ -40,6 +39,8 @@ public class Controller {
 
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/login/Login.fxml"));
         Scene scene = new Scene(root);
+        primaryStage.setTitle("Child Care Tech");
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
         ObservableList<String> C = FXCollections.observableArrayList("RMI", "SOCKET");
@@ -57,12 +58,13 @@ public class Controller {
                 System.out.println("E' stata scelta la connessione RMI");
                 InterfaceServer Mainframe = Singleton.getInstance().rmiLookup();
                 if(Mainframe.login(txtUsername.getText(), txtPassword.getText())) {
-                    //se il login ha avuto successo nascono il login
+
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-                    //apro la schermata del menù
                     Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
+                    stage.setTitle("Child Care Tech");
+                    stage.setResizable(false);
                     stage.setScene(scene);
                     stage.show();
                 }
@@ -81,6 +83,8 @@ public class Controller {
                     Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
+                    stage.setTitle("Child Care Tech");
+                    stage.setResizable(false);
                     stage.setScene(scene);
                     stage.show();
 

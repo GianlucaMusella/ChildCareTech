@@ -121,6 +121,8 @@ public class ModifyContact implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/ContactMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Contatto");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

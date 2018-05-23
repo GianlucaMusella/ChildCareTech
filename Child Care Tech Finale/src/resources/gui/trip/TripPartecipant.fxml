@@ -8,36 +8,41 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="914.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.TripPartecipant">
-   <children>
-      <TextField fx:id="txtCodicefiscale" layoutX="45.0" layoutY="64.0" prefHeight="26.0" prefWidth="158.0" promptText="Codice Fiscale Partecipante" />
-      <TextField fx:id="txtIDgita" layoutX="45.0" layoutY="99.0" prefHeight="26.0" prefWidth="158.0" promptText="ID gita" />
-      <TableView fx:id="tableBambini" layoutX="271.0" layoutY="64.0" prefHeight="200.0" prefWidth="306.0">
-        <columns>
-          <TableColumn fx:id="columnNome" prefWidth="75.0" text="Nome" />
-          <TableColumn fx:id="columnCognome" prefWidth="79.0" text="Cognome" />
-            <TableColumn fx:id="columnCodiceFiscale" prefWidth="112.0" text="Codice Fiscale" />
-            <TableColumn fx:id="columnID" prefWidth="39.0" text="ID" />
-        </columns>
-      </TableView>
-      <TableView fx:id="tableGita" layoutX="602.0" layoutY="65.0" prefHeight="200.0" prefWidth="275.0">
-        <columns>
-          <TableColumn fx:id="columnIDGita" prefWidth="42.0" text="ID" />
-          <TableColumn fx:id="columnMeta" text="Meta" />
-            <TableColumn fx:id="columnAndata" prefWidth="76.0" text="Andata" />
-            <TableColumn fx:id="columnRitorno" prefWidth="76.0" text="Ritorno" />
-        </columns>
-      </TableView>
-      <Button layoutX="19.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
-         <graphic>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0"
+            prefWidth="692.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="trip.TripPartecipant">
+    <ImageView fitHeight="486.0" fitWidth="692.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../../image/185235620.jpg"/>
+    </ImageView>
+    <TextField fx:id="txtCodicefiscale" layoutX="50.0" layoutY="90.0" prefHeight="26.0" prefWidth="158.0"
+               promptText="Codice Fiscale Partecipante"/>
+    <TextField fx:id="txtIDgita" layoutX="483.0" layoutY="90.0" prefHeight="26.0" prefWidth="158.0"
+               promptText="ID gita"/>
+    <TableView fx:id="tableBambini" layoutX="50.0" layoutY="137.0" prefHeight="200.0" prefWidth="306.0">
+      <columns>
+          <TableColumn fx:id="columnNome" prefWidth="75.0" text="Nome"/>
+          <TableColumn fx:id="columnCognome" prefWidth="79.0" text="Cognome"/>
+          <TableColumn fx:id="columnCodiceFiscale" prefWidth="112.0" text="Codice Fiscale"/>
+          <TableColumn fx:id="columnID" prefWidth="39.0" text="ID"/>
+      </columns>
+    </TableView>
+    <TableView fx:id="tableGita" layoutX="366.0" layoutY="137.0" prefHeight="200.0" prefWidth="275.0">
+      <columns>
+          <TableColumn fx:id="columnIDGita" prefWidth="42.0" text="ID"/>
+          <TableColumn fx:id="columnMeta" text="Meta"/>
+          <TableColumn fx:id="columnAndata" prefWidth="76.0" text="Andata"/>
+          <TableColumn fx:id="columnRitorno" prefWidth="76.0" text="Ritorno"/>
+      </columns>
+    </TableView>
+    <Button layoutX="19.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method"
+            style="-fx-background-color: transparent;">
+        <graphic>
             <ImageView fitHeight="26.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
-               </image>
+                <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png"/>
             </ImageView>
-         </graphic>
-      </Button>
-      <Button layoutX="271.0" layoutY="283.0" mnemonicParsing="false" onAction="#viewInfo" text="Carica Dati" />
-      <Button layoutX="809.0" layoutY="349.0" mnemonicParsing="false" onAction="#partecipantiTrip" text="Conferma" />
-   </children>
+        </graphic>
+    </Button>
+    <Button layoutX="50.0" layoutY="363.0" mnemonicParsing="false" onAction="#viewInfo" text="Mostra Gite e Bambini"/>
+    <Button layoutX="492.0" layoutY="363.0" mnemonicParsing="false" onAction="#partecipantiTrip"
+            text="Conferma Partecipazione"/>
 </AnchorPane>

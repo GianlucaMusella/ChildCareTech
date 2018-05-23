@@ -10,8 +10,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="522.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="searchAndDelete.SearchAndDeleteParents">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="524.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="searchAndDelete.SearchAndDeleteParents">
     <children>
+      <ImageView fitHeight="463.0" fitWidth="665.0" layoutX="-71.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
         <TableView id="tableBambini" fx:id="tabellaGenitori" layoutX="31.0" layoutY="92.0" prefHeight="292.0" prefWidth="461.0">
             <columns>
                 <TableColumn id="columnNome" fx:id="columnNome" prefWidth="149.0" text="Nome" />
@@ -26,14 +31,12 @@
         <Button layoutX="234.0" layoutY="401.0" mnemonicParsing="false" onAction="#deleteParents" text="Elimina" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
-            <ImageView fitHeight="23.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
-               </image>
-            </ImageView>
+             <ImageView fitHeight="23.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                 <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png"/>
+             </ImageView>
          </graphic>
       </Button>
-      <Hyperlink layoutX="441.0" layoutY="436.0" onAction="#logout" text="Logout">
+      <Hyperlink layoutX="360.0" layoutY="402.0" onAction="#logout" text="Logout">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>

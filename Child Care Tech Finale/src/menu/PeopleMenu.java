@@ -16,6 +16,8 @@ public class PeopleMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/ParentsMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Genitore");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -25,6 +27,8 @@ public class PeopleMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/DoctorMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Pediatra");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -34,6 +38,8 @@ public class PeopleMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/ChildMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Bambino");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -43,6 +49,8 @@ public class PeopleMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/ContactMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Contatto");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -52,6 +60,8 @@ public class PeopleMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/StaffMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Personale Interno");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -61,6 +71,8 @@ public class PeopleMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -69,6 +81,8 @@ public class PeopleMenu {
         ((Node) ev.getSource()).getScene().getWindow().hide();
         Controller controller = new Controller();
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         controller.initialize(stage);
     }
 

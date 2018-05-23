@@ -109,6 +109,8 @@ public class SearchAndDeleteParents implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/ParentsMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Genitori");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -117,6 +119,8 @@ public class SearchAndDeleteParents implements Initializable{
         ((Node) ev.getSource()).getScene().getWindow().hide();
         Controller controller = new Controller();
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         controller.initialize(stage);
     }
 }

@@ -16,6 +16,8 @@ public class Choice{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/PeopleMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -25,6 +27,8 @@ public class Choice{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Gestione Gita");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 
@@ -35,6 +39,8 @@ public class Choice{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menuFood/MenuTable.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Gestione Menù");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -52,6 +58,8 @@ public class Choice{
         ((Node) ev.getSource()).getScene().getWindow().hide();
         Controller controller = new Controller();
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         controller.initialize(stage);
     }
 

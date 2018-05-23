@@ -110,6 +110,8 @@ public class SearchAndDeleteContact implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/ContactMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Contatti");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -118,6 +120,8 @@ public class SearchAndDeleteContact implements Initializable{
         ((Node) ev.getSource()).getScene().getWindow().hide();
         Controller controller = new Controller();
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         controller.initialize(stage);
     }
 }

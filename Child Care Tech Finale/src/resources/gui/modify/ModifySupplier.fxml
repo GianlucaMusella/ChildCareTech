@@ -9,8 +9,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modify.ModifySupplier">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modify.ModifySupplier">
     <children>
+      <ImageView fitHeight="478.0" fitWidth="609.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
         <TextField fx:id="txtAzienda" layoutX="35.0" layoutY="76.0" promptText="Azienda" />
         <TextField fx:id="txtNome" layoutX="35.0" layoutY="111.0" promptText="Nome" />
         <TextField fx:id="txtCognome" layoutX="35.0" layoutY="146.0" promptText="Cognome" />
@@ -24,7 +29,7 @@
                 <TableColumn fx:id="colonnaFornitura" prefWidth="110.0" text="Fornitura" />
             </columns>
         </TableView>
-        <Button layoutX="489.0" layoutY="310.0" mnemonicParsing="false" onAction="#viewSupplier" text="Carica Dati" />
+        <Button layoutX="232.0" layoutY="310.0" mnemonicParsing="false" onAction="#viewSupplier" text="Mostra Fornitori" />
         <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="29.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">

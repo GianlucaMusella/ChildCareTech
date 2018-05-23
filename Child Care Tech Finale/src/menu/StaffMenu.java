@@ -16,6 +16,8 @@ public class StaffMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddTeacher.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Inserisci Insegnante");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -25,6 +27,8 @@ public class StaffMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/add/AddStaff.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Inserisci Personale Interno");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -34,6 +38,8 @@ public class StaffMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/searchAndDelete/SearchAndDeleteStaff.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Cerca o Elimina Personale Interno");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -43,6 +49,8 @@ public class StaffMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/modify/ModifyStaff.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Modifica Personale Interno");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -52,6 +60,8 @@ public class StaffMenu {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/PeopleMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -60,6 +70,8 @@ public class StaffMenu {
         ((Node) ev.getSource()).getScene().getWindow().hide();
         Controller controller = new Controller();
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         controller.initialize(stage);
     }
 

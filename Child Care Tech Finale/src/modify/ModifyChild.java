@@ -140,6 +140,8 @@ public class ModifyChild implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/ChildMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Bambino");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

@@ -149,6 +149,8 @@ public class AddMenu implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menuFood/AddFirstDish.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Inserisci Primo Piatto");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -158,6 +160,8 @@ public class AddMenu implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menuFood/AddSecondDish.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Inserisci Secondo Piatto");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -168,6 +172,8 @@ public class AddMenu implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menuFood/MenuTable.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Mensa");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

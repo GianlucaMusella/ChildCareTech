@@ -96,6 +96,8 @@ public class AppealTrip implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Gita");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

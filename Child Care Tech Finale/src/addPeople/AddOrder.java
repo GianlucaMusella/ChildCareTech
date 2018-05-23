@@ -114,6 +114,8 @@ public class AddOrder implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/SupplierMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Fornitori");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 

@@ -106,6 +106,8 @@ public class SearchAndDeleteDoctor implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/DoctorMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Pediatra");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -114,6 +116,8 @@ public class SearchAndDeleteDoctor implements Initializable{
         ((Node) ev.getSource()).getScene().getWindow().hide();
         Controller controller = new Controller();
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         controller.initialize(stage);
     }
 }

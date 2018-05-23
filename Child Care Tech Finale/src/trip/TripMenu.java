@@ -94,6 +94,8 @@ public class TripMenu implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/AddTrip.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Inserisci Gita");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 
@@ -104,6 +106,8 @@ public class TripMenu implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripAppeal.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Appello Gita");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -113,6 +117,8 @@ public class TripMenu implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/Pullman.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Pullman");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -123,6 +129,8 @@ public class TripMenu implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/Stage.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Tappe");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -133,6 +141,8 @@ public class TripMenu implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripPartecipant.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Adesioni Gita");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -143,6 +153,8 @@ public class TripMenu implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 
@@ -152,6 +164,8 @@ public class TripMenu implements Initializable{
         ((Node) ev.getSource()).getScene().getWindow().hide();
         Controller controller = new Controller();
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         controller.initialize(stage);
     }
 

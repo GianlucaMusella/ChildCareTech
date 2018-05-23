@@ -88,6 +88,8 @@ public class MenuTable implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menuFood/AddMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Inserisci Menù Mensa");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -98,6 +100,8 @@ public class MenuTable implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -106,6 +110,8 @@ public class MenuTable implements Initializable{
         ((Node) ev.getSource()).getScene().getWindow().hide();
         Controller controller = new Controller();
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         controller.initialize(stage);
     }
 

@@ -102,6 +102,8 @@ public class AddTeacher {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/StaffMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Personale Interno");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 
@@ -113,6 +115,8 @@ public class AddTeacher {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 

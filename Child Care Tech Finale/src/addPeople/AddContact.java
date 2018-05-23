@@ -79,14 +79,15 @@ public class AddContact implements Initializable{
     }
 
     public void addContact(ActionEvent actionEvent) throws Exception {
+
+        String nome = txtNome.getText();
+        String cognome = txtCognome.getText();
+        String codiceFiscale = txtCodiceFiscale.getText();
+        String telefono = txtTelefono.getText();
+
         if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty())
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         else {
-            String nome = txtNome.getText();
-            String cognome = txtCognome.getText();
-            String codiceFiscale = txtCodiceFiscale.getText();
-            String telefono = txtTelefono.getText();
-
             try {
                 InterfaceServer interfaceServer;
                 if (Controller.selection.equals("RMI")) {
@@ -109,8 +110,6 @@ public class AddContact implements Initializable{
                 e.printStackTrace();
             }
         }
-
-
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
@@ -119,6 +118,8 @@ public class AddContact implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/ContactMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Menù Contatti");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 
@@ -130,6 +131,8 @@ public class AddContact implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/Choice.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setTitle("Child Care Tech");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 

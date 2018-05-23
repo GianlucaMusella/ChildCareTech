@@ -10,22 +10,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="426.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="searchAndDelete.SearchAndDeleteSupplier">
    <children>
-      <TextField fx:id="txtAzienda" layoutX="25.0" layoutY="50.0" promptText="Azienda" />
-      <TextField fx:id="txtFornitura" layoutX="226.0" layoutY="50.0" promptText="Fornitura" />
-      <TextField fx:id="txtPartitaIva" layoutX="426.0" layoutY="50.0" promptText="Partita IVA" />
-      <TableView fx:id="tabellaAzienda" layoutX="25.0" layoutY="91.0" prefHeight="244.0" prefWidth="551.0">
+      <ImageView fitHeight="499.0" fitWidth="641.0" layoutX="-27.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="txtAzienda" layoutX="32.0" layoutY="50.0" promptText="Azienda" />
+      <TextField fx:id="txtFornitura" layoutX="240.0" layoutY="50.0" promptText="Fornitura" />
+      <TextField fx:id="txtPartitaIva" layoutX="434.0" layoutY="50.0" promptText="Partita IVA" />
+      <TableView fx:id="tabellaAzienda" layoutX="32.0" layoutY="91.0" prefHeight="244.0" prefWidth="551.0">
         <columns>
           <TableColumn fx:id="colonnaAzienda" prefWidth="190.0" text="Azienda" />
           <TableColumn fx:id="colonnaFornitura" minWidth="0.0" prefWidth="181.0" text="Fornitura" />
             <TableColumn fx:id="colonnaPartitaIva" minWidth="0.0" prefWidth="179.0" text="Partiva IVA" />
         </columns>
       </TableView>
-      <Button layoutX="25.0" layoutY="348.0" mnemonicParsing="false" onAction="#viewSupplier" text="Carica Tabella" />
-      <Button layoutX="277.0" layoutY="348.0" mnemonicParsing="false" onAction="#searchSupplier" text="Cerca" />
-      <Button layoutX="521.0" layoutY="348.0" mnemonicParsing="false" onAction="#deleteSupplier" text="Elimina" />
+      <Button layoutX="32.0" layoutY="348.0" mnemonicParsing="false" onAction="#viewSupplier" text="Mostra Fornitori" />
+      <Button layoutX="284.0" layoutY="348.0" mnemonicParsing="false" onAction="#searchSupplier" text="Cerca" />
+      <Button layoutX="526.0" layoutY="348.0" mnemonicParsing="false" onAction="#deleteSupplier" text="Elimina" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
