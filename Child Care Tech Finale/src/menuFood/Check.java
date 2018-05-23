@@ -4,6 +4,7 @@ import connectionDatabase.ConnectionDatabase;
 import getterAndSetter.food.MenuGS;
 import getterAndSetter.people.ChildGS;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -25,7 +26,8 @@ public class Check {
                 "INNER JOIN mydb.allergeni_has_secondi ON mydb.allergeni_has_secondi.Allergeni_Nome = mydb.allergeni.Nome)" +
                 "INNER JOIN mydb.secondi ON mydb.secondi.Nome = mydb.allergeni_has_secondi.Secondi_Nome = mydb.secondi.Nome)" +
                 "INNER JOIN mydb.menu ON mydb.menu.Secondi_Nome = mydb.secondi.Nome AND mydb.menu.Primi_Nome = mydb.primi.Nome AND mydb.menu.Nome = '" + menuGS.getNomeMenu() + "')");
-        int n = stmt.executeUpdate(SQL);
+        ResultSet rs = stmt.executeQuery(SQL);
+        System.out.println(rs.getString(1));
     }
 }
 /*SELECT mydb.bambini.Nome, mydb.bambini.Cognome, mydb.bambini.CodiceFiscale
