@@ -116,11 +116,64 @@ public class AddChild implements Initializable{
     private TableColumn<DoctorGS, String> colonnaNomeP;
 
     @FXML
+    private TableColumn<DoctorGS, String> colonnaCognomeP;
+
+    @FXML
     private TableColumn<DoctorGS, String> colonnaCfP;
 
     @FXML
     private Label lblStatus;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        columnCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        columnCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+        columnID.setCellValueFactory(new PropertyValueFactory<>("idBambino"));
+
+        colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        colonnaCF.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+
+        colonnaNomeC.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCognomeC.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        colonnaCfC.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+
+        colonnaNomeP.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCognomeP.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        colonnaCfP.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+
+        tabellaGenitori.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        tabellaGenitori.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if(newSelection != null){
+                txtGenitore1.setText(newSelection.getCodiceFiscale());
+            }
+        });
+
+        tabellaContatti.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        tabellaContatti.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if(newSelection != null){
+                txtContatto.setText(newSelection.getCodiceFiscale());
+            }
+        });
+
+        tabellaPediatra.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        tabellaPediatra.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if(newSelection != null){
+                txtPediatra.setText(newSelection.getCodiceFiscale());
+            }
+        });
+
+        tableBambini.getItems().clear();
+        tabellaGenitori.getItems().clear();
+        tabellaContatti.getItems().clear();
+        tabellaPediatra.getItems().clear();
+
+    }
 
     public void addChild(ActionEvent actionEvent) throws Exception {
 
@@ -183,56 +236,6 @@ public class AddChild implements Initializable{
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        columnCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
-        columnCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
-        columnID.setCellValueFactory(new PropertyValueFactory<>("idBambino"));
-
-        colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
-        colonnaCF.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
-
-        colonnaNomeC.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colonnaCognomeC.setCellValueFactory(new PropertyValueFactory<>("cognome"));
-        colonnaCfC.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
-
-        colonnaNomeP.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colonnaCfP.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
-
-        tabellaGenitori.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        tabellaGenitori.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
-            if(newSelection != null){
-                txtGenitore1.setText(newSelection.getCodiceFiscale());
-            }
-        });
-
-        tabellaContatti.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        tabellaContatti.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
-            if(newSelection != null){
-                txtContatto.setText(newSelection.getCodiceFiscale());
-            }
-        });
-
-        tabellaPediatra.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        tabellaPediatra.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
-            if(newSelection != null){
-                txtPediatra.setText(newSelection.getCodiceFiscale());
-            }
-        });
-
-        tableBambini.getItems().clear();
-        tabellaGenitori.getItems().clear();
-        tabellaContatti.getItems().clear();
-        tabellaPediatra.getItems().clear();
-
-    }
-
     public void viewChild(ActionEvent actionEvent) throws Exception {
 
         InterfaceServer interfaceServer;
@@ -243,21 +246,10 @@ public class AddChild implements Initializable{
         }
 
         ArrayList<ChildGS> childrenGS = interfaceServer.viewChild();
-        /*ArrayList<ParentsGS> parents = interfaceServer.viewParents();
-        ArrayList<ContactGS> contactGS = interfaceServer.viewContacts();
-        ArrayList<DoctorGS> doctorGS = interfaceServer.viewDoctors();*/
 
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
         tableBambini.setItems(FXCollections.observableArrayList(childrenGS));
 
-        /*tabellaGenitori.setColumnResizePolicy(tabellaGenitori.CONSTRAINED_RESIZE_POLICY);
-        tabellaGenitori.setItems(FXCollections.observableArrayList(parents));
-
-        tabellaContatti.setColumnResizePolicy(tabellaContatti.CONSTRAINED_RESIZE_POLICY);
-        tabellaContatti.setItems(FXCollections.observableArrayList(contactGS));
-
-        tabellaPediatra.setColumnResizePolicy(tabellaPediatra.CONSTRAINED_RESIZE_POLICY);
-        tabellaPediatra.setItems(FXCollections.observableArrayList(doctorGS));*/
     }
 
     public void viewParents(ActionEvent actionEvent) throws Exception {

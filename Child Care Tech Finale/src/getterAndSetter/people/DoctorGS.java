@@ -12,9 +12,10 @@ public class DoctorGS implements Serializable{
     private Date data;
     private String sesso;
 
-    public DoctorGS(String nome, String codiceFiscale){
+    public DoctorGS(String nome, String cognome, String codiceFiscale){
 
         this.nome = nome;
+        this.cognome = cognome;
         this.codiceFiscale = codiceFiscale;
 
     }

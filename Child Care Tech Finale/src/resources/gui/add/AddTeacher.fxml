@@ -13,6 +13,11 @@
 
 <AnchorPane prefHeight="462.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddTeacher">
    <children>
+      <ImageView fitHeight="476.0" fitWidth="692.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
       <TextField fx:id="txtNome" layoutX="41.0" layoutY="50.0" promptText="Nome" />
       <TextField fx:id="txtCognome" layoutX="41.0" layoutY="82.0" promptText="Cognome" />
       <TextField fx:id="txtCodiceFiscale" layoutX="41.0" layoutY="115.0" promptText="Codice Fiscale" />

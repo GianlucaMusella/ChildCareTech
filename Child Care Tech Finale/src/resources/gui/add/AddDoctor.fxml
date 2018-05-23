@@ -5,26 +5,36 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddDoctor">
    <children>
-      <TextField fx:id="txtNome" layoutX="36.0" layoutY="77.0" promptText="Nome" />
-      <TextField fx:id="txtCognome" layoutX="36.0" layoutY="113.0" promptText="Cognome" />
-      <TextField fx:id="txtCodiceFiscale" layoutX="36.0" layoutY="153.0" promptText="Codice FIscale" />
-      <DatePicker fx:id="dataData" layoutX="36.0" layoutY="188.0" prefHeight="25.0" prefWidth="149.0" promptText="Data Di Nascita" />
-      <TextField fx:id="txtLuogo" layoutX="36.0" layoutY="230.0" promptText="Luogo Di Nascita" />
-      <TextField fx:id="txtSesso" layoutX="36.0" layoutY="271.0" promptText="Sesso" />
-      <RadioButton fx:id="radioMaschio" layoutX="36.0" layoutY="322.0" mnemonicParsing="false" text="Maschio">
+      <ImageView fitHeight="548.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="txtNome" layoutX="36.0" layoutY="66.0" promptText="Nome" />
+      <TextField fx:id="txtCognome" layoutX="36.0" layoutY="103.0" promptText="Cognome" />
+      <TextField fx:id="txtCodiceFiscale" layoutX="37.0" layoutY="139.0" promptText="Codice FIscale" />
+      <DatePicker fx:id="dataData" layoutX="37.0" layoutY="175.0" prefHeight="25.0" prefWidth="149.0" promptText="Data Di Nascita" />
+      <TextField fx:id="txtLuogo" layoutX="36.0" layoutY="242.0" promptText="Luogo Di Nascita" />
+      <RadioButton fx:id="radioMaschio" layoutX="37.0" layoutY="212.0" mnemonicParsing="false" text="Maschio">
          <toggleGroup>
             <ToggleGroup fx:id="choice" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="radioFemmina" layoutX="111.0" layoutY="322.0" mnemonicParsing="false" text="Femmina" toggleGroup="$choice" />
-      <Button layoutX="522.0" layoutY="327.0" mnemonicParsing="false" onAction="#addDoctor" text="Salva" />
+      <RadioButton fx:id="radioFemmina" layoutX="112.0" layoutY="212.0" mnemonicParsing="false" text="Femmina" toggleGroup="$choice" />
+      <Button layoutX="520.0" layoutY="323.0" mnemonicParsing="false" onAction="#addDoctor" text="Salva">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
       <Button layoutX="10.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="21.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
@@ -34,7 +44,15 @@
             </ImageView>
          </graphic>
       </Button>
-      <Hyperlink layoutX="488.0" layoutY="364.0" onAction="#menuPrincipale" text="Menù Principale" />
+      <Hyperlink layoutX="473.0" layoutY="361.0" onAction="#menuPrincipale" text="Menù Principale" />
       <Label fx:id="lblStatus" layoutX="88.0" layoutY="355.0" textFill="RED" />
+      <TableView fx:id="tabellaPediatra" layoutX="241.0" layoutY="66.0" prefHeight="233.0" prefWidth="325.0">
+        <columns>
+          <TableColumn fx:id="colonnaNomeP" prefWidth="102.0" text="Nome" />
+          <TableColumn fx:id="colonnaCognomeP" prefWidth="92.0" text="Cognome" />
+            <TableColumn fx:id="colonnaCfP" prefWidth="130.0" text="Codice Fiscale" />
+        </columns>
+      </TableView>
+      <Button layoutX="241.0" layoutY="311.0" mnemonicParsing="false" onAction="#viewDoctor" text="Mostra Pediatri già inseriti" />
    </children>
 </AnchorPane>

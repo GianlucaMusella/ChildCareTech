@@ -1153,9 +1153,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         while (rs.next()) {
             String colonnanome = rs.getString("Nome");
+            String colonnacognome = rs.getString("Cognome");
             String colonnacodicefiscale = rs.getString("CodiceFiscale");
 
-            values.add(new DoctorGS(colonnanome, colonnacodicefiscale));
+            values.add(new DoctorGS(colonnanome, colonnacognome, colonnacodicefiscale));
         }
 
         rs.close();
@@ -1175,18 +1176,20 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
             ResultSet rs = stmt.executeQuery(sql + "Nome = '" + name + "'");
             while (rs.next()) {
                 String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
                 String colonnacodicefiscale = rs.getString("CodiceFiscale");
 
-                values.add(new DoctorGS(colonnanome, colonnacodicefiscale));
+                values.add(new DoctorGS(colonnanome, colonnacognome, colonnacodicefiscale));
 
             }
         } else if (name.isEmpty()) {
             ResultSet rs = stmt.executeQuery(sql + "CodiceFiscale = '" + cod + "'");
             while (rs.next()) {
                 String colonnanome = rs.getString("Nome");
+                String colonnacognome = rs.getString("Cognome");
                 String colonnacodicefiscale = rs.getString("CodiceFiscale");
 
-                values.add(new DoctorGS(colonnanome, colonnacodicefiscale));
+                values.add(new DoctorGS(colonnanome, colonnacognome, colonnacodicefiscale));
 
             }
 

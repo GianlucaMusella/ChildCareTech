@@ -9,10 +9,27 @@
 
 <AnchorPane prefHeight="436.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menu.StaffMenu">
    <children>
-      <Button layoutX="56.0" layoutY="74.0" mnemonicParsing="false" onAction="#inserisciInsegnante" prefHeight="63.0" prefWidth="179.0" text="Inserisci Insegnante" />
-      <Button layoutX="56.0" layoutY="153.0" mnemonicParsing="false" onAction="#inserisciStaff" prefHeight="63.0" prefWidth="179.0" text="Inserisci Personale" />
-      <Button layoutX="56.0" layoutY="235.0" mnemonicParsing="false" onAction="#cercaStaff" prefHeight="63.0" prefWidth="179.0" text="Cerca e Rimuovi" />
-      <Button layoutX="56.0" layoutY="317.0" mnemonicParsing="false" onAction="#modificaStaff" prefHeight="63.0" prefWidth="179.0" text="Modifica" />
+      <ImageView fitHeight="457.0" fitWidth="290.0" layoutX="3.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620vericale.jpg" />
+         </image>
+      </ImageView>
+      <Button layoutX="59.0" layoutY="83.0" mnemonicParsing="false" onAction="#inserisciInsegnante" prefHeight="53.0" prefWidth="179.0" text="Inserisci Insegnante">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button layoutX="59.0" layoutY="157.0" mnemonicParsing="false" onAction="#inserisciStaff" prefHeight="53.0" prefWidth="179.0" text="Inserisci Personale">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button layoutX="59.0" layoutY="230.0" mnemonicParsing="false" onAction="#cercaStaff" prefHeight="53.0" prefWidth="179.0" text="Cerca e Rimuovi">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button layoutX="59.0" layoutY="305.0" mnemonicParsing="false" onAction="#modificaStaff" prefHeight="53.0" prefWidth="179.0" text="Modifica">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
       <Hyperlink layoutX="229.0" layoutY="399.0" onAction="#logout" text="Logout">
          <font>
             <Font name="System Bold Italic" size="12.0" />

@@ -9,9 +9,23 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="287.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menu.ParentsMenu">
     <children>
-        <Button layoutX="56.0" layoutY="80.0" mnemonicParsing="false" onAction="#inserisciGenitore" prefHeight="46.0" prefWidth="176.0" text="Inserisci" />
-        <Button layoutX="56.0" layoutY="177.0" mnemonicParsing="false" onAction="#cercaGenitore" prefHeight="46.0" prefWidth="176.0" text="Cerca o Rimuovi" />
-        <Button layoutX="56.0" layoutY="274.0" mnemonicParsing="false" onAction="#modificaGenitore" prefHeight="46.0" prefWidth="176.0" text="Modifica" />
+      <ImageView fitHeight="433.0" fitWidth="316.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620vericale.jpg" />
+         </image>
+      </ImageView>
+        <Button layoutX="56.0" layoutY="96.0" mnemonicParsing="false" onAction="#inserisciGenitore" prefHeight="57.0" prefWidth="176.0" text="Inserisci">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+        <Button layoutX="57.0" layoutY="188.0" mnemonicParsing="false" onAction="#cercaGenitore" prefHeight="57.0" prefWidth="176.0" text="Cerca o Rimuovi">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+        <Button layoutX="57.0" layoutY="280.0" mnemonicParsing="false" onAction="#modificaGenitore" prefHeight="57.0" prefWidth="176.0" text="Modifica">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="47.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">

@@ -15,6 +15,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddParents">
    <children>
+      <ImageView fitHeight="403.0" fitWidth="619.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
       <TextField id="txtNome" fx:id="txtNome" layoutX="36.0" layoutY="68.0" promptText="Nome" />
       <TextField id="txtCognme" fx:id="txtCognome" layoutX="36.0" layoutY="102.0" promptText="Cognome" />
       <TextField id="txtCodiceFiscale" fx:id="txtCodiceFiscale" layoutX="36.0" layoutY="136.0" promptText="Codice Fiscale" />
@@ -45,7 +50,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="260.0" layoutY="312.0" mnemonicParsing="false" onAction="#viewParents" text="Mostra Persone" />
+      <Button layoutX="260.0" layoutY="312.0" mnemonicParsing="false" onAction="#viewParents" text="Mostra Genitori" />
       <Label fx:id="lblStatus" layoutX="96.0" layoutY="341.0" textFill="RED" />
    </children>
 </AnchorPane>

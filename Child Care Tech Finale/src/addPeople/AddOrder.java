@@ -54,11 +54,12 @@ public class AddOrder implements Initializable{
         colonnaFornitura.setCellValueFactory(new PropertyValueFactory<>("fornitura"));
         colonnaPartitaIVA.setCellValueFactory(new PropertyValueFactory<>("partitaIva"));
 
-        tabellaFornitori.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tabellaFornitori.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tabellaFornitori.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
             if(newSelection != null){
                 txtAzienda.setText(newSelection.getAzienda());
+                txtOrdine.setText(newSelection.getFornitura());
             }
         });
 

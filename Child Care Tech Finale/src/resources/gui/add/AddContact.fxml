@@ -9,14 +9,23 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="589.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddContact">
+<AnchorPane prefHeight="388.0" prefWidth="589.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddContact">
    <children>
+      <ImageView fitHeight="415.0" fitWidth="589.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
       <TextField fx:id="txtNome" layoutX="34.0" layoutY="83.0" prefHeight="23.0" prefWidth="154.0" promptText="Nome" />
       <TextField fx:id="txtCognome" layoutX="34.0" layoutY="123.0" prefHeight="25.0" prefWidth="154.0" promptText="Cognome" />
       <TextField fx:id="txtCodiceFiscale" layoutX="34.0" layoutY="163.0" prefHeight="23.0" prefWidth="154.0" promptText="Codice Fiscale" />
       <TextField fx:id="txtTelefono" layoutX="34.0" layoutY="200.0" prefHeight="23.0" prefWidth="154.0" promptText="Telefono" />
-      <Button layoutX="500.0" layoutY="330.0" mnemonicParsing="false" onAction="#addContact" text="Salva" />
+      <Button layoutX="498.0" layoutY="330.0" mnemonicParsing="false" onAction="#addContact" text="Salva">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
       <TableView fx:id="tabellaContatti" layoutX="242.0" layoutY="84.0" prefHeight="209.0" prefWidth="302.0">
         <columns>
           <TableColumn fx:id="colonnaNome" prefWidth="88.0" text="Nome" />
@@ -24,7 +33,7 @@
             <TableColumn fx:id="colonnaCodiceFiscale" prefWidth="129.0" text="Codice Fiscale" />
         </columns>
       </TableView>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method">
          <graphic>
             <ImageView fitHeight="63.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -33,9 +42,12 @@
             </ImageView>
          </graphic>
       </Button>
-      <Hyperlink layoutX="453.0" layoutY="363.0" onAction="#menuPrincipale" text="Menù Principale" />
+      <Hyperlink layoutX="453.0" layoutY="363.0" onAction="#menuPrincipale" text="Menù Principale">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Hyperlink>
       <Button layoutX="242.0" layoutY="305.0" mnemonicParsing="false" onAction="#viewContact" text="Mostra Contatti" />
-      <Label text="Label" />
+      <Label layoutX="34.0" layoutY="366.0" />
       <Label fx:id="lblStatus" layoutX="97.0" layoutY="334.0" textFill="RED" />
    </children>
 </AnchorPane>

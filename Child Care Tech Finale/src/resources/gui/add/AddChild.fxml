@@ -73,16 +73,17 @@
           <TableColumn fx:id="colonnaCfC" prefWidth="130.0" text="Codice Fiscale" />
         </columns>
       </TableView>
-      <TableView fx:id="tabellaPediatra" layoutX="675.0" layoutY="348.0" prefHeight="242.0" prefWidth="200.0">
+      <TableView fx:id="tabellaPediatra" layoutX="656.0" layoutY="348.0" prefHeight="242.0" prefWidth="304.0">
         <columns>
           <TableColumn fx:id="colonnaNomeP" prefWidth="96.0" text="Nome" />
-          <TableColumn fx:id="colonnaCfP" prefWidth="103.0" text="Codice Fiscale" />
+            <TableColumn fx:id="colonnaCognomeP" prefWidth="75.0" text="Cognome" />
+          <TableColumn fx:id="colonnaCfP" prefWidth="132.0" text="Codice Fiscale" />
         </columns>
       </TableView>
       <Label layoutX="290.0" layoutY="31.0" text="Bambini presenti nel database" />
       <Label layoutX="674.0" layoutY="31.0" text="Genitori presenti nel database" />
       <Label layoutX="290.0" layoutY="322.0" text="Contatti presenti nel database" />
-      <Label layoutX="675.0" layoutY="322.0" text="Pediatri presenti nel database" />
+      <Label layoutX="656.0" layoutY="322.0" text="Pediatri presenti nel database" />
       <Label fx:id="lblStatus" layoutX="88.0" layoutY="619.0" textFill="RED" />
       <Button layoutX="416.0" layoutY="627.0" mnemonicParsing="false" onAction="#viewParents" text="Genitori" />
       <Button layoutX="523.0" layoutY="627.0" mnemonicParsing="false" onAction="#viewContact" text="Contatti" />

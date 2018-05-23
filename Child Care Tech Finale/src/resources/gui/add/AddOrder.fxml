@@ -11,6 +11,11 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddOrder">
    <children>
+      <ImageView fitHeight="405.0" fitWidth="603.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
       <TextField fx:id="txtAzienda" layoutX="43.0" layoutY="66.0" promptText="Azienda" />
       <TextField fx:id="txtOrdine" layoutX="43.0" layoutY="103.0" promptText="Ordine" />
       <TextField fx:id="txtQuantità" layoutX="43.0" layoutY="141.0" promptText="Quantità" />
@@ -21,8 +26,8 @@
             <TableColumn fx:id="colonnaFornitura" prefWidth="109.0" text="Fornitura" />
         </columns>
       </TableView>
-      <Button layoutX="288.0" layoutY="284.0" mnemonicParsing="false" onAction="#viewSupplier" text="Carica Dati" />
-      <Button layoutX="463.0" layoutY="330.0" mnemonicParsing="false" onAction="#addOrder" text="Salva Ordine" />
+      <Button layoutX="242.0" layoutY="284.0" mnemonicParsing="false" onAction="#viewSupplier" text="Mostra Fornitori" />
+      <Button layoutX="493.0" layoutY="330.0" mnemonicParsing="false" onAction="#addOrder" text="Salva Ordine" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="31.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">

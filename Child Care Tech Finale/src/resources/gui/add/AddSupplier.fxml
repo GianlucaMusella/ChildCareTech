@@ -2,17 +2,35 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="388.0" prefWidth="277.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddSupplier">
+<AnchorPane prefHeight="371.0" prefWidth="557.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddSupplier">
    <children>
-      <TextField fx:id="txtName" layoutX="64.0" layoutY="55.0" prefHeight="35.0" prefWidth="149.0" promptText="Nome" />
-      <TextField fx:id="txtSurname" layoutX="64.0" layoutY="101.0" prefHeight="35.0" prefWidth="149.0" promptText="Cognome" />
-      <TextField fx:id="txtAzienda" layoutX="64.0" layoutY="148.0" prefHeight="35.0" prefWidth="149.0" promptText="Azienda" />
-      <TextField fx:id="txtFornitura" layoutX="64.0" layoutY="194.0" prefHeight="35.0" prefWidth="149.0" promptText="Fornitura" />
-      <TextField fx:id="txtPiva" layoutX="64.0" layoutY="240.0" prefHeight="35.0" prefWidth="149.0" promptText="Partita IVA" />
-      <Button fx:id="save" layoutX="169.0" layoutY="303.0" mnemonicParsing="false" onAction="#addSupplier" text="Salva" />
+      <ImageView fitHeight="388.0" fitWidth="557.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="txtName" layoutX="42.0" layoutY="65.0" prefHeight="25.0" prefWidth="149.0" promptText="Nome" />
+      <TextField fx:id="txtSurname" layoutX="42.0" layoutY="105.0" prefHeight="25.0" prefWidth="149.0" promptText="Cognome" />
+      <TextField fx:id="txtAzienda" layoutX="42.0" layoutY="143.0" prefHeight="25.0" prefWidth="149.0" promptText="Azienda" />
+      <TextField fx:id="txtFornitura" layoutX="42.0" layoutY="182.0" prefHeight="25.0" prefWidth="149.0" promptText="Fornitura" />
+      <TextField fx:id="txtPiva" layoutX="42.0" layoutY="218.0" prefHeight="25.0" prefWidth="149.0" promptText="Partita IVA" />
+      <TableView fx:id="tabellaFornitori" layoutX="247.0" layoutY="65.0" prefHeight="200.0" prefWidth="267.0">
+        <columns>
+          <TableColumn fx:id="colonnaAzienda" prefWidth="84.0" text="Azienda" />
+          <TableColumn fx:id="colonnaPartitaIVA" prefWidth="94.0" text="Partita IVA" />
+            <TableColumn fx:id="colonnaFornitura" prefWidth="88.0" text="Fornitura" />
+        </columns>
+      </TableView>
+      <Button layoutX="247.0" layoutY="282.0" mnemonicParsing="false" onAction="#viewSupplier" text="Mostra Fornitori" />
+      <Button layoutX="470.0" layoutY="303.0" mnemonicParsing="false" onAction="#addSupplier" text="Salva" />
+      <Button layoutX="16.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" prefHeight="25.0" prefWidth="23.0" />
       <Label fx:id="lblStatus" layoutX="50.0" layoutY="307.0" textFill="RED" />
    </children>
 </AnchorPane>

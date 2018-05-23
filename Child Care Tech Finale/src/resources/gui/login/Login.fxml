@@ -14,22 +14,22 @@
 <AnchorPane prefHeight="390.0" prefWidth="409.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
    <ImageView fitHeight="475.0" fitWidth="536.0" layoutY="-10.0">
       <image>
-         <Image url="@../../image/il_fullxfull.642144139_bvbr.jpg" />
+         <Image url="@../../image/185235620.jpg" />
       </image>
    </ImageView>
-    <Text fill="WHITE" layoutX="70.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Child Care Tech" textAlignment="CENTER" wrappingWidth="396.552734375">
+    <Text layoutX="70.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Child Care Tech" textAlignment="CENTER" wrappingWidth="396.552734375">
         <font>
             <Font name="Britannic Bold" size="48.0" />
         </font>
     </Text>
       <TextField fx:id="txtUsername" layoutX="156.0" layoutY="169.0" prefHeight="48.0" prefWidth="225.0" promptText="Username">
           <font>
-              <Font name="Berlin Sans FB" size="15.0" />
+              <Font name="Berlin Sans FB" size="17.0" />
           </font>
       </TextField>
       <PasswordField fx:id="txtPassword" layoutX="156.0" layoutY="261.0" prefHeight="48.0" prefWidth="225.0" promptText="Password">
           <font>
-              <Font name="Berlin Sans FB" size="15.0" />
+              <Font name="Berlin Sans FB" size="17.0" />
           </font>
       </PasswordField>
       <Button layoutX="215.0" layoutY="341.0" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="107.0" text="Login">
