@@ -15,6 +15,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="994.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddChild">
    <children>
+      <ImageView fitHeight="717.0" fitWidth="1034.0" layoutX="-40.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
       <TextField id="txtNome" fx:id="txtNome" layoutX="36.0" layoutY="68.0" promptText="Nome" />
       <TextField id="txtCognme" fx:id="txtCognome" layoutX="36.0" layoutY="102.0" promptText="Cognome" />
       <TextField id="txtCodiceFiscale" fx:id="txtCodiceFiscale" layoutX="36.0" layoutY="136.0" promptText="Codice Fiscale" />
@@ -43,7 +48,7 @@
             <TableColumn id="columnNome" fx:id="columnID" minWidth="0.0" prefWidth="46.0" text="ID" />
          </columns>
       </TableView>
-      <Hyperlink layoutX="886.0" layoutY="652.0" onAction="#menuPrincipale" text="Menù principale" />
+      <Hyperlink layoutX="899.0" layoutY="664.0" onAction="#menuPrincipale" text="Menù principale" />
       <Button layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">

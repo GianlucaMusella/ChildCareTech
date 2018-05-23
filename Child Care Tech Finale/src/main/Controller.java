@@ -39,7 +39,7 @@ public class Controller {
     public void initialize(Stage primaryStage) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/login/Login.fxml"));
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
         ObservableList<String> C = FXCollections.observableArrayList("RMI", "SOCKET");
