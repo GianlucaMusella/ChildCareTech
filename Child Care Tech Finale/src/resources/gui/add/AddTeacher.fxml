@@ -26,7 +26,7 @@
       <TextField fx:id="txtAllergie" layoutX="41.0" layoutY="219.0" promptText="Allergie" />
       <RadioButton fx:id="radioMaschio" layoutX="41.0" layoutY="258.0" mnemonicParsing="false" text="Maschio" />
       <RadioButton fx:id="radioFemmina" layoutX="116.0" layoutY="258.0" mnemonicParsing="false" text="Femmina" />
-      <TextField fx:id="txtInsegnante" layoutX="41.0" layoutY="286.0" promptText="Insegnante di.." />
+      <TextField fx:id="txtInsegnante" layoutX="41.0" layoutY="286.0" promptText="Mansione" />
       <TextField fx:id="txtUsername" layoutX="41.0" layoutY="322.0" promptText="Username" />
       <PasswordField fx:id="txtPassword" layoutX="41.0" layoutY="358.0" promptText="Password" />
       <Button layoutX="574.0" layoutY="400.0" mnemonicParsing="false" onAction="#addTeacher" prefHeight="25.0" prefWidth="56.0" text="Salva" />

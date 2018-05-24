@@ -14,7 +14,7 @@
             <Image url="@../../image/185235620vericale.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="59.0" layoutY="83.0" mnemonicParsing="false" onAction="#inserisciInsegnante" prefHeight="53.0" prefWidth="179.0" text="Inserisci Insegnante">
+      <Button layoutX="59.0" layoutY="83.0" mnemonicParsing="false" onAction="#inserisciInsegnante" prefHeight="53.0" prefWidth="179.0" text="Inserisci Personale con Accesso" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="15.0" />
          </font></Button>
