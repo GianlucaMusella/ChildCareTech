@@ -8,6 +8,7 @@ import getterAndSetter.people.*;
 import interfaces.InterfaceServer;
 import getterAndSetter.trip.AppealGS;
 import getterAndSetter.trip.TripGS;
+import getterAndSetter.food.SideDishGS;
 
 import java.io.*;
 import java.net.Socket;
@@ -1024,6 +1025,28 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
+    public ArrayList<SideDishGS> viewSide() throws Exception {
+
+        try{
+
+            toServer.writeUTF("viewSide");
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try{
+            return (ArrayList<SideDishGS>) fromServer.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    @Override
     public ArrayList<AllergyPeopleGS> viewAllergy() throws Exception {
 
         try{
@@ -1122,6 +1145,33 @@ public class SocketUserClient implements InterfaceServer {
 
         return success;
 
+    }
+
+    @Override
+    public boolean addSide(String nome, String allergeni) throws Exception {
+
+        boolean success = false;
+
+        try{
+
+            toServer.writeUTF("addSide");
+            toServer.flush();
+            toServer.writeUTF(nome);
+            toServer.flush();
+            toServer.writeUTF(allergeni);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = fromServer.readBoolean();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return success;
     }
 
     @Override
@@ -1259,15 +1309,13 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
-    public boolean newTappaServer(String numeroTappa, String tappa, String idGita, LocalDate giorno, String ora) throws Exception {
+    public boolean newTappaServer(String tappa, String idGita, LocalDate giorno, String ora) throws Exception {
 
         boolean success = false;
 
         try{
 
             toServer.writeUTF("newTappa");
-            toServer.flush();
-            toServer.writeUTF(numeroTappa);
             toServer.flush();
             toServer.writeUTF(tappa);
             toServer.flush();

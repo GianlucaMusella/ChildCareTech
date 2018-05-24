@@ -93,10 +93,10 @@ public class AppealTrip implements Initializable{
 
     public void back_method(ActionEvent actionEvent) throws Exception{
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripManagement.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
-        stage.setTitle("Menù Gita");
+        stage.setTitle("Gestione Gita");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

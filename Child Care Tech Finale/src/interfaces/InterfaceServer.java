@@ -7,6 +7,7 @@ import getterAndSetter.food.MenuGS;
 import getterAndSetter.food.SecondDishGS;
 import getterAndSetter.trip.AppealGS;
 import getterAndSetter.trip.TripGS;
+import getterAndSetter.food.SideDishGS;
 
 import java.rmi.Remote;
 import java.time.LocalDate;
@@ -57,10 +58,12 @@ public interface InterfaceServer extends Remote{
     boolean addMenu(String nome, String primo, String secondo, LocalDate giorno) throws Exception;
     ArrayList<FirstDishGS> viewFirst() throws Exception;
     ArrayList<SecondDishGS> viewSecond() throws Exception;
+    ArrayList<SideDishGS> viewSide() throws Exception;
     ArrayList<AllergyPeopleGS> viewAllergy() throws Exception;
     ArrayList<MenuGS> viewMenu() throws Exception;
     boolean addPrimo(String nome, String allergeni) throws Exception;
     boolean addSecondo(String nome, String allergeni) throws Exception;
+    boolean addSide(String nome, String allergeni) throws Exception;
     boolean deleteMenu(String nomeMenu) throws Exception;
 
     boolean newTrip(String id, String meta, LocalDate andata, LocalDate ritorno) throws Exception;
@@ -68,8 +71,9 @@ public interface InterfaceServer extends Remote{
     ArrayList<AppealGS> loadDataServer(int idGita) throws Exception;
     void bambinoPresenteServer(String codiceFiscale, int idGita) throws Exception;
     void bambinoAssenteServer(String codiceFiscale, int idGita) throws Exception;
-    boolean newTappaServer(String numeroTappa, String tappa, String idGita, LocalDate giorno, String ora) throws Exception;
+    boolean newTappaServer(String tappa, String idGita, LocalDate giorno, String ora) throws Exception;
     boolean newpartecipanteTrip(String codiceFiscale, String idGita) throws Exception;
     boolean deleteTrip(String idGita) throws Exception;
     void pullmanCount(String idGita) throws Exception;
+
 }

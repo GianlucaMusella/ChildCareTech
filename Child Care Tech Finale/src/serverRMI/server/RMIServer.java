@@ -9,6 +9,7 @@ import getterAndSetter.food.SecondDishGS;
 import getterAndSetter.trip.AppealGS;
 import getterAndSetter.trip.TripGS;
 import interfaces.InterfaceServer;
+import getterAndSetter.food.SideDishGS;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -1390,6 +1391,28 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
+    public ArrayList<SideDishGS> viewSide() throws Exception {
+
+        ArrayList<SideDishGS> values = new ArrayList<>();
+        String sql = ("SELECT * FROM mydb.allergeni_has_contorno ");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()) {
+
+            String colonnaAllergeni = rs.getString("Allergeni_nome");
+            String colonnaContorni = rs.getString("Contorno_Nome");
+
+            values.add(new SideDishGS(colonnaContorni, colonnaAllergeni));
+        }
+
+        rs.close();
+        return values;
+    }
+
+    @Override
     public boolean addPrimo(String nome, String allergeni) throws Exception {
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement1 = null;
@@ -1453,6 +1476,54 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(secondoPiatto);
             preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(sqlAllergeni);
             preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(primiEAllergeni);
+
+            preparedStatement.setString(1, nome);
+            preparedStatement.executeUpdate();
+
+            preparedStatement1.setString(1, allergeni);
+            preparedStatement1.executeUpdate();
+
+            preparedStatement2.setString(1, allergeni);
+            preparedStatement2.setString(2, nome);
+            preparedStatement2.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+
+                if (preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null) {
+                    preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
+                    preparedStatement1.close();
+                    preparedStatement2.close();
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+
+    }
+
+    @Override
+    public boolean addSide(String nome, String allergeni) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement1 = null;
+        PreparedStatement preparedStatement2 = null;
+
+        String secondoPiatto = "INSERT INTO mydb.contorno (Nome) VALUES (?)";
+        String sqlAllergeni = "INSERT INTO mydb.allergeni (Nome) VALUES (?)";
+        String contornoEAllergeni = "INSERT INTO mydb.allergeni_has_contorno (Allergeni_Nome, Contorno_Nome) VALUES (?,?)";
+
+        try {
+
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(secondoPiatto);
+            preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(sqlAllergeni);
+            preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(contornoEAllergeni);
 
             preparedStatement.setString(1, nome);
             preparedStatement.executeUpdate();
@@ -1621,23 +1692,22 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
-    public boolean newTappaServer(String numeroTappa, String tappa, String idGita, LocalDate giorno, String ora) throws Exception {
+    public boolean newTappaServer(String tappa, String idGita, LocalDate giorno, String ora) throws Exception {
 
 
         PreparedStatement preparedStatement = null;
 
-        String trip = "INSERT INTO mydb.tappe (idTappa,Nome,Data,Gita_idGita) VALUES (?,?,?,?)";
+        String trip = "INSERT INTO mydb.tappe (Nome,Data,Gita_idGita) VALUES (?,?,?)";
 
         try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(trip);
 
-            preparedStatement.setInt(1, Integer.parseInt(numeroTappa));
-            preparedStatement.setString(2, tappa);
-            preparedStatement.setDate(3, Date.valueOf(giorno));
+            preparedStatement.setString(1, tappa);
+            preparedStatement.setDate(2, Date.valueOf(giorno));
             //preparedStatement.setTime(4, Time.valueOf(ora));
-            preparedStatement.setInt(4, Integer.parseInt(idGita));
+            preparedStatement.setInt(3, Integer.parseInt(idGita));
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -1687,6 +1757,17 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
                 e.printStackTrace();
             }
         }
+
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+        String CountSQL = ("SELECT * FROM mydb.bambini_has_gita WHERE mydb.bambini_has_gita.Gita_idGIta = ");
+        ResultSet rsbis = stmt.executeQuery(CountSQL + idGita);
+        float count = 0.0f;
+        while (rsbis.next()){
+            count = count + 1;
+        }
+        float x = (float) (count / 1.00);
+        int NumPullman = (int) Math.ceil(x);
+        stmt.executeUpdate("UPDATE mydb.gita SET NumPullman = " + NumPullman + " WHERE mydb.gita.idGita = " + idGita);
 
         return false;
     }

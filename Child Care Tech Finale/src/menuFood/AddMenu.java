@@ -3,6 +3,7 @@ package menuFood;
 import getterAndSetter.food.AllergyPeopleGS;
 import getterAndSetter.food.FirstDishGS;
 import getterAndSetter.food.SecondDishGS;
+import getterAndSetter.food.SideDishGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,6 +37,9 @@ public class AddMenu implements Initializable{
     private TextField secondoPiatto;
 
     @FXML
+    private TextField contorno;
+
+    @FXML
     private DatePicker txtGiorno;
 
     @FXML
@@ -57,6 +61,15 @@ public class AddMenu implements Initializable{
     private TableColumn<SecondDishGS, String> colonnaAllergeniSecondi;
 
     @FXML
+    private TableView<SideDishGS> tabellaContorni;
+
+    @FXML
+    private TableColumn<SideDishGS, String> colonnaContorni;
+
+    @FXML
+    private TableColumn<SideDishGS, String> colonnaAllergieContorni;
+
+    @FXML
     private TableView<AllergyPeopleGS> tabellaAllergie;
 
     @FXML
@@ -75,6 +88,9 @@ public class AddMenu implements Initializable{
         colonnaSecondi.setCellValueFactory(new PropertyValueFactory<>("nomeSecondo"));
         colonnaAllergeniSecondi.setCellValueFactory(new PropertyValueFactory<>("allergene"));
 
+        colonnaContorni.setCellValueFactory(new PropertyValueFactory<>("nomeContorno"));
+        colonnaAllergieContorni.setCellValueFactory(new PropertyValueFactory<>("allergene"));
+
         allergieBambini.setCellValueFactory(new PropertyValueFactory<>("allergieBambini"));
         allergiePersonale.setCellValueFactory(new PropertyValueFactory<>("allergiePersonale"));
 
@@ -86,14 +102,25 @@ public class AddMenu implements Initializable{
             }
         });
 
+        tabellaSecondi.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
         tabellaSecondi.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
             if(newSelection != null){
                 secondoPiatto.setText(newSelection.getNomeSecondo());
             }
         });
 
+        tabellaContorni.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        tabellaContorni.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if(newSelection != null){
+                contorno.setText(newSelection.getNomeContorno());
+            }
+        });
+
         tabellaPrimi.getItems().clear();
         tabellaSecondi.getItems().clear();
+        tabellaContorni.getItems().clear();
         tabellaAllergie.getItems().clear();
 
     }
@@ -108,6 +135,7 @@ public class AddMenu implements Initializable{
         }
         ArrayList<FirstDishGS> firstDishGS = interfaceServer.viewFirst();
         ArrayList<SecondDishGS> secondDishGS = interfaceServer.viewSecond();
+        ArrayList<SideDishGS> sideDishGS = interfaceServer.viewSide();
         ArrayList<AllergyPeopleGS> allergyPeopleGS = interfaceServer.viewAllergy();
 
         tabellaAllergie.setColumnResizePolicy(tabellaAllergie.CONSTRAINED_RESIZE_POLICY);
@@ -118,6 +146,9 @@ public class AddMenu implements Initializable{
 
         tabellaSecondi.setColumnResizePolicy(tabellaSecondi.CONSTRAINED_RESIZE_POLICY);
         tabellaSecondi.setItems(FXCollections.observableArrayList(secondDishGS));
+
+        tabellaContorni.setColumnResizePolicy(tabellaSecondi.CONSTRAINED_RESIZE_POLICY);
+        tabellaContorni.setItems(FXCollections.observableArrayList(sideDishGS));
     }
 
 
@@ -161,6 +192,17 @@ public class AddMenu implements Initializable{
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setTitle("Inserisci Secondo Piatto");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void addSideDish(ActionEvent actionEvent) throws Exception{
+
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menuFood/AddSideDish.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Inserisci Contorno");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

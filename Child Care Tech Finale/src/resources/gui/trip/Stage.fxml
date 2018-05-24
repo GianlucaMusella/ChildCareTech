@@ -2,16 +2,34 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.Stage">
    <children>
-      <TextField fx:id="txtIdTappa" layoutX="58.0" layoutY="83.0" promptText="Tappa Numero:" />
-      <TextField fx:id="txtTappa" layoutX="58.0" layoutY="123.0" promptText="Tappa" />
-      <TextField fx:id="txtidGita" layoutX="58.0" layoutY="164.0" promptText="ID gita" />
-      <DatePicker fx:id="giornoTappa" layoutX="58.0" layoutY="206.0" prefHeight="25.0" prefWidth="149.0" promptText="Data " />
-      <TextField fx:id="txtOra" layoutX="58.0" layoutY="246.0" promptText="Orario (hh:mm)" />
-      <Button layoutX="510.0" layoutY="344.0" mnemonicParsing="false" onAction="#newTappa" text="Conferma" />
+      <ImageView fitHeight="446.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
+      <Button layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#back_method" prefHeight="34.0" prefWidth="37.0" />
+      <TextField fx:id="txtTappa" layoutX="45.0" layoutY="115.0" promptText="Tappa" />
+      <TextField fx:id="txtidGita" layoutX="45.0" layoutY="152.0" promptText="ID gita" />
+      <DatePicker fx:id="giornoTappa" layoutX="45.0" layoutY="188.0" prefHeight="25.0" prefWidth="149.0" promptText="Data " />
+      <TextField fx:id="txtOra" layoutX="45.0" layoutY="225.0" promptText="Orario (hh:mm)" />
+      <TableView fx:id="tableGita" layoutX="230.0" layoutY="77.0" prefHeight="200.0" prefWidth="329.0">
+        <columns>
+          <TableColumn fx:id="columnIDGita" prefWidth="45.0" text="ID" />
+          <TableColumn fx:id="columnMeta" prefWidth="92.0" text="Meta" />
+            <TableColumn fx:id="columnAndata" prefWidth="94.0" text="Andata" />
+            <TableColumn fx:id="columnRitorno" prefWidth="97.0" text="Ritorno" />
+        </columns>
+      </TableView>
+      <Button layoutX="230.0" layoutY="294.0" mnemonicParsing="false" onAction="#viewInfo" text="Mostra Gita" />
+      <Button layoutX="491.0" layoutY="341.0" mnemonicParsing="false" onAction="#newTappa" text="Conferma" />
    </children>
 </AnchorPane>

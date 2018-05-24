@@ -1,6 +1,7 @@
 package trip;
 
 import getterAndSetter.trip.TripGS;
+import interfaces.InterfaceServer;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,30 +10,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
-import interfaces.InterfaceServer;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class Stage implements Initializable{
-
-    @FXML
-    private TextField txtTappa;
-
-    @FXML
-    private DatePicker giornoTappa;
-
-    @FXML
-    private TextField txtidGita;
-
-    @FXML
-    private TextField txtOra;
+public class TripOrganize implements Initializable {
 
     @FXML
     private TableView<TripGS> tableGita;
@@ -49,6 +38,8 @@ public class Stage implements Initializable{
     @FXML
     private TableColumn<TripGS, String> columnRitorno;
 
+    @FXML
+    private TableColumn<TripGS, String> colonnaPullman;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,14 +48,7 @@ public class Stage implements Initializable{
         columnMeta.setCellValueFactory(new PropertyValueFactory<>("meta"));
         columnAndata.setCellValueFactory(new PropertyValueFactory<>("andata"));
         columnRitorno.setCellValueFactory(new PropertyValueFactory<>("ritorno"));
-
-        tableGita.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        tableGita.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
-            if(newSelection != null){
-                txtidGita.setText(newSelection.getId());
-            }
-        });
+        colonnaPullman.setCellValueFactory(new PropertyValueFactory<>("pullman"));
 
         tableGita.getItems().clear();
 
@@ -85,13 +69,12 @@ public class Stage implements Initializable{
 
     }
 
+    public void deleteTrip(ActionEvent actionEvent) throws Exception {
 
-    public void newTappa (ActionEvent actionEvent) throws Exception {
+        TripGS deletableTrips = tableGita.getSelectionModel().getSelectedItem();
+        String idGita = deletableTrips.getId();
 
-        String tappa = txtTappa.getText();
-        String idGita = txtidGita.getText();
-        LocalDate giorno = giornoTappa.getValue();
-        String ora = txtOra.getText();
+        System.out.println(idGita); // Ho messo questo per capire se prende il codice fiscale giusto
 
         InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
@@ -99,21 +82,30 @@ public class Stage implements Initializable{
         } else {
             interfaceServer = Singleton.getInstance().methodSocket();
         }
-        interfaceServer.newTappaServer(tappa, idGita, giorno, ora);
+        interfaceServer.deleteTrip(idGita);
 
-
-        txtidGita.clear();
-        txtTappa.clear();
-        txtOra.clear();
-        giornoTappa.getEditor().clear();
     }
 
-    public void back_method(ActionEvent actionEvent) throws Exception{
+    public void createTrip(ActionEvent actionEvent) throws Exception {
+
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripManagement.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/AddTrip.fxml"));
         Scene scene = new Scene(root);
-        javafx.stage.Stage stage = new javafx.stage.Stage();
-        stage.setTitle("Gestione Gita");
+        javafx.stage.Stage stage = new Stage();
+        stage.setTitle("Inserisci Gita");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    public void back_method(ActionEvent actionEvent) throws Exception {
+
+        ((Node) actionEvent.getSource()).getScene().getWindow().hide();
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripMenu.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Menù Gita");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

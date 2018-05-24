@@ -55,10 +55,10 @@ public class AddTrip {
     public void back_method(ActionEvent actionEvent) throws Exception{
 
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/trip/TripOrganize.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
-        stage.setTitle("Menù Gita");
+        stage.setTitle("Organizza Gita");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

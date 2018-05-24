@@ -487,6 +487,13 @@ public class SocketServer extends Thread{
             outputToClient.reset();
             return true;
 
+        }else if(commandMethod.equals("viewSide")) {
+
+            System.out.println("Sto Eseguendo da Socket");
+            outputToClient.writeObject(rmiServer.viewSide());
+            outputToClient.reset();
+            return true;
+
         }else if(commandMethod.equals("viewAllergy")){
 
             System.out.println("Sto Eseguendo da Socket");
@@ -523,6 +530,17 @@ public class SocketServer extends Thread{
 
             return success;
 
+        }else if(commandMethod.equals("addSide")){
+
+            String nome = inputFromClient.readUTF();
+            String allergeni = inputFromClient.readUTF();
+
+            boolean success = rmiServer.addSide(nome, allergeni);
+
+            outputToClient.writeBoolean(success);
+
+            return success;
+
         }else if(commandMethod.equals("deleteMenu")){
 
             System.out.println("Sto eseguendo da Socket");
@@ -548,7 +566,6 @@ public class SocketServer extends Thread{
             outputToClient.writeBoolean(success);
 
             return success;
-
 
         }else if(commandMethod.equals("viewTrip")){
 
@@ -583,13 +600,12 @@ public class SocketServer extends Thread{
 
         }else if(commandMethod.equals("newTappa")){
 
-            String numeroTappa = inputFromClient.readUTF();
             String tappa = inputFromClient.readUTF();
             String idGita = inputFromClient.readUTF();
             LocalDate giorno = LocalDate.parse(inputFromClient.readUTF());
             String ora = inputFromClient.readUTF();
 
-            boolean success = rmiServer.newTappaServer(numeroTappa, tappa, idGita, giorno, ora);
+            boolean success = rmiServer.newTappaServer(tappa, idGita, giorno, ora);
 
             outputToClient.writeBoolean(success);
 
@@ -627,7 +643,6 @@ public class SocketServer extends Thread{
             return true;
 
         }
-
 
         return false;
     }
