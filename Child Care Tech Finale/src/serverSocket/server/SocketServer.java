@@ -1,9 +1,6 @@
 package serverSocket.server;
 
-import getterAndSetter.food.FirstDishGS;
-import getterAndSetter.food.MenuGS;
-import getterAndSetter.food.SecondDishGS;
-import getterAndSetter.food.SideDishGS;
+import getterAndSetter.food.*;
 import getterAndSetter.people.*;
 import getterAndSetter.trip.TripGS;
 import serverRMI.server.RMIServer;
@@ -78,7 +75,7 @@ public class SocketServer extends Thread implements Runnable {
             String password = (String) inputFromClient.readUnshared();
             boolean success = rmiServer.login(user, password);
             outputToClient.writeUnshared(success);
-
+            outputToClient.flush();
             return success;
 
         } else if (commandMethod.equals("addSupplier")) {
@@ -92,6 +89,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.addSupplier(nome, cognome, azienda, fornitura, partitaIVA);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -159,6 +157,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.addOrder(azienda, ordini, quantità);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -170,6 +169,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.deleteSupplier(azienda);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
         }
@@ -193,6 +193,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.addChild(codiceFiscale, idBambino, nome, cognome, date, luogo,  allergie,  genitore1,  genitore2,  sesso,  pediatra, contatto);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -260,6 +261,7 @@ public class SocketServer extends Thread implements Runnable {
             Boolean success = rmiServer.deleteChild(codiceFiscale);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -282,6 +284,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.addTeacher( nome,  cognome, codiceFiscale,  data,  luogo,  allergie,  sesso,  insegnante,  username,  password);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -299,6 +302,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.addStaff(nome, cognome, codiceFiscale, data, luogo, allergie, sesso, mansione);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -366,6 +370,7 @@ public class SocketServer extends Thread implements Runnable {
             Boolean success = rmiServer.deleteStaff(codiceFiscale);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -385,6 +390,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.addParents(codiceFiscale, nome, cognome, date, luogo, telefono, sesso);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -450,6 +456,7 @@ public class SocketServer extends Thread implements Runnable {
             Boolean success = rmiServer.deleteParents(codiceFiscale);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -466,6 +473,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.addContact(codiceFiscale, nome, cognome, telefono);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -491,7 +499,6 @@ public class SocketServer extends Thread implements Runnable {
 
             System.out.println("Cerco dal Socket");
             String nome = null;
-            String cognome = null;
             String codiceFiscale = null;
 
             try {
@@ -531,6 +538,7 @@ public class SocketServer extends Thread implements Runnable {
             Boolean success = rmiServer.deleteContacts(codiceFiscale);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -549,6 +557,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.addDoctor(codiceFiscale, nome, cognome, date, luogo, sesso);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -613,6 +622,7 @@ public class SocketServer extends Thread implements Runnable {
             Boolean success = rmiServer.deleteDoctors(codiceFiscale);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -629,6 +639,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.addMenu(nome, primo, secondo, giorno);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -719,11 +730,29 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("viewCheck")){
 
-            System.out.println("Sto Eseguendo da Socket");
-            String nome = (String) inputFromClient.readUnshared();
-            outputToClient.writeUnshared(rmiServer.viewCheck(nome));
-            outputToClient.reset();
-            return true;
+            System.out.println("Cerco dal Socket");
+            String nomeMenu = null;
+
+            try {
+                nomeMenu = (String) inputFromClient.readUnshared();
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            ArrayList<BambiniAllergici> isLoadedal = rmiServer.viewCheck(nomeMenu);
+            if (isLoadedal == null) {
+                outputToClient.writeUnshared(true);
+                outputToClient.flush();
+                responce = false;
+            } else {
+                outputToClient.writeUnshared(false);
+                outputToClient.flush();
+                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.flush();
+                responce = true;
+            }
+            return responce;
+
 
         }else if(commandMethod.equals("addPrimo")){
 
@@ -733,6 +762,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.addPrimo(nome, allergeni);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -744,6 +774,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.addSecondo(nome, allergeni);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -755,6 +786,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.addSide(nome, allergeni);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -766,6 +798,7 @@ public class SocketServer extends Thread implements Runnable {
             Boolean success = rmiServer.deleteMenu(nomeMenu);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
         }
@@ -781,6 +814,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.newTrip(id, meta, andata, ritorno);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -806,7 +840,7 @@ public class SocketServer extends Thread implements Runnable {
             System.out.println("Sto Eseguendo da Socket");
             String idGita = (String) inputFromClient.readUnshared();
             outputToClient.writeUnshared(rmiServer.loadDataServer(Integer.parseInt(idGita)));
-            outputToClient.reset();
+            outputToClient.flush();
             return true;
 
         }else if(commandMethod.equals("bambinoPresenteServer")){
@@ -835,6 +869,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.newTappaServer(tappa, idGita, giorno, ora);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -847,6 +882,7 @@ public class SocketServer extends Thread implements Runnable {
             boolean success = rmiServer.newpartecipanteTrip(codiceFiscale, idGita);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 
@@ -859,6 +895,7 @@ public class SocketServer extends Thread implements Runnable {
             Boolean success = rmiServer.deleteTrip(idGita);
 
             outputToClient.writeUnshared(success);
+            outputToClient.flush();
 
             return success;
 

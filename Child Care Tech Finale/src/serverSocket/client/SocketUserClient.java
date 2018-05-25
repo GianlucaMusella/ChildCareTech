@@ -531,6 +531,7 @@ public class SocketUserClient implements InterfaceServer {
             toServer.writeUnshared(username);
             toServer.flush();
             toServer.writeUnshared(password);
+            toServer.flush();
 
         }catch (IOException e){
             e.printStackTrace();
@@ -1652,43 +1653,42 @@ public class SocketUserClient implements InterfaceServer {
     public ArrayList<BambiniAllergici> viewCheck(String nomeMenu) throws Exception {
 
         boolean ok = false;
-        ArrayList<BambiniAllergici> arrayList = new ArrayList<>();
-        Object object = new Object();
+        try{
 
-        try {
-            toServer.writeUnshared("viewCheck");
+            toServer.writeUnshared ("searchSupplier");
             toServer.flush();
+            toServer.writeUnshared (nomeMenu);
+            toServer.flush();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        ArrayList<BambiniAllergici> arrayListToReturn = new ArrayList<>();
         boolean isEmpty = false;
         try {
             isEmpty = (boolean) fromServer.readUnshared();
-            System.out.println("Is db empty? " + isEmpty);
+            System.out.println("Is db empty? " +isEmpty);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (!isEmpty) {
+        if(!isEmpty) {
             try {
-                object = fromServer.readUnshared();
-                System.out.println("Read array as Object");
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-            if (object instanceof ArrayList<?>) {
-                //get list
-                ArrayList<?> loadedAl = (ArrayList<?>) object;
-                if (loadedAl.size() > 0) {
-                    for (Object element : loadedAl) {
-                        if (element instanceof BambiniAllergici) {
-                            BambiniAllergici myElement = (BambiniAllergici) element;
-                            arrayList.add(myElement);
+                Object loaded = fromServer.readUnshared();
+                if (loaded instanceof ArrayList<?>) {
+                    //get list
+                    ArrayList<?> loadedAl = (ArrayList<?>) loaded;
+                    if (loadedAl.size() > 0) {
+                        for (Object element : loadedAl) {
+                            if (element instanceof BambiniAllergici) {
+                                BambiniAllergici myElement = (BambiniAllergici) element;
+                                arrayListToReturn.add(myElement);
+                            }
                         }
                     }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
         }
         try {
             ok = (boolean) fromServer.readUnshared ();
@@ -1699,9 +1699,10 @@ public class SocketUserClient implements InterfaceServer {
         System.out.println(ok);
 
         if(ok){
-            return arrayList;
+            return arrayListToReturn;
         }
         return null;
+
     }
 
     @Override
