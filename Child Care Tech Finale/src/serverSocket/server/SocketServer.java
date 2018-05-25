@@ -6,7 +6,6 @@ import getterAndSetter.food.SecondDishGS;
 import getterAndSetter.food.SideDishGS;
 import getterAndSetter.people.*;
 import getterAndSetter.trip.TripGS;
-import javafx.beans.property.StringProperty;
 import serverRMI.server.RMIServer;
 
 import java.io.IOException;
@@ -21,7 +20,7 @@ public class SocketServer extends Thread implements Runnable {
     //private String command = null;
     private ObjectOutputStream outputToClient;
     private ObjectInputStream inputFromClient;
-    private java.net.Socket s = null;
+    private Socket s = null;
     private RMIServer rmiServer;
 
     public SocketServer(Socket s, RMIServer rmiServer) {
@@ -46,10 +45,10 @@ public class SocketServer extends Thread implements Runnable {
 
         try {
             for(;;) {
-                System.out.println("Ready to receive a message");
+                System.out.println("Aspetto il Comando");
                 String command = (String) inputFromClient.readUnshared();
 
-                System.out.println("Received " + command);
+                System.out.println("Il comando ricevuto è " + command);
 
                 responce = method(command);
 
@@ -115,13 +114,31 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("searchSupplier")){
 
-            System.out.println("Sto Eseguendo da Socket");
-            String azienda = (String) inputFromClient.readUnshared();
-            String fornitura = (String) inputFromClient.readUnshared();
-            String partitaIva = (String) inputFromClient.readUnshared();
-            outputToClient.writeUnshared(rmiServer.searchSupplier(azienda, fornitura, partitaIva));
-            outputToClient.reset();
-            return true;
+            System.out.println("Cerco dal Socket");
+            String azienda = null;
+            String fornitura = null;
+            String partitaIva = null;
+
+            try {
+                azienda = (String) inputFromClient.readUnshared();
+                fornitura = (String) inputFromClient.readUnshared();
+                partitaIva = (String) inputFromClient.readUnshared();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            ArrayList<SupplierGS> isLoadedal = rmiServer.searchSupplier(azienda, fornitura, partitaIva);
+            if (isLoadedal == null) {
+                outputToClient.writeUnshared(true);
+                outputToClient.flush();
+                responce = false;
+            } else {
+                outputToClient.writeUnshared(false);
+                outputToClient.flush();
+                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.flush();
+                responce = true;
+            }
+            return responce;
 
         }else if(commandMethod.equals("modifySupplier")){
 
@@ -181,13 +198,31 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("searchChild")){
 
-            System.out.println("Sto Eseguendo da Socket");
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            outputToClient.writeUnshared(rmiServer.searchC(nome, cognome, codiceFiscale));
-            outputToClient.reset();
-            return true;
+            System.out.println("Cerco dal Socket");
+            String nome = null;
+            String cognome = null;
+            String codiceFiscale = null;
+
+            try {
+                nome = (String) inputFromClient.readUnshared();
+                cognome = (String) inputFromClient.readUnshared();
+                codiceFiscale = (String) inputFromClient.readUnshared();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            ArrayList<ChildGS> isLoadedal = rmiServer.searchC(nome, cognome, codiceFiscale);
+            if (isLoadedal == null) {
+                outputToClient.writeUnshared(true);
+                outputToClient.flush();
+                responce = false;
+            } else {
+                outputToClient.writeUnshared(false);
+                outputToClient.flush();
+                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.flush();
+                responce = true;
+            }
+            return responce;
 
         }else if(commandMethod.equals("viewChild")){
 
@@ -286,13 +321,31 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("searchStaff")){
 
-            System.out.println("Sto Eseguendo da Socket");
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            outputToClient.writeUnshared(rmiServer.searchStaff(nome, cognome, codiceFiscale));
-            outputToClient.reset();
-            return true;
+            System.out.println("Cerco dal Socket");
+            String nome = null;
+            String cognome = null;
+            String codiceFiscale = null;
+
+            try {
+                nome = (String) inputFromClient.readUnshared();
+                cognome = (String) inputFromClient.readUnshared();
+                codiceFiscale = (String) inputFromClient.readUnshared();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            ArrayList<StaffGS> isLoadedal = rmiServer.searchStaff(nome, cognome, codiceFiscale);
+            if (isLoadedal == null) {
+                outputToClient.writeUnshared(true);
+                outputToClient.flush();
+                responce = false;
+            } else {
+                outputToClient.writeUnshared(false);
+                outputToClient.flush();
+                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.flush();
+                responce = true;
+            }
+            return responce;
 
         }else if(commandMethod.equals("modifyStaff")){
 
@@ -354,12 +407,29 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("searchParents")){
 
-            System.out.println("Sto Eseguendo da Socket");
-            String nome = (String) inputFromClient.readUnshared();
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            outputToClient.writeUnshared(rmiServer.searchParents(nome, codiceFiscale));
-            outputToClient.reset();
-            return true;
+            System.out.println("Cerco dal Socket");
+            String nome = null;
+            String codiceFiscale = null;
+
+            try {
+                nome = (String) inputFromClient.readUnshared();
+                codiceFiscale = (String) inputFromClient.readUnshared();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            ArrayList<ParentsGS> isLoadedal = rmiServer.searchParents(nome, codiceFiscale);
+            if (isLoadedal == null) {
+                outputToClient.writeUnshared(true);
+                outputToClient.flush();
+                responce = false;
+            } else {
+                outputToClient.writeUnshared(false);
+                outputToClient.flush();
+                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.flush();
+                responce = true;
+            }
+            return responce;
 
         }else if(commandMethod.equals("modifyParents")){
 
@@ -419,12 +489,30 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("searchContacts")){
 
-            System.out.println("Sto Eseguendo da Socket");
-            String nome = (String) inputFromClient.readUnshared();
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            outputToClient.writeUnshared(rmiServer.searchContacts(nome, codiceFiscale));
-            outputToClient.reset();
-            return true;
+            System.out.println("Cerco dal Socket");
+            String nome = null;
+            String cognome = null;
+            String codiceFiscale = null;
+
+            try {
+                nome = (String) inputFromClient.readUnshared();
+                codiceFiscale = (String) inputFromClient.readUnshared();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            ArrayList<ContactGS> isLoadedal = rmiServer.searchContacts(nome, codiceFiscale);
+            if (isLoadedal == null) {
+                outputToClient.writeUnshared(true);
+                outputToClient.flush();
+                responce = false;
+            } else {
+                outputToClient.writeUnshared(false);
+                outputToClient.flush();
+                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.flush();
+                responce = true;
+            }
+            return responce;
 
         }else if(commandMethod.equals("modifyContacts")){
 
@@ -483,12 +571,29 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("searchDoctor")){
 
-            System.out.println("Sto Eseguendo da Socket");
-            String nome = (String) inputFromClient.readUnshared();
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            outputToClient.writeUnshared(rmiServer.searchDoctors(nome, codiceFiscale));
-            outputToClient.reset();
-            return true;
+            System.out.println("Cerco dal Socket");
+            String nome = null;
+            String codiceFiscale = null;
+
+            try {
+                nome = (String) inputFromClient.readUnshared();
+                codiceFiscale = (String) inputFromClient.readUnshared();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            ArrayList<DoctorGS> isLoadedal = rmiServer.searchDoctors(nome, codiceFiscale);
+            if (isLoadedal == null) {
+                outputToClient.writeUnshared(true);
+                outputToClient.flush();
+                responce = false;
+            } else {
+                outputToClient.writeUnshared(false);
+                outputToClient.flush();
+                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.flush();
+                responce = true;
+            }
+            return responce;
 
         }else if(commandMethod.equals("modifyDoctor")){
 

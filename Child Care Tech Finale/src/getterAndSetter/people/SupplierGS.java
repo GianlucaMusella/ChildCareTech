@@ -10,11 +10,11 @@ public class SupplierGS implements Serializable {
     private String fornitura;
     private String partitaIva;
 
-    public SupplierGS(String azienda, String partitaIva, String fornitura){
+    public SupplierGS(String azienda, String fornitura, String partitaIva){
 
         this.azienda = azienda;
-        this.partitaIva = partitaIva;
         this.fornitura = fornitura;
+        this.partitaIva = partitaIva;
     }
 
     public String getNome() {

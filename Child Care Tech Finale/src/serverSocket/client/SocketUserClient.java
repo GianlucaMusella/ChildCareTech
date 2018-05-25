@@ -5,9 +5,7 @@ import getterAndSetter.people.*;
 import interfaces.InterfaceServer;
 import getterAndSetter.trip.AppealGS;
 import getterAndSetter.trip.TripGS;
-import menuFood.Check;
 
-import javax.print.Doc;
 import java.io.*;
 import java.net.Socket;
 import java.rmi.RemoteException;
@@ -28,6 +26,7 @@ public class SocketUserClient implements InterfaceServer {
         try{
 
             toServer = new ObjectOutputStream(s.getOutputStream());
+            toServer.flush();
             fromServer = new ObjectInputStream(s.getInputStream());
 
         }catch (IOException e){
@@ -156,26 +155,58 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<SupplierGS> searchSupplier(String azienda, String fornitura, String partitaIva) throws Exception {
 
+        boolean ok = false;
         try{
 
-            toServer.writeUnshared("searchSupplier");
+            toServer.writeUnshared ("searchSupplier");
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(azienda));
+            toServer.writeUnshared (azienda);
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(fornitura));
+            toServer.writeUnshared (fornitura);
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(partitaIva));
+            toServer.writeUnshared (partitaIva);
             toServer.flush();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<SupplierGS>) fromServer.readObject();
-        } catch (IOException e) {
+        ArrayList<SupplierGS> arrayListToReturn = new ArrayList<>();
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " +isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if(!isEmpty) {
+            try {
+                Object loaded = fromServer.readUnshared();
+                if (loaded instanceof ArrayList<?>) {
+                    //get list
+                    ArrayList<?> loadedAl = (ArrayList<?>) loaded;
+                    if (loadedAl.size() > 0) {
+                        for (Object element : loadedAl) {
+                            if (element instanceof SupplierGS) {
+                                SupplierGS myElement = (SupplierGS) element;
+                                arrayListToReturn.add(myElement);
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayListToReturn;
         }
         return null;
 
@@ -310,29 +341,58 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<ChildGS> searchC(String name, String surname, String cod) throws Exception {
 
+        boolean ok = false;
         try{
-
-            toServer.writeUnshared("searchChild");
+            toServer.writeUnshared ("searchChild");
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(name));
+            toServer.writeUnshared (name);
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(surname));
+            toServer.writeUnshared(surname);
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(cod));
+            toServer.writeUnshared(cod);
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<ChildGS>) fromServer.readObject();
-        } catch (IOException e) {
+        ArrayList<ChildGS> arrayListToReturn = new ArrayList<>();
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " +isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if(!isEmpty) {
+            try {
+                Object loaded = fromServer.readUnshared();
+                if (loaded instanceof ArrayList<?>) {
+                    //get list
+                    ArrayList<?> loadedAl = (ArrayList<?>) loaded;
+                    if (loadedAl.size() > 0) {
+                        for (Object element : loadedAl) {
+                            if (element instanceof ChildGS) {
+                                ChildGS myElement = (ChildGS) element;
+                                arrayListToReturn.add(myElement);
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayListToReturn;
         }
         return null;
-
     }
 
     @Override
@@ -584,29 +644,58 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<StaffGS> searchStaff(String nome, String cognome, String cod) throws Exception {
 
+        boolean ok = false;
         try{
-
-            toServer.writeUnshared("searchStaff");
+            toServer.writeUnshared ("loadDataContacts");
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(nome));
+            toServer.writeUnshared (nome);
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(cognome));
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(cod));
+            toServer.writeUnshared(cod);
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<StaffGS>) fromServer.readObject();
-        } catch (IOException e) {
+        ArrayList<StaffGS> arrayListToReturn = new ArrayList<>();
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " +isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if(!isEmpty) {
+            try {
+                Object loaded = fromServer.readUnshared();
+                if (loaded instanceof ArrayList<?>) {
+                    //get list
+                    ArrayList<?> loadedAl = (ArrayList<?>) loaded;
+                    if (loadedAl.size() > 0) {
+                        for (Object element : loadedAl) {
+                            if (element instanceof StaffGS) {
+                                StaffGS myElement = (StaffGS) element;
+                                arrayListToReturn.add(myElement);
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayListToReturn;
         }
         return null;
-
     }
 
     @Override
@@ -756,27 +845,56 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<ParentsGS> searchParents(String name, String cod) throws Exception {
 
+        boolean ok = false;
         try{
-
-            toServer.writeUnshared("searchParents");
+            toServer.writeUnshared ("searchParents");
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(name));
+            toServer.writeUnshared (name);
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(cod));
+            toServer.writeUnshared(cod);
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<ParentsGS>) fromServer.readObject();
-        } catch (IOException e) {
+        ArrayList<ParentsGS> arrayListToReturn = new ArrayList<>();
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " +isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if(!isEmpty) {
+            try {
+                Object loaded = fromServer.readUnshared();
+                if (loaded instanceof ArrayList<?>) {
+                    //get list
+                    ArrayList<?> loadedAl = (ArrayList<?>) loaded;
+                    if (loadedAl.size() > 0) {
+                        for (Object element : loadedAl) {
+                            if (element instanceof ParentsGS) {
+                                ParentsGS myElement = (ParentsGS) element;
+                                arrayListToReturn.add(myElement);
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayListToReturn;
         }
         return null;
-
     }
 
     @Override
@@ -921,27 +1039,56 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<ContactGS> searchContacts(String nome, String cod) throws Exception {
 
+        boolean ok = false;
         try{
-
-            toServer.writeUnshared("searchContacts");
+            toServer.writeUnshared ("searchContacts");
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(nome));
+            toServer.writeUnshared (nome);
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(cod));
+            toServer.writeUnshared(cod);
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<ContactGS>) fromServer.readObject();
-        } catch (IOException e) {
+        ArrayList<ContactGS> arrayListToReturn = new ArrayList<>();
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " +isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if(!isEmpty) {
+            try {
+                Object loaded = fromServer.readUnshared();
+                if (loaded instanceof ArrayList<?>) {
+                    //get list
+                    ArrayList<?> loadedAl = (ArrayList<?>) loaded;
+                    if (loadedAl.size() > 0) {
+                        for (Object element : loadedAl) {
+                            if (element instanceof ContactGS) {
+                                ContactGS myElement = (ContactGS) element;
+                                arrayListToReturn.add(myElement);
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayListToReturn;
         }
         return null;
-
 
     }
 
@@ -1086,28 +1233,56 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<DoctorGS> searchDoctors(String name, String cod) throws Exception {
 
+        boolean ok = false;
         try{
-
-            toServer.writeUnshared("searchDoctor");
+            toServer.writeUnshared ("searchDoctor");
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(name));
+            toServer.writeUnshared (name);
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(cod));
+            toServer.writeUnshared(cod);
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<DoctorGS>) fromServer.readObject();
-        } catch (IOException e) {
+        ArrayList<DoctorGS> arrayListToReturn = new ArrayList<>();
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " +isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if(!isEmpty) {
+            try {
+                Object loaded = fromServer.readUnshared();
+                if (loaded instanceof ArrayList<?>) {
+                    //get list
+                    ArrayList<?> loadedAl = (ArrayList<?>) loaded;
+                    if (loadedAl.size() > 0) {
+                        for (Object element : loadedAl) {
+                            if (element instanceof DoctorGS) {
+                                DoctorGS myElement = (DoctorGS) element;
+                                arrayListToReturn.add(myElement);
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayListToReturn;
         }
         return null;
-
-
     }
 
     @Override

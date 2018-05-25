@@ -12,8 +12,8 @@ public class SupplierGUI {
     public SupplierGUI(SupplierGS supplierGS){
 
         this.azienda = new SimpleStringProperty(supplierGS.getAzienda());
-        this.partitaIva = new SimpleStringProperty(supplierGS.getPartitaIva());
         this.fornitura = new SimpleStringProperty(supplierGS.getFornitura());
+        this.partitaIva = new SimpleStringProperty(supplierGS.getPartitaIva());
     }
 
     public String getAzienda() {
