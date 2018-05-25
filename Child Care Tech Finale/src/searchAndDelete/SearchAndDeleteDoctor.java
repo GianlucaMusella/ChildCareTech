@@ -37,6 +37,9 @@ public class SearchAndDeleteDoctor implements Initializable{
     private TableColumn<DoctorGS, String> columnNome;
 
     @FXML
+    private TableColumn<DoctorGS, String> colonnaCognome;
+
+    @FXML
     private TableColumn<DoctorGS, String> columnCodicefiscale;
 
 
@@ -45,6 +48,7 @@ public class SearchAndDeleteDoctor implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
 
         columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         columnCodicefiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
 
         tabellaPediatra.getItems().clear();

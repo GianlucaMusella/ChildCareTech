@@ -1,6 +1,5 @@
 package menuFood;
 
-import getterAndSetter.food.AllergyPeopleGS;
 import getterAndSetter.food.FirstDishGS;
 import getterAndSetter.food.SecondDishGS;
 import getterAndSetter.food.SideDishGS;
@@ -70,13 +69,13 @@ public class AddMenu implements Initializable{
     private TableColumn<SideDishGS, String> colonnaAllergieContorni;
 
     @FXML
-    private TableView<AllergyPeopleGS> tabellaAllergie;
+    private Button primi;
 
     @FXML
-    private TableColumn<AllergyPeopleGS, String> allergieBambini;
+    private Button secondi;
 
     @FXML
-    private TableColumn<AllergyPeopleGS, String> allergiePersonale;
+    private Button contorni;
 
 
     @Override
@@ -90,9 +89,6 @@ public class AddMenu implements Initializable{
 
         colonnaContorni.setCellValueFactory(new PropertyValueFactory<>("nomeContorno"));
         colonnaAllergieContorni.setCellValueFactory(new PropertyValueFactory<>("allergene"));
-
-        allergieBambini.setCellValueFactory(new PropertyValueFactory<>("allergieBambini"));
-        allergiePersonale.setCellValueFactory(new PropertyValueFactory<>("allergiePersonale"));
 
         tabellaPrimi.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
@@ -121,11 +117,14 @@ public class AddMenu implements Initializable{
         tabellaPrimi.getItems().clear();
         tabellaSecondi.getItems().clear();
         tabellaContorni.getItems().clear();
-        tabellaAllergie.getItems().clear();
+
+        primi.fire();
+        secondi.fire();
+        contorni.fire();
 
     }
 
-    public void viewFirstAndSecond(ActionEvent actionEvent) throws Exception{
+    public void viewFirst(ActionEvent actionEvent) throws Exception{
 
         InterfaceServer interfaceServer;
         if (Controller.selection.equals("RMI")) {
@@ -134,23 +133,42 @@ public class AddMenu implements Initializable{
             interfaceServer = Singleton.getInstance().methodSocket();
         }
         ArrayList<FirstDishGS> firstDishGS = interfaceServer.viewFirst();
-        ArrayList<SecondDishGS> secondDishGS = interfaceServer.viewSecond();
-        ArrayList<SideDishGS> sideDishGS = interfaceServer.viewSide();
-        ArrayList<AllergyPeopleGS> allergyPeopleGS = interfaceServer.viewAllergy();
-
-        tabellaAllergie.setColumnResizePolicy(tabellaAllergie.CONSTRAINED_RESIZE_POLICY);
-        tabellaAllergie.setItems(FXCollections.observableArrayList(allergyPeopleGS));
 
         tabellaPrimi.setColumnResizePolicy(tabellaPrimi.CONSTRAINED_RESIZE_POLICY);
         tabellaPrimi.setItems(FXCollections.observableArrayList(firstDishGS));
 
+
+    }
+
+    public void second(ActionEvent actionEvent) throws Exception {
+
+        InterfaceServer interfaceServer;
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+
+        ArrayList<SecondDishGS> secondDishGS = interfaceServer.viewSecond();
         tabellaSecondi.setColumnResizePolicy(tabellaSecondi.CONSTRAINED_RESIZE_POLICY);
         tabellaSecondi.setItems(FXCollections.observableArrayList(secondDishGS));
 
-        tabellaContorni.setColumnResizePolicy(tabellaSecondi.CONSTRAINED_RESIZE_POLICY);
-        tabellaContorni.setItems(FXCollections.observableArrayList(sideDishGS));
     }
 
+    public void side(ActionEvent actionEvent) throws Exception {
+
+        InterfaceServer interfaceServer;
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+
+        ArrayList<SideDishGS> sideDishGS = interfaceServer.viewSide();
+        tabellaContorni.setColumnResizePolicy(tabellaSecondi.CONSTRAINED_RESIZE_POLICY);
+        tabellaContorni.setItems(FXCollections.observableArrayList(sideDishGS));
+
+    }
 
     public void addMenu(ActionEvent actionEvent) throws Exception{
 
@@ -173,6 +191,16 @@ public class AddMenu implements Initializable{
         txtGiorno.getEditor().clear();
 
 
+    }
+
+    public void check(ActionEvent actionEvent) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("/menuFood/CheckAllergy.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Inserisci Menù Mensa");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void addFirstDish(ActionEvent actionEvent) throws Exception{

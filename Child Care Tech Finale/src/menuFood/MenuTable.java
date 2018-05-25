@@ -80,17 +80,6 @@ public class MenuTable implements Initializable{
         }
         interfaceServer.deleteMenu(nomeMenu);
 
-
-    }
-
-    public void check(ActionEvent actionEvent) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/menuFood/CheckAllergy.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setTitle("Inserisci Menù Mensa");
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public void inserisciMenu(ActionEvent actionEvent) throws Exception{

@@ -1537,62 +1537,6 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
-    public ArrayList<AllergyPeopleGS> viewAllergy() throws Exception {
-
-        boolean ok = false;
-        ArrayList<AllergyPeopleGS> arrayList = new ArrayList<>();
-        Object object = new Object();
-
-        try {
-            toServer.writeUnshared("viewAllergy");
-            toServer.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        boolean isEmpty = false;
-        try {
-            isEmpty = (boolean) fromServer.readUnshared();
-            System.out.println("Is db empty? " + isEmpty);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (!isEmpty) {
-            try {
-                object = fromServer.readUnshared();
-                System.out.println("Read array as Object");
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-            if (object instanceof ArrayList<?>) {
-                //get list
-                ArrayList<?> loadedAl = (ArrayList<?>) object;
-                if (loadedAl.size() > 0) {
-                    for (Object element : loadedAl) {
-                        if (element instanceof AllergyPeopleGS) {
-                            AllergyPeopleGS myElement = (AllergyPeopleGS) element;
-                            arrayList.add(myElement);
-                        }
-                    }
-                }
-            }
-
-        }
-        try {
-            ok = (boolean) fromServer.readUnshared ();
-            System.out.println("Read reply from server");
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        System.out.println(ok);
-
-        if(ok){
-            return arrayList;
-        }
-        return null;
-    }
-
-    @Override
     public ArrayList<MenuGS> viewMenu() throws Exception {
 
         boolean ok = false;

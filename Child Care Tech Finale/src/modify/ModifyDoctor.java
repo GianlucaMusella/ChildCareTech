@@ -47,10 +47,31 @@ public class ModifyDoctor implements Initializable {
     private TableColumn<DoctorGS, String> colonnaNome;
 
     @FXML
+    private TableColumn<DoctorGS, String> colonnaCognome;
+
+    @FXML
     private TableColumn<DoctorGS, String> colonnaCodiceFiscale;
 
     @FXML
     private Label lblStatus;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        colonnaCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+
+        tabellaPediatra.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        tabellaPediatra.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if(newSelection != null){
+                txtCodicefiscaleOld.setText(newSelection.getCodiceFiscale());
+            }
+        });
+
+        tabellaPediatra.getItems().clear();
+    }
 
     public void modifyDoctor (ActionEvent actionEvent) throws Exception {
 
@@ -80,27 +101,11 @@ public class ModifyDoctor implements Initializable {
                 txtCognome.clear();
                 txtLuogo.clear();
                 dateData.getEditor().clear();
+
             }catch (RemoteException e){
                 e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colonnaCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
-
-        tabellaPediatra.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        tabellaPediatra.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
-            if(newSelection != null){
-                txtCodicefiscaleOld.setText(newSelection.getCodiceFiscale());
-            }
-        });
-
-        tabellaPediatra.getItems().clear();
     }
 
     public void viewDoctor(ActionEvent actionEvent) throws Exception {

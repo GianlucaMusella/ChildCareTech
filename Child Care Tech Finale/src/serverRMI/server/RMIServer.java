@@ -1257,34 +1257,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
-    public ArrayList<AllergyPeopleGS> viewAllergy() throws Exception {
-
-        ArrayList<AllergyPeopleGS> values = new ArrayList<>();
-        String sql = ("SELECT * FROM mydb.bambini ");
-        String sql1 = ("SELECT * FROM mydb.personaleinterno");
-
-        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        Statement statement = connectionDatabase.initializeConnection().createStatement();
-        Statement statement1 = connectionDatabase.initializeConnection().createStatement();
-
-
-        ResultSet rs = statement.executeQuery(sql);
-        ResultSet rs1 = statement1.executeQuery(sql1);
-
-        while (rs.next() && rs1.next()) {
-            String allergieBambini = rs.getString("Allergie");
-            String allergiePersonale = rs1.getString("Allergie");
-
-            values.add(new AllergyPeopleGS(allergieBambini, allergiePersonale));
-        }
-
-        statement.close();
-        statement1.close();
-
-        return values;
-    }
-
-    @Override
     public ArrayList<MenuGS> viewMenu() throws Exception {
 
         ArrayList<MenuGS> values = new ArrayList<>();

@@ -694,23 +694,6 @@ public class SocketServer extends Thread implements Runnable {
             }
             return responce;
 
-        }else if(commandMethod.equals("viewAllergy")){
-
-            System.out.println("Carico Dati da Socket");
-            ArrayList<SideDishGS> isLoadedal = rmiServer.viewSide();
-            if (isLoadedal == null) {
-                outputToClient.writeUnshared(true);
-                outputToClient.flush();
-                responce = false;
-            } else {
-                outputToClient.writeUnshared(false);
-                outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
-                outputToClient.flush();
-                responce = true;
-            }
-            return responce;
-
         }else if(commandMethod.equals("viewMenu")){
 
             System.out.println("Carico Dati da Socket");

@@ -10,37 +10,32 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0"
-      prefWidth="663.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="searchAndDelete.SearchAndDeleteDoctor">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0" prefWidth="663.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="searchAndDelete.SearchAndDeleteDoctor">
     <ImageView fitHeight="443.0" fitWidth="663.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../image/185235620.jpg"/>
+        <Image url="@../../image/185235620.jpg" />
     </ImageView>
-    <TableView id="tableBambini" fx:id="tabellaPediatra" layoutX="71.0" layoutY="104.0" prefHeight="274.0"
-               prefWidth="521.0">
+    <TableView id="tableBambini" fx:id="tabellaPediatra" layoutX="71.0" layoutY="104.0" prefHeight="274.0" prefWidth="521.0">
         <columns>
-            <TableColumn id="columnNome" fx:id="columnNome" prefWidth="161.0" text="Nome"/>
-        <TableColumn prefWidth="161.0" text="Cognome"/>
-            <TableColumn id="columnCodicefiscale" fx:id="columnCodicefiscale" minWidth="0.0" prefWidth="198.0"
-                         text="Codice Fiscale"/>
+            <TableColumn id="columnNome" fx:id="columnNome" prefWidth="161.0" text="Nome" />
+        <TableColumn fx:id="colonnaCognome" prefWidth="169.0" text="Cognome" />
+            <TableColumn id="columnCodicefiscale" fx:id="columnCodicefiscale" minWidth="0.0" prefWidth="190.0" text="Codice Fiscale" />
         </columns>
     </TableView>
-    <TextField id="nome" fx:id="txtNome" layoutX="72.0" layoutY="54.0" promptText="Nome"/>
-    <TextField id="codicefiscale" fx:id="txtCodicefiscale" layoutX="443.0" layoutY="54.0" promptText="Codice Fiscale"/>
-    <Button layoutX="309.0" layoutY="396.0" mnemonicParsing="false" onAction="#searchDoctor" text="Cerca"/>
-    <Button layoutX="71.0" layoutY="396.0" mnemonicParsing="false" onAction="#viewDoctor" text="Mostra Pediatri"/>
-    <Button layoutX="537.0" layoutY="396.0" mnemonicParsing="false" onAction="#deleteDoctor" text="Elimina"/>
-    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method"
-            style="-fx-background-color: transparent;">
+    <TextField id="nome" fx:id="txtNome" layoutX="72.0" layoutY="54.0" promptText="Nome" />
+    <TextField id="codicefiscale" fx:id="txtCodicefiscale" layoutX="443.0" layoutY="54.0" promptText="Codice Fiscale" />
+    <Button layoutX="309.0" layoutY="396.0" mnemonicParsing="false" onAction="#searchDoctor" text="Cerca" />
+    <Button layoutX="71.0" layoutY="396.0" mnemonicParsing="false" onAction="#viewDoctor" text="Mostra Pediatri" />
+    <Button layoutX="537.0" layoutY="396.0" mnemonicParsing="false" onAction="#deleteDoctor" text="Elimina" />
+    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png"/>
+                <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
             </ImageView>
         </graphic>
     </Button>
     <Hyperlink layoutX="602.0" layoutY="410.0" onAction="#logout" text="Logout">
         <font>
-          <Font name="System Bold Italic" size="12.0"/>
+          <Font name="System Bold Italic" size="12.0" />
         </font>
     </Hyperlink>
 </Pane>
