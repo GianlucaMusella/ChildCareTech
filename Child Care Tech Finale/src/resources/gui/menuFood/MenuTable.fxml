@@ -9,38 +9,34 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="409.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/9.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="menuFood.MenuTable">
+<AnchorPane prefHeight="409.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menuFood.MenuTable">
    <ImageView fitHeight="454.0" fitWidth="645.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../../image/185235620.jpg"/>
+      <Image url="@../../image/185235620.jpg" />
    </ImageView>
    <TableView fx:id="tabellaMenu" layoutX="103.0" layoutY="63.0" prefHeight="256.0" prefWidth="459.0">
       <columns>
-         <TableColumn fx:id="colonnaNome" prefWidth="121.0" text="Nome"/>
-         <TableColumn fx:id="colonnaPrimi" prefWidth="109.0" text="Primo"/>
-         <TableColumn fx:id="colonnaSecondi" minWidth="0.0" prefWidth="115.0" text="Secondo"/>
-         <TableColumn fx:id="colonnaGiorno" prefWidth="113.0" text="Giorno"/>
+         <TableColumn fx:id="colonnaNome" prefWidth="121.0" text="Nome" />
+         <TableColumn fx:id="colonnaPrimi" prefWidth="109.0" text="Primo" />
+         <TableColumn fx:id="colonnaSecondi" minWidth="0.0" prefWidth="115.0" text="Secondo" />
+         <TableColumn fx:id="colonnaGiorno" prefWidth="113.0" text="Giorno" />
       </columns>
    </TableView>
-   <Button layoutX="103.0" layoutY="353.0" mnemonicParsing="false" onAction="#viewMenu" prefHeight="34.0"
-           prefWidth="88.0" text="Mostra Menù"/>
-   <Button layoutX="296.0" layoutY="353.0" mnemonicParsing="false" onAction="#inserisciMenu" prefHeight="34.0"
-           prefWidth="74.0" text="Crea Menù"/>
-   <Button layoutX="474.0" layoutY="353.0" mnemonicParsing="false" onAction="#deleteMenu" prefHeight="34.0"
-           prefWidth="88.0" text="Elimina Menù"/>
+   <Button layoutX="103.0" layoutY="353.0" mnemonicParsing="false" onAction="#viewMenu" prefHeight="34.0" prefWidth="88.0" text="Mostra Menù" />
+   <Button layoutX="296.0" layoutY="353.0" mnemonicParsing="false" onAction="#inserisciMenu" prefHeight="34.0" prefWidth="74.0" text="Crea Menù" />
+   <Button layoutX="474.0" layoutY="353.0" mnemonicParsing="false" onAction="#deleteMenu" prefHeight="34.0" prefWidth="88.0" text="Elimina Menù" />
    <Hyperlink layoutX="539.0" layoutY="397.0" onAction="#logout" text="Logout">
       <font>
-         <Font name="System Bold Italic" size="12.0"/>
+         <Font name="System Bold Italic" size="12.0" />
       </font>
    </Hyperlink>
-   <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" prefHeight="34.0"
-           prefWidth="29.0" style="-fx-background-color: transparent;">
+   <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" prefHeight="34.0" prefWidth="29.0" style="-fx-background-color: transparent;">
       <graphic>
          <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png"/>
+               <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
             </image>
          </ImageView>
       </graphic>
    </Button>
+   <Button layoutX="213.0" layoutY="358.0" mnemonicParsing="false" onAction="#check" text="Check" />
 </AnchorPane>

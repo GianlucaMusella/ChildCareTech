@@ -1,24 +1,29 @@
 package addPeople;
 
+import getterAndSetter.people.StaffGS;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
 import interfaces.InterfaceServer;
 
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class AddTeacher {
+public class AddTeacher implements Initializable{
 
     @FXML
     private TextField txtNome;
@@ -39,9 +44,6 @@ public class AddTeacher {
     private TextField txtAllergie;
 
     @FXML
-    private TextField txtSesso;
-
-    @FXML
     private TextField txtInsegnante;
 
     @FXML
@@ -52,6 +54,39 @@ public class AddTeacher {
 
     @FXML
     private Label lblStatus;
+
+    @FXML
+    private RadioButton radioMaschio;
+
+    @FXML
+    private RadioButton radioFemmina;
+
+    @FXML
+    private TableView<StaffGS> tabellaInsegnanti;
+
+    @FXML
+    private TableColumn<StaffGS, String> colonnaNome;
+
+    @FXML
+    private TableColumn<StaffGS, String> colonnaCognome;
+
+    @FXML
+    private TableColumn<StaffGS, String> colonnaCF;
+
+    @FXML
+    private TableColumn<StaffGS, String> colonnaMansione;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        colonnaCF.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
+        colonnaMansione.setCellValueFactory(new PropertyValueFactory<>("mansione"));
+
+        tabellaInsegnanti.getItems().clear();
+    }
+
 
     public void addTeacher(ActionEvent actionEvent) throws Exception {
         if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16 ||
@@ -64,10 +99,18 @@ public class AddTeacher {
             LocalDate data = dateData.getValue();
             String luogo = txtLuogo.getText();
             String allergie = txtAllergie.getText();
-            String sesso = txtSesso.getText();
             String insegnante = txtInsegnante.getText();
             String username = txtUsername.getText();
             String password = txtPassword.getText();
+            String sesso;
+            String sessoM = radioMaschio.getText();
+            String sessoF = radioFemmina.getText();
+
+            if (radioMaschio.isSelected()) {
+                sesso = sessoM;
+            } else {
+                sesso = sessoF;
+            }
             try {
                 InterfaceServer interfaceServer;
                 if (Controller.selection.equals("RMI")) {
@@ -82,7 +125,6 @@ public class AddTeacher {
                     txtCodiceFiscale.clear();
                     txtAllergie.clear();
                     txtLuogo.clear();
-                    txtSesso.clear();
                     txtInsegnante.clear();
                     txtUsername.clear();
                     txtPassword.clear();
@@ -106,6 +148,23 @@ public class AddTeacher {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+
+    }
+
+    public void viewStaff(ActionEvent actionEvent) throws Exception {
+
+        InterfaceServer interfaceServer;
+
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+
+        ArrayList<StaffGS> staffGS = interfaceServer.viewStaff();
+
+        tabellaInsegnanti.setColumnResizePolicy(tabellaInsegnanti.CONSTRAINED_RESIZE_POLICY);
+        tabellaInsegnanti.setItems(FXCollections.observableArrayList(staffGS));
 
     }
 

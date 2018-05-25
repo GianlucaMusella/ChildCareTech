@@ -1,6 +1,8 @@
 package getterAndSetter.food;
 
-public class BambiniAllergici {
+import java.io.Serializable;
+
+public class BambiniAllergici implements Serializable{
     // mydb.bambini.Nome, mydb.Bambini.Cognome, mydb.Allergeni.Nome, mydb.Primi.Nome, mydb.Secondi.Nome, mydb.menumensa.Nome
     private String nomeBambino;
     private String cognomeBambino;

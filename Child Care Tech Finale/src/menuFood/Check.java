@@ -20,15 +20,15 @@ public class Check {
         ArrayList<BambiniAllergici> values = new ArrayList<>();
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
-        String SQL = ("SELECT mydb.bambini.Nome, mydb.Bambini.Cognome, mydb.Allergeni.Nome, mydb.Primi.Nome, mydb.Secondi.Nome, mydb.menumensa.Nome " +
-                "FROM ((((((( mydb.bambini_has_allergeni " +
-                "INNER JOIN mydb.bambini ON mydb.bambini.CodiceFiscale = mydb.bambini_has_allergeni.Bambini_CodiceFiscale) " +
-                "INNER JOIN mydb.allergeni ON mydb.allergeni.Nome =  mydb.bambini_has_allergeni.Allergeni_Nome) " +
-                "INNER JOIN mydb.allergeni_has_primi ON mydb.allergeni_has_primi.Allergeni_Nome = mydb.allergeni.Nome) " +
-                "INNER JOIN mydb.primi ON mydb.primi.Nome = mydb.allergeni_has_primi.Primi_Nome = mydb.primi.Nome) " +
-                "INNER JOIN mydb.allergeni_has_secondi ON mydb.allergeni_has_secondi.Allergeni_Nome = mydb.allergeni.Nome) " +
-                "INNER JOIN mydb.secondi ON mydb.secondi.Nome = mydb.allergeni_has_secondi.Secondi_Nome = mydb.secondi.Nome) " +
-                "INNER JOIN mydb.menumensa ON mydb.menumensa.Secondi_Nome = mydb.secondi.Nome AND mydb.menumensa.Primi_Nome = mydb.primi.Nome AND mydb.menumensa.Nome = '" + menuGS.getNomeMenu() + "'");
+        String SQL = ("SELECT  mydb.bambini.Nome, mydb.bambini.Cognome, mydb.Allergeni.Nome, mydb.Primi.Nome, mydb.secondi.Nome, mydb.menumensa.Nome " +
+                "FROM (((((( mydb.menumensa " +
+                "INNER JOIN mydb.Primi ON mydb.menumensa.Primi_Nome = mydb.primi.Nome)" +
+                "INNER JOIN mydb.allergeni_has_primi ON mydb.allergeni_has_primi.Primi_Nome = mydb.primi.nome) " +
+                "INNER JOIN mydb.secondi ON mydb.menumensa.Secondi_Nome = mydb.secondi.Nome) " +
+                "INNER JOIN mydb.allergeni_has_secondi ON mydb.allergeni_has_secondi.Secondi_Nome = mydb.secondi.nome) " +
+                "INNER JOIN mydb.allergeni ON mydb.allergeni_has_primi.Allergeni_Nome = mydb.allergeni.Nome OR mydb.allergeni_has_secondi.Allergeni_Nome = mydb.allergeni.Nome) " +
+                "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
+                "WHERE mydb.menumensa.Nome = '" + menuGS.getNomeMenu() + "'");
         ResultSet rs = stmt.executeQuery(SQL);
 
         System.out.println(rs.getString(1)); // prova per vedere se funziona

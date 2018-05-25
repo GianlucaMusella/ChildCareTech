@@ -1,15 +1,13 @@
 package serverSocket.client;
 
-import getterAndSetter.food.AllergyPeopleGS;
-import getterAndSetter.food.FirstDishGS;
-import getterAndSetter.food.MenuGS;
-import getterAndSetter.food.SecondDishGS;
+import getterAndSetter.food.*;
 import getterAndSetter.people.*;
 import interfaces.InterfaceServer;
 import getterAndSetter.trip.AppealGS;
 import getterAndSetter.trip.TripGS;
-import getterAndSetter.food.SideDishGS;
+import menuFood.Check;
 
+import javax.print.Doc;
 import java.io.*;
 import java.net.Socket;
 import java.rmi.RemoteException;
@@ -45,11 +43,11 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("login");
+            toServer.writeUnshared("login");
             toServer.flush();
-            toServer.writeUTF(username);
+            toServer.writeUnshared(username);
             toServer.flush();
-            toServer.writeUTF(password);
+            toServer.writeUnshared(password);
             toServer.flush();
 
         }catch (IOException e){
@@ -58,7 +56,7 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
             System.out.println("Client " + success);
 
         }catch (IOException e){
@@ -73,17 +71,17 @@ public class SocketUserClient implements InterfaceServer {
         boolean success = false;
 
         try{
-            toServer.writeUTF("addSupplier");
+            toServer.writeUnshared("addSupplier");
             toServer.flush();
-            toServer.writeUTF(name);
+            toServer.writeUnshared(name);
             toServer.flush();
-            toServer.writeUTF(surname);
+            toServer.writeUnshared(surname);
             toServer.flush();
-            toServer.writeUTF(azienda);
+            toServer.writeUnshared(azienda);
             toServer.flush();
-            toServer.writeUTF(fornitura);
+            toServer.writeUnshared(fornitura);
             toServer.flush();
-            toServer.writeUTF(partitaIva);
+            toServer.writeUnshared(partitaIva);
             toServer.flush();
 
         }catch (IOException e){
@@ -91,7 +89,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -102,23 +100,57 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<SupplierGS> viewSupplier() throws RemoteException, SQLException {
 
-        try{
+        boolean ok = false;
+        ArrayList<SupplierGS> arrayList = new ArrayList<>();
+        Object object = new Object();
 
-            toServer.writeUTF("viewSupplier");
+        try {
+            toServer.writeUnshared("viewSupplier");
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<SupplierGS>) fromServer.readObject();
-        } catch (IOException e) {
+
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof SupplierGS) {
+                            SupplierGS myElement = (SupplierGS) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
         }
         return null;
-
     }
 
     @Override
@@ -126,13 +158,13 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("searchSupplier");
+            toServer.writeUnshared("searchSupplier");
             toServer.flush();
-            toServer.writeUTF(String.valueOf(azienda));
+            toServer.writeUnshared(String.valueOf(azienda));
             toServer.flush();
-            toServer.writeUTF(String.valueOf(fornitura));
+            toServer.writeUnshared(String.valueOf(fornitura));
             toServer.flush();
-            toServer.writeUTF(String.valueOf(partitaIva));
+            toServer.writeUnshared(String.valueOf(partitaIva));
             toServer.flush();
 
         } catch (IOException e) {
@@ -154,17 +186,17 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("modifySupplier");
+            toServer.writeUnshared("modifySupplier");
             toServer.flush();
-            toServer.writeUTF(azienda);
+            toServer.writeUnshared(azienda);
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(cognome);
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUTF(fornitura);
+            toServer.writeUnshared(fornitura);
             toServer.flush();
-            toServer.writeUTF(partitaIva);
+            toServer.writeUnshared(partitaIva);
             toServer.flush();
 
         } catch (IOException e) {
@@ -180,13 +212,13 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("addOrder");
+            toServer.writeUnshared("addOrder");
             toServer.flush();
-            toServer.writeUTF(azienda);
+            toServer.writeUnshared(azienda);
             toServer.flush();
-            toServer.writeUTF(ordini);
+            toServer.writeUnshared(ordini);
             toServer.flush();
-            toServer.writeUTF(quantità);
+            toServer.writeUnshared(quantità);
             toServer.flush();
 
         }catch (IOException e){
@@ -194,7 +226,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -208,9 +240,9 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("deleteSupplier");
+            toServer.writeUnshared("deleteSupplier");
             toServer.flush();
-            toServer.writeUTF(azienda);
+            toServer.writeUnshared(azienda);
             toServer.flush();
 
         }catch (IOException e){
@@ -218,7 +250,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            return fromServer.readBoolean();
+            return (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -234,31 +266,31 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("addChild");
+            toServer.writeUnshared("addChild");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(idBambino);
+            toServer.writeUnshared(idBambino);
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(cognome);
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(data));
+            toServer.writeUnshared(String.valueOf(data));
             toServer.flush();
-            toServer.writeUTF(luogo);
+            toServer.writeUnshared(luogo);
             toServer.flush();
-            toServer.writeUTF(allergie);
+            toServer.writeUnshared(allergie);
             toServer.flush();
-            toServer.writeUTF(genitore1);
+            toServer.writeUnshared(genitore1);
             toServer.flush();
-            toServer.writeUTF(genitore2);
+            toServer.writeUnshared(genitore2);
             toServer.flush();
-            toServer.writeUTF(sesso);
+            toServer.writeUnshared(sesso);
             toServer.flush();
-            toServer.writeUTF(pediatra);
+            toServer.writeUnshared(pediatra);
             toServer.flush();
-            toServer.writeUTF(Contatto);
+            toServer.writeUnshared(Contatto);
             toServer.flush();
 
 
@@ -267,7 +299,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -280,13 +312,13 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("searchChild");
+            toServer.writeUnshared("searchChild");
             toServer.flush();
-            toServer.writeUTF(String.valueOf(name));
+            toServer.writeUnshared(String.valueOf(name));
             toServer.flush();
-            toServer.writeUTF(String.valueOf(surname));
+            toServer.writeUnshared(String.valueOf(surname));
             toServer.flush();
-            toServer.writeUTF(String.valueOf(cod));
+            toServer.writeUnshared(String.valueOf(cod));
             toServer.flush();
 
         } catch (IOException e) {
@@ -306,20 +338,55 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<ChildGS> viewChild() throws Exception {
 
-        try{
+        boolean ok = false;
+        ArrayList<ChildGS> arrayList = new ArrayList<>();
+        Object object = new Object();
 
-            toServer.writeUTF("viewChild");
+        try {
+            toServer.writeUnshared("viewChild");
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<ChildGS>) fromServer.readObject();
-        } catch (IOException e) {
+
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof ChildGS) {
+                            ChildGS myElement = (ChildGS) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
         }
         return null;
     }
@@ -329,19 +396,19 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("modifyChild");
+            toServer.writeUnshared("modifyChild");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(Nome);
+            toServer.writeUnshared(Nome);
             toServer.flush();
-            toServer.writeUTF(cognome);
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUTF(luogo);
+            toServer.writeUnshared(luogo);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(data));
+            toServer.writeUnshared(String.valueOf(data));
             toServer.flush();
-            toServer.writeUTF(idBambino);
+            toServer.writeUnshared(idBambino);
             toServer.flush();
 
         } catch (IOException e) {
@@ -357,9 +424,9 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("deleteChild");
+            toServer.writeUnshared("deleteChild");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
 
         }catch (IOException e){
@@ -367,7 +434,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -383,32 +450,34 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("addTeacher");
+            toServer.writeUnshared("addTeacher");
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(cognome);
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(data));
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(luogo);
+            toServer.writeUnshared(String.valueOf(data));
             toServer.flush();
-            toServer.writeUTF(allergie);
+            toServer.writeUnshared(luogo);
             toServer.flush();
-            toServer.writeUTF(sesso);
+            toServer.writeUnshared(allergie);
             toServer.flush();
-            toServer.writeUTF(insegnante);
+            toServer.writeUnshared(sesso);
             toServer.flush();
-            toServer.writeUTF(username);
+            toServer.writeUnshared(insegnante);
             toServer.flush();
-            toServer.writeUTF(password);
+            toServer.writeUnshared(username);
+            toServer.flush();
+            toServer.writeUnshared(password);
 
         }catch (IOException e){
             e.printStackTrace();
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -424,21 +493,21 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("addTeacher");
+            toServer.writeUnshared("addTeacher");
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(cognome);
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(data));
+            toServer.writeUnshared(String.valueOf(data));
             toServer.flush();
-            toServer.writeUTF(luogo);
+            toServer.writeUnshared(luogo);
             toServer.flush();
-            toServer.writeUTF(allergie);
+            toServer.writeUnshared(allergie);
             toServer.flush();
-            toServer.writeUTF(sesso);
+            toServer.writeUnshared(sesso);
             toServer.flush();
-            toServer.writeUTF(mansione);
+            toServer.writeUnshared(mansione);
             toServer.flush();
 
         }catch (IOException e){
@@ -446,7 +515,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -458,20 +527,55 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<StaffGS> viewStaff() throws Exception {
 
-        try{
+        boolean ok = false;
+        ArrayList<StaffGS> arrayList = new ArrayList<>();
+        Object object = new Object();
 
-            toServer.writeUTF("viewStaff");
+        try {
+            toServer.writeUnshared("viewStaff");
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<StaffGS>) fromServer.readObject();
-        } catch (IOException e) {
+
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof StaffGS) {
+                            StaffGS myElement = (StaffGS) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
         }
         return null;
 
@@ -482,13 +586,13 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("searchStaff");
+            toServer.writeUnshared("searchStaff");
             toServer.flush();
-            toServer.writeUTF(String.valueOf(nome));
+            toServer.writeUnshared(String.valueOf(nome));
             toServer.flush();
-            toServer.writeUTF(String.valueOf(cognome));
+            toServer.writeUnshared(String.valueOf(cognome));
             toServer.flush();
-            toServer.writeUTF(String.valueOf(cod));
+            toServer.writeUnshared(String.valueOf(cod));
             toServer.flush();
 
         } catch (IOException e) {
@@ -510,19 +614,19 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("modifyStaff");
+            toServer.writeUnshared("modifyStaff");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(cognome);
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUTF(luogo);
+            toServer.writeUnshared(luogo);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(data));
+            toServer.writeUnshared(String.valueOf(data));
             toServer.flush();
-            toServer.writeUTF(mansione);
+            toServer.writeUnshared(mansione);
             toServer.flush();
 
         } catch (IOException e) {
@@ -536,9 +640,9 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("deleteStaff");
+            toServer.writeUnshared("deleteStaff");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
 
         }catch (IOException e){
@@ -546,7 +650,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            return fromServer.readBoolean();
+            return (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -562,21 +666,21 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("addParents");
+            toServer.writeUnshared("addParents");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(cognome);
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(data));
+            toServer.writeUnshared(String.valueOf(data));
             toServer.flush();
-            toServer.writeUTF(luogo);
+            toServer.writeUnshared(luogo);
             toServer.flush();
-            toServer.writeUTF(telefono);
+            toServer.writeUnshared(telefono);
             toServer.flush();
-            toServer.writeUTF(sesso);
+            toServer.writeUnshared(sesso);
             toServer.flush();
 
         }catch (IOException e){
@@ -584,7 +688,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -596,23 +700,57 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<ParentsGS> viewParents() throws Exception {
 
-        try{
+        boolean ok = false;
+        ArrayList<ParentsGS> arrayList = new ArrayList<>();
+        Object object = new Object();
 
-            toServer.writeUTF("viewParents");
+        try {
+            toServer.writeUnshared("viewParents");
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<ParentsGS>) fromServer.readObject();
-        } catch (IOException e) {
+
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof ParentsGS) {
+                            ParentsGS myElement = (ParentsGS) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
         }
         return null;
-
     }
 
     @Override
@@ -620,11 +758,11 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("searchParents");
+            toServer.writeUnshared("searchParents");
             toServer.flush();
-            toServer.writeUTF(String.valueOf(name));
+            toServer.writeUnshared(String.valueOf(name));
             toServer.flush();
-            toServer.writeUTF(String.valueOf(cod));
+            toServer.writeUnshared(String.valueOf(cod));
             toServer.flush();
 
         } catch (IOException e) {
@@ -646,19 +784,19 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("modifyParents");
+            toServer.writeUnshared("modifyParents");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(cognome);
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUTF(luogo);
+            toServer.writeUnshared(luogo);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(data));
+            toServer.writeUnshared(String.valueOf(data));
             toServer.flush();
-            toServer.writeUTF(telefono);
+            toServer.writeUnshared(telefono);
             toServer.flush();
 
         } catch (IOException e) {
@@ -672,9 +810,9 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("deleteParents");
+            toServer.writeUnshared("deleteParents");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
 
         }catch (IOException e){
@@ -682,7 +820,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            return fromServer.readBoolean();
+            return (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -698,15 +836,15 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("addContact");
+            toServer.writeUnshared("addContact");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(cognome);
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUTF(telefono);
+            toServer.writeUnshared(telefono);
             toServer.flush();
 
         }catch (IOException e){
@@ -714,7 +852,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -726,20 +864,55 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<ContactGS> viewContacts() throws RemoteException, SQLException {
 
-        try{
+        boolean ok = false;
+        ArrayList<ContactGS> arrayList = new ArrayList<>();
+        Object object = new Object();
 
-            toServer.writeUTF("viewContacts");
+        try {
+            toServer.writeUnshared("viewContacts");
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<ContactGS>) fromServer.readObject();
-        } catch (IOException e) {
+
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof ContactGS) {
+                            ContactGS myElement = (ContactGS) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
         }
         return null;
 
@@ -750,11 +923,11 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("searchContacts");
+            toServer.writeUnshared("searchContacts");
             toServer.flush();
-            toServer.writeUTF(String.valueOf(nome));
+            toServer.writeUnshared(String.valueOf(nome));
             toServer.flush();
-            toServer.writeUTF(String.valueOf(cod));
+            toServer.writeUnshared(String.valueOf(cod));
             toServer.flush();
 
         } catch (IOException e) {
@@ -777,15 +950,15 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("modifyContacts");
+            toServer.writeUnshared("modifyContacts");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(cognome);
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUTF(telefono);
+            toServer.writeUnshared(telefono);
             toServer.flush();
 
         } catch (IOException e) {
@@ -798,9 +971,9 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("deleteContacts");
+            toServer.writeUnshared("deleteContacts");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
 
         }catch (IOException e){
@@ -808,7 +981,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            return fromServer.readBoolean();
+            return (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -824,19 +997,19 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("addDoctor");
+            toServer.writeUnshared("addDoctor");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(cognome);
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(data));
+            toServer.writeUnshared(String.valueOf(data));
             toServer.flush();
-            toServer.writeUTF(luogo);
+            toServer.writeUnshared(luogo);
             toServer.flush();
-            toServer.writeUTF(sesso);
+            toServer.writeUnshared(sesso);
             toServer.flush();
 
         }catch (IOException e){
@@ -844,7 +1017,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -856,23 +1029,57 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<DoctorGS> viewDoctors() throws Exception {
 
-        try{
+        boolean ok = false;
+        ArrayList<DoctorGS> arrayList = new ArrayList<>();
+        Object object = new Object();
 
-            toServer.writeUTF("viewDoctor");
+        try {
+            toServer.writeUnshared("viewDoctor");
             toServer.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        } catch (IOException e) {
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        ArrayList<DoctorGS> response = null;
-        try{
-            response = (ArrayList<DoctorGS>) fromServer.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof DoctorGS) {
+                            DoctorGS myElement = (DoctorGS) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
         }
-        return response;
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
+        }
+        return null;
 
     }
 
@@ -881,11 +1088,11 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("searchDoctor");
+            toServer.writeUnshared("searchDoctor");
             toServer.flush();
-            toServer.writeUTF(String.valueOf(name));
+            toServer.writeUnshared(String.valueOf(name));
             toServer.flush();
-            toServer.writeUTF(String.valueOf(cod));
+            toServer.writeUnshared(String.valueOf(cod));
             toServer.flush();
 
         } catch (IOException e) {
@@ -908,17 +1115,17 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("modifyDoctor");
+            toServer.writeUnshared("modifyDoctor");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(cognome);
+            toServer.writeUnshared(cognome);
             toServer.flush();
-            toServer.writeUTF(luogo);
+            toServer.writeUnshared(luogo);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(data));
+            toServer.writeUnshared(String.valueOf(data));
             toServer.flush();
 
         } catch (IOException e) {
@@ -931,9 +1138,9 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("deleteDoctor");
+            toServer.writeUnshared("deleteDoctor");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
 
         }catch (IOException e){
@@ -941,7 +1148,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            return fromServer.readBoolean();
+            return (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -957,15 +1164,15 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("addMenu");
+            toServer.writeUnshared("addMenu");
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(primo);
+            toServer.writeUnshared(primo);
             toServer.flush();
-            toServer.writeUTF(secondo);
+            toServer.writeUnshared(secondo);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(giorno));
+            toServer.writeUnshared(String.valueOf(giorno));
             toServer.flush();
 
         }catch (IOException e){
@@ -973,7 +1180,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -985,40 +1192,112 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<FirstDishGS> viewFirst() throws Exception {
 
-        try{
+        boolean ok = false;
+        ArrayList<FirstDishGS> arrayList = new ArrayList<>();
+        Object object = new Object();
 
-            toServer.writeUTF("viewFirst");
+        try {
+            toServer.writeUnshared("viewFirst");
             toServer.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        } catch (IOException e) {
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<FirstDishGS>) fromServer.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof FirstDishGS) {
+                            FirstDishGS myElement = (FirstDishGS) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
         }
-        return null;    }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
+        }
+        return null;
+
+    }
 
     @Override
     public ArrayList<SecondDishGS> viewSecond() throws Exception {
 
-        try{
+        boolean ok = false;
+        ArrayList<SecondDishGS> arrayList = new ArrayList<>();
+        Object object = new Object();
 
-            toServer.writeUTF("viewSecond");
+        try {
+            toServer.writeUnshared("viewSecond");
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<SecondDishGS>) fromServer.readObject();
-        } catch (IOException e) {
+
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof SecondDishGS) {
+                            SecondDishGS myElement = (SecondDishGS) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
         }
         return null;
 
@@ -1027,20 +1306,55 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<SideDishGS> viewSide() throws Exception {
 
-        try{
+        boolean ok = false;
+        ArrayList<SideDishGS> arrayList = new ArrayList<>();
+        Object object = new Object();
 
-            toServer.writeUTF("viewSide");
+        try {
+            toServer.writeUnshared("viewSide");
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<SideDishGS>) fromServer.readObject();
-        } catch (IOException e) {
+
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof SideDishGS) {
+                            SideDishGS myElement = (SideDishGS) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
         }
         return null;
 
@@ -1049,45 +1363,170 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<AllergyPeopleGS> viewAllergy() throws Exception {
 
-        try{
+        boolean ok = false;
+        ArrayList<AllergyPeopleGS> arrayList = new ArrayList<>();
+        Object object = new Object();
 
-            toServer.writeUTF("viewAllergy");
+        try {
+            toServer.writeUnshared("viewAllergy");
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<AllergyPeopleGS>) fromServer.readObject();
-        } catch (IOException e) {
+
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        }
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof AllergyPeopleGS) {
+                            AllergyPeopleGS myElement = (AllergyPeopleGS) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<MenuGS> viewMenu() throws Exception {
+
+        boolean ok = false;
+        ArrayList<MenuGS> arrayList = new ArrayList<>();
+        Object object = new Object();
+
+        try {
+            toServer.writeUnshared("viewMenu");
+            toServer.flush();
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof MenuGS) {
+                            MenuGS myElement = (MenuGS) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
         }
         return null;
 
     }
 
     @Override
-    public ArrayList<MenuGS> viewMenu() throws Exception {
+    public ArrayList<BambiniAllergici> viewCheck(String nomeMenu) throws Exception {
 
-        try{
+        boolean ok = false;
+        ArrayList<BambiniAllergici> arrayList = new ArrayList<>();
+        Object object = new Object();
 
-            toServer.writeUTF("viewMenu");
+        try {
+            toServer.writeUnshared("viewCheck");
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<MenuGS>) fromServer.readObject();
-        } catch (IOException e) {
+
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof BambiniAllergici) {
+                            BambiniAllergici myElement = (BambiniAllergici) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
         }
         return null;
-
     }
 
     @Override
@@ -1097,11 +1536,11 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("addPrimo");
+            toServer.writeUnshared("addPrimo");
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(allergeni);
+            toServer.writeUnshared(allergeni);
             toServer.flush();
 
 
@@ -1110,7 +1549,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -1126,11 +1565,11 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("addSecondo");
+            toServer.writeUnshared("addSecondo");
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(allergeni);
+            toServer.writeUnshared(allergeni);
             toServer.flush();
 
         }catch (IOException e){
@@ -1138,7 +1577,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -1154,11 +1593,11 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("addSide");
+            toServer.writeUnshared("addSide");
             toServer.flush();
-            toServer.writeUTF(nome);
+            toServer.writeUnshared(nome);
             toServer.flush();
-            toServer.writeUTF(allergeni);
+            toServer.writeUnshared(allergeni);
             toServer.flush();
 
         }catch (IOException e){
@@ -1166,7 +1605,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -1179,9 +1618,9 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("deleteMenu");
+            toServer.writeUnshared("deleteMenu");
             toServer.flush();
-            toServer.writeUTF(nomeMenu);
+            toServer.writeUnshared(nomeMenu);
             toServer.flush();
 
         }catch (IOException e){
@@ -1189,7 +1628,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            return fromServer.readBoolean();
+            return (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -1204,15 +1643,15 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("AddTrip");
+            toServer.writeUnshared("AddTrip");
             toServer.flush();
-            toServer.writeUTF(id);
+            toServer.writeUnshared(id);
             toServer.flush();
-            toServer.writeUTF(meta);
+            toServer.writeUnshared(meta);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(andata));
+            toServer.writeUnshared(String.valueOf(andata));
             toServer.flush();
-            toServer.writeUTF(String.valueOf(ritorno));
+            toServer.writeUnshared(String.valueOf(ritorno));
             toServer.flush();
 
         }catch (IOException e){
@@ -1220,7 +1659,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -1232,23 +1671,57 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public ArrayList<TripGS> viewTrip() throws Exception {
 
-        try{
+        boolean ok = false;
+        ArrayList<TripGS> arrayList = new ArrayList<>();
+        Object object = new Object();
 
-            toServer.writeUTF("viewTrip");
+        try {
+            toServer.writeUnshared("viewTrip");
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<TripGS>) fromServer.readObject();
-        } catch (IOException e) {
+
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " + isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if (!isEmpty) {
+            try {
+                object = fromServer.readUnshared();
+                System.out.println("Read array as Object");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (object instanceof ArrayList<?>) {
+                //get list
+                ArrayList<?> loadedAl = (ArrayList<?>) object;
+                if (loadedAl.size() > 0) {
+                    for (Object element : loadedAl) {
+                        if (element instanceof TripGS) {
+                            TripGS myElement = (TripGS) element;
+                            arrayList.add(myElement);
+                        }
+                    }
+                }
+            }
+
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayList;
         }
         return null;
-
     }
 
     @Override
@@ -1256,9 +1729,9 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("loadDataServer");
+            toServer.writeUnshared("loadDataServer");
             toServer.flush();
-            toServer.writeUTF(String.valueOf(idGita));
+            toServer.writeUnshared(String.valueOf(idGita));
             toServer.flush();
 
         } catch (IOException e) {
@@ -1279,11 +1752,11 @@ public class SocketUserClient implements InterfaceServer {
     public void bambinoPresenteServer(String codiceFiscale, int idGita) throws Exception {
         try{
 
-            toServer.writeUTF("bambinoPresenteServer");
+            toServer.writeUnshared("bambinoPresenteServer");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(idGita));
+            toServer.writeUnshared(String.valueOf(idGita));
             toServer.flush();
 
         } catch (IOException e) {
@@ -1296,11 +1769,11 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("bambinoAssenteServer");
+            toServer.writeUnshared("bambinoAssenteServer");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(idGita));
+            toServer.writeUnshared(String.valueOf(idGita));
             toServer.flush();
 
         } catch (IOException e) {
@@ -1315,15 +1788,15 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("newTappa");
+            toServer.writeUnshared("newTappa");
             toServer.flush();
-            toServer.writeUTF(tappa);
+            toServer.writeUnshared(tappa);
             toServer.flush();
-            toServer.writeUTF(idGita);
+            toServer.writeUnshared(idGita);
             toServer.flush();
-            toServer.writeUTF(String.valueOf(giorno));
+            toServer.writeUnshared(String.valueOf(giorno));
             toServer.flush();
-            toServer.writeUTF(ora);
+            toServer.writeUnshared(ora);
             toServer.flush();
 
         }catch (IOException e){
@@ -1331,7 +1804,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -1347,11 +1820,11 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("newPartecipante");
+            toServer.writeUnshared("newPartecipante");
             toServer.flush();
-            toServer.writeUTF(codiceFiscale);
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUTF(idGita);
+            toServer.writeUnshared(idGita);
             toServer.flush();
 
         }catch (IOException e){
@@ -1359,7 +1832,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            success = fromServer.readBoolean();
+            success = (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -1373,9 +1846,9 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUTF("deleteTrip");
+            toServer.writeUnshared("deleteTrip");
             toServer.flush();
-            toServer.writeUTF(idGita);
+            toServer.writeUnshared(idGita);
             toServer.flush();
 
         }catch (IOException e){
@@ -1383,7 +1856,7 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         try{
-            return fromServer.readBoolean();
+            return (boolean) fromServer.readUnshared();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -1395,9 +1868,9 @@ public class SocketUserClient implements InterfaceServer {
     public void pullmanCount(String idGita) throws Exception {
         try{
 
-            toServer.writeUTF("pullmanCount");
+            toServer.writeUnshared("pullmanCount");
             toServer.flush();
-            toServer.writeUTF(idGita);
+            toServer.writeUnshared(idGita);
             toServer.flush();
 
         } catch (IOException e) {

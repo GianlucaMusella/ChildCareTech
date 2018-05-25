@@ -1,15 +1,11 @@
 package serverRMI.server;
 
 import connectionDatabase.ConnectionDatabase;
+import getterAndSetter.food.*;
 import getterAndSetter.people.*;
-import getterAndSetter.food.AllergyPeopleGS;
-import getterAndSetter.food.FirstDishGS;
-import getterAndSetter.food.MenuGS;
-import getterAndSetter.food.SecondDishGS;
 import getterAndSetter.trip.AppealGS;
 import getterAndSetter.trip.TripGS;
 import interfaces.InterfaceServer;
-import getterAndSetter.food.SideDishGS;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -1311,6 +1307,29 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
+    public ArrayList<BambiniAllergici> viewCheck(String nomeMenu) throws Exception {
+        ArrayList<BambiniAllergici> values = new ArrayList<>();
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+        String SQL = ("SELECT  mydb.bambini.Nome, mydb.bambini.Cognome, mydb.Allergeni.Nome, mydb.Primi.Nome, mydb.secondi.Nome, mydb.menumensa.Nome " +
+                "FROM (((((( mydb.menumensa " +
+                "INNER JOIN mydb.Primi ON mydb.menumensa.Primi_Nome = mydb.primi.Nome)" +
+                "INNER JOIN mydb.allergeni_has_primi ON mydb.allergeni_has_primi.Primi_Nome = mydb.primi.nome) " +
+                "INNER JOIN mydb.secondi ON mydb.menumensa.Secondi_Nome = mydb.secondi.Nome) " +
+                "INNER JOIN mydb.allergeni_has_secondi ON mydb.allergeni_has_secondi.Secondi_Nome = mydb.secondi.nome) " +
+                "INNER JOIN mydb.allergeni ON mydb.allergeni_has_primi.Allergeni_Nome = mydb.allergeni.Nome OR mydb.allergeni_has_secondi.Allergeni_Nome = mydb.allergeni.Nome) " +
+                "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
+                "WHERE mydb.menumensa.Nome = '" + nomeMenu + "'");
+        ResultSet rs = stmt.executeQuery(SQL);
+
+        //System.out.println(rs.getString(1)); // prova per vedere se funziona
+        while (rs.next())
+                values.add(new BambiniAllergici(rs.getString(1), rs.getString(2), rs.getString(3),
+                    rs.getString(4), rs.getString(5), rs.getString(6)));
+        return values;
+    }
+
+    @Override
     public boolean addMenu(String nome, String primo, String secondo, LocalDate giorno) throws Exception {
 
         PreparedStatement preparedStatement = null;
@@ -1765,7 +1784,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         while (rsbis.next()){
             count = count + 1;
         }
-        float x = (float) (count / 1.00);
+        float x = (float) (1.00 / count);
         int NumPullman = (int) Math.ceil(x);
         stmt.executeUpdate("UPDATE mydb.gita SET NumPullman = " + NumPullman + " WHERE mydb.gita.idGita = " + idGita);
 

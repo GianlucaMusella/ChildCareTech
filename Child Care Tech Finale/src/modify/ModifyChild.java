@@ -89,6 +89,7 @@ public class ModifyChild implements Initializable{
                 lblStatus.setText("Inserimento riuscito");
                 txtCodicefiscaleOld.clear();
                 txtCognome.clear();
+                dateData.getEditor().clear();
                 txtNome.clear();
                 txtLuogo.clear();
                 idBambino.clear();
