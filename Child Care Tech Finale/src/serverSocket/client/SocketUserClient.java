@@ -452,7 +452,7 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
-    public void modifyChild(String codiceFiscale, String Nome, String cognome, String luogo, LocalDate data, String idBambino) throws Exception {
+    public boolean modifyChild(String codiceFiscale, String Nome, String cognome, String luogo, LocalDate data, String idBambino) throws Exception {
 
         try{
 
@@ -475,6 +475,7 @@ public class SocketUserClient implements InterfaceServer {
             e.printStackTrace();
         }
 
+        return false;
     }
 
     @Override

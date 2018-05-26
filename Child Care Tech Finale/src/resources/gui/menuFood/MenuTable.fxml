@@ -38,5 +38,4 @@
          </ImageView>
       </graphic>
    </Button>
-   <Button layoutX="213.0" layoutY="358.0" mnemonicParsing="false" onAction="#check" text="Check" />
 </AnchorPane>

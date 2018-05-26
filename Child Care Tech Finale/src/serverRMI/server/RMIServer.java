@@ -219,29 +219,31 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
-    public void modifySupplier(String azienda, String nome, String cognome, String fornitura, String partitaIva) throws Exception {
+    public boolean modifySupplier(String azienda, String nome, String cognome, String fornitura, String partitaIva) throws Exception {
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
-        String SQL = ("UPDATE mydb.fornitori SET ");
-        String equal = ("WHERE Azienda = '" + azienda + "'");
-        if (!nome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Nome = '" + nome + "'" + equal);
-            // System.out.println(Nome);
+        PreparedStatement preparedStatement = null;
+        String query = ("UPDATE mydb.fornitori SET idBambino ='" + idBambino + "', Nome ='" + Nome + "', Cognome ='" + cognome + "', " +
+                "Data_di_Nascita ='" + Date.valueOf(data) + "', Luogo_di_Nascita='" + luogo + "'" + "WHERE Azienda = '" + azienda + "'");
+
+        try {
+
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(query);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        if (!cognome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
-            // System.out.println(Cognome);
-        }
-        if (!fornitura.isEmpty()) {
-            stmt.executeUpdate(SQL + "TipoDiFornitura = '" + fornitura + "'" + equal);
-            // System.out.println(Luogo);
-        }
-        if (partitaIva != null) {
-            stmt.executeUpdate(SQL + "PartitaIVA = '" + partitaIva + "'" + equal);
-            // System.out.println(data);
-        }
+
+        return true;
     }
 
     @Override
@@ -814,33 +816,31 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
-    public void modifyChild(String codiceFiscale, String Nome, String cognome, String luogo, LocalDate data, String idBambino) throws Exception {
+    public boolean modifyChild(String codiceFiscale, String Nome, String cognome, String luogo, LocalDate data, String idBambino) throws Exception {
+
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
-        String SQL = ("UPDATE mydb.bambini SET ");
-        String equal = ("WHERE CodiceFiscale = '" + codiceFiscale + "'");
-        if (!Nome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Nome = '" + Nome + "'" + equal);
-            // System.out.println(Nome);
-        }
-        if (!cognome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
-            // System.out.println(Cognome);
-        }
-        if (!luogo.isEmpty()) {
-            stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + luogo + "'" + equal);
-            // System.out.println(Luogo);
-        }
-        if (data != null ) {
-            stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
-            // System.out.println(data);
-        }
-        if (idBambino != null ) {
-            stmt.executeUpdate(SQL + "idBambino = '" + Integer.parseInt(idBambino) + "'" + equal);
-            // System.out.println(data);
+        PreparedStatement preparedStatement = null;
+        String query = ("UPDATE mydb.bambini SET idBambino ='" + idBambino + "', Nome ='" + Nome + "', Cognome ='" + cognome + "', " +
+                "Data_di_Nascita ='" + Date.valueOf(data) + "', Luogo_di_Nascita='" + luogo + "'" + "WHERE CodiceFiscale = '" + codiceFiscale + "'");
+
+        try {
+
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(query);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
+        return true;
     }
 
     @Override

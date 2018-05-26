@@ -82,6 +82,8 @@ public class MenuTable implements Initializable{
 
     }
 
+
+
     public void inserisciMenu(ActionEvent actionEvent) throws Exception{
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menuFood/AddMenu.fxml"));
