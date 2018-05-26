@@ -56,7 +56,7 @@ public interface InterfaceServer extends Remote{
     ArrayList<SecondDishGS> viewSecond() throws Exception;
     ArrayList<SideDishGS> viewSide() throws Exception;
     ArrayList<MenuGS> viewMenu() throws Exception;
-    ArrayList<BambiniAllergici> viewCheck(String nomeMenu) throws Exception;
+    ArrayList<BambiniAllergici> viewCheck(String primo, String secondo, String contorno) throws Exception;
     boolean addPrimo(String nome, String allergeni) throws Exception;
     boolean addSecondo(String nome, String allergeni) throws Exception;
     boolean addSide(String nome, String allergeni) throws Exception;
