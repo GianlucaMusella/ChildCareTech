@@ -60,6 +60,8 @@ public class AddDoctor implements Initializable{
     @FXML
     private TableColumn<DoctorGS, String> colonnaCfP;
 
+    @FXML
+    private Button show;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,6 +71,7 @@ public class AddDoctor implements Initializable{
         colonnaCfP.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
 
         tabellaPediatra.getItems().clear();
+        show.fire();
     }
 
     public void addDoctor(ActionEvent actionEvent) throws Exception {
@@ -111,6 +114,7 @@ public class AddDoctor implements Initializable{
                     dataData.getEditor().clear();
                     lblStatus.setTextFill(Color.BLACK);
                     lblStatus.setText("Inserimento riuscito");
+                    show.fire();
                 }
             } catch (Exception e) {
                 e.printStackTrace();

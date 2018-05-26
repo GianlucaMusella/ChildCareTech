@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -53,6 +50,8 @@ public class AddContact implements Initializable{
     @FXML
     private Label lblStatus;
 
+    @FXML
+    private Button show;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,6 +61,8 @@ public class AddContact implements Initializable{
         colonnaCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
 
         tabellaContatti.getItems().clear();
+
+        show.fire();
     }
 
     public void viewContact(ActionEvent actionEvent) throws Exception {
@@ -105,6 +106,7 @@ public class AddContact implements Initializable{
                     txtTelefono.clear();
                     lblStatus.setTextFill(Color.BLACK);
                     lblStatus.setText("Inserimento riuscito");
+                    show.fire();
                 }
             } catch (Exception e){
                 e.printStackTrace();

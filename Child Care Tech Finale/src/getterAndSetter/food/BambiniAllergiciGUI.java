@@ -10,7 +10,7 @@ public class BambiniAllergiciGUI {
     private StringProperty nomeAllergene;
     private StringProperty nomePrimo;
     private StringProperty nomeSecondo;
-    private StringProperty nomeMenu;
+    private StringProperty nomeContorno;
 
     public BambiniAllergiciGUI(BambiniAllergici bambiniAllergici){
 
@@ -19,7 +19,7 @@ public class BambiniAllergiciGUI {
         this.nomeAllergene = new SimpleStringProperty(bambiniAllergici.getNomeAllergene());
         this.nomePrimo = new SimpleStringProperty(bambiniAllergici.getNomePrimo());
         this.nomeSecondo = new SimpleStringProperty(bambiniAllergici.getNomeSecondo());
-        this.nomeMenu = new SimpleStringProperty(bambiniAllergici.getNomeMenu());
+        this.nomeContorno = new SimpleStringProperty(bambiniAllergici.getNomeContorno());
     }
 
     public String getNomeBambino() {
@@ -82,15 +82,15 @@ public class BambiniAllergiciGUI {
         this.nomeSecondo.set(nomeSecondo);
     }
 
-    public String getNomeMenu() {
-        return nomeMenu.get();
+    public String getNomeContorno() {
+        return nomeContorno.get();
     }
 
-    public StringProperty nomeMenuProperty() {
-        return nomeMenu;
+    public StringProperty nomeContornoProperty() {
+        return nomeContorno;
     }
 
-    public void setNomeMenu(String nomeMenu) {
-        this.nomeMenu.set(nomeMenu);
+    public void setNomeContorno(String nomeContorno) {
+        this.nomeContorno.set(nomeContorno);
     }
 }

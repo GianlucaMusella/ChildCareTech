@@ -54,6 +54,9 @@ public class AddSupplier implements Initializable{
     @FXML
     private Label lblStatus;
 
+    @FXML
+    private Button show;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -62,6 +65,7 @@ public class AddSupplier implements Initializable{
         colonnaPartitaIVA.setCellValueFactory(new PropertyValueFactory<>("partitaIva"));
 
         tabellaFornitori.getItems().clear();
+        show.fire();
     }
 
     public void viewSupplier(ActionEvent actionEvent) throws Exception{
@@ -108,6 +112,7 @@ public class AddSupplier implements Initializable{
                     txtPiva.clear();
                     lblStatus.setTextFill(Color.BLACK);
                     lblStatus.setText("Inserimento riuscito");
+                    show.fire();
                 }
             } catch (Exception e ) {
                 e.printStackTrace();

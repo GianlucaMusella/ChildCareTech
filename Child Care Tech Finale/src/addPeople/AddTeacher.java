@@ -76,6 +76,9 @@ public class AddTeacher implements Initializable{
     @FXML
     private TableColumn<StaffGS, String> colonnaMansione;
 
+    @FXML
+    private Button show;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -85,6 +88,7 @@ public class AddTeacher implements Initializable{
         colonnaMansione.setCellValueFactory(new PropertyValueFactory<>("mansione"));
 
         tabellaInsegnanti.getItems().clear();
+        show.fire();
     }
 
 
@@ -131,6 +135,7 @@ public class AddTeacher implements Initializable{
                     dateData.getEditor().clear();
                     lblStatus.setTextFill(Color.BLACK);
                     lblStatus.setText("Inserimento riuscito");
+                    show.fire();
                 }
             } catch (Exception e) {
                 e.printStackTrace();

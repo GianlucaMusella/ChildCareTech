@@ -15,13 +15,13 @@ import java.util.ArrayList;
 
 public class SocketUserClient implements InterfaceServer {
 
-    protected final Socket socket;
+    //protected final Socket socket;
     private ObjectOutputStream toServer;
     private ObjectInputStream fromServer;
 
     public SocketUserClient(Socket s) {
 
-        this.socket = s;
+        //this.socket = s;
 
         try{
 
@@ -31,6 +31,8 @@ public class SocketUserClient implements InterfaceServer {
 
         }catch (IOException e){
             System.out.println("Errore di tipo IO nel server");
+        }catch (RuntimeException e){
+            e.printStackTrace();
         }
     }
 
@@ -213,8 +215,9 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
-    public void modifySupplier(String azienda, String nome, String cognome, String fornitura, String partitaIva) throws Exception {
+    public boolean modifySupplier(String azienda, String nome, String cognome, String fornitura, String partitaIva) throws Exception {
 
+        boolean ok = false;
         try{
 
             toServer.writeUnshared("modifySupplier");
@@ -230,9 +233,16 @@ public class SocketUserClient implements InterfaceServer {
             toServer.writeUnshared(partitaIva);
             toServer.flush();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        try{
+            ok = (boolean) fromServer.readUnshared();
+            System.out.println("Read reply from server");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ok;
     }
 
 
@@ -454,6 +464,7 @@ public class SocketUserClient implements InterfaceServer {
     @Override
     public boolean modifyChild(String codiceFiscale, String Nome, String cognome, String luogo, LocalDate data, String idBambino) throws Exception {
 
+        boolean ok = false;
         try{
 
             toServer.writeUnshared("modifyChild");
@@ -471,11 +482,16 @@ public class SocketUserClient implements InterfaceServer {
             toServer.writeUnshared(idBambino);
             toServer.flush();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return false;
+        try{
+            ok = (boolean) fromServer.readUnshared();
+            System.out.println("Read reply from server");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ok;
     }
 
     @Override
@@ -648,7 +664,7 @@ public class SocketUserClient implements InterfaceServer {
 
         boolean ok = false;
         try{
-            toServer.writeUnshared ("loadDataContacts");
+            toServer.writeUnshared ("searchStaff");
             toServer.flush();
             toServer.writeUnshared (nome);
             toServer.flush();
@@ -701,8 +717,9 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
-    public void modifyStaff(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data, String mansione) throws Exception {
+    public boolean modifyStaff(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data, String mansione) throws Exception {
 
+        boolean ok = false;
         try{
 
             toServer.writeUnshared("modifyStaff");
@@ -720,10 +737,16 @@ public class SocketUserClient implements InterfaceServer {
             toServer.writeUnshared(mansione);
             toServer.flush();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
+        try{
+            ok = (boolean) fromServer.readUnshared();
+            System.out.println("Read reply from server");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ok;
     }
 
     @Override
@@ -900,8 +923,9 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
-    public void modifyParents(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data, String telefono) throws Exception {
+    public boolean modifyParents(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data, String telefono) throws Exception {
 
+        boolean ok = false;
         try{
 
             toServer.writeUnshared("modifyParents");
@@ -919,10 +943,16 @@ public class SocketUserClient implements InterfaceServer {
             toServer.writeUnshared(telefono);
             toServer.flush();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
+        try{
+            ok = (boolean) fromServer.readUnshared();
+            System.out.println("Read reply from server");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ok;
     }
 
     @Override
@@ -956,7 +986,7 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUnshared("addContact");
+            toServer.writeUnshared("addContacts");
             toServer.flush();
             toServer.writeUnshared(codiceFiscale);
             toServer.flush();
@@ -1095,8 +1125,8 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
-    public void modifyContact(String codiceFiscale, String nome, String cognome, String telefono) throws Exception {
-
+    public boolean modifyContact(String codiceFiscale, String nome, String cognome, String telefono) throws Exception {
+        boolean ok = false;
         try{
 
             toServer.writeUnshared("modifyContacts");
@@ -1110,9 +1140,16 @@ public class SocketUserClient implements InterfaceServer {
             toServer.writeUnshared(telefono);
             toServer.flush();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        try{
+            ok = (boolean) fromServer.readUnshared();
+            System.out.println("Read reply from server");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ok;
     }
 
     @Override
@@ -1288,8 +1325,9 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
-    public void modifyDoctor(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data) throws Exception {
+    public boolean modifyDoctor(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data) throws Exception {
 
+        boolean ok = false;
         try{
 
             toServer.writeUnshared("modifyDoctor");
@@ -1305,9 +1343,16 @@ public class SocketUserClient implements InterfaceServer {
             toServer.writeUnshared(String.valueOf(data));
             toServer.flush();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        try{
+            ok = (boolean) fromServer.readUnshared();
+            System.out.println("Read reply from server");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ok;
     }
 
     @Override
@@ -1595,14 +1640,18 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
-    public ArrayList<BambiniAllergici> viewCheck(String nomeMenu) throws Exception {
+    public ArrayList<BambiniAllergici> viewCheck(String primo, String secondo, String contorno) throws Exception {
 
         boolean ok = false;
         try{
 
-            toServer.writeUnshared ("searchSupplier");
+            toServer.writeUnshared ("viewCheck");
             toServer.flush();
-            toServer.writeUnshared (nomeMenu);
+            toServer.writeUnshared (primo);
+            toServer.flush();
+            toServer.writeUnshared (secondo);
+            toServer.flush();
+            toServer.writeUnshared (contorno);
             toServer.flush();
 
         } catch (Exception e) {

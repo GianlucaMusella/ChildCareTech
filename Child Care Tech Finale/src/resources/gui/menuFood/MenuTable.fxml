@@ -21,7 +21,7 @@
          <TableColumn fx:id="colonnaGiorno" prefWidth="113.0" text="Giorno" />
       </columns>
    </TableView>
-   <Button layoutX="103.0" layoutY="353.0" mnemonicParsing="false" onAction="#viewMenu" prefHeight="34.0" prefWidth="88.0" text="Mostra Menù" />
+   <Button fx:id="show" layoutX="103.0" layoutY="353.0" mnemonicParsing="false" onAction="#viewMenu" prefHeight="34.0" prefWidth="88.0" text="Mostra Menù" />
    <Button layoutX="296.0" layoutY="353.0" mnemonicParsing="false" onAction="#inserisciMenu" prefHeight="34.0" prefWidth="74.0" text="Crea Menù" />
    <Button layoutX="474.0" layoutY="353.0" mnemonicParsing="false" onAction="#deleteMenu" prefHeight="34.0" prefWidth="88.0" text="Elimina Menù" />
    <Hyperlink layoutX="539.0" layoutY="397.0" onAction="#logout" text="Logout">

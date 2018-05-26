@@ -53,6 +53,6 @@
             <TableColumn fx:id="colonnaCfP" prefWidth="130.0" text="Codice Fiscale" />
         </columns>
       </TableView>
-      <Button layoutX="241.0" layoutY="311.0" mnemonicParsing="false" onAction="#viewDoctor" text="Mostra Pediatri già inseriti" />
+      <Button fx:id="show" layoutX="241.0" layoutY="311.0" mnemonicParsing="false" onAction="#viewDoctor" text="Mostra Pediatri già inseriti" />
    </children>
 </AnchorPane>

@@ -224,8 +224,8 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
 
         PreparedStatement preparedStatement = null;
-        String query = ("UPDATE mydb.fornitori SET idBambino ='" + idBambino + "', Nome ='" + Nome + "', Cognome ='" + cognome + "', " +
-                "Data_di_Nascita ='" + Date.valueOf(data) + "', Luogo_di_Nascita='" + luogo + "'" + "WHERE Azienda = '" + azienda + "'");
+        String query = ("UPDATE mydb.fornitori SET Nome ='" + nome + "', Cognome ='" + cognome + "', TipoDiFornitura ='" + fornitura + "', " +
+                "PartitaIVA ='" + partitaIva + "'" + "WHERE Azienda = '" + azienda + "'");
 
         try {
 
@@ -567,34 +567,31 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
-    public void modifyStaff(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data, String mansione) throws Exception {
+    public boolean modifyStaff(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data, String mansione) throws Exception {
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
-        String SQL = ("UPDATE mydb.personaleinterno SET ");
-        String equal = ("WHERE CodiceFiscale = '" + codiceFiscale + "'");
-        if (!nome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Nome = '" + nome + "'" + equal);
-            // System.out.println(Nome);
-        }
-        if (!cognome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
-            // System.out.println(Cognome);
-        }
-        if (!luogo.isEmpty()) {
-            stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + luogo + "'" + equal);
-            // System.out.println(Luogo);
-        }
-        if (data != null) {
-            stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
-            // System.out.println(data);
-        }
-        if (mansione != null) {
-            stmt.executeUpdate(SQL + "Mansione = '" + mansione + "'" + equal);
-            // System.out.println(data);
+        PreparedStatement preparedStatement = null;
+        String query = ("UPDATE mydb.personaleinterno SET Nome ='" + nome + "', Cognome ='" + cognome + "', Data_di_Nascita ='" + Date.valueOf(data) + "', " +
+                "Luogo_di_Nascita ='" + luogo + "', Mansione='" + mansione + "'" + "WHERE CodiceFiscale = '" + codiceFiscale + "'");
+
+        try {
+
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(query);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
+        return true;
     }
 
     @Override
@@ -967,33 +964,31 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
-    public void modifyParents(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data, String telefono) throws Exception {
+    public boolean modifyParents(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data, String telefono) throws Exception {
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
-        String SQL = ("UPDATE mydb.genitori SET ");
-        String equal = ("WHERE CodiceFiscale = '" + codiceFiscale + "'");
-        if (!nome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Nome = '" + nome + "'" + equal);
-            // System.out.println(Nome);
+        PreparedStatement preparedStatement = null;
+        String query = ("UPDATE mydb.genitori SET Nome ='" + nome + "', Cognome ='" + cognome + "', Data_di_Nascita ='" + Date.valueOf(data) + "', " +
+                "Luogo_di_Nascita ='" + luogo + "', Telefono='" + telefono + "'" + "WHERE CodiceFiscale = '" + codiceFiscale + "'");
+
+        try {
+
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(query);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        if (!cognome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
-            // System.out.println(Cognome);
-        }
-        if (!luogo.isEmpty()) {
-            stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + luogo + "'" + equal);
-            // System.out.println(Luogo);
-        }
-        if (data != null) {
-            stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
-            // System.out.println(data);
-        }
-        if (telefono != null) {
-            stmt.executeUpdate(SQL + "Telefono = '" + telefono + "'" + equal);
-            // System.out.println(data);
-        }
+
+        return true;
 
     }
 
@@ -1088,24 +1083,29 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
-    public void modifyContact(String codiceFiscale, String nome, String cognome, String telefono) throws Exception {
+    public boolean modifyContact(String codiceFiscale, String nome, String cognome, String telefono) throws Exception {
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
-        String SQL = ("UPDATE mydb.contatti SET ");
-        String equal = ("WHERE CodiceFiscale = '" + codiceFiscale + "'");
-        if (!nome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Nome = '" + nome + "'" + equal);
-            // System.out.println(Nome);
+        PreparedStatement preparedStatement = null;
+        String query = ("UPDATE mydb.contatti SET Nome ='" + nome + "', Cognome ='" + cognome + "', telefono ='" + telefono + "'" + "WHERE CodiceFiscale = '" + codiceFiscale + "'");
+
+        try {
+
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(query);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        if (!cognome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
-            // System.out.println(Cognome);
-        }
-        if (telefono != null) {
-            stmt.executeUpdate(SQL + "Telefono = '" + telefono + "'" + equal);
-            // System.out.println(data);
-        }
+
+        return true;
     }
 
     @Override
@@ -1198,31 +1198,31 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
-    public void modifyDoctor(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data) throws Exception {
+    public boolean modifyDoctor(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data) throws Exception {
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-        Statement stmt = connectionDatabase.initializeConnection().createStatement();
 
-        String SQL = ("UPDATE mydb.pediatra SET ");
-        String equal = ("WHERE CodiceFiscale = '" + codiceFiscale + "'");
-        if (!nome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Nome = '" + nome + "'" + equal);
-            // System.out.println(Nome);
-        }
-        if (!cognome.isEmpty()) {
-            stmt.executeUpdate(SQL + "Cognome = '" + cognome + "'" + equal);
-            // System.out.println(Cognome);
-        }
-        if (!luogo.isEmpty()) {
-            stmt.executeUpdate(SQL + "Luogo_di_Nascita = '" + luogo + "'" + equal);
-            // System.out.println(Luogo);
-        }
-        if (data != null) {
-            stmt.executeUpdate(SQL + "Data_di_Nascita = '" + data + "'" + equal);
-            // System.out.println(data);
+        PreparedStatement preparedStatement = null;
+        String query = ("UPDATE mydb.pediatra SET Nome ='" + nome + "', Cognome ='" + cognome + "', Luogo_di_Nascita ='" + luogo + "', " +
+                "Data_di_Nascita ='" + Date.valueOf(data) + "'" + "WHERE CodiceFiscale = '" + codiceFiscale + "'");
+
+        try {
+
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(query);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-
+        return true;
     }
 
     @Override
@@ -1301,7 +1301,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         if (!secondo.isEmpty()){
             String SQL = ("SELECT  mydb.bambini.Nome, mydb.bambini.Cognome, mydb.Allergeni.Nome, mydb.Secondi.Nome " +
                 "FROM ((( mydb.secondi " +
-                "INNER JOIN mydb.allergeni_has_secondi ON mydb.allergeni_has_primi.Secondi_Nome = mydb.secondi.nome) " +
+                "INNER JOIN mydb.allergeni_has_secondi ON mydb.allergeni_has_secondi.Secondi_Nome = mydb.secondi.nome) " +
                 "INNER JOIN mydb.allergeni ON mydb.allergeni_has_secondi.Allergeni_Nome = mydb.allergeni.Nome) " +
                 "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
                 "WHERE mydb.secondi.Nome = '" + secondo + "'");

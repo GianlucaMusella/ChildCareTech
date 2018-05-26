@@ -124,6 +124,9 @@ public class AddChild implements Initializable{
     @FXML
     private Label lblStatus;
 
+    @FXML
+    private Button show;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -173,6 +176,7 @@ public class AddChild implements Initializable{
         tabellaContatti.getItems().clear();
         tabellaPediatra.getItems().clear();
 
+        show.fire();
     }
 
     public void addChild(ActionEvent actionEvent) throws Exception {
@@ -226,6 +230,7 @@ public class AddChild implements Initializable{
                     txtContatto.clear();
                     lblStatus.setTextFill(Color.BLACK);
                     lblStatus.setText("Inserimento riuscito");
+                    show.fire();
                 }
 
 
@@ -299,6 +304,14 @@ public class AddChild implements Initializable{
 
     }
 
+    public void fourButton(ActionEvent actionEvent) throws Exception {
+
+        viewChild(actionEvent);
+        viewParents(actionEvent);
+        viewDoctor(actionEvent);
+        viewContact(actionEvent);
+
+    }
 
     public void inserisciGenitore(ActionEvent actionEvent) throws Exception{
 

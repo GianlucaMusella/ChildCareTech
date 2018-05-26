@@ -10,9 +10,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="539.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menuFood.AddMenu">
+<AnchorPane prefHeight="539.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menuFood.AddMenu">
    <children>
-      <ImageView fitHeight="621.0" fitWidth="807.0" layoutX="72.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="638.0" fitWidth="879.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../image/185235620.jpg" />
          </image>
@@ -53,9 +53,7 @@
           <TableColumn fx:id="colonnaAllergieContorni" prefWidth="113.0" text="Allergie" />
         </columns>
       </TableView>
-      <Button fx:id="primi" layoutX="260.0" layoutY="263.0" mnemonicParsing="false" onAction="#viewFirst" text="Mostra Primi" />
-      <Button fx:id="secondi" layoutX="507.0" layoutY="263.0" mnemonicParsing="false" onAction="#second" text="Mostra Secondi" />
-      <Button fx:id="contorni" layoutX="260.0" layoutY="478.0" mnemonicParsing="false" onAction="#side" text="Mostra Contorni" />
+      <Button fx:id="show" layoutX="260.0" layoutY="478.0" mnemonicParsing="false" onAction="#threeButton" text="Mostra Dati" />
       <Button layoutX="507.0" layoutY="478.0" mnemonicParsing="false" onAction="#check" text="Controlla Allergie" />
       <Label fx:id="lblStatus" layoutX="92.0" layoutY="483.0" prefHeight="21.0" prefWidth="0.0" textFill="RED" />
    </children>

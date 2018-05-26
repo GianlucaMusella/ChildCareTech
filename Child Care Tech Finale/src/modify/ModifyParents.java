@@ -102,6 +102,15 @@ public class ModifyParents implements Initializable {
         colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         colonnaCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
 
+        tabellaGenitori.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        tabellaGenitori.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if(newSelection != null){
+                txtCodicefiscaleOld.setText(newSelection.getCodiceFiscale());
+            }
+        });
+
+
         tabellaGenitori.getItems().clear();
     }
 

@@ -71,13 +71,7 @@ public class AddMenu implements Initializable{
     private TableColumn<SideDishGS, String> colonnaAllergieContorni;
 
     @FXML
-    private Button primi;
-
-    @FXML
-    private Button secondi;
-
-    @FXML
-    private Button contorni;
+    private Button show;
 
     @FXML
     private Label lblStatus;
@@ -123,9 +117,7 @@ public class AddMenu implements Initializable{
         tabellaSecondi.getItems().clear();
         tabellaContorni.getItems().clear();
 
-        primi.fire();
-        secondi.fire();
-        contorni.fire();
+        show.fire();
 
     }
 
@@ -173,6 +165,13 @@ public class AddMenu implements Initializable{
         tabellaContorni.setColumnResizePolicy(tabellaSecondi.CONSTRAINED_RESIZE_POLICY);
         tabellaContorni.setItems(FXCollections.observableArrayList(sideDishGS));
 
+    }
+
+    public void threeButton(ActionEvent actionEvent) throws Exception {
+
+        viewFirst(actionEvent);
+        second(actionEvent);
+        side(actionEvent);
     }
 
     public void addMenu(ActionEvent actionEvent) throws Exception{

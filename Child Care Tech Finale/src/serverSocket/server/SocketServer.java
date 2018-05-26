@@ -2,6 +2,7 @@ package serverSocket.server;
 
 import getterAndSetter.food.*;
 import getterAndSetter.people.*;
+import getterAndSetter.trip.AppealGS;
 import getterAndSetter.trip.TripGS;
 import serverRMI.server.RMIServer;
 
@@ -80,18 +81,20 @@ public class SocketServer extends Thread implements Runnable {
 
         } else if (commandMethod.equals("addSupplier")) {
 
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            String azienda = (String) inputFromClient.readUnshared();
-            String fornitura = (String) inputFromClient.readUnshared();
-            String partitaIVA = (String) inputFromClient.readUnshared();
+            try {
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                String azienda = (String) inputFromClient.readUnshared();
+                String fornitura = (String) inputFromClient.readUnshared();
+                String partitaIVA = (String) inputFromClient.readUnshared();
 
-            boolean success = rmiServer.addSupplier(nome, cognome, azienda, fornitura, partitaIVA);
+                responce= rmiServer.addSupplier(nome, cognome, azienda, fornitura, partitaIVA);
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            return success;
+            return responce;
 
         }else if(commandMethod.equals("viewSupplier")){
 
@@ -140,62 +143,73 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("modifySupplier")){
 
-            String azienda = (String) inputFromClient.readUnshared();
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            String fornitura = (String) inputFromClient.readUnshared();
-            String partitaIva = (String) inputFromClient.readUnshared();
-            rmiServer.modifySupplier(azienda, nome, cognome, fornitura, partitaIva);
-            return true;
+            try{
+
+                String azienda = (String) inputFromClient.readUnshared();
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                String fornitura = (String) inputFromClient.readUnshared();
+                String partitaIva = (String) inputFromClient.readUnshared();
+                responce = rmiServer.modifySupplier(azienda, nome, cognome, fornitura, partitaIva);
+
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
         }else if(commandMethod.equals("addOrder")){
 
-            String azienda = (String) inputFromClient.readUnshared();
-            String ordini = (String) inputFromClient.readUnshared();
-            String quantità = (String) inputFromClient.readUnshared();
+            try {
 
-            boolean success = rmiServer.addOrder(azienda, ordini, quantità);
+                String azienda = (String) inputFromClient.readUnshared();
+                String ordini = (String) inputFromClient.readUnshared();
+                String quantità = (String) inputFromClient.readUnshared();
+                responce = rmiServer.addOrder(azienda, ordini, quantità);
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
 
-            return success;
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            return responce;
 
         }else if(commandMethod.equals("deleteSupplier")){
 
-            System.out.println("Sto eseguendo da Socket");
-            String azienda = (String) inputFromClient.readUnshared();
+            try {
+                System.out.println("Sto eseguendo da Socket");
+                String azienda = (String) inputFromClient.readUnshared();
 
-            boolean success = rmiServer.deleteSupplier(azienda);
+                responce = rmiServer.deleteSupplier(azienda);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
-
-            return success;
         }
 
 
         else if(commandMethod.equals("addChild")){
 
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            String idBambino = (String) inputFromClient.readUnshared();
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            LocalDate date = LocalDate.parse((String) inputFromClient.readUnshared());
-            String luogo = (String) inputFromClient.readUnshared();
-            String allergie = (String) inputFromClient.readUnshared();
-            String genitore1 = (String) inputFromClient.readUnshared();
-            String genitore2 = (String) inputFromClient.readUnshared();
-            String sesso = (String) inputFromClient.readUnshared();
-            String pediatra = (String) inputFromClient.readUnshared();
-            String contatto = (String) inputFromClient.readUnshared();
+            try {
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+                String idBambino = (String) inputFromClient.readUnshared();
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                LocalDate date = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
+                String luogo = (String) inputFromClient.readUnshared();
+                String allergie = (String) inputFromClient.readUnshared();
+                String genitore1 = (String) inputFromClient.readUnshared();
+                String genitore2 = (String) inputFromClient.readUnshared();
+                String sesso = (String) inputFromClient.readUnshared();
+                String pediatra = (String) inputFromClient.readUnshared();
+                String contatto = (String) inputFromClient.readUnshared();
 
-            boolean success = rmiServer.addChild(codiceFiscale, idBambino, nome, cognome, date, luogo,  allergie,  genitore1,  genitore2,  sesso,  pediatra, contatto);
+                responce = rmiServer.addChild(codiceFiscale, idBambino, nome, cognome, date, luogo, allergie, genitore1, genitore2, sesso, pediatra, contatto);
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
-
-            return success;
+            return responce;
 
         }else if(commandMethod.equals("searchChild")){
 
@@ -244,67 +258,81 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("modifyChild")){
 
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            String luogo = (String) inputFromClient.readUnshared();
-            LocalDate data = LocalDate.parse((String) inputFromClient.readUnshared());
-            String idBambino = (String) inputFromClient.readUnshared();
-            rmiServer.modifyChild(codiceFiscale, nome, cognome, luogo, data, idBambino);
-            return true;
+            try{
+
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                String luogo = (String) inputFromClient.readUnshared();
+                LocalDate data = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
+                String idBambino = (String) inputFromClient.readUnshared();
+                responce = rmiServer.modifyChild(codiceFiscale, nome, cognome, luogo, data, idBambino);
+
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
         }else if(commandMethod.equals("deleteChild")){
 
-            System.out.println("Sto eseguendo da Socket");
-            String codiceFiscale = (String) inputFromClient.readUnshared();
+            try {
 
-            Boolean success = rmiServer.deleteChild(codiceFiscale);
+                System.out.println("Sto eseguendo da Socket");
+                String codiceFiscale = (String) inputFromClient.readUnshared();
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
-
-            return success;
+                responce = rmiServer.deleteChild(codiceFiscale);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
         }
 
 
         else if(commandMethod.equals("addTeacher")){
 
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            LocalDate data = LocalDate.parse((String) inputFromClient.readUnshared());
-            String luogo = (String) inputFromClient.readUnshared();
-            String allergie = (String) inputFromClient.readUnshared();
-            String sesso = (String) inputFromClient.readUnshared();
-            String insegnante = (String) inputFromClient.readUnshared();
-            String username = (String) inputFromClient.readUnshared();
-            String password = (String) inputFromClient.readUnshared();
+            try {
 
-            boolean success = rmiServer.addTeacher( nome,  cognome, codiceFiscale,  data,  luogo,  allergie,  sesso,  insegnante,  username,  password);
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+                LocalDate data = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
+                String luogo = (String) inputFromClient.readUnshared();
+                String allergie = (String) inputFromClient.readUnshared();
+                String sesso = (String) inputFromClient.readUnshared();
+                String insegnante = (String) inputFromClient.readUnshared();
+                String username = (String) inputFromClient.readUnshared();
+                String password = (String) inputFromClient.readUnshared();
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+                responce = rmiServer.addTeacher( nome,  cognome, codiceFiscale,  data,  luogo,  allergie,  sesso,  insegnante,  username,  password);
 
-            return success;
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            return responce;
+
 
         }else if(commandMethod.equals("addStaff")){
 
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            LocalDate data = LocalDate.parse((String) inputFromClient.readUnshared());
-            String luogo = (String) inputFromClient.readUnshared();
-            String allergie = (String) inputFromClient.readUnshared();
-            String sesso = (String) inputFromClient.readUnshared();
-            String mansione = (String) inputFromClient.readUnshared();
+            try {
 
-            boolean success = rmiServer.addStaff(nome, cognome, codiceFiscale, data, luogo, allergie, sesso, mansione);
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+                LocalDate data = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
+                String luogo = (String) inputFromClient.readUnshared();
+                String allergie = (String) inputFromClient.readUnshared();
+                String sesso = (String) inputFromClient.readUnshared();
+                String mansione = (String) inputFromClient.readUnshared();
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+                responce = rmiServer.addStaff(nome, cognome, codiceFiscale, data, luogo, allergie, sesso, mansione);
 
-            return success;
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
 
         }else if(commandMethod.equals("viewStaff")){
 
@@ -353,46 +381,56 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("modifyStaff")){
 
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            String luogo = (String) inputFromClient.readUnshared();
-            LocalDate data = LocalDate.parse((String) inputFromClient.readUnshared());
-            String mansione = (String) inputFromClient.readUnshared();
-            rmiServer.modifyStaff(codiceFiscale, nome, cognome, luogo, data, mansione);
-            return true;
+            try{
+
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                String luogo = (String) inputFromClient.readUnshared();
+                LocalDate data = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
+                String mansione = (String) inputFromClient.readUnshared();
+                responce = rmiServer.modifyStaff(codiceFiscale, nome, cognome, luogo, data, mansione);
+
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            return responce;
 
         }else if(commandMethod.equals("deleteStaff")){
 
-            System.out.println("Sto eseguendo da Socket");
-            String codiceFiscale = (String) inputFromClient.readUnshared();
+            try {
+                System.out.println("Sto eseguendo da Socket");
+                String codiceFiscale = (String) inputFromClient.readUnshared();
 
-            Boolean success = rmiServer.deleteStaff(codiceFiscale);
+                responce = rmiServer.deleteStaff(codiceFiscale);
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
-
-            return success;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
         }
 
 
         else if(commandMethod.equals("addParents")){
 
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            LocalDate date = LocalDate.parse((String) inputFromClient.readUnshared());
-            String luogo = (String) inputFromClient.readUnshared();
-            String telefono = (String) inputFromClient.readUnshared();
-            String sesso = (String) inputFromClient.readUnshared();
+            try {
 
-            boolean success = rmiServer.addParents(codiceFiscale, nome, cognome, date, luogo, telefono, sesso);
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                LocalDate date = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
+                String luogo = (String) inputFromClient.readUnshared();
+                String telefono = (String) inputFromClient.readUnshared();
+                String sesso = (String) inputFromClient.readUnshared();
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+                responce = rmiServer.addParents(codiceFiscale, nome, cognome, date, luogo, telefono, sesso);
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            return success;
+            return responce;
 
         }else if(commandMethod.equals("viewParents")){
 
@@ -439,44 +477,50 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("modifyParents")){
 
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            String luogo = (String) inputFromClient.readUnshared();
-            LocalDate data = LocalDate.parse((String) inputFromClient.readUnshared());
-            String telefono = (String) inputFromClient.readUnshared();
-            rmiServer.modifyParents(codiceFiscale, nome, cognome, luogo, data, telefono);
-            return true;
+            try{
+
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                String luogo = (String) inputFromClient.readUnshared();
+                LocalDate data = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
+                String telefono = (String) inputFromClient.readUnshared();
+                responce = rmiServer.modifyParents(codiceFiscale, nome, cognome, luogo, data, telefono);
+
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
         }else if(commandMethod.equals("deleteParents")){
 
-            System.out.println("Sto eseguendo da Socket");
-            String codiceFiscale = (String) inputFromClient.readUnshared();
+            try {
+                System.out.println("Sto eseguendo da Socket");
+                String codiceFiscale = (String) inputFromClient.readUnshared();
 
-            Boolean success = rmiServer.deleteParents(codiceFiscale);
-
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
-
-            return success;
-
+                responce = rmiServer.deleteParents(codiceFiscale);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
         }
 
 
-        else if(commandMethod.equals("addContact")){
+        else if(commandMethod.equals("addContacts")){
 
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            String telefono = (String) inputFromClient.readUnshared();
+            try {
 
-            boolean success = rmiServer.addContact(codiceFiscale, nome, cognome, telefono);
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                String telefono = (String) inputFromClient.readUnshared();
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+                responce = rmiServer.addContact(codiceFiscale, nome, cognome, telefono);
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            return success;
-
+            return responce;
 
         }else if(commandMethod.equals("viewContacts")){
 
@@ -523,43 +567,51 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("modifyContacts")){
 
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            String telefono = (String) inputFromClient.readUnshared();
-            rmiServer.modifyContact(codiceFiscale, nome, cognome, telefono);
-            return true;
+            try{
+
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                String telefono = (String) inputFromClient.readUnshared();
+                responce = rmiServer.modifyContact(codiceFiscale, nome, cognome, telefono);
+
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
         }else if(commandMethod.equals("deleteContacts")){
 
-            System.out.println("Sto eseguendo da Socket");
-            String codiceFiscale = (String) inputFromClient.readUnshared();
+            try {
+                System.out.println("Sto eseguendo da Socket");
+                String codiceFiscale = (String) inputFromClient.readUnshared();
 
-            Boolean success = rmiServer.deleteContacts(codiceFiscale);
-
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
-
-            return success;
+                responce = rmiServer.deleteContacts(codiceFiscale);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
         }
 
 
         else if(commandMethod.equals("addDoctor")){
 
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            LocalDate date = LocalDate.parse((String) inputFromClient.readUnshared());
-            String luogo = (String) inputFromClient.readUnshared();
-            String sesso = (String) inputFromClient.readUnshared();
+            try {
 
-            boolean success = rmiServer.addDoctor(codiceFiscale, nome, cognome, date, luogo, sesso);
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                LocalDate date = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
+                String luogo = (String) inputFromClient.readUnshared();
+                String sesso = (String) inputFromClient.readUnshared();
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+                responce = rmiServer.addDoctor(codiceFiscale, nome, cognome, date, luogo, sesso);
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            return success;
+            return responce;
 
         }else if(commandMethod.equals("viewDoctor")){
 
@@ -606,42 +658,49 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("modifyDoctor")){
 
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            String nome = (String) inputFromClient.readUnshared();
-            String cognome = (String) inputFromClient.readUnshared();
-            String luogo = (String) inputFromClient.readUnshared();
-            LocalDate data = LocalDate.parse((String) inputFromClient.readUnshared());
-            rmiServer.modifyDoctor(codiceFiscale, nome, cognome, luogo, data);
-            return true;
+            try{
+
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+                String nome = (String) inputFromClient.readUnshared();
+                String cognome = (String) inputFromClient.readUnshared();
+                String luogo = (String) inputFromClient.readUnshared();
+                LocalDate data = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
+                responce = rmiServer.modifyDoctor(codiceFiscale, nome, cognome, luogo, data);
+
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
         }else if(commandMethod.equals("deleteDoctor")){
 
-            System.out.println("Sto eseguendo da Socket");
-            String codiceFiscale = (String) inputFromClient.readUnshared();
+            try {
+                System.out.println("Sto eseguendo da Socket");
+                String codiceFiscale = (String) inputFromClient.readUnshared();
 
-            Boolean success = rmiServer.deleteDoctors(codiceFiscale);
-
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
-
-            return success;
-
+                Boolean success = rmiServer.deleteDoctors(codiceFiscale);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
         }
 
 
         else if(commandMethod.equals("addMenu")){
 
-            String nome = (String) inputFromClient.readUnshared();
-            String primo = (String) inputFromClient.readUnshared();
-            String secondo = (String) inputFromClient.readUnshared();
-            LocalDate giorno = LocalDate.parse((String) inputFromClient.readUnshared());
+            try {
+                String nome = (String) inputFromClient.readUnshared();
+                String primo = (String) inputFromClient.readUnshared();
+                String secondo = (String) inputFromClient.readUnshared();
+                LocalDate giorno = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
 
-            boolean success = rmiServer.addMenu(nome, primo, secondo, giorno);
+                responce = rmiServer.addMenu(nome, primo, secondo, giorno);
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            return success;
+            return responce;
 
         }else if(commandMethod.equals("viewFirst")){
 
@@ -714,15 +773,19 @@ public class SocketServer extends Thread implements Runnable {
         }else if(commandMethod.equals("viewCheck")){
 
             System.out.println("Cerco dal Socket");
-            String nomeMenu = null;
+            String primo = null;
+            String secondo = null;
+            String contorno = null;
 
             try {
-                nomeMenu = (String) inputFromClient.readUnshared();
+                primo = (String) inputFromClient.readUnshared();
+                secondo = (String) inputFromClient.readUnshared();
+                contorno = (String) inputFromClient.readUnshared();
 
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            ArrayList<BambiniAllergici> isLoadedal = rmiServer.viewCheck(nomeMenu);
+            ArrayList<BambiniAllergici> isLoadedal = rmiServer.viewCheck(primo, secondo, contorno);
             if (isLoadedal == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
@@ -739,67 +802,79 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("addPrimo")){
 
-            String nome = (String) inputFromClient.readUnshared();
-            String allergeni = (String) inputFromClient.readUnshared();
+            try {
+                String nome = (String) inputFromClient.readUnshared();
+                String allergeni = (String) inputFromClient.readUnshared();
 
-            boolean success = rmiServer.addPrimo(nome, allergeni);
+                responce = rmiServer.addPrimo(nome, allergeni);
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            return success;
+            return responce;
 
         }else if(commandMethod.equals("addSecondo")){
 
-            String nome = (String) inputFromClient.readUnshared();
-            String allergeni = (String) inputFromClient.readUnshared();
+            try {
+                String nome = (String) inputFromClient.readUnshared();
+                String allergeni = (String) inputFromClient.readUnshared();
 
-            boolean success = rmiServer.addSecondo(nome, allergeni);
+                responce = rmiServer.addSecondo(nome, allergeni);
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            return success;
+            return responce;
 
         }else if(commandMethod.equals("addSide")){
 
-            String nome = (String) inputFromClient.readUnshared();
-            String allergeni = (String) inputFromClient.readUnshared();
+            try {
+                String nome = (String) inputFromClient.readUnshared();
+                String allergeni = (String) inputFromClient.readUnshared();
 
-            boolean success = rmiServer.addSide(nome, allergeni);
+                responce = rmiServer.addSide(nome, allergeni);
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            return success;
+            return responce;
 
         }else if(commandMethod.equals("deleteMenu")){
 
-            System.out.println("Sto eseguendo da Socket");
-            String nomeMenu = (String) inputFromClient.readUnshared();
+            try {
+                System.out.println("Sto eseguendo da Socket");
+                String nomeMenu = (String) inputFromClient.readUnshared();
 
-            Boolean success = rmiServer.deleteMenu(nomeMenu);
+                responce = rmiServer.deleteMenu(nomeMenu);
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
-            return success;
         }
 
 
         else if(commandMethod.equals("AddTrip")){
 
-            String id = (String) inputFromClient.readUnshared();
-            String meta = (String) inputFromClient.readUnshared();
-            LocalDate andata = LocalDate.parse((String) inputFromClient.readUnshared());
-            LocalDate ritorno = LocalDate.parse((String) inputFromClient.readUnshared());
+            try {
 
-            boolean success = rmiServer.newTrip(id, meta, andata, ritorno);
+                String id = (String) inputFromClient.readUnshared();
+                String meta = (String) inputFromClient.readUnshared();
+                LocalDate andata = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
+                LocalDate ritorno = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+                responce = rmiServer.newTrip(id, meta, andata, ritorno);
 
-            return success;
+
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            return responce;
 
         }else if(commandMethod.equals("viewTrip")){
 
@@ -820,11 +895,27 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("loadDataServer")){
 
-            System.out.println("Sto Eseguendo da Socket");
-            String idGita = (String) inputFromClient.readUnshared();
-            outputToClient.writeUnshared(rmiServer.loadDataServer(Integer.parseInt(idGita)));
-            outputToClient.flush();
-            return true;
+            String idGita = null;
+
+            try {
+                idGita = (String) inputFromClient.readUnshared();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            ArrayList<AppealGS> isLoadedal = rmiServer.loadDataServer(Integer.parseInt(idGita));
+            if (isLoadedal == null) {
+                outputToClient.writeUnshared(true);
+                outputToClient.flush();
+                responce = false;
+            } else {
+                outputToClient.writeUnshared(false);
+                outputToClient.flush();
+                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.flush();
+                responce = true;
+            }
+            return responce;
+
 
         }else if(commandMethod.equals("bambinoPresenteServer")){
 
@@ -844,43 +935,47 @@ public class SocketServer extends Thread implements Runnable {
 
         }else if(commandMethod.equals("newTappa")){
 
-            String tappa = (String) inputFromClient.readUnshared();
-            String idGita = (String) inputFromClient.readUnshared();
-            LocalDate giorno = LocalDate.parse((String) inputFromClient.readUnshared());
-            String ora = (String) inputFromClient.readUnshared();
+            try {
 
-            boolean success = rmiServer.newTappaServer(tappa, idGita, giorno, ora);
+                String tappa = (String) inputFromClient.readUnshared();
+                String idGita = (String) inputFromClient.readUnshared();
+                LocalDate giorno = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
+                String ora = (String) inputFromClient.readUnshared();
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+                responce = rmiServer.newTappaServer(tappa, idGita, giorno, ora);
 
-            return success;
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
+            return responce;
 
         }else if(commandMethod.equals("newPartecipante")){
 
-            String codiceFiscale = (String) inputFromClient.readUnshared();
-            String idGita = (String) inputFromClient.readUnshared();
+            try {
 
-            boolean success = rmiServer.newpartecipanteTrip(codiceFiscale, idGita);
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+                String idGita = (String) inputFromClient.readUnshared();
 
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
+                responce = rmiServer.newpartecipanteTrip(codiceFiscale, idGita);
 
-            return success;
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
+            return responce;
 
         }else if(commandMethod.equals("deleteTrip")){
 
-            System.out.println("Sto eseguendo da Socket");
-            String idGita = (String) inputFromClient.readUnshared();
+            try {
+                System.out.println("Sto eseguendo da Socket");
+                String idGita = (String) inputFromClient.readUnshared();
 
-            Boolean success = rmiServer.deleteTrip(idGita);
-
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
-
-            return success;
+                responce = rmiServer.deleteTrip(idGita);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
         }else if(commandMethod.equals("pullmanCount")){
 

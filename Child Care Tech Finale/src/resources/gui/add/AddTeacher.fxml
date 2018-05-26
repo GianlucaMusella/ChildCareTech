@@ -51,6 +51,6 @@
             <TableColumn fx:id="colonnaMansione" prefWidth="114.0" text="Mansione" />
         </columns>
       </TableView>
-      <Button layoutX="239.0" layoutY="358.0" mnemonicParsing="false" onAction="#viewStaff" text="Mostra Personale Con Accesso" />
+      <Button fx:id="show" layoutX="239.0" layoutY="358.0" mnemonicParsing="false" onAction="#viewStaff" text="Mostra Personale Con Accesso" />
    </children>
 </AnchorPane>

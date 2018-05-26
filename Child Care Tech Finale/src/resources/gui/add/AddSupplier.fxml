@@ -28,7 +28,7 @@
             <TableColumn fx:id="colonnaFornitura" prefWidth="88.0" text="Fornitura" />
         </columns>
       </TableView>
-      <Button layoutX="247.0" layoutY="282.0" mnemonicParsing="false" onAction="#viewSupplier" text="Mostra Fornitori" />
+      <Button fx:id="show" layoutX="247.0" layoutY="282.0" mnemonicParsing="false" onAction="#viewSupplier" text="Mostra Fornitori" />
       <Button layoutX="470.0" layoutY="303.0" mnemonicParsing="false" onAction="#addSupplier" text="Salva" />
       <Button layoutX="16.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" prefHeight="25.0" prefWidth="23.0" />
       <Label fx:id="lblStatus" layoutX="50.0" layoutY="307.0" textFill="RED" />

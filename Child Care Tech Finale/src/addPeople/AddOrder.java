@@ -47,6 +47,9 @@ public class AddOrder implements Initializable{
     @FXML
     private Label lblStatus;
 
+    @FXML
+    private Button show;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -64,6 +67,7 @@ public class AddOrder implements Initializable{
         });
 
         tabellaFornitori.getItems().clear();
+        show.fire();
     }
 
     public void viewSupplier(ActionEvent actionEvent) throws Exception{
@@ -101,6 +105,7 @@ public class AddOrder implements Initializable{
                     txtQuantità.clear();
                     lblStatus.setTextFill(Color.BLACK);
                     lblStatus.setText("Ordine registrato");
+                    show.fire();
                 }
             } catch (Exception e){
                 e.printStackTrace();

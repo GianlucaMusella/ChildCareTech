@@ -41,7 +41,7 @@
             <TableColumn fx:id="colonnaMansione" prefWidth="104.0" text="Mansione" />
         </columns>
       </TableView>
-      <Button layoutX="224.0" layoutY="371.0" mnemonicParsing="false" onAction="#viewStaff" text="Mostra Personale" />
+      <Button fx:id="show" layoutX="224.0" layoutY="371.0" mnemonicParsing="false" onAction="#viewStaff" text="Mostra Personale" />
       <Button layoutX="570.0" layoutY="371.0" mnemonicParsing="false" onAction="#addStaff" prefHeight="25.0" prefWidth="47.0" text="Salva" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
          <graphic>

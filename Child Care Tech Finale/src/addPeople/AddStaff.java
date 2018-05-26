@@ -69,6 +69,9 @@ public class AddStaff implements Initializable{
     @FXML
     private TableColumn<StaffGS, String> colonnaMansione;
 
+    @FXML
+    private Button show;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -79,6 +82,7 @@ public class AddStaff implements Initializable{
         colonnaMansione.setCellValueFactory(new PropertyValueFactory<>("mansione"));
 
         tabellaStaff.getItems().clear();
+        show.fire();
     }
 
 
@@ -125,6 +129,7 @@ public class AddStaff implements Initializable{
                     dateData.getEditor().clear();
                     lblStatus.setText("Inserimento riuscito");
                     lblStatus.setTextFill(Color.BLACK);
+                    show.fire();
                 }
             } catch (Exception e ){
                 e.printStackTrace();

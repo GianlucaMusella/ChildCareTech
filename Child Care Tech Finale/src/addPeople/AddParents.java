@@ -63,6 +63,9 @@ public class AddParents implements Initializable{
     @FXML
     private Label lblStatus;
 
+    @FXML
+    private Button show;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -71,6 +74,7 @@ public class AddParents implements Initializable{
         colonnaCodiceFiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
 
         tabellaGenitori.getItems().clear();
+        show.fire();
 
     }
 
@@ -125,6 +129,7 @@ public class AddParents implements Initializable{
                     txtTelefono.clear();
                     lblStatus.setTextFill(Color.BLACK);
                     lblStatus.setText("Inserimento riuscito");
+                    show.fire();
                 }
             } catch (Exception e){
                 e.printStackTrace();

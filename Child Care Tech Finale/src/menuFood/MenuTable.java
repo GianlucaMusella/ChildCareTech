@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -38,6 +39,9 @@ public class MenuTable implements Initializable{
     @FXML
     private TableColumn<MenuGS, String> colonnaGiorno;
 
+    @FXML
+    private Button show;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -48,6 +52,8 @@ public class MenuTable implements Initializable{
         colonnaGiorno.setCellValueFactory(new PropertyValueFactory<>("giorno"));
 
         tabellaMenu.getItems().clear();
+
+        show.fire();
     }
 
     public void viewMenu(ActionEvent actionEvent) throws Exception {
@@ -80,6 +86,7 @@ public class MenuTable implements Initializable{
         }
         interfaceServer.deleteMenu(nomeMenu);
 
+        show.fire();
     }
 
 
