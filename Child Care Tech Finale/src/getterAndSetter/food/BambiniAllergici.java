@@ -9,15 +9,15 @@ public class BambiniAllergici implements Serializable{
     private String nomeAllergene;
     private String nomePrimo;
     private String nomeSecondo;
-    private String nomeMenu;
+    private String nomeContorno;
 
-    public BambiniAllergici (String nomeBambino, String cognomeBambino, String nomeAllergene, String nomePrimo, String nomeSecondo, String nomeMenu){
+    public BambiniAllergici (String nomeBambino, String cognomeBambino, String nomeAllergene, String nomePrimo, String nomeSecondo, String nomeContorno){
         this.nomeBambino = nomeBambino;
         this.cognomeBambino = cognomeBambino;
         this.nomeAllergene = nomeAllergene;
         this.nomePrimo = nomePrimo;
         this.nomeSecondo = nomeSecondo;
-        this.nomeMenu = nomeMenu;
+        this.nomeContorno = nomeContorno;
     }
 
     public String getNomeBambino() {
@@ -60,11 +60,11 @@ public class BambiniAllergici implements Serializable{
         this.nomeSecondo = nomeSecondo;
     }
 
-    public String getNomeMenu() {
-        return nomeMenu;
+    public String getNomeContorno() {
+        return nomeContorno;
     }
 
-    public void setNomeMenu(String nomeMenu) {
-        this.nomeMenu = nomeMenu;
+    public void setNomeContorno(String nomeContorno) {
+        this.nomeContorno = nomeContorno;
     }
 }

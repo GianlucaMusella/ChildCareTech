@@ -13,12 +13,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
 import interfaces.InterfaceServer;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -76,6 +78,9 @@ public class AddMenu implements Initializable{
 
     @FXML
     private Button contorni;
+
+    @FXML
+    private Label lblStatus;
 
 
     @Override
@@ -171,26 +176,33 @@ public class AddMenu implements Initializable{
     }
 
     public void addMenu(ActionEvent actionEvent) throws Exception{
-
-        String nome = nomeMenu.getText();
-        String primo = primoPiatto.getText();
-        String secondo = secondoPiatto.getText();
-        LocalDate giorno = txtGiorno.getValue();
-
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
+        if (nomeMenu.getText().isEmpty() || primoPiatto.getText().isEmpty() || secondoPiatto.getText().isEmpty())
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        else {
+            String nome = nomeMenu.getText();
+            String primo = primoPiatto.getText();
+            String secondo = secondoPiatto.getText();
+            LocalDate giorno = txtGiorno.getValue();
+            try {
+                InterfaceServer interfaceServer;
+                if (Controller.selection.equals("RMI")) {
+                    interfaceServer = Singleton.getInstance().rmiLookup();
+                } else {
+                    interfaceServer = Singleton.getInstance().methodSocket();
+                }
+                boolean success = interfaceServer.addMenu(nome, primo, secondo, giorno);
+                if (success) {
+                    nomeMenu.clear();
+                    primoPiatto.clear();
+                    secondoPiatto.clear();
+                    txtGiorno.getEditor().clear();
+                    lblStatus.setTextFill(Color.BLACK);
+                    lblStatus.setText("Inserimento riuscito");
+                }
+            } catch (RemoteException e){
+                e.printStackTrace();
+            }
         }
-        boolean success = interfaceServer.addMenu(nome, primo, secondo, giorno);
-
-        nomeMenu.clear();
-        primoPiatto.clear();
-        secondoPiatto.clear();
-        txtGiorno.getEditor().clear();
-
-
     }
 
     public void check(ActionEvent actionEvent) throws Exception{

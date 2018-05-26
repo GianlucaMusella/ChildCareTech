@@ -18,7 +18,13 @@ import java.util.ResourceBundle;
 
 public class CheckAllergy implements Initializable {
     @FXML
-    private TextField txtNomeMenu;
+    private TextField txtNomePrimo;
+
+    @FXML
+    private TextField txtNomeSecondo;
+
+    @FXML
+    private TextField txtNomeContorno;
 
     @FXML
     private TableView<BambiniAllergici> tabellaCheck;
@@ -39,7 +45,7 @@ public class CheckAllergy implements Initializable {
     private TableColumn<BambiniAllergici, String> secondo;
 
     @FXML
-    private TableColumn<BambiniAllergici, String> menu;
+    private TableColumn<BambiniAllergici, String> contorno;
 
     @FXML
     private Button check;
@@ -52,7 +58,7 @@ public class CheckAllergy implements Initializable {
         allergene.setCellValueFactory(new PropertyValueFactory<>("nomeAllergene"));
         primo.setCellValueFactory(new PropertyValueFactory<>("nomePrimo"));
         secondo.setCellValueFactory(new PropertyValueFactory<>("nomeSecondo"));
-        menu.setCellValueFactory(new PropertyValueFactory<>("nomeMenu"));
+        contorno.setCellValueFactory(new PropertyValueFactory<>("nomeContorno"));
 
 
         tabellaCheck.getItems().clear();
@@ -68,7 +74,7 @@ public class CheckAllergy implements Initializable {
         } else {
             interfaceServer = Singleton.getInstance().methodSocket();
         }
-        ArrayList<BambiniAllergici> bambiniAllergici = interfaceServer.viewCheck(txtNomeMenu.getText());
+        ArrayList<BambiniAllergici> bambiniAllergici = interfaceServer.viewCheck(txtNomePrimo.getText(), txtNomeSecondo.getText(), txtNomeContorno.getText());
 
         tabellaCheck.setColumnResizePolicy(tabellaCheck.CONSTRAINED_RESIZE_POLICY);
         tabellaCheck.setItems(FXCollections.observableArrayList(bambiniAllergici));

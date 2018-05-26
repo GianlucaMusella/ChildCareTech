@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>modify.ModifyChild</OriginalElement>
+  <nodes>
+    <node x="303.0" y="3645.0">menu.DoctorMenu</node>
+    <node x="2174.0" y="3228.0">menu.StaffMenu</node>
+    <node x="417.0" y="3228.0">javafx.fxml.Initializable</node>
+    <node x="1563.5" y="233.0">getterAndSetter.food.MenuGS</node>
+    <node x="1874.0" y="3228.0">menu.PeopleMenu</node>
+    <node x="1991.7499999999998" y="79.0">java.lang.Runnable</node>
+    <node x="650.0" y="2010.0">serverRMI.server.RMIServer</node>
+    <node x="278.0" y="3340.0">menuFood.AddMenu</node>
+    <node x="0.0" y="2010.0">serverSocket.client.SocketUserClient</node>
+    <node x="1137.0" y="3228.0">javafx.application.Application</node>
+    <node x="1977.2499999999998" y="0.0">java.lang.FunctionalInterface</node>
+    <node x="1279.5" y="79.0">getterAndSetter.people.ChildGS</node>
+    <node x="3006.0" y="3329.0">serverRMI.client.ClientRMI</node>
+    <node x="2315.5" y="1678.0">serverSocket.server.SocketListener</node>
+    <node x="1895.9999999999998" y="180.0">java.lang.Thread</node>
+    <node x="865.5" y="1271.0">java.rmi.server.UnicastRemoteObject</node>
+    <node x="3250.0" y="3228.0">menu.ChildMenu</node>
+    <node x="2896.5" y="3228.0">interfaces.User</node>
+    <node x="556.0" y="3329.0">addPeople.AddChild</node>
+    <node x="1185.0" y="3645.0">main.Controller</node>
+    <node x="0.0" y="3645.0">menu.ParentsMenu</node>
+    <node x="834.0" y="3384.0">searchAndDelete.SearchAndDeleteChild</node>
+    <node x="716.8541666666667" y="0.0">java.rmi.Remote</node>
+    <node x="1016.5" y="642.0">java.rmi.server.RemoteServer</node>
+    <node x="2787.0" y="3329.0">serverSocket.client.SocketClient</node>
+    <node x="2484.0" y="3228.0">menu.SupplierMenu</node>
+    <node x="985.5" y="244.0">java.rmi.server.RemoteObject</node>
+    <node x="0.0" y="3406.0">modify.ModifyChild</node>
+    <node x="1222.0" y="3527.0">main.Main</node>
+    <node x="3556.0" y="3228.0">menu.ContactMenu</node>
+    <node x="2583.0" y="0.0">getterAndSetter.people.ChildGUI</node>
+    <node x="1520.0" y="3228.0">getterAndSetter.food.MenuGUI</node>
+    <node x="1357.0" y="0.0">java.io.Serializable</node>
+    <node x="905.0" y="3645.0">main.Singleton</node>
+    <node x="1836.4999999999998" y="1667.0">serverSocket.server.SocketServer</node>
+    <node x="157.5" y="787.0">interfaces.InterfaceServer</node>
+    <node x="1423.0" y="3645.0">connectionDatabase.ConnectionDatabase</node>
+    <node x="1712.0" y="3645.0">serverRMI.server.ServerStart</node>
+    <node x="605.0" y="3645.0">menu.Choice</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="getterAndSetter.people.ChildGS" target="java.io.Serializable">
+      <point x="0.0" y="-256.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="main.Main" target="javafx.application.Application">
+      <point x="0.0" y="-36.5" />
+      <point x="0.0" y="124.5" />
+    </edge>
+    <edge source="interfaces.InterfaceServer" target="java.rmi.Remote">
+      <point x="0.0" y="-586.5" />
+      <point x="472.5" y="54.0" />
+      <point x="739.1041666666667" y="54.0" />
+      <point x="-22.25" y="14.5" />
+    </edge>
+    <edge source="addPeople.AddChild" target="javafx.fxml.Initializable">
+      <point x="0.0" y="-135.5" />
+      <point x="685.0" y="3309.0" />
+      <point x="578.25" y="3309.0" />
+      <point x="32.25" y="25.5" />
+    </edge>
+    <edge source="serverRMI.server.RMIServer" target="interfaces.InterfaceServer">
+      <point x="-157.5" y="-586.5" />
+      <point x="807.5" y="1985.0" />
+      <point x="630.0" y="1985.0" />
+      <point x="157.5" y="586.5" />
+    </edge>
+    <edge source="serverRMI.server.RMIServer" target="java.rmi.server.UnicastRemoteObject">
+      <point x="157.5" y="-586.5" />
+      <point x="0.0" y="102.5" />
+    </edge>
+    <edge source="java.rmi.server.RemoteObject" target="java.io.Serializable">
+      <point x="68.5" y="-91.5" />
+      <point x="1191.0" y="54.0" />
+      <point x="1375.1666666666667" y="54.0" />
+      <point x="-36.33333333333326" y="14.5" />
+    </edge>
+    <edge source="java.rmi.server.UnicastRemoteObject" target="java.rmi.server.RemoteServer">
+      <point x="0.0" y="-102.5" />
+      <point x="0.0" y="47.5" />
+    </edge>
+    <edge source="java.lang.Runnable" target="java.lang.FunctionalInterface">
+      <point x="0.0" y="-25.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="serverSocket.server.SocketServer" target="java.lang.Runnable">
+      <point x="-49.0" y="-36.5" />
+      <point x="1885.4999999999998" y="155.0" />
+      <point x="2021.4999999999998" y="155.0" />
+      <point x="-29.75" y="25.5" />
+    </edge>
+    <edge source="serverSocket.client.SocketClient" target="interfaces.User">
+      <point x="0.0" y="-25.5" />
+      <point x="2886.5" y="3304.0" />
+      <point x="2946.25" y="3304.0" />
+      <point x="-49.75" y="25.5" />
+    </edge>
+    <edge source="java.rmi.server.RemoteObject" target="java.rmi.Remote">
+      <point x="-68.5" y="-91.5" />
+      <point x="1054.0" y="54.0" />
+      <point x="783.6041666666667" y="54.0" />
+      <point x="22.25" y="14.5" />
+    </edge>
+    <edge source="serverSocket.server.SocketListener" target="java.lang.Thread">
+      <point x="0.0" y="-25.5" />
+      <point x="160.5" y="718.5" />
+    </edge>
+    <edge source="serverSocket.server.SocketServer" target="java.lang.Thread">
+      <point x="49.0" y="-36.5" />
+      <point x="1983.4999999999998" y="1642.0" />
+      <point x="2056.5" y="1642.0" />
+      <point x="-160.5" y="718.5" />
+    </edge>
+    <edge source="serverRMI.client.ClientRMI" target="interfaces.User">
+      <point x="0.0" y="-25.5" />
+      <point x="3105.5" y="3304.0" />
+      <point x="3045.75" y="3304.0" />
+      <point x="49.75" y="25.5" />
+    </edge>
+    <edge source="modify.ModifyChild" target="javafx.fxml.Initializable">
+      <point x="0.0" y="-58.5" />
+      <point x="129.0" y="3299.0" />
+      <point x="449.25" y="3299.0" />
+      <point x="-96.75" y="25.5" />
+    </edge>
+    <edge source="searchAndDelete.SearchAndDeleteChild" target="javafx.fxml.Initializable">
+      <point x="0.0" y="-80.5" />
+      <point x="963.0" y="3299.0" />
+      <point x="642.75" y="3299.0" />
+      <point x="96.75" y="25.5" />
+    </edge>
+    <edge source="getterAndSetter.food.MenuGS" target="java.io.Serializable">
+      <point x="0.0" y="-102.5" />
+      <point x="1677.5" y="54.0" />
+      <point x="1447.8333333333333" y="54.0" />
+      <point x="36.33333333333326" y="14.5" />
+    </edge>
+    <edge source="java.rmi.server.RemoteServer" target="java.rmi.server.RemoteObject">
+      <point x="0.0" y="-47.5" />
+      <point x="0.0" y="91.5" />
+    </edge>
+    <edge source="java.lang.Thread" target="java.lang.Runnable">
+      <point x="0.0" y="-718.5" />
+      <point x="2217.0" y="155.0" />
+      <point x="2081.0" y="155.0" />
+      <point x="29.75" y="25.5" />
+    </edge>
+    <edge source="menuFood.AddMenu" target="javafx.fxml.Initializable">
+      <point x="0.0" y="-124.5" />
+      <point x="407.0" y="3309.0" />
+      <point x="513.75" y="3309.0" />
+      <point x="-32.25" y="25.5" />
+    </edge>
+    <edge source="serverSocket.client.SocketUserClient" target="interfaces.InterfaceServer">
+      <point x="0.0" y="-586.5" />
+      <point x="-157.5" y="586.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="699.6666666666665" y="3266.833333333333" />
+  <SelectedNodes>
+    <node>modify.ModifyChild</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
