@@ -1797,7 +1797,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
             }
         }
 
-        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+        /*Statement stmt = connectionDatabase.initializeConnection().createStatement();
         String CountSQL = ("SELECT * FROM mydb.bambini_has_gita WHERE mydb.bambini_has_gita.Gita_idGIta = ");
         ResultSet rsbis = stmt.executeQuery(CountSQL + idGita);
         float count = 0.0f;
@@ -1807,7 +1807,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         float x = (float) (1.00 / count);
         int NumPullman = (int) Math.ceil(x);
         stmt.executeUpdate("UPDATE mydb.gita SET NumPullman = " + NumPullman + " WHERE mydb.gita.idGita = " + idGita);
-
+*/
         return false;
     }
 
