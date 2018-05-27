@@ -206,7 +206,7 @@ public class AddMenu implements Initializable{
     }
 
     public void check(ActionEvent actionEvent) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/menuFood/CheckAllergy.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menuFood/CheckAllergy.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setTitle("Inserisci Menù Mensa");
