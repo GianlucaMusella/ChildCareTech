@@ -86,15 +86,15 @@ public class ModifyContact implements Initializable{
                 } else {
                     interfaceServer = Singleton.getInstance().methodSocket();
                 }
-                interfaceServer.modifyContact(codiceFiscale, nome, cognome, telefono);
-
-                lblStatus.setTextFill(Color.BLACK);
-                lblStatus.setText("Inserimento riuscito");
-                txtCodicefiscaleOld.clear();
-                txtNome.clear();
-                txtCognome.clear();
-                txtTelefono.clear();
-
+                boolean success = interfaceServer.modifyContact(codiceFiscale, nome, cognome, telefono);
+                if (success) {
+                    lblStatus.setTextFill(Color.BLACK);
+                    lblStatus.setText("Modifica riuscita");
+                    txtCodicefiscaleOld.clear();
+                    txtNome.clear();
+                    txtCognome.clear();
+                    txtTelefono.clear();
+                }
             }catch (RemoteException e){
                 e.printStackTrace();
             }

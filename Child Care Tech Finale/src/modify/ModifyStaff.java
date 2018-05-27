@@ -80,16 +80,17 @@ public class ModifyStaff implements Initializable{
                 } else {
                     interfaceServer = Singleton.getInstance().methodSocket();
                 }
-                interfaceServer.modifyStaff(codiceFiscale, nome, cognome, luogo, data, mansione);
-
-                lblStatus.setTextFill(Color.BLACK);
-                lblStatus.setText("Inserimento riuscito");
-                txtCodicefiscaleOld.clear();
-                txtNome.clear();
-                txtCognome.clear();
-                txtLuogo.clear();
-                dateData.getEditor().clear();
-                txtMansione.clear();
+                boolean success = interfaceServer.modifyStaff(codiceFiscale, nome, cognome, luogo, data, mansione);
+                if (success) {
+                    lblStatus.setTextFill(Color.BLACK);
+                    lblStatus.setText("Modifica riuscita");
+                    txtCodicefiscaleOld.clear();
+                    txtNome.clear();
+                    txtCognome.clear();
+                    txtLuogo.clear();
+                    dateData.getEditor().clear();
+                    txtMansione.clear();
+                }
             }catch (RemoteException e){
                 e.printStackTrace();
             }

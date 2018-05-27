@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
@@ -72,13 +73,16 @@ public class ModifySupplier implements Initializable{
                 } else {
                     interfaceServer = Singleton.getInstance().methodSocket();
                 }
-                interfaceServer.modifySupplier(azienda, nome, cognome, fornitura, partitaIVA);
-
-                txtAzienda.clear();
-                txtNome.clear();
-                txtCognome.clear();
-                txtFornitura.clear();
-                txtPartitaIva.clear();
+                boolean success = interfaceServer.modifySupplier(azienda, nome, cognome, fornitura, partitaIVA);
+                if (success) {
+                    lblStatus.setTextFill(Color.BLACK);
+                    lblStatus.setText("Modifica riuscita");
+                    txtAzienda.clear();
+                    txtNome.clear();
+                    txtCognome.clear();
+                    txtFornitura.clear();
+                    txtPartitaIva.clear();
+                }
             }catch (RemoteException e){
                 e.printStackTrace();
             }

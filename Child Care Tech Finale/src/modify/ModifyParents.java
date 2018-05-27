@@ -79,16 +79,17 @@ public class ModifyParents implements Initializable {
                 } else {
                     interfaceServer = Singleton.getInstance().methodSocket();
                 }
-                interfaceServer.modifyParents(codiceFiscale, nome, cognome, luogo, data, telefono);
-
-                lblStatus.setTextFill(Color.BLACK);
-                lblStatus.setText("Inserimento riuscito");
-                txtCodicefiscaleOld.clear();
-                txtNome.clear();
-                txtCognome.clear();
-                txtLuogo.clear();
-                dateData.getEditor().clear();
-                txtTelefono.clear();
+                boolean success = interfaceServer.modifyParents(codiceFiscale, nome, cognome, luogo, data, telefono);
+                if (success) {
+                    lblStatus.setTextFill(Color.BLACK);
+                    lblStatus.setText("Modifica riuscita");
+                    txtCodicefiscaleOld.clear();
+                    txtNome.clear();
+                    txtCognome.clear();
+                    txtLuogo.clear();
+                    dateData.getEditor().clear();
+                    txtTelefono.clear();
+                }
             }catch (RemoteException e){
                 e.printStackTrace();
             }

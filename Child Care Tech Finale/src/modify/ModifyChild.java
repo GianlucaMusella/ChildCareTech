@@ -71,8 +71,8 @@ public class ModifyChild implements Initializable{
         LocalDate data = dateData.getValue();
         String id = idBambino.getText();
 
-        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodicefiscaleOld.getText().isEmpty() || txtCodicefiscaleOld.getText().length() != 16 ||
-                txtLuogo.getText().isEmpty() || idBambino.getText().isEmpty())
+        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodicefiscaleOld.getText().isEmpty()
+                || txtCodicefiscaleOld.getText().length() != 16 || txtLuogo.getText().isEmpty() || idBambino.getText().isEmpty())
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         else {
 
@@ -83,17 +83,17 @@ public class ModifyChild implements Initializable{
                 } else {
                     interfaceServer = Singleton.getInstance().methodSocket();
                 }
-                interfaceServer.modifyChild(codiceFiscale, nome, cognome, luogo, data, id);
-
-                lblStatus.setTextFill(Color.BLACK);
-                lblStatus.setText("Inserimento riuscito");
-                txtCodicefiscaleOld.clear();
-                txtCognome.clear();
-                dateData.getEditor().clear();
-                txtNome.clear();
-                txtLuogo.clear();
-                idBambino.clear();
-
+                boolean success = interfaceServer.modifyChild(codiceFiscale, nome, cognome, luogo, data, id);
+                if(success) {
+                    lblStatus.setTextFill(Color.BLACK);
+                    lblStatus.setText("Modifica riuscita");
+                    txtCodicefiscaleOld.clear();
+                    txtCognome.clear();
+                    dateData.getEditor().clear();
+                    txtNome.clear();
+                    txtLuogo.clear();
+                    idBambino.clear();
+                }
             }catch (RemoteException e){
                 e.printStackTrace();
             }

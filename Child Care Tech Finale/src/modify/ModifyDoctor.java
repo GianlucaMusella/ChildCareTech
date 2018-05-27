@@ -92,16 +92,16 @@ public class ModifyDoctor implements Initializable {
                 } else {
                     interfaceServer = Singleton.getInstance().methodSocket();
                 }
-                interfaceServer.modifyDoctor(codiceFiscale, nome, cognome, luogo, data);
-
-                lblStatus.setTextFill(Color.BLACK);
-                lblStatus.setText("Inserimento riuscito");
-                txtCodicefiscaleOld.clear();
-                txtNome.clear();
-                txtCognome.clear();
-                txtLuogo.clear();
-                dateData.getEditor().clear();
-
+                boolean success = interfaceServer.modifyDoctor(codiceFiscale, nome, cognome, luogo, data);
+                if (success) {
+                    lblStatus.setTextFill(Color.BLACK);
+                    lblStatus.setText("Modifica riuscita");
+                    txtCodicefiscaleOld.clear();
+                    txtNome.clear();
+                    txtCognome.clear();
+                    txtLuogo.clear();
+                    dateData.getEditor().clear();
+                }
             }catch (RemoteException e){
                 e.printStackTrace();
             }
