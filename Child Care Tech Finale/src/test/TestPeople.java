@@ -12,10 +12,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
-public class TestModify {
+public class TestPeople {
     private RMIServer rmiServer;
 
-    public TestModify() throws RemoteException {
+    public TestPeople() throws RemoteException {
 
         rmiServer = new RMIServer();
     }
@@ -31,6 +31,26 @@ public class TestModify {
 
     }
 
+    @Test
+    void testModifyChild() throws Exception{
+        assertTrue(rmiServer.modifyChild("testtesttesttest", "Lorenzo", "Pallotti", "Civitavecchia", LocalDate.parse("1996-04-09"), "7"));
+    }
+
+    @Test
+    void testModifyContact() throws Exception{
+        assertTrue(rmiServer.modifyContact("testcontattotest", "Romano", "Fenati", "7896230145"));
+    }
+
+    @Test
+    void testmodifyParents() throws Exception{
+        assertTrue(rmiServer.modifyParents("testgenitoretest", "Romano", "Fenati", "7896230145",LocalDate.parse("1996-04-09"), "7896543211"));
+    }
+
+    @Test
+    void testmodifyDoctor() throws Exception{
+        assertTrue(rmiServer.modifyDoctor("testpediatratest", "Romano", "Fenati", "Cremona", LocalDate.parse("1996-04-09")));
+    }
+
     @AfterEach
     void after() throws Exception {
         rmiServer.deleteChild("testtesttesttest");
@@ -39,12 +59,4 @@ public class TestModify {
         rmiServer.deleteDoctors("testpediatratest");
         rmiServer.deleteContacts("testcontattotest");
     }
-
-    @Test
-    void testModifyChild() throws Exception{
-
-        assertTrue(rmiServer.modifyChild("testtesttesttest", "Lorenzo", "Pallotti", "Civitavecchia", LocalDate.parse("1996-04-09"), "7"));
-
-    }
-
 }

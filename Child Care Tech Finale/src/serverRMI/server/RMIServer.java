@@ -373,7 +373,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
             }
         }
 
-        return false;
+        return true;
     }
 
     @Override
