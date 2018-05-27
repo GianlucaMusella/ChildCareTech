@@ -6,13 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.DatePicker;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
 import interfaces.InterfaceServer;
 
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 
 public class AddTrip {
@@ -29,27 +32,37 @@ public class AddTrip {
     @FXML
     private DatePicker dateRitorno;
 
-    public void newTrip (ActionEvent actionEvent) throws Exception {
+    @FXML
+    private Label lblStatus;
 
+    public void newTrip (ActionEvent actionEvent) throws Exception {
+        if (txtMetaa.getText().isEmpty() || txtID.getText().isEmpty() || datePartenza.getValue() == null
+                || dateRitorno.getValue() == null)
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         String id = txtID.getText();
         String meta = txtMetaa.getText();
         LocalDate andata = datePartenza.getValue();
         LocalDate ritorno = dateRitorno.getValue();
+        try {
+            InterfaceServer interfaceServer;
+            if (Controller.selection.equals("RMI")) {
+                interfaceServer = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceServer = Singleton.getInstance().methodSocket();
+            }
 
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
+            boolean success = interfaceServer.newTrip(id, meta, andata, ritorno);
+            if (success) {
+                lblStatus.setTextFill(Color.BLACK);
+                lblStatus.setText("Inserimento riuscito");
+                txtID.clear();
+                txtMetaa.clear();
+                datePartenza.getEditor().clear();
+                dateRitorno.getEditor().clear();
+            }
+        } catch (RemoteException e){
+            e.printStackTrace();
         }
-
-        boolean success = interfaceServer.newTrip(id, meta, andata, ritorno);
-
-        txtID.clear();
-        txtMetaa.clear();
-        datePartenza.getEditor().clear();
-        dateRitorno.getEditor().clear();
-
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
