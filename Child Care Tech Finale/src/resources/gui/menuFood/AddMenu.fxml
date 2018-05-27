@@ -23,7 +23,7 @@
       <Button layoutX="26.0" layoutY="219.0" mnemonicParsing="false" onAction="#addSecondDish" prefHeight="25.0" prefWidth="186.0" text="Inserisci Secondo" />
       <TextField fx:id="secondoPiatto" layoutX="26.0" layoutY="263.0" prefHeight="25.0" prefWidth="186.0" promptText="Secondo Piatto" />
       <Button layoutX="27.0" layoutY="304.0" mnemonicParsing="false" onAction="#addSideDish" prefHeight="25.0" prefWidth="186.0" text="Inserisci Contorno" />
-      <TextField fx:id="contorno" layoutX="27.0" layoutY="344.0" prefHeight="25.0" prefWidth="186.0" promptText="Inserisci Contorno" />
+      <TextField fx:id="txtContorno" layoutX="27.0" layoutY="344.0" prefHeight="25.0" prefWidth="186.0" promptText="Inserisci Contorno" />
       <DatePicker fx:id="txtGiorno" layoutX="27.0" layoutY="383.0" prefHeight="25.0" prefWidth="186.0" promptText="Giorno" />
       <TableView fx:id="tabellaPrimi" layoutX="260.0" layoutY="88.0" prefHeight="160.0" prefWidth="229.0">
         <columns>

@@ -38,7 +38,7 @@ public class AddMenu implements Initializable{
     private TextField secondoPiatto;
 
     @FXML
-    private TextField contorno;
+    private TextField txtContorno;
 
     @FXML
     private DatePicker txtGiorno;
@@ -109,7 +109,7 @@ public class AddMenu implements Initializable{
 
         tabellaContorni.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
             if(newSelection != null){
-                contorno.setText(newSelection.getNomeContorno());
+                txtContorno.setText(newSelection.getNomeContorno());
             }
         });
 
@@ -175,12 +175,13 @@ public class AddMenu implements Initializable{
     }
 
     public void addMenu(ActionEvent actionEvent) throws Exception{
-        if (nomeMenu.getText().isEmpty() || primoPiatto.getText().isEmpty() || secondoPiatto.getText().isEmpty())
+        if (nomeMenu.getText().isEmpty() || primoPiatto.getText().isEmpty() || secondoPiatto.getText().isEmpty() || txtContorno.getText().isEmpty())
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         else {
             String nome = nomeMenu.getText();
             String primo = primoPiatto.getText();
             String secondo = secondoPiatto.getText();
+            String contorno = txtContorno.getText();
             LocalDate giorno = txtGiorno.getValue();
             try {
                 InterfaceServer interfaceServer;
@@ -189,7 +190,7 @@ public class AddMenu implements Initializable{
                 } else {
                     interfaceServer = Singleton.getInstance().methodSocket();
                 }
-                boolean success = interfaceServer.addMenu(nome, primo, secondo, giorno);
+                boolean success = interfaceServer.addMenu(nome, primo, secondo, contorno, giorno);
                 if (success) {
                     nomeMenu.clear();
                     primoPiatto.clear();

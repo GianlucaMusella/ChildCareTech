@@ -1349,11 +1349,11 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
              */
 
     @Override
-    public boolean addMenu(String nome, String primo, String secondo, LocalDate giorno) throws Exception {
+    public boolean addMenu(String nome, String primo, String secondo, String contorno, LocalDate giorno) throws Exception {
 
         PreparedStatement preparedStatement = null;
 
-        String nomeMenu = "INSERT INTO mydb.menumensa (Nome, Giorno, Secondi_Nome, Primi_Nome) VALUES (?,?,?,?)";
+        String nomeMenu = "INSERT INTO mydb.menumensa (Nome, Giorno, Secondi_Nome, Primi_Nome, Contorno_Nome) VALUES (?,?,?,?,?)";
 
         try {
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
@@ -1363,6 +1363,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
             preparedStatement.setDate(2, java.sql.Date.valueOf(giorno));
             preparedStatement.setString(3, secondo);
             preparedStatement.setString(4, primo);
+            preparedStatement.setString(5, contorno);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {

@@ -72,12 +72,15 @@ public class SocketServer extends Thread implements Runnable {
 
         if (commandMethod.equals("login")){
 
-            String user = (String) inputFromClient.readUnshared();
-            String password = (String) inputFromClient.readUnshared();
-            boolean success = rmiServer.login(user, password);
-            outputToClient.writeUnshared(success);
-            outputToClient.flush();
-            return success;
+            System.out.println("Logging in...");
+            try {
+                String user = (String) inputFromClient.readUnshared();
+                String password = (String) inputFromClient.readUnshared();
+                responce = rmiServer.login(user, password);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
         } else if (commandMethod.equals("addSupplier")) {
 
@@ -99,15 +102,15 @@ public class SocketServer extends Thread implements Runnable {
         }else if(commandMethod.equals("viewSupplier")){
 
             System.out.println("Carico Dati da Socket");
-            ArrayList<SupplierGS> isLoadedal = rmiServer.viewSupplier();
-            if (isLoadedal == null) {
+            ArrayList<SupplierGS> ready = rmiServer.viewSupplier();
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -127,15 +130,15 @@ public class SocketServer extends Thread implements Runnable {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            ArrayList<SupplierGS> isLoadedal = rmiServer.searchSupplier(azienda, fornitura, partitaIva);
-            if (isLoadedal == null) {
+            ArrayList<SupplierGS> ready = rmiServer.searchSupplier(azienda, fornitura, partitaIva);
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -225,15 +228,15 @@ public class SocketServer extends Thread implements Runnable {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            ArrayList<ChildGS> isLoadedal = rmiServer.searchC(nome, cognome, codiceFiscale);
-            if (isLoadedal == null) {
+            ArrayList<ChildGS> ready = rmiServer.searchC(nome, cognome, codiceFiscale);
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -242,15 +245,15 @@ public class SocketServer extends Thread implements Runnable {
         }else if(commandMethod.equals("viewChild")){
 
             System.out.println("Carico Dati da Socket");
-            ArrayList<ChildGS> isLoadedal = rmiServer.viewChild();
-            if (isLoadedal == null) {
+            ArrayList<ChildGS> ready = rmiServer.viewChild();
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -337,15 +340,15 @@ public class SocketServer extends Thread implements Runnable {
         }else if(commandMethod.equals("viewStaff")){
 
             System.out.println("Carico Dati da Socket");
-            ArrayList<StaffGS> isLoadedal = rmiServer.viewStaff();
-            if (isLoadedal == null) {
+            ArrayList<StaffGS> ready = rmiServer.viewStaff();
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -365,15 +368,15 @@ public class SocketServer extends Thread implements Runnable {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            ArrayList<StaffGS> isLoadedal = rmiServer.searchStaff(nome, cognome, codiceFiscale);
-            if (isLoadedal == null) {
+            ArrayList<StaffGS> ready = rmiServer.searchStaff(nome, cognome, codiceFiscale);
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -435,15 +438,15 @@ public class SocketServer extends Thread implements Runnable {
         }else if(commandMethod.equals("viewParents")){
 
             System.out.println("Carico Dati da Socket");
-            ArrayList<ParentsGS> isLoadedal = rmiServer.viewParents();
-            if (isLoadedal == null) {
+            ArrayList<ParentsGS> ready = rmiServer.viewParents();
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -461,15 +464,15 @@ public class SocketServer extends Thread implements Runnable {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            ArrayList<ParentsGS> isLoadedal = rmiServer.searchParents(nome, codiceFiscale);
-            if (isLoadedal == null) {
+            ArrayList<ParentsGS> ready = rmiServer.searchParents(nome, codiceFiscale);
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -525,15 +528,15 @@ public class SocketServer extends Thread implements Runnable {
         }else if(commandMethod.equals("viewContacts")){
 
             System.out.println("Carico Dati da Socket");
-            ArrayList<ContactGS> isLoadedal = rmiServer.viewContacts();
-            if (isLoadedal == null) {
+            ArrayList<ContactGS> ready = rmiServer.viewContacts();
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -551,15 +554,15 @@ public class SocketServer extends Thread implements Runnable {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            ArrayList<ContactGS> isLoadedal = rmiServer.searchContacts(nome, codiceFiscale);
-            if (isLoadedal == null) {
+            ArrayList<ContactGS> ready = rmiServer.searchContacts(nome, codiceFiscale);
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -616,15 +619,15 @@ public class SocketServer extends Thread implements Runnable {
         }else if(commandMethod.equals("viewDoctor")){
 
             System.out.println("Carico Dati da Socket");
-            ArrayList<DoctorGS> isLoadedal = rmiServer.viewDoctors();
-            if (isLoadedal == null) {
+            ArrayList<DoctorGS> ready = rmiServer.viewDoctors();
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -642,15 +645,15 @@ public class SocketServer extends Thread implements Runnable {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            ArrayList<DoctorGS> isLoadedal = rmiServer.searchDoctors(nome, codiceFiscale);
-            if (isLoadedal == null) {
+            ArrayList<DoctorGS> ready = rmiServer.searchDoctors(nome, codiceFiscale);
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -693,8 +696,8 @@ public class SocketServer extends Thread implements Runnable {
                 String primo = (String) inputFromClient.readUnshared();
                 String secondo = (String) inputFromClient.readUnshared();
                 LocalDate giorno = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
-
-                responce = rmiServer.addMenu(nome, primo, secondo, giorno);
+                String contorno = (String) inputFromClient.readUnshared(); 
+                responce = rmiServer.addMenu(nome, primo, secondo, contorno, giorno);
 
             }catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -705,15 +708,15 @@ public class SocketServer extends Thread implements Runnable {
         }else if(commandMethod.equals("viewFirst")){
 
             System.out.println("Carico Dati da Socket");
-            ArrayList<FirstDishGS> isLoadedal = rmiServer.viewFirst();
-            if (isLoadedal == null) {
+            ArrayList<FirstDishGS> ready = rmiServer.viewFirst();
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -722,15 +725,15 @@ public class SocketServer extends Thread implements Runnable {
         }else if(commandMethod.equals("viewSecond")){
 
             System.out.println("Carico Dati da Socket");
-            ArrayList<SecondDishGS> isLoadedal = rmiServer.viewSecond();
-            if (isLoadedal == null) {
+            ArrayList<SecondDishGS> ready = rmiServer.viewSecond();
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -739,15 +742,15 @@ public class SocketServer extends Thread implements Runnable {
         }else if(commandMethod.equals("viewSide")) {
 
             System.out.println("Carico Dati da Socket");
-            ArrayList<SideDishGS> isLoadedal = rmiServer.viewSide();
-            if (isLoadedal == null) {
+            ArrayList<SideDishGS> ready = rmiServer.viewSide();
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -756,15 +759,15 @@ public class SocketServer extends Thread implements Runnable {
         }else if(commandMethod.equals("viewMenu")){
 
             System.out.println("Carico Dati da Socket");
-            ArrayList<MenuGS> isLoadedal = rmiServer.viewMenu();
-            if (isLoadedal == null) {
+            ArrayList<MenuGS> ready = rmiServer.viewMenu();
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -785,15 +788,15 @@ public class SocketServer extends Thread implements Runnable {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            ArrayList<BambiniAllergici> isLoadedal = rmiServer.viewCheck(primo, secondo, contorno);
-            if (isLoadedal == null) {
+            ArrayList<BambiniAllergici> ready = rmiServer.viewCheck(primo, secondo, contorno);
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -879,15 +882,15 @@ public class SocketServer extends Thread implements Runnable {
         }else if(commandMethod.equals("viewTrip")){
 
             System.out.println("Carico Dati da Socket");
-            ArrayList<TripGS> isLoadedal = rmiServer.viewTrip();
-            if (isLoadedal == null) {
+            ArrayList<TripGS> ready = rmiServer.viewTrip();
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }
@@ -902,15 +905,15 @@ public class SocketServer extends Thread implements Runnable {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            ArrayList<AppealGS> isLoadedal = rmiServer.loadDataServer(Integer.parseInt(idGita));
-            if (isLoadedal == null) {
+            ArrayList<AppealGS> ready = rmiServer.loadDataServer(Integer.parseInt(idGita));
+            if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
                 responce = false;
             } else {
                 outputToClient.writeUnshared(false);
                 outputToClient.flush();
-                outputToClient.writeUnshared(isLoadedal);
+                outputToClient.writeUnshared(ready);
                 outputToClient.flush();
                 responce = true;
             }

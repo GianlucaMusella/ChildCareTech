@@ -3,15 +3,22 @@ package test;
 import org.junit.jupiter.api.Test;
 import serverRMI.server.RMIServer;
 
+import java.rmi.RemoteException;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TestLogin {
 
+    private RMIServer rmiServer;
+
+    public TestLogin() throws RemoteException {
+
+        rmiServer = new RMIServer();
+    }
+
     @Test
     void testLoginFail() throws Exception {
-
-        RMIServer rmiServer = new RMIServer();
 
         assertFalse(rmiServer.login(null, null));
         assertFalse(rmiServer.login("f", null));
@@ -21,8 +28,6 @@ class TestLogin {
 
     @Test
     void testLoginSuccess() throws Exception {
-
-        RMIServer rmiServer = new RMIServer();
 
         assertTrue(rmiServer.login("f", "atz"));
 

@@ -1,7 +1,6 @@
 package serverRMI.server;
 
 import interfaces.InterfaceServer;
-import serverSocket.server.SocketListener;
 import serverSocket.server.SocketServer;
 
 import javax.naming.NamingException;

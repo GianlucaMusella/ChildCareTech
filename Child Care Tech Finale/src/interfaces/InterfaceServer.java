@@ -51,7 +51,7 @@ public interface InterfaceServer extends Remote{
     boolean modifyDoctor(String codiceFiscale, String nome, String cognome, String luogo, LocalDate data) throws Exception;
     boolean deleteDoctors(String codiceFiscale) throws Exception;
 
-    boolean addMenu(String nome, String primo, String secondo, LocalDate giorno) throws Exception;
+    boolean addMenu(String nome, String primo, String secondo, String contorno, LocalDate giorno) throws Exception;
     ArrayList<FirstDishGS> viewFirst() throws Exception;
     ArrayList<SecondDishGS> viewSecond() throws Exception;
     ArrayList<SideDishGS> viewSide() throws Exception;

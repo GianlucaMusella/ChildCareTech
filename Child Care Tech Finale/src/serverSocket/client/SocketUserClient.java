@@ -1380,7 +1380,7 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
-    public boolean addMenu(String nome, String primo, String secondo, LocalDate giorno) throws Exception {
+    public boolean addMenu(String nome, String primo, String secondo, String contorno, LocalDate giorno) throws Exception {
 
         boolean success = false;
 
@@ -1395,6 +1395,8 @@ public class SocketUserClient implements InterfaceServer {
             toServer.writeUnshared(secondo);
             toServer.flush();
             toServer.writeUnshared(String.valueOf(giorno));
+            toServer.flush();
+            toServer.writeUnshared(contorno);
             toServer.flush();
 
         }catch (IOException e){
