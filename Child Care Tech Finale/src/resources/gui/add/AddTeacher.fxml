@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -26,8 +27,11 @@
       <DatePicker fx:id="dateData" layoutX="41.0" layoutY="150.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di Nascita" />
       <TextField fx:id="txtLuogo" layoutX="41.0" layoutY="183.0" promptText="Luogo di Nascita" />
       <TextField fx:id="txtAllergie" layoutX="41.0" layoutY="219.0" promptText="Allergie" />
-      <RadioButton fx:id="radioMaschio" layoutX="41.0" layoutY="258.0" mnemonicParsing="false" text="Maschio" />
-      <RadioButton fx:id="radioFemmina" layoutX="116.0" layoutY="258.0" mnemonicParsing="false" text="Femmina" />
+      <RadioButton fx:id="radioMaschio" layoutX="41.0" layoutY="258.0" mnemonicParsing="false" text="Maschio">
+         <toggleGroup>
+            <ToggleGroup fx:id="choice" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="radioFemmina" layoutX="116.0" layoutY="258.0" mnemonicParsing="false" text="Femmina" toggleGroup="$choice" />
       <TextField fx:id="txtInsegnante" layoutX="41.0" layoutY="286.0" promptText="Mansione" />
       <TextField fx:id="txtUsername" layoutX="41.0" layoutY="322.0" promptText="Username" />
       <PasswordField fx:id="txtPassword" layoutX="41.0" layoutY="358.0" promptText="Password" />

@@ -74,7 +74,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
 
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return false;
@@ -83,14 +83,14 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
     @Override
     public boolean addSupplier(String name, String surname, String azienda, String fornitura, String partitaIva) throws Exception {
-
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         PreparedStatement preparedStatement = null;
 
         String supplier = "INSERT INTO mydb.fornitori (Nome,Cognome,Azienda,TipoDiFornitura,PartitaIVA) VALUES (?,?,?,?,?)";
 
         try {
 
-            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(supplier);
 
             preparedStatement.setString(1, name);
@@ -213,6 +213,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
             }
             rs.close();
+
         }
 
         return values;
@@ -236,8 +237,9 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
             e.printStackTrace();
         } finally {
             try {
-                if (preparedStatement != null)
+                if (preparedStatement != null) {
                     preparedStatement.close();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -251,13 +253,13 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement1 = null;
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
 
         String order = "INSERT INTO mydb.ordine (Nome, Quantità) VALUES (?,?)";
         String fornitura = "INSERT INTO mydb.fornitori_has_ordine (Fornitori_Azienda, Ordine_Nome) VALUES (?,?)";
 
         try {
 
-            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(order);
             preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(fornitura);
 
@@ -277,7 +279,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
                 if (preparedStatement != null && preparedStatement1 != null) {
                     preparedStatement.close();      //chiudo le connessioni al db una volta effettuato il controllo
                     preparedStatement1.close();
-                    return true;
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -322,6 +324,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement1 = null;
         PreparedStatement preparedStatement2 = null;
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
 
         String child = "INSERT INTO mydb.bambini (idBambino,CodiceFiscale,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Allergie,Sesso,Pediatra_CodiceFiscale) VALUES (?,?,?,?,?,?,?,?,?)";
         String parents = "INSERT INTO mydb.bambini_has_genitori (Bambini_CodiceFiscale,Genitori_CodiceFiscale) VALUES (?,?)";
@@ -329,7 +332,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         try {
 
-            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(child);
             preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(parents);
             preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(contact);
@@ -378,12 +381,13 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement1 = null;
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
 
         String teacher = "INSERT INTO mydb.personaleinterno (CodiceFiscale,Nome,Cognome,Data_di_Nascita,Allergie,Luogo_di_Nascita,Sesso,Mansione) VALUES (?,?,?,?,?,?,?,?)";
         String teacherCredentials = "INSERT INTO mydb.personaleconaccesso(Username,Password,PersonaleInterno_CodiceFiscale) VALUES (?,?,?)";
         try {
 
-            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(teacher);
             preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(teacherCredentials);
 
@@ -425,12 +429,13 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     public boolean addStaff(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String mansione) throws Exception {
 
         PreparedStatement preparedStatement = null;
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
 
         String teacher = "INSERT INTO mydb.personaleinterno (CodiceFiscale,Nome,Cognome,Data_di_Nascita,Allergie,Luogo_di_Nascita,Sesso,Mansione) VALUES (?,?,?,?,?,?,?,?)";
 
         try {
 
-            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(teacher);
 
             preparedStatement.setString(1, codiceFiscale);
@@ -451,6 +456,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
                 if (preparedStatement != null) {
                     preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
+
                     return true;
                 }
             } catch (Exception e) {
@@ -561,6 +567,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
             }
             rs.close();
+
         }
 
         return values;
@@ -586,6 +593,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
             try {
                 if (preparedStatement != null)
                     preparedStatement.close();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -614,6 +622,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
             try {
                 if (st != null)
                     st.close();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -1,7 +1,6 @@
 package menuFood;
 
 import getterAndSetter.food.BambiniAllergici;
-import getterAndSetter.food.FirstDishGS;
 import interfaces.InterfaceServer;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;

@@ -16,7 +16,7 @@ si chiamerà: Bambini_has_Allergeni e i cambi saranno: Allergeni_Nome e Bambini_
  */
 
 public class Check {
-    public ArrayList<BambiniAllergici> Check (MenuGS menuGS) throws SQLException { // c'è MenuGS per non avere errori di compilazione ma servirebbe un tipo con nome, primo e secondo
+    public ArrayList<BambiniAllergici> Check (MenuGS menuGS) throws Exception { // c'è MenuGS per non avere errori di compilazione ma servirebbe un tipo con nome, primo e secondo
         ArrayList<BambiniAllergici> values = new ArrayList<>();
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();

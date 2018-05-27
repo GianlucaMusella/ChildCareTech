@@ -13,13 +13,31 @@ public class ConnectionDatabase{
     // jdbc url per MySql.
     private static final String URL = "jdbc:mysql://localhost:3306/mydb?autoReconnect=true&useSSL=false";
 
+    //private static final String driver = "com.mysql.jdbc.Driver";
     private Connection conn = null;
 
 
-    public ConnectionDatabase() {
-        conn = initializeConnection();
+    public ConnectionDatabase() throws Exception {
+        try {
+            conn = initializeConnection();
+            System.out.println("Connessione avvenuta con successo al database");
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            conn.close();
+            System.out.println("Sto chiudendo connessione al db");
+        }
+        /*Connection conn = null;
 
-        System.out.println("Connessione avvenuta con successo al database");
+        try {
+            Class.forName(driver);
+            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+
     }
 
     public Connection initializeConnection(){
@@ -38,4 +56,7 @@ public class ConnectionDatabase{
         return null;
     }
 
+    /*public Connection getConn() throws SQLException {
+        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+    }*/
 }

@@ -13,23 +13,24 @@ public class Singleton {
     }
 
     public static Singleton getInstance() {
-        if (instance == null)
-            instance = new Singleton();
-        return instance;
+        if (instance == null){
+            return new Singleton();
+        }else
+            return instance;
     }
 
     public InterfaceServer rmiLookup() {
-        User inte;
-        inte = new ClientRMI();
-        InterfaceServer rmi = null;
+        User user;
+        user = new ClientRMI();
+        InterfaceServer interfaceServer = null;
         try {
-            rmi = inte.getUser();
+            interfaceServer = user.getUser();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return rmi;
+        return interfaceServer;
     }
 
     public InterfaceServer methodSocket() {

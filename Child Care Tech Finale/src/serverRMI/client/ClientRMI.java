@@ -11,6 +11,7 @@ import java.rmi.registry.Registry;
 public class ClientRMI implements User {
 
     Registry registry = null;
+
     public ClientRMI(){
 
         try {

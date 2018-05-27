@@ -1,6 +1,5 @@
 package addPeople;
 
-import getterAndSetter.people.ChildGS;
 import getterAndSetter.people.StaffGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;

@@ -25,7 +25,7 @@ class TestLogin {
         RMIServer rmiServer = new RMIServer();
 
         assertTrue(rmiServer.login("f", "atz"));
-        assertTrue(rmiServer.login("t", "l"));
+
     }
 
 }
