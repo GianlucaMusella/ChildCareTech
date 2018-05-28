@@ -68,8 +68,10 @@ public interface InterfaceServer extends Remote{
     ArrayList<BambiniAllergici> viewCheck(String primo, String secondo, String contorno) throws Exception;
     boolean addPrimo(String nome, String allergeni) throws Exception;
     boolean addSecondo(String nome, String allergeni) throws Exception;
+    boolean addAllergy(String allergeni) throws Exception;
     boolean addSide(String nome, String allergeni) throws Exception;
     boolean deleteMenu(String nomeMenu) throws Exception;
+    boolean controlAllergy(String allergeni) throws Exception;
 
 
     boolean newTrip(String id, String meta, LocalDate andata, LocalDate ritorno) throws Exception;

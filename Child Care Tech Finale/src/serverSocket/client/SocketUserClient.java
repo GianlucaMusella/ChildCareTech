@@ -322,7 +322,8 @@ public class SocketUserClient implements InterfaceServer {
             e.printStackTrace();
         }
 
-        return success;    }
+        return success;
+    }
 
     @Override
     public boolean addChild(String codiceFiscale, String idBambino, String nome, String cognome, LocalDate data, String luogo, String allergie, String genitore1, String genitore2, String sesso, String pediatra, String Contatto) throws Exception {
@@ -1918,6 +1919,30 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
+    public boolean addAllergy(String allergeni) throws Exception {
+        boolean success = false;
+
+        try{
+
+            toServer.writeUnshared("addAllergy");
+            toServer.flush();
+            toServer.writeUnshared(allergeni);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = (boolean) fromServer.readUnshared();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return success;
+    }
+
+    @Override
     public boolean addSide(String nome, String allergeni) throws Exception {
 
         boolean success = false;
@@ -1965,6 +1990,33 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean controlAllergy(String allergeni) throws Exception {
+
+        boolean success = false;
+
+        try{
+
+            toServer.writeUnshared("controlAllergy");
+            toServer.flush();
+            toServer.writeUnshared(allergeni);
+            toServer.flush();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = (boolean) fromServer.readUnshared();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return success;
+
     }
 
     @Override

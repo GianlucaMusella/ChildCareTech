@@ -27,16 +27,6 @@ public class ConnectionDatabase{
             conn.close();
             System.out.println("Sto chiudendo connessione al db");
         }
-        /*Connection conn = null;
-
-        try {
-            Class.forName(driver);
-            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
 
     }
 
@@ -56,7 +46,4 @@ public class ConnectionDatabase{
         return null;
     }
 
-    /*public Connection getConn() throws SQLException {
-        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
-    }*/
 }

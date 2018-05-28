@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -41,6 +42,9 @@ public class TripOrganize implements Initializable {
     @FXML
     private TableColumn<TripGS, String> colonnaPullman;
 
+    @FXML
+    private Button show;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -51,6 +55,8 @@ public class TripOrganize implements Initializable {
         colonnaPullman.setCellValueFactory(new PropertyValueFactory<>("pullman"));
 
         tableGita.getItems().clear();
+
+        show.fire();
 
     }
 
@@ -83,6 +89,8 @@ public class TripOrganize implements Initializable {
             interfaceServer = Singleton.getInstance().methodSocket();
         }
         interfaceServer.deleteTrip(idGita);
+
+        show.fire();
 
     }
 

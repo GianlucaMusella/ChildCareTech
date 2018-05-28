@@ -22,20 +22,26 @@ public class AddSideDish {
     @FXML
     private Label lblStatus;
 
+    private InterfaceServer interfaceServer;
+
+    public AddSideDish(){
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+    }
 
     public void addSideDish(ActionEvent actionEvent) throws Exception{
+        String nome = nomeContorno.getText();
+        String allergeni = txtAllergeni.getText();
+
         if (nomeContorno.getText().isEmpty() || txtAllergeni.getText().isEmpty())
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         else {
-            String nome = nomeContorno.getText();
-            String allergeni = txtAllergeni.getText();
+
             try {
-                InterfaceServer interfaceServer;
-                if (Controller.selection.equals("RMI")) {
-                    interfaceServer = Singleton.getInstance().rmiLookup();
-                } else {
-                    interfaceServer = Singleton.getInstance().methodSocket();
-                }
+
                 boolean success = interfaceServer.addSide(nome, allergeni);
                 if (success) {
                     nomeContorno.clear();

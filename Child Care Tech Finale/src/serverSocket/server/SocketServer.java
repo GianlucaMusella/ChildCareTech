@@ -1088,7 +1088,34 @@ public class SocketServer extends Thread implements Runnable {
             }
             return responce;
 
+        }else if(commandMethod.equals("controlAllergy")){
+
+            try {
+
+                System.out.println("Sto eseguendo da Socket");
+                String allergeni = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.controlAllergy(allergeni);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
+        }else if(commandMethod.equals("addAllergy")){
+
+            try {
+
+                System.out.println("Sto eseguendo da Socket");
+                String allergeni = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.addAllergy(allergeni);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
         }
+
 
         return false;
     }

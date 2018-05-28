@@ -1570,26 +1570,20 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     @Override
     public boolean addPrimo(String nome, String allergeni) throws Exception {
         PreparedStatement preparedStatement = null;
-        PreparedStatement preparedStatement1 = null;
         PreparedStatement preparedStatement2 = null;
 
 
         String primoPiatto = "INSERT INTO mydb.primi (Nome) VALUES (?)";
-        String sqlAllergeni = "INSERT INTO mydb.allergeni (Nome) VALUES (?)";
         String primiEAllergeni = "INSERT INTO mydb.allergeni_has_primi (Allergeni_Nome, Primi_Nome) VALUES (?,?)";
 
         try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(primoPiatto);
-            preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(sqlAllergeni);
             preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(primiEAllergeni);
 
             preparedStatement.setString(1, nome);
             preparedStatement.executeUpdate();
-
-            preparedStatement1.setString(1, allergeni);
-            preparedStatement1.executeUpdate();
 
             preparedStatement2.setString(1, allergeni);
             preparedStatement2.setString(2, nome);
@@ -1600,9 +1594,8 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         } finally {
             try {
 
-                if (preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null) {
+                if (preparedStatement != null  && preparedStatement2 != null) {
                     preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
-                    preparedStatement1.close();
                     preparedStatement2.close();
                     return true;
                 }
@@ -1618,25 +1611,19 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     @Override
     public boolean addSecondo(String nome, String allergeni) throws Exception {
         PreparedStatement preparedStatement = null;
-        PreparedStatement preparedStatement1 = null;
         PreparedStatement preparedStatement2 = null;
 
         String secondoPiatto = "INSERT INTO mydb.secondi (Nome) VALUES (?)";
-        String sqlAllergeni = "INSERT INTO mydb.allergeni (Nome) VALUES (?)";
         String primiEAllergeni = "INSERT INTO mydb.allergeni_has_secondi (Allergeni_Nome, Secondi_Nome) VALUES (?,?)";
 
         try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(secondoPiatto);
-            preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(sqlAllergeni);
             preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(primiEAllergeni);
 
             preparedStatement.setString(1, nome);
             preparedStatement.executeUpdate();
-
-            preparedStatement1.setString(1, allergeni);
-            preparedStatement1.executeUpdate();
 
             preparedStatement2.setString(1, allergeni);
             preparedStatement2.setString(2, nome);
@@ -1647,10 +1634,43 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         } finally {
             try {
 
-                if (preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null) {
+                if (preparedStatement != null && preparedStatement2 != null) {
                     preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
-                    preparedStatement1.close();
                     preparedStatement2.close();
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+
+    }
+
+    @Override
+    public boolean addAllergy(String allergeni) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+
+        String sqlAllergeni = "INSERT INTO mydb.allergeni (Nome) VALUES (?)";
+
+        try {
+
+            ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+            preparedStatement = connectionDatabase.initializeConnection().prepareStatement(sqlAllergeni);
+
+            preparedStatement.setString(1, allergeni);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+
+                if (preparedStatement != null) {
+                    preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
+
                     return true;
                 }
             } catch (Exception e) {
@@ -1666,25 +1686,19 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     public boolean addSide(String nome, String allergeni) throws Exception {
 
         PreparedStatement preparedStatement = null;
-        PreparedStatement preparedStatement1 = null;
         PreparedStatement preparedStatement2 = null;
 
         String secondoPiatto = "INSERT INTO mydb.contorno (Nome) VALUES (?)";
-        String sqlAllergeni = "INSERT INTO mydb.allergeni (Nome) VALUES (?)";
         String contornoEAllergeni = "INSERT INTO mydb.allergeni_has_contorno (Allergeni_Nome, Contorno_Nome) VALUES (?,?)";
 
         try {
 
             ConnectionDatabase connectionDatabase = new ConnectionDatabase();
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(secondoPiatto);
-            preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(sqlAllergeni);
             preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(contornoEAllergeni);
 
             preparedStatement.setString(1, nome);
             preparedStatement.executeUpdate();
-
-            preparedStatement1.setString(1, allergeni);
-            preparedStatement1.executeUpdate();
 
             preparedStatement2.setString(1, allergeni);
             preparedStatement2.setString(2, nome);
@@ -1695,9 +1709,8 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         } finally {
             try {
 
-                if (preparedStatement != null && preparedStatement1 != null && preparedStatement2 != null) {
+                if (preparedStatement != null && preparedStatement2 != null) {
                     preparedStatement.close();  //chiudo le connessioni al db una volta effettuato il controllo
-                    preparedStatement1.close();
                     preparedStatement2.close();
                     return true;
                 }
@@ -1739,6 +1752,22 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         return true;
 
+    }
+
+    @Override
+    public boolean controlAllergy(String allergeni) throws Exception {
+        String control = "SELECT * FROM mydb.allergeni WHERE Nome = '"+ allergeni+"'";
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(control);
+
+        while (!rs.next()) {
+            return true;
+        }
+        rs.close();
+        return false;
     }
 
     @Override

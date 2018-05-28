@@ -22,20 +22,27 @@ public class AddFirstDish {
     @FXML
     private Label lblStatus;
 
+    private InterfaceServer interfaceServer;
+
+    public AddFirstDish(){
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+    }
 
     public void addFirstDish(ActionEvent actionEvent) throws Exception {
-        if (nomePrimo.getText().isEmpty() || txtAllergeni.getText().isEmpty())
+        String nome = nomePrimo.getText();
+        String allergeni = txtAllergeni.getText();
+
+        if (nomePrimo.getText().isEmpty() || txtAllergeni.getText().isEmpty()) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        else {
-            String nome = nomePrimo.getText();
-            String allergeni = txtAllergeni.getText();
+        }if(interfaceServer.controlAllergy(allergeni)){
+            interfaceServer.addAllergy(allergeni);
+        } else {
             try {
-                InterfaceServer interfaceServer;
-                if (Controller.selection.equals("RMI")) {
-                    interfaceServer = Singleton.getInstance().rmiLookup();
-                } else {
-                    interfaceServer = Singleton.getInstance().methodSocket();
-                }
+
                 boolean success = interfaceServer.addPrimo(nome, allergeni);
                 if (success){
                     nomePrimo.clear();
