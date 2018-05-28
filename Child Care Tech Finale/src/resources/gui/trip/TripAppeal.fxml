@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -25,13 +26,14 @@
     </TableView>
     <Button layoutX="234.0" layoutY="400.0" mnemonicParsing="false" onAction="#appelloTrip" text="Segna Presenza" />
     <Button layoutX="416.0" layoutY="400.0" mnemonicParsing="false" onAction="#assenza" text="Segna Assenza" />
-    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method">
         <graphic>
             <ImageView fitHeight="27.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                <Image url="@../../image/back-arrow-35325b9dd72f970a-512x512.png" />
             </ImageView>
         </graphic>
     </Button>
    <TextField fx:id="txtPullman" layoutX="42.0" layoutY="400.0" prefHeight="25.0" prefWidth="120.0" promptText="Numero pullman" />
    <Button layoutX="578.0" layoutY="400.0" mnemonicParsing="false" onAction="#assenzaAll" text="Azzera Appello" />
+   <Label fx:id="lblStatus" layoutX="483.0" layoutY="80.0" textFill="RED" />
 </AnchorPane>

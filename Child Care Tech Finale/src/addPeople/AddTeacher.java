@@ -125,29 +125,30 @@ public class AddTeacher implements Initializable{
         if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16 ||
                 txtLuogo.getText().isEmpty() || txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        }else if (!interfaceServer.controlStaff(codiceFiscale)) {
-                lblStatus.setText("ERRORE: Cambia Codice Fiscale");
         }else {
+            if (!interfaceServer.controlStaff(codiceFiscale)) {
+                lblStatus.setText("ERRORE: Cambia Codice Fiscale");
+            }else {
+                try {
 
-            try {
-
-                boolean success = interfaceServer.addTeacher(nome, cognome, codiceFiscale, data, luogo, allergie, sesso, insegnante, username, password);
-                if (success) {
-                    txtNome.clear();
-                    txtCognome.clear();
-                    txtCodiceFiscale.clear();
-                    txtAllergie.clear();
-                    txtLuogo.clear();
-                    txtInsegnante.clear();
-                    txtUsername.clear();
-                    txtPassword.clear();
-                    dateData.getEditor().clear();
-                    lblStatus.setTextFill(Color.BLACK);
-                    lblStatus.setText("Inserimento riuscito");
-                    show.fire();
+                    boolean success = interfaceServer.addTeacher(nome, cognome, codiceFiscale, data, luogo, allergie, sesso, insegnante, username, password);
+                    if (success) {
+                        txtNome.clear();
+                        txtCognome.clear();
+                        txtCodiceFiscale.clear();
+                        txtAllergie.clear();
+                        txtLuogo.clear();
+                        txtInsegnante.clear();
+                        txtUsername.clear();
+                        txtPassword.clear();
+                        dateData.getEditor().clear();
+                        lblStatus.setTextFill(Color.BLACK);
+                        lblStatus.setText("Inserimento riuscito");
+                        show.fire();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }

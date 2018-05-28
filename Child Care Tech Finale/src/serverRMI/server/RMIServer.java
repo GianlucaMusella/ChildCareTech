@@ -326,12 +326,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         ResultSet rs = statement.executeQuery(control);
 
-        while (!rs.next()) {
+        if(!rs.next())
             return true;
-        }
-
-        rs.close();
-        return false;
+        else
+            return false;
     }
 
     @Override
@@ -656,11 +654,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         ResultSet rs = statement.executeQuery(control);
 
-        while (!rs.next()) {
+        if(!rs.next())
             return true;
-        }
-        rs.close();
-        return false;
+        else
+            return false;
     }
 
 
@@ -919,11 +916,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         ResultSet rs = statement.executeQuery(control);
 
-        while (!rs.next()) {
+        if(!rs.next())
             return true;
-        }
-        rs.close();
-        return false;
+        else
+            return false;
 
     }
 
@@ -937,11 +933,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         ResultSet rs = statement.executeQuery(control);
 
-        while (!rs.next()) {
+        if(!rs.next())
             return true;
-        }
-        rs.close();
-        return false;
+        else
+            return false;
 
     }
 
@@ -1109,11 +1104,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         ResultSet rs = statement.executeQuery(control);
 
-        while (!rs.next()) {
+        if(!rs.next())
             return true;
-        }
-        rs.close();
-        return false;
+        else
+            return false;
     }
 
     @Override
@@ -1240,11 +1234,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         ResultSet rs = statement.executeQuery(control);
 
-        while (!rs.next()) {
+        if(!rs.next())
             return true;
-        }
-        rs.close();
-        return false;
+        else
+            return false;
     }
 
     @Override
@@ -1374,11 +1367,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         ResultSet rs = statement.executeQuery(control);
 
-        while (!rs.next()) {
+        if(!rs.next())
             return true;
-        }
-        rs.close();
-        return false;
+        else
+            return false;
     }
 
     @Override
@@ -1415,20 +1407,19 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
                     "INNER JOIN mydb.allergeni ON mydb.allergeni_has_primi.Allergeni_Nome = mydb.allergeni.Nome) " +
                     "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
                     "WHERE mydb.primi.Nome = '" + primo + "'");
-            String SQLPersonal = ("SELECT  mydb.PersonaleInterno.Nome, mydb.PersonaleInterno.Cognome, mydb.Allergeni.Nome, mydb.Primi.Nome " +
+            String SQLPersonal = ("SELECT  mydb.personaleinterno.Nome, mydb.personaleinterno.Cognome, mydb.Allergeni.Nome, mydb.Primi.Nome " +
                     "FROM ((( mydb.primi " +
                     "INNER JOIN mydb.allergeni_has_primi ON mydb.allergeni_has_primi.Primi_Nome = mydb.primi.nome) " +
                     "INNER JOIN mydb.allergeni ON mydb.allergeni_has_primi.Allergeni_Nome = mydb.allergeni.Nome) " +
-                    "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
+                    "INNER JOIN mydb.personaleinterno ON mydb.personaleinterno.Allergie = mydb.allergeni.Nome) " +
                     "WHERE mydb.primi.Nome = '" + primo + "'");
             ResultSet rsChild = stmt.executeQuery(SQLChild);
-            ResultSet rsPersonal = stmt.executeQuery(SQLPersonal);
-
             //System.out.println(rs.getString(1)); // prova per vedere se funziona
 
             while (rsChild.next())
                 values.add(new BambiniAllergici(rsChild.getString(1), rsChild.getString(2), rsChild.getString(3),
                         rsChild.getString(4), null, null));
+            ResultSet rsPersonal = stmt.executeQuery(SQLPersonal);
             while (rsPersonal.next())
                 values.add(new BambiniAllergici(rsPersonal.getString(1), rsPersonal.getString(2), rsPersonal.getString(3),
                         rsPersonal.getString(4), null, null));
@@ -1444,14 +1435,15 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
                     "FROM ((( mydb.secondi " +
                     "INNER JOIN mydb.allergeni_has_secondi ON mydb.allergeni_has_secondi.Secondi_Nome = mydb.secondi.nome) " +
                     "INNER JOIN mydb.allergeni ON mydb.allergeni_has_secondi.Allergeni_Nome = mydb.allergeni.Nome) " +
-                    "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
+                    "INNER JOIN mydb.personaleinterno ON mydb.personaleinterno.Allergie = mydb.allergeni.Nome) " +
                     "WHERE mydb.secondi.Nome = '" + secondo + "'");
             ResultSet rs = stmt.executeQuery(SQL);
-            ResultSet rsPersonal = stmt.executeQuery(SQLPersonal);
+
 
             while (rs.next())
                 values.add(new BambiniAllergici(rs.getString(1), rs.getString(2), rs.getString(3),
                         null, rs.getString(4), null));
+            ResultSet rsPersonal = stmt.executeQuery(SQLPersonal);
             while (rsPersonal.next())
                 values.add(new BambiniAllergici(rsPersonal.getString(1), rsPersonal.getString(2), rsPersonal.getString(3),
                         null , rsPersonal.getString(4), null));
@@ -1467,14 +1459,15 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
                     "FROM ((( mydb.contorno " +
                     "INNER JOIN mydb.allergeni_has_contorno ON mydb.allergeni_has_contorno.Contorno_Nome = mydb.contorno.nome) " +
                     "INNER JOIN mydb.allergeni ON mydb.allergeni_has_contorno.Allergeni_Nome = mydb.allergeni.Nome) " +
-                    "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
+                    "INNER JOIN mydb.personaleinterno ON mydb.personaleinterno.Allergie = mydb.allergeni.Nome) " +
                     "WHERE mydb.contorno.Nome = '" + contorno + "'");
             ResultSet rs = stmt.executeQuery(SQL);
-            ResultSet rsPersonal = stmt.executeQuery(SQLPersonal);
 
             while (rs.next())
                 values.add(new BambiniAllergici(rs.getString(1), rs.getString(2), rs.getString(3),
                         null, null, rs.getString(4)));
+            ResultSet rsPersonal = stmt.executeQuery(SQLPersonal);
+
             while (rsPersonal.next())
                 values.add(new BambiniAllergici(rsPersonal.getString(1), rsPersonal.getString(2), rsPersonal.getString(3),
                         null , null, rsPersonal.getString(4)));
@@ -1482,17 +1475,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         return values;
     }
-     /*
-            SELECT  mydb.bambini.Nome, mydb.bambini.Cognome, mydb.Allergeni.Nome, mydb.Primi.Nome, mydb.secondi.Nome, mydb.menumensa.Nome " +
-                    "FROM (((((( mydb.menumensa " +
-                    "INNER JOIN mydb.Primi ON mydb.menumensa.Primi_Nome = mydb.primi.Nome)" +
-                    "INNER JOIN mydb.allergeni_has_primi ON mydb.allergeni_has_primi.Primi_Nome = mydb.primi.nome) " +
-                    "INNER JOIN mydb.secondi ON mydb.menumensa.Secondi_Nome = mydb.secondi.Nome) " +
-                    "INNER JOIN mydb.allergeni_has_secondi ON mydb.allergeni_has_secondi.Secondi_Nome = mydb.secondi.nome) " +
-                    "INNER JOIN mydb.allergeni ON mydb.allergeni_has_primi.Allergeni_Nome = mydb.allergeni.Nome OR mydb.allergeni_has_secondi.Allergeni_Nome = mydb.allergeni.Nome) " +
-                    "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
-                    "WHERE mydb.menumensa.Nome = '" + primo + "'");
-             */
+
 
     @Override
     public boolean addMenu(String nome, String primo, String secondo, String contorno, LocalDate giorno) throws Exception {
@@ -1785,6 +1768,95 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
+    public boolean deleteFirst(String first) throws Exception {
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.primi WHERE Nome = '" + first + "';";
+
+        try {
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from Primi.");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean deleteSecond(String second) throws Exception {
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.secondi WHERE Nome = '" + second + "';";
+
+        try {
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from Secondi.");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean deleteSide(String side) throws Exception {
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.menumensa WHERE Nome = '" + side + "';";
+
+        try {
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from Side.");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
+
+    }
+
+    @Override
     public boolean controlAllergy(String allergeni) throws Exception {
         String control = "SELECT * FROM mydb.allergeni WHERE Nome = '"+ allergeni+"'";
 
@@ -1793,11 +1865,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         ResultSet rs = statement.executeQuery(control);
 
-        while (!rs.next()) {
+        if(!rs.next())
             return true;
-        }
-        rs.close();
-        return false;
+        else
+            return false;
     }
 
     @Override
@@ -1918,7 +1989,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
-    public boolean newTappaServer(String tappa, String idGita, LocalDate giorno, String ora) throws Exception {
+    public boolean newTappaServer(String tappa, String idGita, LocalDate giorno) throws Exception {
 
 
         PreparedStatement preparedStatement = null;
@@ -2067,11 +2138,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         ResultSet rs = statement.executeQuery(control);
 
-        while (!rs.next()) {
+        if(!rs.next())
             return true;
-        }
-        rs.close();
-        return false;
+        else
+            return false;
     }
 
 }

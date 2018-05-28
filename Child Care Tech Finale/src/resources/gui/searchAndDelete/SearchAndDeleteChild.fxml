@@ -22,20 +22,20 @@
                 <TableColumn id="columnNome" fx:id="columnNome" prefWidth="109.0" text="Nome" />
                 <TableColumn id="columnCognome" fx:id="columnCognome" prefWidth="113.0" text="Cognome" />
                 <TableColumn id="columnCodicefiscale" fx:id="columnCodicefiscale" prefWidth="151.0" text="Codice Fiscale" />
-            <TableColumn id="columnNome" fx:id="columnID" prefWidth="69.0" text="ID" />
+            <TableColumn id="columnNome" fx:id="columnID" prefWidth="136.0" text="ID" />
             </columns>
         </TableView>
         <TextField id="nome" fx:id="txtNome" layoutX="55.0" layoutY="54.0" prefHeight="25.0" prefWidth="135.0" promptText="Nome" />
         <TextField id="cognome" fx:id="txtCognome" layoutX="243.0" layoutY="54.0" prefHeight="25.0" prefWidth="135.0" promptText="Cognome" />
         <TextField id="codicefiscale" fx:id="txtCodicefiscale" layoutX="430.0" layoutY="54.0" prefHeight="25.0" prefWidth="135.0" promptText="Codice fiscale" />
-      <Button layoutX="55.0" layoutY="365.0" mnemonicParsing="false" onAction="#viewChild" text="Mostra Bambini" />
+      <Button fx:id="show" layoutX="55.0" layoutY="365.0" mnemonicParsing="false" onAction="#viewChild" text="Mostra Bambini" />
         <Button layoutX="287.0" layoutY="365.0" mnemonicParsing="false" onAction="#searchChild" text="Cerca" />
       <Button layoutX="513.0" layoutY="365.0" mnemonicParsing="false" onAction="#deleteChild" text="Elimina" />
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                  <Image url="@../../image/back-arrow-35325b9dd72f970a-512x512.png" />
                </image>
             </ImageView>
          </graphic>

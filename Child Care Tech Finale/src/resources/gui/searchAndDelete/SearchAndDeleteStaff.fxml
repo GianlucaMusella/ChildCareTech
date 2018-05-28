@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="651.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="searchAndDelete.SearchAndDeleteStaff">
     <children>
@@ -17,7 +15,7 @@
             <Image url="@../../image/185235620.jpg" />
          </image>
       </ImageView>
-        <TableView id="tableBambini" fx:id="tabellaStaff" layoutX="74.0" layoutY="93.0" prefHeight="282.0" prefWidth="513.0">
+        <TableView id="tableBambini" fx:id="tabellaStaff" layoutX="69.0" layoutY="92.0" prefHeight="282.0" prefWidth="513.0">
             <columns>
                 <TableColumn id="columnNome" fx:id="columnNome" prefWidth="132.0" text="Nome" />
             <TableColumn fx:id="columnCognome" prefWidth="105.0" text="Cognome" />
@@ -28,21 +26,17 @@
         <TextField id="nome" fx:id="txtNome" layoutX="73.0" layoutY="54.0" promptText="Nome" />
       <TextField fx:id="txtCognome" layoutX="251.0" layoutY="54.0" promptText="Cognome" />
         <TextField id="codicefiscale" fx:id="txtCodicefiscale" layoutX="438.0" layoutY="54.0" promptText="Codice Fiscale" />
-        <Button layoutX="308.0" layoutY="393.0" mnemonicParsing="false" onAction="#searchStaff" text="Cerca" />
-        <Button layoutX="74.0" layoutY="393.0" mnemonicParsing="false" onAction="#viewStaff" text="Carica Dati" />
-        <Button layoutX="532.0" layoutY="393.0" mnemonicParsing="false" onAction="#deleteStaff" text="Elimina" />
-        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+        <Button layoutX="302.0" layoutY="395.0" mnemonicParsing="false" onAction="#searchStaff" text="Cerca" />
+        <Button fx:id="show" layoutX="69.0" layoutY="393.0" mnemonicParsing="false" onAction="#viewStaff" text="Carica Dati" />
+        <Button layoutX="527.0" layoutY="393.0" mnemonicParsing="false" onAction="#deleteStaff" text="Elimina" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method">
          <graphic>
-            <ImageView fitHeight="21.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="31.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                  <Image url="@../../image/back-arrow-35325b9dd72f970a-512x512.png" />
                </image>
             </ImageView>
-         </graphic></Button>
-      <Hyperlink layoutX="587.0" layoutY="407.0" onAction="#logout" text="Logout">
-         <font>
-            <Font name="System Bold Italic" size="12.0" />
-         </font>
-      </Hyperlink>
+         </graphic>
+      </Button>
     </children>
 </Pane>

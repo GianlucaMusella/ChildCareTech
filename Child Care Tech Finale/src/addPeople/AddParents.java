@@ -119,28 +119,29 @@ public class AddParents implements Initializable{
         }
 
         if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() &&
-                txtCodiceFiscale.getText().length() == 16 || txtLuogo.getText().isEmpty() ) {
+                txtCodiceFiscale.getText().length() == 16 || txtLuogo.getText().isEmpty()) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        }else if (!interfaceServer.controlParents(codiceFiscale)) {
+        } else {
+            if (!interfaceServer.controlParents(codiceFiscale)) {
                 lblStatus.setText("ERRORE: Cambia Codice Fiscale");
-        }else {
+            } else {
+                try {
 
-            try {
-
-                boolean success = interfaceServer.addParents(codiceFiscale, nome, cognome, data, luogo, telefono, sesso);
-                if (success) {
-                    txtNome.clear();
-                    txtCognome.clear();
-                    txtCodiceFiscale.clear();
-                    txtLuogo.clear();
-                    dateData.getEditor().clear();
-                    txtTelefono.clear();
-                    lblStatus.setTextFill(Color.BLACK);
-                    lblStatus.setText("Inserimento riuscito");
-                    show.fire();
+                    boolean success = interfaceServer.addParents(codiceFiscale, nome, cognome, data, luogo, telefono, sesso);
+                    if (success) {
+                        txtNome.clear();
+                        txtCognome.clear();
+                        txtCodiceFiscale.clear();
+                        txtLuogo.clear();
+                        dateData.getEditor().clear();
+                        txtTelefono.clear();
+                        lblStatus.setTextFill(Color.BLACK);
+                        lblStatus.setText("Inserimento riuscito");
+                        show.fire();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e){
-                e.printStackTrace();
             }
         }
     }

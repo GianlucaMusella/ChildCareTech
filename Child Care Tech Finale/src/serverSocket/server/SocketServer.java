@@ -869,6 +869,45 @@ public class SocketServer extends Thread implements Runnable {
             }
             return responce;
 
+        }else if(commandMethod.equals("deleteFirst")){
+
+            try {
+                System.out.println("Sto eseguendo da Socket");
+                String first = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.deleteFirst(first);
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
+        }else if(commandMethod.equals("deleteSecond")){
+
+            try {
+                System.out.println("Sto eseguendo da Socket");
+                String second = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.deleteSecond(second);
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
+        }else if(commandMethod.equals("deleteSide")){
+
+            try {
+                System.out.println("Sto eseguendo da Socket");
+                String side = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.deleteSide(side);
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
         }
 
 
@@ -957,7 +996,7 @@ public class SocketServer extends Thread implements Runnable {
                 LocalDate giorno = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
                 String ora = (String) inputFromClient.readUnshared();
 
-                responce = rmiServer.newTappaServer(tappa, idGita, giorno, ora);
+                responce = rmiServer.newTappaServer(tappa, idGita, giorno);
 
             }catch (ClassNotFoundException e) {
                 e.printStackTrace();

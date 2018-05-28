@@ -35,11 +35,11 @@
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Hyperlink>
-      <Button layoutX="14.0" layoutY="20.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+      <Button layoutX="14.0" layoutY="20.0" mnemonicParsing="false" onAction="#back_method">
          <graphic>
             <ImageView fitHeight="39.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                  <Image url="@../../image/back-arrow-35325b9dd72f970a-512x512.png" />
                </image>
             </ImageView>
          </graphic>

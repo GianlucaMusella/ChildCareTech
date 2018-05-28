@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,6 +49,18 @@ public class SearchAndDeleteChild implements Initializable {
     @FXML
     private TableColumn<ChildGS, String> columnID;
 
+    @FXML
+    private Button show;
+
+    private InterfaceServer interfaceServer;
+
+    public SearchAndDeleteChild(){
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -59,16 +72,12 @@ public class SearchAndDeleteChild implements Initializable {
 
         tableBambini.getItems().clear();
 
+        show.fire();
     }
 
     public void viewChild(ActionEvent actionEvent) throws Exception {
 
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
-        }
+
         ArrayList<ChildGS> childrenGS = interfaceServer.viewChild();
 
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
@@ -79,12 +88,6 @@ public class SearchAndDeleteChild implements Initializable {
 
     public void searchChild(ActionEvent actionEvent) throws Exception {
 
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
-        }
         ArrayList<ChildGS> childrenGS = interfaceServer.searchC(txtNome.getText(), txtCognome.getText(), txtCodicefiscale.getText());
 
         tableBambini.setColumnResizePolicy(tableBambini.CONSTRAINED_RESIZE_POLICY);
@@ -100,12 +103,6 @@ public class SearchAndDeleteChild implements Initializable {
 
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
-        }
         interfaceServer.deleteChild(codiceFiscale);
         tableBambini.getItems().remove(index);
 

@@ -102,27 +102,30 @@ public class AddDoctor implements Initializable{
             sesso = sessoF;
         }
 
-        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16|| txtLuogo.getText().isEmpty()) {
+        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16 || txtLuogo.getText().isEmpty()) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        }else if (!interfaceServer.controlDoctor(codiceFiscale)) {
-                lblStatus.setText("ERRORE: Cambia Codice Fiscale");
         } else {
-            try {
 
-                boolean success = interfaceServer.addDoctor(codiceFiscale, nome, cognome, data, luogo, sesso);
+            if (!interfaceServer.controlDoctor(codiceFiscale)) {
+                lblStatus.setText("ERRORE: Cambia Codice Fiscale");
+            } else {
+                try {
 
-                if (success) {
-                    txtNome.clear();
-                    txtCognome.clear();
-                    txtCodiceFiscale.clear();
-                    txtLuogo.clear();
-                    dataData.getEditor().clear();
-                    lblStatus.setTextFill(Color.BLACK);
-                    lblStatus.setText("Inserimento riuscito");
-                    show.fire();
+                    boolean success = interfaceServer.addDoctor(codiceFiscale, nome, cognome, data, luogo, sesso);
+
+                    if (success) {
+                        txtNome.clear();
+                        txtCognome.clear();
+                        txtCodiceFiscale.clear();
+                        txtLuogo.clear();
+                        dataData.getEditor().clear();
+                        lblStatus.setTextFill(Color.BLACK);
+                        lblStatus.setText("Inserimento riuscito");
+                        show.fire();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }

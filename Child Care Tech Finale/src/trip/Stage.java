@@ -16,6 +16,7 @@ import main.Singleton;
 import interfaces.InterfaceServer;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,9 +31,6 @@ public class Stage implements Initializable{
 
     @FXML
     private TextField txtidGita;
-
-    @FXML
-    private TextField txtOra;
 
     @FXML
     private TableView<TripGS> tableGita;
@@ -51,6 +49,9 @@ public class Stage implements Initializable{
 
     @FXML
     private Button show;
+
+    @FXML
+    private Label lblStatus;
 
     private InterfaceServer interfaceServer;
 
@@ -103,16 +104,23 @@ public class Stage implements Initializable{
         String tappa = txtTappa.getText();
         String idGita = txtidGita.getText();
         LocalDate giorno = giornoTappa.getValue();
-        String ora = txtOra.getText();
 
+        if (txtTappa.getText().isEmpty() || txtidGita.getText().isEmpty() || giornoTappa.getValue() == null || giornoTappa.getValue() == null) {
+            lblStatus.setText("ERRORE: Inserire dati obbligatori");
+        }else {
+            try {
+                boolean success = interfaceServer.newTappaServer(tappa, idGita, giorno);
 
-        interfaceServer.newTappaServer(tappa, idGita, giorno, ora);
+                if (success) {
+                    txtidGita.clear();
+                    txtTappa.clear();
+                    giornoTappa.getEditor().clear();
+                }
+            }catch (RemoteException e){
+                e.printStackTrace();
+            }
 
-
-        txtidGita.clear();
-        txtTappa.clear();
-        txtOra.clear();
-        giornoTappa.getEditor().clear();
+        }
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{

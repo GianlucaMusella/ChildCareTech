@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -48,6 +49,8 @@ public class SearchAndDeleteStaff implements Initializable{
     @FXML
     private TableColumn<StaffGS, String> columnMansione;
 
+    @FXML
+    private Button show;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -59,6 +62,7 @@ public class SearchAndDeleteStaff implements Initializable{
 
         tabellaStaff.getItems().clear();
 
+        show.fire();
     }
 
     public void viewStaff(ActionEvent actionEvent) throws Exception {

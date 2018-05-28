@@ -29,11 +29,11 @@
             </columns>
         </TableView>
         <Button layoutX="222.0" layoutY="303.0" mnemonicParsing="false" onAction="#viewContact" text="Carica Dati" />
-        <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+        <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method">
          <graphic>
-            <ImageView fitHeight="25.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="28.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                  <Image url="@../../image/back-arrow-35325b9dd72f970a-512x512.png" />
                </image>
             </ImageView>
          </graphic>

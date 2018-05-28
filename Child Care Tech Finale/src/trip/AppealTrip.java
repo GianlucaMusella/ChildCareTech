@@ -9,11 +9,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.Controller;
 import main.Singleton;
 import interfaces.InterfaceServer;
 
@@ -47,6 +49,19 @@ public class AppealTrip implements Initializable{
     @FXML
     private TextField txtPullman;
 
+    @FXML
+    private Label lblStatus;
+
+    private InterfaceServer interfaceServer;
+
+    public AppealTrip(){
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -59,40 +74,53 @@ public class AppealTrip implements Initializable{
 
         tableAppello.getItems().clear();
     }
+
+
     public void loadData(ActionEvent actionEvent) throws Exception {
 
-        InterfaceServer interfaceServer = Singleton.getInstance().rmiLookup();
-        ArrayList<AppealGS> appelloGSArrayList = interfaceServer.loadDataServer(Integer.parseInt(idGita.getText()));  //Qui vado a chiamare la parte Server che scrivo in fondo al codice come ieri
+        if(idGita.getText().isEmpty()) {
+            lblStatus.setText("Errore: dati mancanti");
+        } else {
+            ArrayList<AppealGS> appelloGSArrayList = interfaceServer.loadDataServer(Integer.parseInt(idGita.getText()));  //Qui vado a chiamare la parte Server che scrivo in fondo al codice come ieri
 
-        tableAppello.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableAppello.setItems(FXCollections.observableArrayList(appelloGSArrayList));
-
+            tableAppello.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+            tableAppello.setItems(FXCollections.observableArrayList(appelloGSArrayList));
+        }
     }
 
     public void appelloTrip (ActionEvent actionEvent) throws Exception {
-        AppealGS bambinoPresente = tableAppello.getSelectionModel().getSelectedItem();
-        String codiceFiscale = bambinoPresente.getCodiceFiscale();
 
-        System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        InterfaceServer interfaceServer = Singleton.getInstance().rmiLookup();
-        interfaceServer.bambinoPresenteServer(codiceFiscale, Integer.parseInt(idGita.getText()), Integer.parseInt(txtPullman.getText()));
+        if(idGita.getText().isEmpty() || txtPullman.getText().isEmpty()) {
+            lblStatus.setText("Errore: dati mancanti");
+        } else {
+
+            AppealGS bambinoPresente = tableAppello.getSelectionModel().getSelectedItem();
+            String codiceFiscale = bambinoPresente.getCodiceFiscale();
+
+            interfaceServer.bambinoPresenteServer(codiceFiscale, Integer.parseInt(idGita.getText()), Integer.parseInt(txtPullman.getText()));
+        }
+
     }
 
     public void assenza (ActionEvent actionEvent) throws Exception {
 
-        AppealGS bambinoAssente = tableAppello.getSelectionModel().getSelectedItem();
-        String codiceFiscale = bambinoAssente.getCodiceFiscale();
-
-        System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
-
-        InterfaceServer interfaceServer = Singleton.getInstance().rmiLookup();
-        interfaceServer.bambinoAssenteServer(codiceFiscale, Integer.parseInt(idGita.getText()));
+        if (idGita.getText().isEmpty()) {
+            lblStatus.setText("Errore: dati mancanti");
+        } else {
+            AppealGS bambinoAssente = tableAppello.getSelectionModel().getSelectedItem();
+            String codiceFiscale = bambinoAssente.getCodiceFiscale();
+            interfaceServer.bambinoAssenteServer(codiceFiscale, Integer.parseInt(idGita.getText()));
+        }
     }
 
     public void assenzaAll (ActionEvent actionEvent) throws Exception {
-        InterfaceServer interfaceServer = Singleton.getInstance().rmiLookup();
-        interfaceServer.assenzaAll(Integer.parseInt(idGita.getText()));
+
+        if (idGita.getText().isEmpty()) {
+            lblStatus.setText("Errore: dati mancanti");
+        } else {
+            interfaceServer.assenzaAll(Integer.parseInt(idGita.getText()));
+        }
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{

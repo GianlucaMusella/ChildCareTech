@@ -37,7 +37,7 @@
          <graphic>
             <ImageView fitHeight="63.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                  <Image url="@../../image/back-arrow-35325b9dd72f970a-512x512.png" />
                </image>
             </ImageView>
          </graphic>
@@ -47,7 +47,6 @@
             <Font name="System Bold Italic" size="12.0" />
          </font></Hyperlink>
       <Button fx:id="show" layoutX="242.0" layoutY="305.0" mnemonicParsing="false" onAction="#viewContact" text="Mostra Contatti" />
-      <Label layoutX="34.0" layoutY="366.0" />
-      <Label fx:id="lblStatus" layoutX="97.0" layoutY="334.0" textFill="RED" />
+      <Label fx:id="lblStatus" layoutX="40.0" layoutY="334.0" prefHeight="17.0" prefWidth="0.0" textFill="RED" />
    </children>
 </AnchorPane>

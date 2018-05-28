@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -45,7 +46,8 @@ public class SearchAndDeleteSupplier implements Initializable{
     @FXML
     private TableColumn<SupplierGS, String> colonnaPartitaIva;
 
-
+    @FXML
+    private Button show;
 
 
     @Override
@@ -57,6 +59,7 @@ public class SearchAndDeleteSupplier implements Initializable{
 
         tabellaAzienda.getItems().clear();
 
+        show.fire();
     }
 
     public void viewSupplier(ActionEvent actionEvent) throws Exception {

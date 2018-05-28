@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -62,6 +59,11 @@ public class TripPartecipant implements Initializable{
     @FXML
     private TextField txtIDgita;
 
+    @FXML
+    private Label lblStatus;
+
+    @FXML
+    private Button show;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -94,6 +96,8 @@ public class TripPartecipant implements Initializable{
 
         tableBambini.getItems().clear();
         tableGita.getItems().clear();
+
+        show.fire();
     }
 
     public void partecipantiTrip (ActionEvent actionEvent) throws Exception {
@@ -104,13 +108,17 @@ public class TripPartecipant implements Initializable{
         } else {
             interfaceServer = Singleton.getInstance().methodSocket();
         }
-        interfaceServer.newpartecipanteTrip(txtCodicefiscale.getText(), txtIDgita.getText());
-        interfaceServer.pullmanCount(txtIDgita.getText());
-        interfaceServer.assegnaPullman(txtCodicefiscale.getText(), txtIDgita.getText());
 
-        txtCodicefiscale.clear();
-        txtIDgita.clear();
+        if (txtCodicefiscale.getText().isEmpty() || txtIDgita.getText().isEmpty()){
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        }else {
+            interfaceServer.newpartecipanteTrip(txtCodicefiscale.getText(), txtIDgita.getText());
+            interfaceServer.pullmanCount(txtIDgita.getText());
+            interfaceServer.assegnaPullman(txtCodicefiscale.getText(), txtIDgita.getText());
 
+            txtCodicefiscale.clear();
+            txtIDgita.clear();
+        }
     }
 
     public void viewInfo(ActionEvent actionEvent) throws Exception {

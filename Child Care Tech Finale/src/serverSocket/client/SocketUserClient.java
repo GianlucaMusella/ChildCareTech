@@ -1993,6 +1993,73 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
+    public boolean deleteFirst(String first) throws Exception {
+        try{
+
+            toServer.writeUnshared("deleteFirst");
+            toServer.flush();
+            toServer.writeUnshared(first);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            return (boolean) fromServer.readUnshared();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return true;    }
+
+    @Override
+    public boolean deleteSecond(String second) throws Exception {
+        try{
+
+            toServer.writeUnshared("deleteSecond");
+            toServer.flush();
+            toServer.writeUnshared(second);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            return (boolean) fromServer.readUnshared();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean deleteSide(String side) throws Exception {
+
+        try{
+
+            toServer.writeUnshared("deleteSide");
+            toServer.flush();
+            toServer.writeUnshared(side);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            return (boolean) fromServer.readUnshared();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return true;
+
+    }
+
+    @Override
     public boolean controlAllergy(String allergeni) throws Exception {
 
         boolean success = false;
@@ -2168,7 +2235,7 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
-    public boolean newTappaServer(String tappa, String idGita, LocalDate giorno, String ora) throws Exception {
+    public boolean newTappaServer(String tappa, String idGita, LocalDate giorno) throws Exception {
 
         boolean success = false;
 
@@ -2182,8 +2249,7 @@ public class SocketUserClient implements InterfaceServer {
             toServer.flush();
             toServer.writeUnshared(String.valueOf(giorno));
             toServer.flush();
-            toServer.writeUnshared(ora);
-            toServer.flush();
+
 
         }catch (IOException e){
             e.printStackTrace();

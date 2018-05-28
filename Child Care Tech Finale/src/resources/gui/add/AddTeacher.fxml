@@ -21,33 +21,33 @@
             <Image url="@../../image/185235620.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="txtNome" layoutX="41.0" layoutY="50.0" promptText="Nome" />
-      <TextField fx:id="txtCognome" layoutX="41.0" layoutY="82.0" promptText="Cognome" />
-      <TextField fx:id="txtCodiceFiscale" layoutX="41.0" layoutY="115.0" promptText="Codice Fiscale" />
-      <DatePicker fx:id="dateData" layoutX="41.0" layoutY="150.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di Nascita" />
-      <TextField fx:id="txtLuogo" layoutX="41.0" layoutY="183.0" promptText="Luogo di Nascita" />
-      <TextField fx:id="txtAllergie" layoutX="41.0" layoutY="219.0" promptText="Allergie" />
-      <RadioButton fx:id="radioMaschio" layoutX="41.0" layoutY="258.0" mnemonicParsing="false" text="Maschio">
+      <TextField fx:id="txtNome" layoutX="36.0" layoutY="65.0" promptText="Nome" />
+      <TextField fx:id="txtCognome" layoutX="36.0" layoutY="97.0" promptText="Cognome" />
+      <TextField fx:id="txtCodiceFiscale" layoutX="36.0" layoutY="130.0" promptText="Codice Fiscale" />
+      <DatePicker fx:id="dateData" layoutX="36.0" layoutY="165.0" prefHeight="25.0" prefWidth="149.0" promptText="Data di Nascita" />
+      <TextField fx:id="txtLuogo" layoutX="36.0" layoutY="198.0" promptText="Luogo di Nascita" />
+      <TextField fx:id="txtAllergie" layoutX="36.0" layoutY="234.0" promptText="Allergie" />
+      <RadioButton fx:id="radioMaschio" layoutX="36.0" layoutY="273.0" mnemonicParsing="false" text="Maschio">
          <toggleGroup>
             <ToggleGroup fx:id="choice" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="radioFemmina" layoutX="116.0" layoutY="258.0" mnemonicParsing="false" text="Femmina" toggleGroup="$choice" />
-      <TextField fx:id="txtInsegnante" layoutX="41.0" layoutY="286.0" promptText="Mansione" />
-      <TextField fx:id="txtUsername" layoutX="41.0" layoutY="322.0" promptText="Username" />
-      <PasswordField fx:id="txtPassword" layoutX="41.0" layoutY="358.0" promptText="Password" />
+      <RadioButton fx:id="radioFemmina" layoutX="111.0" layoutY="273.0" mnemonicParsing="false" text="Femmina" toggleGroup="$choice" />
+      <TextField fx:id="txtInsegnante" layoutX="36.0" layoutY="301.0" promptText="Mansione" />
+      <TextField fx:id="txtUsername" layoutX="36.0" layoutY="337.0" promptText="Username" />
+      <PasswordField fx:id="txtPassword" layoutX="36.0" layoutY="373.0" promptText="Password" />
       <Button layoutX="597.0" layoutY="400.0" mnemonicParsing="false" onAction="#addTeacher" prefHeight="25.0" prefWidth="56.0" text="Salva" />
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method">
          <graphic>
-            <ImageView fitHeight="23.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                  <Image url="@../../image/back-arrow-35325b9dd72f970a-512x512.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
       <Hyperlink layoutX="548.0" layoutY="425.0" onAction="#menuPrincipale" prefHeight="2.0" prefWidth="94.0" text="Menù Principale" />
       <Label fx:id="lblStatus" layoutX="87.0" layoutY="404.0" textFill="RED" />
-      <TableView fx:id="tabellaInsegnanti" layoutX="239.0" layoutY="53.0" prefHeight="288.0" prefWidth="414.0">
+      <TableView fx:id="tabellaInsegnanti" layoutX="239.0" layoutY="67.0" prefHeight="288.0" prefWidth="414.0">
         <columns>
           <TableColumn fx:id="colonnaNome" prefWidth="112.0" text="Nome" />
           <TableColumn fx:id="colonnaCognome" prefWidth="95.0" text="Cognome" />
@@ -55,6 +55,6 @@
             <TableColumn fx:id="colonnaMansione" prefWidth="114.0" text="Mansione" />
         </columns>
       </TableView>
-      <Button fx:id="show" layoutX="239.0" layoutY="358.0" mnemonicParsing="false" onAction="#viewStaff" text="Mostra Personale Con Accesso" />
+      <Button fx:id="show" layoutX="239.0" layoutY="373.0" mnemonicParsing="false" onAction="#viewStaff" text="Mostra Personale Con Accesso" />
    </children>
 </AnchorPane>

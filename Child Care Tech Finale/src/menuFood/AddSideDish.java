@@ -36,9 +36,11 @@ public class AddSideDish {
         String nome = nomeContorno.getText();
         String allergeni = txtAllergeni.getText();
 
-        if (nomeContorno.getText().isEmpty() || txtAllergeni.getText().isEmpty())
+        if (nomeContorno.getText().isEmpty() || txtAllergeni.getText().isEmpty()) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        else {
+        }if(interfaceServer.controlAllergy(allergeni)){
+            interfaceServer.addAllergy(allergeni);
+        }else {
 
             try {
 

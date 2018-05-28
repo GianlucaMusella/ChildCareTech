@@ -56,9 +56,9 @@ public class AddTrip {
 
         if (txtMetaa.getText().isEmpty() || txtID.getText().isEmpty() || datePartenza.getValue() == null || dateRitorno.getValue() == null) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        }if(andata.isAfter(ritorno)){
+        }else if(andata.isAfter(ritorno)){
             lblStatus.setText("La data di andata è successiva a quella di ritorno");
-        }if(!interfaceServer.controlGita(id)){
+        }else if(!interfaceServer.controlGita(id)){
             lblStatus.setText("ERRORE: Id gita già presente");
         }else {
 

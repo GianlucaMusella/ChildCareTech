@@ -31,7 +31,14 @@
             </columns>
         </TableView>
         <Button layoutX="227.0" layoutY="304.0" mnemonicParsing="false" onAction="#viewDoctor" text="Mostra Pediatri" />
-      <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" prefHeight="25.0" prefWidth="25.0" />
+      <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" prefHeight="34.0" prefWidth="36.0">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../image/back-arrow-35325b9dd72f970a-512x512.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Label fx:id="lblStatus" layoutX="35.0" layoutY="359.0" textFill="RED" />
     </children>
 </AnchorPane>

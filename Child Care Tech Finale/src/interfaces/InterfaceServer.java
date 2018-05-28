@@ -6,7 +6,6 @@ import getterAndSetter.trip.AppealGS;
 import getterAndSetter.trip.TripGS;
 
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -71,6 +70,9 @@ public interface InterfaceServer extends Remote{
     boolean addAllergy(String allergeni) throws Exception;
     boolean addSide(String nome, String allergeni) throws Exception;
     boolean deleteMenu(String nomeMenu) throws Exception;
+    boolean deleteFirst(String first) throws Exception;
+    boolean deleteSecond(String second) throws Exception;
+    boolean deleteSide(String side) throws Exception;
     boolean controlAllergy(String allergeni) throws Exception;
 
 
@@ -79,7 +81,7 @@ public interface InterfaceServer extends Remote{
     ArrayList<AppealGS> loadDataServer(int idGita) throws Exception;
     void bambinoPresenteServer(String codiceFiscale, int idGita, int pullman) throws Exception;
     void bambinoAssenteServer(String codiceFiscale, int idGita) throws Exception;
-    boolean newTappaServer(String tappa, String idGita, LocalDate giorno, String ora) throws Exception;
+    boolean newTappaServer(String tappa, String idGita, LocalDate giorno) throws Exception;
     boolean newpartecipanteTrip(String codiceFiscale, String idGita) throws Exception;
     boolean deleteTrip(String idGita) throws Exception;
     void pullmanCount(String idGita) throws Exception;

@@ -15,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddParents">
    <children>
-      <ImageView fitHeight="403.0" fitWidth="619.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="403.0" fitWidth="619.0" layoutX="-14.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../image/185235620.jpg" />
          </image>
@@ -41,16 +41,16 @@
          </columns>
       </TableView>
       <Hyperlink layoutX="456.0" layoutY="366.0" onAction="#menuPrincipale" text="Menù principale" />
-      <Button layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+      <Button layoutX="17.0" layoutY="21.0" mnemonicParsing="false" onAction="#back_method" prefHeight="33.0" prefWidth="38.0">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                  <Image url="@../../image/back-arrow-35325b9dd72f970a-512x512.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
       <Button fx:id="show" layoutX="260.0" layoutY="312.0" mnemonicParsing="false" onAction="#viewParents" text="Mostra Genitori" />
-      <Label fx:id="lblStatus" layoutX="96.0" layoutY="341.0" textFill="RED" />
+      <Label fx:id="lblStatus" layoutX="36.0" layoutY="329.0" prefHeight="17.0" prefWidth="0.0" textFill="RED" />
    </children>
 </AnchorPane>

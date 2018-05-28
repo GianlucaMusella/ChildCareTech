@@ -214,13 +214,13 @@ public class AddChild implements Initializable{
         if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16 ||
                 txtLuogo.getText().isEmpty() || txtPediatra.getText().isEmpty() || txtIDBambino.getText().isEmpty() || txtContatto.getText().isEmpty() || txtGenitore1.getText().isEmpty()) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        } else if (!interfaceServer.controlID(idBambino)) {
-            lblStatus.setText("ERRORE: Cambia Id Bambino");
-        } else {
+        }  else {
 
             if (!interfaceServer.controlChild(codiceFiscale)) {
                 lblStatus.setText("ERRORE: Cambia Codice Fiscale");
-            } else {
+            } else if (!interfaceServer.controlID(idBambino)) {
+                lblStatus.setText("ERRORE: Cambia Id Bambino");
+            }else {
                 try {
 
                     boolean success = interfaceServer.addChild(codiceFiscale, idBambino, nome, cognome, data, luogo, allergie, genitore1, genitore2, sesso, pediatra, contatto);

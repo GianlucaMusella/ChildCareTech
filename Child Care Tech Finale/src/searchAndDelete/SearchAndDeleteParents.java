@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -42,7 +43,8 @@ public class SearchAndDeleteParents implements Initializable{
     @FXML
     private TableColumn<ParentsGS, String> columnCodicefiscale;
 
-
+    @FXML
+    private Button show;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,6 +55,7 @@ public class SearchAndDeleteParents implements Initializable{
 
         tabellaGenitori.getItems().clear();
 
+        show.fire();
     }
 
     public void viewParents(ActionEvent actionEvent) throws Exception {

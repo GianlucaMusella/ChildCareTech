@@ -27,14 +27,14 @@
             <TableColumn fx:id="colonnaPartitaIva" minWidth="0.0" prefWidth="179.0" text="Partiva IVA" />
         </columns>
       </TableView>
-      <Button layoutX="32.0" layoutY="348.0" mnemonicParsing="false" onAction="#viewSupplier" text="Mostra Fornitori" />
+      <Button fx:id="show" layoutX="32.0" layoutY="348.0" mnemonicParsing="false" onAction="#viewSupplier" text="Mostra Fornitori" />
       <Button layoutX="284.0" layoutY="348.0" mnemonicParsing="false" onAction="#searchSupplier" text="Cerca" />
       <Button layoutX="526.0" layoutY="348.0" mnemonicParsing="false" onAction="#deleteSupplier" text="Elimina" />
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                  <Image url="@../../image/back-arrow-35325b9dd72f970a-512x512.png" />
                </image>
             </ImageView>
          </graphic>

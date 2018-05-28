@@ -101,27 +101,28 @@ public class AddSupplier implements Initializable{
         String partitaIva = txtPiva.getText();
 
         if (txtName.getText().isEmpty() || txtSurname.getText().isEmpty() || txtPiva.getText().isEmpty() && txtPiva.getText().length() == 11 || txtAzienda.getText().isEmpty()
-                || txtFornitura.getText().isEmpty()){
+                || txtFornitura.getText().isEmpty()) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        }else if (!interfaceServer.controlSupplier(azienda)) {
+        } else {
+            if (!interfaceServer.controlSupplier(azienda)) {
                 lblStatus.setText("ERRORE: Cambia Azienda");
+            } else {
+                try {
 
-        }else {
-            try {
-
-                boolean success = interfaceServer.addSupplier(name, surname, azienda, fornitura, partitaIva);
-                if (success) {
-                    txtName.clear();
-                    txtSurname.clear();
-                    txtAzienda.clear();
-                    txtFornitura.clear();
-                    txtPiva.clear();
-                    lblStatus.setTextFill(Color.BLACK);
-                    lblStatus.setText("Inserimento riuscito");
-                    show.fire();
+                    boolean success = interfaceServer.addSupplier(name, surname, azienda, fornitura, partitaIva);
+                    if (success) {
+                        txtName.clear();
+                        txtSurname.clear();
+                        txtAzienda.clear();
+                        txtFornitura.clear();
+                        txtPiva.clear();
+                        lblStatus.setTextFill(Color.BLACK);
+                        lblStatus.setText("Inserimento riuscito");
+                        show.fire();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e ) {
-                e.printStackTrace();
             }
         }
     }

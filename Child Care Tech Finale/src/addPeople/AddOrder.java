@@ -54,8 +54,9 @@ public class AddOrder implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
 
         colonnaAzienda.setCellValueFactory(new PropertyValueFactory<>("azienda"));
-        colonnaFornitura.setCellValueFactory(new PropertyValueFactory<>("fornitura"));
         colonnaPartitaIVA.setCellValueFactory(new PropertyValueFactory<>("partitaIva"));
+        colonnaFornitura.setCellValueFactory(new PropertyValueFactory<>("fornitura"));
+
 
         tabellaFornitori.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 

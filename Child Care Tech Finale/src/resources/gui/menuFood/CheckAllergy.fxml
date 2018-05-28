@@ -4,23 +4,30 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menuFood.CheckAllergy">
    <children>
-      <TableView fx:id="tabellaCheck" layoutX="76.0" layoutY="58.0" prefHeight="270.0" prefWidth="451.0">
+      <ImageView fitHeight="468.0" fitWidth="628.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/185235620.jpg" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tabellaCheck" layoutX="45.0" layoutY="91.0" prefHeight="270.0" prefWidth="536.0">
         <columns>
           <TableColumn fx:id="nome" prefWidth="75.0" text="Nome" />
           <TableColumn fx:id="cognome" prefWidth="75.0" text="Cognome " />
-            <TableColumn fx:id="allergene" prefWidth="75.0" text="Allergene" />
-            <TableColumn fx:id="primo" prefWidth="75.0" text="Primo" />
-            <TableColumn fx:id="secondo" prefWidth="75.0" text="Secondo" />
-            <TableColumn fx:id="contorno" prefWidth="75.0" text="Menù" />
+            <TableColumn fx:id="allergene" prefWidth="90.0" text="Allergene" />
+            <TableColumn fx:id="primo" prefWidth="90.0" text="Primo" />
+            <TableColumn fx:id="secondo" prefWidth="92.0" text="Secondo" />
+            <TableColumn fx:id="contorno" prefWidth="113.0" text="Menù" />
         </columns>
       </TableView>
-      <Button fx:id="check" layoutX="481.0" layoutY="345.0" mnemonicParsing="false" onAction="#viewCheck" text="Cerca" />
-      <TextField fx:id="txtNomePrimo" layoutX="76.0" layoutY="23.0" prefHeight="26.0" prefWidth="132.0" promptText="Nome primo" />
-      <TextField fx:id="txtNomeSecondo" layoutX="236.0" layoutY="24.0" prefHeight="26.0" prefWidth="132.0" promptText="Nome secondo" />
-      <TextField fx:id="txtNomeContorno" layoutX="395.0" layoutY="24.0" prefHeight="26.0" prefWidth="132.0" promptText="Nome contorno" />
+      <Button fx:id="check" layoutX="535.0" layoutY="369.0" mnemonicParsing="false" onAction="#viewCheck" text="Cerca" />
+      <TextField fx:id="txtNomePrimo" layoutX="45.0" layoutY="56.0" prefHeight="26.0" prefWidth="132.0" promptText="Nome primo" />
+      <TextField fx:id="txtNomeSecondo" layoutX="248.0" layoutY="56.0" prefHeight="26.0" prefWidth="132.0" promptText="Nome secondo" />
+      <TextField fx:id="txtNomeContorno" layoutX="449.0" layoutY="56.0" prefHeight="26.0" prefWidth="132.0" promptText="Nome contorno" />
    </children>
 </AnchorPane>

@@ -98,10 +98,11 @@ public class AddContact implements Initializable{
 
         if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        }else if (!interfaceServer.controlContact(codiceFiscale)) {
+        } else {
+            if (!interfaceServer.controlContact(codiceFiscale)) {
                 lblStatus.setText("ERRORE: Cambia Codice Fiscale");
 
-        }else {
+            } else {
                 try {
 
 
@@ -116,12 +117,12 @@ public class AddContact implements Initializable{
                         lblStatus.setText("Inserimento riuscito");
                         show.fire();
                     }
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-
+    }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
 

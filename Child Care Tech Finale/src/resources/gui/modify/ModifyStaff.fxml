@@ -32,12 +32,12 @@
             <TableColumn fx:id="colonnaMansione" prefWidth="107.0" text="Mansione" />
             </columns>
         </TableView>
-        <Button layoutX="595.0" layoutY="310.0" mnemonicParsing="false" onAction="#viewStaff" text="Carica Dati" />
-      <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
+        <Button layoutX="232.0" layoutY="308.0" mnemonicParsing="false" onAction="#viewStaff" text="Mostra Personale" />
+      <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method">
          <graphic>
-            <ImageView fitHeight="21.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="32.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../menu/back-arrow-35325b9dd72f970a-512x512.png" />
+                  <Image url="@../../image/back-arrow-35325b9dd72f970a-512x512.png" />
                </image>
             </ImageView>
          </graphic>
