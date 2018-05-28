@@ -68,7 +68,7 @@ public interface InterfaceServer extends Remote{
     boolean newTrip(String id, String meta, LocalDate andata, LocalDate ritorno) throws Exception;
     ArrayList<TripGS> viewTrip() throws Exception;
     ArrayList<AppealGS> loadDataServer(int idGita) throws Exception;
-    void bambinoPresenteServer(String codiceFiscale, int idGita) throws Exception;
+    void bambinoPresenteServer(String codiceFiscale, int idGita, int pullman) throws Exception;
     void bambinoAssenteServer(String codiceFiscale, int idGita) throws Exception;
     boolean newTappaServer(String tappa, String idGita, LocalDate giorno, String ora) throws Exception;
     boolean newpartecipanteTrip(String codiceFiscale, String idGita) throws Exception;

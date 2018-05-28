@@ -1,8 +1,6 @@
 package getterAndSetter.trip;
 
 import getterAndSetter.trip.AppealGS;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -12,7 +10,6 @@ public class AppealGUI {
     private StringProperty cognome;
     private StringProperty codiceFiscale;
     private StringProperty presenza;
-    private IntegerProperty pullman;
 
     public void AppelloGUI(AppealGS appelloGS){
 
@@ -20,19 +17,6 @@ public class AppealGUI {
         this.cognome = new SimpleStringProperty(appelloGS.getCognome());
         this.codiceFiscale = new SimpleStringProperty(appelloGS.getCodiceFiscale());
         this.presenza = new SimpleStringProperty(appelloGS.getPresenza());
-        this.pullman = new SimpleIntegerProperty(appelloGS.getPullman());
-    }
-
-    public int getPullman() {
-        return pullman.get();
-    }
-
-    public IntegerProperty pullmanProperty() {
-        return pullman;
-    }
-
-    public void setPullman(int pullman) {
-        this.pullman.set(pullman);
     }
 
     public String getNome() {

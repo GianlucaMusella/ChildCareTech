@@ -41,6 +41,12 @@ public class AppealTrip implements Initializable{
     @FXML
     private TableColumn<AppealGS, String> columnPresenza;
 
+    @FXML
+    private TableColumn <AppealGS, String> columnPullman;
+
+    @FXML
+    private TextField txtPullman;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -48,6 +54,8 @@ public class AppealTrip implements Initializable{
         columnCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         columnCodicefiscale.setCellValueFactory(new PropertyValueFactory<>("codiceFiscale"));
         columnPresenza.setCellValueFactory(new PropertyValueFactory<>("presenza"));
+        columnPullman.setCellValueFactory(new PropertyValueFactory<>("pullman"));
+
 
         tableAppello.getItems().clear();
     }
@@ -73,7 +81,7 @@ public class AppealTrip implements Initializable{
         System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
         InterfaceServer interfaceServer = Singleton.getInstance().rmiLookup();
-        interfaceServer.bambinoPresenteServer(codiceFiscale, Integer.parseInt(idGita.getText()));
+        interfaceServer.bambinoPresenteServer(codiceFiscale, Integer.parseInt(idGita.getText()), Integer.parseInt(txtPullman.getText()));
     }
 
     public void assenza (ActionEvent actionEvent) throws Exception {

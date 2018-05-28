@@ -1733,14 +1733,21 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
-    public void bambinoPresenteServer(String codiceFiscale, int idGita) throws Exception {
+    public void bambinoPresenteServer(String codiceFiscale, int idGita, int pullman) throws Exception {
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
-        String SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 1 WHERE (mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
+        String SQL;
+        String CheckPullman = ("SELECT mydb.bambini_has_gita.Pullman FROM mydb.bambini_has_gita WHERE(mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
                 + codiceFiscale + "' AND mydb.bambini_has_gita.Gita_idGita = " + idGita + ")");
+        ResultSet rs = stmt.executeQuery(CheckPullman);
+        if (rs.getInt(1) == pullman)
+            SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 1 WHERE (mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
+                + codiceFiscale + "' AND mydb.bambini_has_gita.Gita_idGita = " + idGita + ")");
+        else
+            SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 2 WHERE (mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
+                    + codiceFiscale + "' AND mydb.bambini_has_gita.Gita_idGita = " + idGita + ")");
         stmt.executeUpdate(SQL);
-
     }
 
     @Override
