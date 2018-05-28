@@ -36,7 +36,15 @@ public class AddTrip {
     @FXML
     private Label lblStatus;
 
+    private InterfaceServer interfaceServer;
 
+    public AddTrip(){
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+    }
 
     public void newTrip (ActionEvent actionEvent) throws Exception {
 
@@ -53,12 +61,6 @@ public class AddTrip {
         }else {
 
             try {
-                InterfaceServer interfaceServer;
-                if (Controller.selection.equals("RMI")) {
-                    interfaceServer = Singleton.getInstance().rmiLookup();
-                } else {
-                    interfaceServer = Singleton.getInstance().methodSocket();
-                }
 
                 boolean success = interfaceServer.newTrip(id, meta, andata, ritorno);
                 if (success) {

@@ -30,7 +30,6 @@ public class ServerStart {
 
         ServerSocket serverSocket = null;
         Socket socket = null;
-        //int counter = 0;
 
         try {
             serverSocket = new ServerSocket(3365);
@@ -42,31 +41,16 @@ public class ServerStart {
         }
 
         while (true) {
-            //counter++;
+
             try {
                 socket = serverSocket.accept();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            //new Thread for client
-            //System.out.println("Creating new socket thread for client number " + counter + " ...");
-            new SocketServer(socket, new RMIServer()).start();  //new thread for client
+            new SocketServer(socket, new RMIServer()).start();
 
         }
 
-        /*ServerSocket serverSocket = null;
-
-        try{
-
-            serverSocket = new ServerSocket(3365);
-            SocketListener socketListener = new SocketListener(serverSocket);
-            System.out.println("Server connection ready");
-
-        }catch (IOException e){
-            e.printStackTrace();
-            System.out.println("Errore");
-        }
-    }*/
     }
 }

@@ -8,23 +8,23 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.AppealTrip">
-    <ImageView fitHeight="425.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.AppealTrip">
+    <ImageView fitHeight="486.0" fitWidth="715.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../image/185235620.jpg" />
     </ImageView>
-    <TextField fx:id="idGita" layoutX="50.0" layoutY="63.0" promptText="ID gita" />
-    <Button layoutX="220.0" layoutY="63.0" mnemonicParsing="false" onAction="#loadData" text="Carica Bambini Iscritti alla Gita" />
-    <TableView fx:id="tableAppello" layoutX="50.0" layoutY="109.0" prefHeight="200.0" prefWidth="484.0">
+    <TextField fx:id="idGita" layoutX="42.0" layoutY="76.0" prefHeight="25.0" prefWidth="136.0" promptText="ID gita" />
+    <Button layoutX="250.0" layoutY="76.0" mnemonicParsing="false" onAction="#loadData" text="Mostra Bambini Iscritti alla Gita" />
+    <TableView fx:id="tableAppello" layoutX="42.0" layoutY="113.0" prefHeight="262.0" prefWidth="632.0">
       <columns>
           <TableColumn fx:id="columnNome" prefWidth="98.39996337890625" text="Nome" />
-          <TableColumn fx:id="columnCognome" prefWidth="95.2000732421875" text="Cognome" />
-          <TableColumn fx:id="columnCodicefiscale" prefWidth="161.0" text="Codice fiscale" />
-          <TableColumn fx:id="columnPresenza" prefWidth="131.0" text="Presente" />
-          <TableColumn fx:id="columnPullman" prefWidth="91.0" text="Pullman" />
+          <TableColumn fx:id="columnCognome" prefWidth="104.0" text="Cognome" />
+          <TableColumn fx:id="columnCodicefiscale" prefWidth="136.0" text="Codice fiscale" />
+          <TableColumn fx:id="columnPresenza" prefWidth="198.0" text="Presente" />
+          <TableColumn fx:id="columnPullman" prefWidth="94.0" text="Pullman" />
       </columns>
     </TableView>
-    <Button layoutX="230.0" layoutY="331.0" mnemonicParsing="false" onAction="#appelloTrip" text="Segna Presenza" />
-    <Button layoutX="439.0" layoutY="331.0" mnemonicParsing="false" onAction="#assenza" text="Segna Assenza" />
+    <Button layoutX="234.0" layoutY="400.0" mnemonicParsing="false" onAction="#appelloTrip" text="Segna Presenza" />
+    <Button layoutX="416.0" layoutY="400.0" mnemonicParsing="false" onAction="#assenza" text="Segna Assenza" />
     <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" style="-fx-background-color: transparent;">
         <graphic>
             <ImageView fitHeight="27.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
@@ -32,5 +32,6 @@
             </ImageView>
         </graphic>
     </Button>
-   <TextField fx:id="txtPullman" layoutX="38.0" layoutY="331.0" promptText="Numero pullman" />
+   <TextField fx:id="txtPullman" layoutX="42.0" layoutY="400.0" prefHeight="25.0" prefWidth="120.0" promptText="Numero pullman" />
+   <Button layoutX="578.0" layoutY="400.0" mnemonicParsing="false" text="Azzera Appello" />
 </AnchorPane>

@@ -49,6 +49,15 @@ public class Stage implements Initializable{
     @FXML
     private TableColumn<TripGS, String> columnRitorno;
 
+    private InterfaceServer interfaceServer;
+
+    public Stage(){
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -93,12 +102,7 @@ public class Stage implements Initializable{
         LocalDate giorno = giornoTappa.getValue();
         String ora = txtOra.getText();
 
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
-        }
+
         interfaceServer.newTappaServer(tappa, idGita, giorno, ora);
 
 
