@@ -19,7 +19,8 @@ public class assegnaPullman {
         while (rsbis.next()){
             counter = counter + 1;
         }
-        float numPullman = (float) (counter / 1.00);
+        float x = (float) (counter / 1.00);
+        int Pullman = (int) Math.ceil(x);
         String SQL = ("UPDATE Bambini_has_gita SET numPullman = " + numPullman + " WHERE Bambini_CodiceFiscale = '" +
                 codicefiscale  + "' AND Gita_idGIta = '" + idGita + "'");
         int i = stmt.executeUpdate(SQL);
