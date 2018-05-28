@@ -935,8 +935,9 @@ public class SocketServer extends Thread implements Runnable {
 
             String codiceFiscale = (String) inputFromClient.readUnshared();
             String idGita = (String) inputFromClient.readUnshared();
+            String pullman = (String) inputFromClient.readUnshared();
 
-            rmiServer.bambinoPresenteServer(codiceFiscale, Integer.parseInt(idGita));
+            rmiServer.bambinoPresenteServer(codiceFiscale, Integer.parseInt(idGita), Integer.parseInt(pullman));
             return true;
 
         }else if(commandMethod.equals("bambinoAssenteServer")){
@@ -1005,6 +1006,87 @@ public class SocketServer extends Thread implements Runnable {
 
             rmiServer.assegnaPullman(codiceFiscale, idGita);
             return true;
+
+        }
+
+
+        else if(commandMethod.equals("controlSupplier")){
+
+            try {
+
+                System.out.println("Sto eseguendo da Socket");
+                String azienda = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.controlSupplier(azienda);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
+        }else if(commandMethod.equals("controlStaff")){
+
+            try {
+
+                System.out.println("Sto eseguendo da Socket");
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.controlStaff(codiceFiscale);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
+        }else if(commandMethod.equals("controlDoctor")){
+
+            try {
+
+                System.out.println("Sto eseguendo da Socket");
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.controlDoctor(codiceFiscale);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
+        } else if(commandMethod.equals("controlParents")){
+
+            try {
+
+                System.out.println("Sto eseguendo da Socket");
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.controlParents(codiceFiscale);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
+        }else if(commandMethod.equals("controlContact")){
+
+            try {
+
+                System.out.println("Sto eseguendo da Socket");
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.controlContact(codiceFiscale);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
+        }else if(commandMethod.equals("controlIdBambino")){
+
+            try {
+
+                System.out.println("Sto eseguendo da Socket");
+                String idBambino = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.controlID(idBambino);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
 
         }
 

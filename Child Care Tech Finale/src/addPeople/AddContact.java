@@ -96,28 +96,32 @@ public class AddContact implements Initializable{
         String codiceFiscale = txtCodiceFiscale.getText();
         String telefono = txtTelefono.getText();
 
-        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty())
+        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        else {
-            try {
+        }else if (!interfaceServer.controlContact(codiceFiscale)) {
+                lblStatus.setText("ERRORE: Cambia Codice Fiscale");
+
+        }else {
+                try {
 
 
-                boolean success = interfaceServer.addContact(codiceFiscale, nome, cognome, telefono);
+                    boolean success = interfaceServer.addContact(codiceFiscale, nome, cognome, telefono);
 
-                if (success) {
-                    txtNome.clear();
-                    txtCognome.clear();
-                    txtCodiceFiscale.clear();
-                    txtTelefono.clear();
-                    lblStatus.setTextFill(Color.BLACK);
-                    lblStatus.setText("Inserimento riuscito");
-                    show.fire();
+                    if (success) {
+                        txtNome.clear();
+                        txtCognome.clear();
+                        txtCodiceFiscale.clear();
+                        txtTelefono.clear();
+                        lblStatus.setTextFill(Color.BLACK);
+                        lblStatus.setText("Inserimento riuscito");
+                        show.fire();
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
-            } catch (Exception e){
-                e.printStackTrace();
             }
         }
-    }
+
 
     public void back_method(ActionEvent actionEvent) throws Exception{
 

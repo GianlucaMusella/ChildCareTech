@@ -101,9 +101,12 @@ public class AddSupplier implements Initializable{
         String partitaIva = txtPiva.getText();
 
         if (txtName.getText().isEmpty() || txtSurname.getText().isEmpty() || txtPiva.getText().isEmpty() && txtPiva.getText().length() == 11 || txtAzienda.getText().isEmpty()
-                || txtFornitura.getText().isEmpty())
+                || txtFornitura.getText().isEmpty()){
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        else {
+        }else if (!interfaceServer.controlSupplier(azienda)) {
+                lblStatus.setText("ERRORE: Cambia Azienda");
+
+        }else {
             try {
 
                 boolean success = interfaceServer.addSupplier(name, surname, azienda, fornitura, partitaIva);

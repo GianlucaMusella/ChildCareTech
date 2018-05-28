@@ -16,10 +16,10 @@
     <Button layoutX="220.0" layoutY="63.0" mnemonicParsing="false" onAction="#loadData" text="Carica Bambini Iscritti alla Gita" />
     <TableView fx:id="tableAppello" layoutX="50.0" layoutY="109.0" prefHeight="200.0" prefWidth="484.0">
       <columns>
-          <TableColumn fx:id="columnNome" prefWidth="118.39996337890625" text="Nome" />
-          <TableColumn fx:id="columnCognome" prefWidth="115.2000732421875" text="Cognome" />
+          <TableColumn fx:id="columnNome" prefWidth="98.39996337890625" text="Nome" />
+          <TableColumn fx:id="columnCognome" prefWidth="95.2000732421875" text="Cognome" />
           <TableColumn fx:id="columnCodicefiscale" prefWidth="161.0" text="Codice fiscale" />
-          <TableColumn fx:id="columnPresenza" prefWidth="91.0" text="Presente" />
+          <TableColumn fx:id="columnPresenza" prefWidth="131.0" text="Presente" />
           <TableColumn fx:id="columnPullman" prefWidth="91.0" text="Pullman" />
       </columns>
     </TableView>

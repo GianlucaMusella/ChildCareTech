@@ -19,6 +19,14 @@ public class AppealGS implements Serializable {
         this.pullman = pullman;
     }
 
+    public int getPullman() {
+        return pullman;
+    }
+
+    public void setPullman(int pullman) {
+        this.pullman = pullman;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -51,11 +59,4 @@ public class AppealGS implements Serializable {
         this.presenza = presenza;
     }
 
-    public int getPullman() {
-        return pullman;
-    }
-
-    public void setPullman(int pullman) {
-        this.pullman = pullman;
-    }
 }

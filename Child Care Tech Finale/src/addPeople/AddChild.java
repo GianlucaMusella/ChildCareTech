@@ -212,40 +212,44 @@ public class AddChild implements Initializable{
             sesso = sessoF;
 
         if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16 ||
-                txtLuogo.getText().isEmpty() || txtPediatra.getText().isEmpty() || txtIDBambino.getText().isEmpty() || txtContatto.getText().isEmpty() || txtGenitore1.getText().isEmpty() ) {
+                txtLuogo.getText().isEmpty() || txtPediatra.getText().isEmpty() || txtIDBambino.getText().isEmpty() || txtContatto.getText().isEmpty() || txtGenitore1.getText().isEmpty()) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        }else if(!interfaceServer.controlChild(codiceFiscale)){
-            lblStatus.setText("ERRORE: Cambia Codice Fiscale");
-        }
-        else {
-            try{
+        } else if (!interfaceServer.controlID(idBambino)) {
+            lblStatus.setText("ERRORE: Cambia Id Bambino");
+        } else {
 
-                boolean success = interfaceServer.addChild(codiceFiscale, idBambino, nome, cognome, data, luogo, allergie, genitore1, genitore2, sesso, pediatra, contatto);
+            if (!interfaceServer.controlChild(codiceFiscale)) {
+                lblStatus.setText("ERRORE: Cambia Codice Fiscale");
+            } else {
+                try {
 
-                if(success){
-                    txtNome.clear();
-                    txtCognome.clear();
-                    txtCodiceFiscale.clear();
-                    txtLuogo.clear();
-                    dateData.getEditor().clear();
-                    txtGenitore1.clear();
-                    txtGenitore2.clear();
-                    txtPediatra.clear();
-                    txtAllergia.clear();
-                    txtIDBambino.clear();
-                    txtContatto.clear();
-                    lblStatus.setTextFill(Color.BLACK);
-                    lblStatus.setText("Inserimento riuscito");
-                    show.fire();
+                    boolean success = interfaceServer.addChild(codiceFiscale, idBambino, nome, cognome, data, luogo, allergie, genitore1, genitore2, sesso, pediatra, contatto);
+
+                    if (success) {
+                        txtNome.clear();
+                        txtCognome.clear();
+                        txtCodiceFiscale.clear();
+                        txtLuogo.clear();
+                        dateData.getEditor().clear();
+                        txtGenitore1.clear();
+                        txtGenitore2.clear();
+                        txtPediatra.clear();
+                        txtAllergia.clear();
+                        txtIDBambino.clear();
+                        txtContatto.clear();
+                        lblStatus.setTextFill(Color.BLACK);
+                        lblStatus.setText("Inserimento riuscito");
+                        show.fire();
+                    }
+
+
+                } catch (RemoteException e) {
+                    e.printStackTrace();
                 }
-
-
-
-            }catch (RemoteException e){
-                e.printStackTrace();
             }
         }
     }
+
 
     public void viewChild(ActionEvent actionEvent) throws Exception {
 

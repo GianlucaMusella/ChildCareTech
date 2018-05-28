@@ -103,28 +103,32 @@ public class AddTeacher implements Initializable{
 
 
     public void addTeacher(ActionEvent actionEvent) throws Exception {
-        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16 ||
-                txtLuogo.getText().isEmpty() || txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty())
-            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        else {
-            String nome = txtNome.getText();
-            String cognome = txtCognome.getText();
-            String codiceFiscale = txtCodiceFiscale.getText();
-            LocalDate data = dateData.getValue();
-            String luogo = txtLuogo.getText();
-            String allergie = txtAllergie.getText();
-            String insegnante = txtInsegnante.getText();
-            String username = txtUsername.getText();
-            String password = txtPassword.getText();
-            String sesso;
-            String sessoM = radioMaschio.getText();
-            String sessoF = radioFemmina.getText();
+        String nome = txtNome.getText();
+        String cognome = txtCognome.getText();
+        String codiceFiscale = txtCodiceFiscale.getText();
+        LocalDate data = dateData.getValue();
+        String luogo = txtLuogo.getText();
+        String allergie = txtAllergie.getText();
+        String insegnante = txtInsegnante.getText();
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+        String sesso;
+        String sessoM = radioMaschio.getText();
+        String sessoF = radioFemmina.getText();
 
-            if (radioMaschio.isSelected()) {
-                sesso = sessoM;
-            } else {
-                sesso = sessoF;
-            }
+        if (radioMaschio.isSelected()) {
+            sesso = sessoM;
+        } else {
+            sesso = sessoF;
+        }
+
+        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16 ||
+                txtLuogo.getText().isEmpty() || txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        }else if (!interfaceServer.controlStaff(codiceFiscale)) {
+                lblStatus.setText("ERRORE: Cambia Codice Fiscale");
+        }else {
+
             try {
 
                 boolean success = interfaceServer.addTeacher(nome, cognome, codiceFiscale, data, luogo, allergie, sesso, insegnante, username, password);

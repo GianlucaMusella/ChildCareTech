@@ -301,6 +301,30 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
+    public boolean controlSupplier(String azienda) throws Exception {
+        boolean success = false;
+
+        try{
+
+            toServer.writeUnshared("controlSupplier");
+            toServer.flush();
+            toServer.writeUnshared(azienda);
+            toServer.flush();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = (boolean) fromServer.readUnshared();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return success;    }
+
+    @Override
     public boolean addChild(String codiceFiscale, String idBambino, String nome, String cognome, LocalDate data, String luogo, String allergie, String genitore1, String genitore2, String sesso, String pediatra, String Contatto) throws Exception {
 
         boolean success = false;
@@ -529,6 +553,33 @@ public class SocketUserClient implements InterfaceServer {
             toServer.writeUnshared("controlChild");
             toServer.flush();
             toServer.writeUnshared(codiceFiscale);
+            toServer.flush();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = (boolean) fromServer.readUnshared();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return success;
+
+    }
+
+    @Override
+    public boolean controlID(String idBambino) throws Exception {
+
+        boolean success = false;
+
+        try{
+
+            toServer.writeUnshared("controlIdBambino");
+            toServer.flush();
+            toServer.writeUnshared(idBambino);
             toServer.flush();
 
 
@@ -800,6 +851,11 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
+    public boolean controlStaff(String codiceFiscale) throws Exception {
+        return false;
+    }
+
+    @Override
     public boolean addParents(String codiceFiscale, String nome, String cognome, LocalDate data, String luogo, String telefono, String sesso) throws Exception {
 
         boolean success = false;
@@ -1006,6 +1062,32 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
+    public boolean controlParents(String codiceFiscale) throws Exception {
+        boolean success = false;
+
+        try{
+
+            toServer.writeUnshared("controlParents");
+            toServer.flush();
+            toServer.writeUnshared(codiceFiscale);
+            toServer.flush();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = (boolean) fromServer.readUnshared();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return success;
+
+    }
+
+    @Override
     public boolean addContact(String codiceFiscale, String nome, String cognome, String telefono) throws Exception {
 
         boolean success = false;
@@ -1199,6 +1281,32 @@ public class SocketUserClient implements InterfaceServer {
         }
 
         return true;
+
+    }
+
+    @Override
+    public boolean controlContact(String codiceFiscale) throws Exception {
+        boolean success = false;
+
+        try{
+
+            toServer.writeUnshared("controlContact");
+            toServer.flush();
+            toServer.writeUnshared(codiceFiscale);
+            toServer.flush();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = (boolean) fromServer.readUnshared();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return success;
 
     }
 
@@ -1403,6 +1511,31 @@ public class SocketUserClient implements InterfaceServer {
 
         return true;
 
+    }
+
+    @Override
+    public boolean controlDoctor(String codiceFiscale) throws Exception {
+        boolean success = false;
+
+        try{
+
+            toServer.writeUnshared("controlDoctor");
+            toServer.flush();
+            toServer.writeUnshared(codiceFiscale);
+            toServer.flush();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = (boolean) fromServer.readUnshared();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return success;
     }
 
     @Override
@@ -1946,8 +2079,9 @@ public class SocketUserClient implements InterfaceServer {
 
     }
 
+
     @Override
-    public void bambinoPresenteServer(String codiceFiscale, int idGita) throws Exception {
+    public void bambinoPresenteServer(String codiceFiscale, int idGita, int pullman) throws Exception {
         try{
 
             toServer.writeUnshared("bambinoPresenteServer");
@@ -1955,6 +2089,8 @@ public class SocketUserClient implements InterfaceServer {
             toServer.writeUnshared(codiceFiscale);
             toServer.flush();
             toServer.writeUnshared(String.valueOf(idGita));
+            toServer.flush();
+            toServer.writeUnshared(pullman);
             toServer.flush();
 
         } catch (IOException e) {

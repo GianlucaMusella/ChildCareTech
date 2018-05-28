@@ -103,25 +103,28 @@ public class AddParents implements Initializable{
     }
 
     public void addParents(ActionEvent actionEvent) throws Exception {
-        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() &&
-                txtCodiceFiscale.getText().length() == 16 || txtLuogo.getText().isEmpty() )
-            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        else {
-            String nome = txtNome.getText();
-            String cognome = txtCognome.getText();
-            String codiceFiscale = txtCodiceFiscale.getText();
-            String luogo = txtLuogo.getText();
-            LocalDate data = dateData.getValue();
-            String telefono = txtTelefono.getText();
-            String sesso;
-            String sessoM = radioMaschio.getText();
-            String sessoF = radioFemmina.getText();
+        String nome = txtNome.getText();
+        String cognome = txtCognome.getText();
+        String codiceFiscale = txtCodiceFiscale.getText();
+        String luogo = txtLuogo.getText();
+        LocalDate data = dateData.getValue();
+        String telefono = txtTelefono.getText();
+        String sesso;
+        String sessoM = radioMaschio.getText();
+        String sessoF = radioFemmina.getText();
+        if (radioMaschio.isSelected()) {
+            sesso = sessoM;
+        } else {
+            sesso = sessoF;
+        }
 
-            if (radioMaschio.isSelected()) {
-                sesso = sessoM;
-            } else {
-                sesso = sessoF;
-            }
+        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() &&
+                txtCodiceFiscale.getText().length() == 16 || txtLuogo.getText().isEmpty() ) {
+            lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        }else if (!interfaceServer.controlParents(codiceFiscale)) {
+                lblStatus.setText("ERRORE: Cambia Codice Fiscale");
+        }else {
+
             try {
 
                 boolean success = interfaceServer.addParents(codiceFiscale, nome, cognome, data, luogo, telefono, sesso);

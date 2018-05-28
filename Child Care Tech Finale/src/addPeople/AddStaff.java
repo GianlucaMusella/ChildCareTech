@@ -114,9 +114,12 @@ public class AddStaff implements Initializable{
         }
 
         if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16 ||
-                txtLuogo.getText().isEmpty() || txtMansione.getText().isEmpty())
+                txtLuogo.getText().isEmpty() || txtMansione.getText().isEmpty()){
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        else {
+        }else if (!interfaceServer.controlStaff(codiceFiscale)) {
+                lblStatus.setText("ERRORE: Cambia Codice Fiscale");
+
+        }else {
 
             try {
 

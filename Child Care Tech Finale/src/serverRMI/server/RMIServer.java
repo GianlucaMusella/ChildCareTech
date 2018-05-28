@@ -90,7 +90,6 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         try {
 
-
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(supplier);
 
             preparedStatement.setString(1, name);
@@ -316,6 +315,23 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean controlSupplier(String azienda) throws Exception {
+        String control = "SELECT * FROM mydb.fornitori WHERE CodiceFiscale = '"+ azienda+"'";
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(control);
+
+        while (!rs.next()) {
+            return true;
+        }
+
+        rs.close();
+        return false;
     }
 
     @Override
@@ -631,6 +647,22 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         return true;
     }
 
+    @Override
+    public boolean controlStaff(String codiceFiscale) throws Exception {
+        String control = "SELECT * FROM mydb.personaleinterno WHERE CodiceFiscale = '"+ codiceFiscale+"'";
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(control);
+
+        while (!rs.next()) {
+            return true;
+        }
+        rs.close();
+        return false;
+    }
+
 
     @Override
     public ArrayList<ChildGS> searchC(String name, String surname, String cod) throws Exception {
@@ -879,10 +911,26 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
     @Override
     public boolean controlChild(String codiceFiscale) throws Exception {
-        //ResultSet result = null;
-        //PreparedStatement st = null;
+
         String control = "SELECT * FROM mydb.bambini WHERE CodiceFiscale = '"+ codiceFiscale+"'";
-        //boolean controllo = false;
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(control);
+
+        while (!rs.next()) {
+            return true;
+        }
+        rs.close();
+        return false;
+
+    }
+
+    @Override
+    public boolean controlID(String idBambino) throws Exception {
+
+        String control = "SELECT * FROM mydb.bambini WHERE idBambino = '"+ Integer.parseInt(idBambino)+"'";
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement statement = connectionDatabase.initializeConnection().createStatement();
@@ -1053,6 +1101,22 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
+    public boolean controlParents(String codiceFiscale) throws Exception {
+        String control = "SELECT * FROM mydb.genitori WHERE CodiceFiscale = '"+ codiceFiscale+"'";
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(control);
+
+        while (!rs.next()) {
+            return true;
+        }
+        rs.close();
+        return false;
+    }
+
+    @Override
     public ArrayList<ContactGS> viewContacts() throws Exception {
 
         ArrayList<ContactGS> values = new ArrayList<>();
@@ -1165,6 +1229,22 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         return true;
 
+    }
+
+    @Override
+    public boolean controlContact(String codiceFiscale) throws Exception {
+        String control = "SELECT * FROM mydb.contatti WHERE CodiceFiscale = '"+ codiceFiscale+"'";
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(control);
+
+        while (!rs.next()) {
+            return true;
+        }
+        rs.close();
+        return false;
     }
 
     @Override
@@ -1283,6 +1363,22 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         return true;
 
+    }
+
+    @Override
+    public boolean controlDoctor(String codiceFiscale) throws Exception {
+        String control = "SELECT * FROM mydb.pediatra WHERE CodiceFiscale = '"+ codiceFiscale+"'";
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(control);
+
+        while (!rs.next()) {
+            return true;
+        }
+        rs.close();
+        return false;
     }
 
     @Override
@@ -1736,20 +1832,22 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     public void bambinoPresenteServer(String codiceFiscale, int idGita, int pullman) throws Exception {
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmtInt = connectionDatabase.initializeConnection().createStatement();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
         String SQL;
-        String CheckPullman = ("SELECT mydb.bambini_has_gita.Pullman FROM mydb.bambini_has_gita WHERE(mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
+        String CheckPullman = ("SELECT mydb.bambini_has_gita.* FROM mydb.bambini_has_gita WHERE(mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
                 + codiceFiscale + "' AND mydb.bambini_has_gita.Gita_idGita = " + idGita + ")");
-        ResultSet rs = stmt.executeQuery(CheckPullman);
-        if (rs.getInt(1) == pullman)
-            SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 1 WHERE (mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
-                + codiceFiscale + "' AND mydb.bambini_has_gita.Gita_idGita = " + idGita + ")");
-        else
-            SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 2 WHERE (mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
-                    + codiceFiscale + "' AND mydb.bambini_has_gita.Gita_idGita = " + idGita + ")");
-        stmt.executeUpdate(SQL);
-    }
-
+        ResultSet rs = stmtInt.executeQuery(CheckPullman);
+        if (rs.next()) {
+            if (rs.getInt("Pullman") == pullman)
+                SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 1 WHERE (mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
+                        + codiceFiscale + "' AND mydb.bambini_has_gita.Gita_idGita = " + idGita + ")");
+            else
+                SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 2 WHERE (mydb.bambini_has_gita.Bambini_CodiceFiscale = '"
+                        + codiceFiscale + "' AND mydb.bambini_has_gita.Gita_idGita = " + idGita + ")");
+            stmt.executeUpdate(SQL);
+        }
+        }
     @Override
     public void bambinoAssenteServer(String codiceFiscale, int idGita) throws Exception {
 

@@ -102,9 +102,11 @@ public class AddDoctor implements Initializable{
             sesso = sessoF;
         }
 
-        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() || txtLuogo.getText().isEmpty())
+        if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16|| txtLuogo.getText().isEmpty()) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        else {
+        }else if (!interfaceServer.controlDoctor(codiceFiscale)) {
+                lblStatus.setText("ERRORE: Cambia Codice Fiscale");
+        } else {
             try {
 
                 boolean success = interfaceServer.addDoctor(codiceFiscale, nome, cognome, data, luogo, sesso);
