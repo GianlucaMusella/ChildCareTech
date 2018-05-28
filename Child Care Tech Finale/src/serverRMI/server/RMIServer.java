@@ -2020,4 +2020,12 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         stmt.executeUpdate(SQL);
     }
 
+    @Override
+    public void assenzaAll(int idGita) throws Exception {
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+        String SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 0 WHERE mydb.bambini_has_gita.Gita_idGita = " + idGita );
+        stmt.executeUpdate(SQL);
+    }
+
 }
