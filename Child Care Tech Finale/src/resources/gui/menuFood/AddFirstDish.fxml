@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="349.0" prefWidth="236.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menuFood.AddFirstDish">
+<AnchorPane prefHeight="349.0" prefWidth="236.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menuFood.AddFirstDish">
    <children>
       <ImageView fitHeight="364.0" fitWidth="246.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -15,7 +15,7 @@
          </image>
       </ImageView>
       <TextField fx:id="nomePrimo" layoutX="38.0" layoutY="101.0" prefHeight="32.0" prefWidth="169.0" promptText="Nome Piatto" />
-      <TextField fx:id="txtAllergeni" layoutX="38.0" layoutY="167.0" prefHeight="32.0" prefWidth="169.0" promptText="Allergeni" />
+      <TextField fx:id="txtAllergeni" layoutX="38.0" layoutY="167.0" prefHeight="32.0" prefWidth="169.0" promptText="Ingredienti" />
       <Button layoutX="93.0" layoutY="231.0" mnemonicParsing="false" onAction="#addFirstDish" prefHeight="32.0" prefWidth="60.0" text="Inserisci" />
       <Label fx:id="lblStatus" layoutX="105.0" layoutY="294.0" textFill="RED" />
    </children>

@@ -28,13 +28,13 @@
       <TableView fx:id="tabellaPrimi" layoutX="260.0" layoutY="88.0" prefHeight="160.0" prefWidth="229.0">
         <columns>
           <TableColumn fx:id="colonnaPrimi" minWidth="0.0" prefWidth="115.0" text="Primi" />
-            <TableColumn fx:id="colonnaAllergeni" minWidth="0.0" prefWidth="113.0" text="Allergeni" />
+            <TableColumn fx:id="colonnaAllergeni" minWidth="0.0" prefWidth="113.0" text="Ingredienti" />
         </columns>
       </TableView>
       <TableView fx:id="tabellaSecondi" layoutX="507.0" layoutY="88.0" prefHeight="160.0" prefWidth="229.0">
         <columns>
           <TableColumn fx:id="colonnaSecondi" prefWidth="115.0" text="Secondi" />
-            <TableColumn fx:id="colonnaAllergeniSecondi" prefWidth="113.0" text="Allergeni" />
+            <TableColumn fx:id="colonnaAllergeniSecondi" prefWidth="113.0" text="Ingredienti" />
         </columns>
       </TableView>
       <Button layoutX="684.0" layoutY="478.0" mnemonicParsing="false" onAction="#addMenu" prefHeight="25.0" prefWidth="52.0" text="Salva" />
@@ -50,7 +50,7 @@
       <TableView fx:id="tabellaContorni" layoutX="260.0" layoutY="304.0" prefHeight="160.0" prefWidth="229.0">
         <columns>
           <TableColumn fx:id="colonnaContorni" prefWidth="115.0" text="Contorni" />
-          <TableColumn fx:id="colonnaAllergieContorni" prefWidth="113.0" text="Allergie" />
+          <TableColumn fx:id="colonnaAllergieContorni" prefWidth="113.0" text="Ingredienti" />
         </columns>
       </TableView>
       <Button fx:id="show" layoutX="260.0" layoutY="478.0" mnemonicParsing="false" onAction="#threeButton" text="Mostra Dati" />
