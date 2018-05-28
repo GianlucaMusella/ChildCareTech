@@ -33,5 +33,5 @@
         </graphic>
     </Button>
    <TextField fx:id="txtPullman" layoutX="42.0" layoutY="400.0" prefHeight="25.0" prefWidth="120.0" promptText="Numero pullman" />
-   <Button fx:id="assenzaAll" layoutX="578.0" layoutY="400.0" mnemonicParsing="false" text="Azzera Appello" />
+   <Button layoutX="578.0" layoutY="400.0" mnemonicParsing="false" onAction="#assenzaAll" text="Azzera Appello" />
 </AnchorPane>

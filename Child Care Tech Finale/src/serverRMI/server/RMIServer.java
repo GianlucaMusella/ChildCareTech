@@ -2028,4 +2028,20 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         stmt.executeUpdate(SQL);
     }
 
+    @Override
+    public boolean controlGita(String id) throws Exception {
+        String control = "SELECT * FROM mydb.gita WHERE idGita = '"+ Integer.parseInt(id)+"'";
+
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(control);
+
+        while (!rs.next()) {
+            return true;
+        }
+        rs.close();
+        return false;
+    }
+
 }

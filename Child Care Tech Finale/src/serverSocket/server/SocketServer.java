@@ -1114,6 +1114,32 @@ public class SocketServer extends Thread implements Runnable {
             }
             return responce;
 
+        }else if(commandMethod.equals("assenzaAll")){
+
+            try {
+
+                System.out.println("Sto eseguendo da Socket");
+                String idGita = (String) inputFromClient.readUnshared();
+
+                rmiServer.assenzaAll(Integer.parseInt(idGita));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
+        }else if(commandMethod.equals("controlGita")){
+
+            try {
+
+                System.out.println("Sto eseguendo da Socket");
+                String id = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.controlGita(id);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
         }
 
 

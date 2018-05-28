@@ -2279,4 +2279,43 @@ public class SocketUserClient implements InterfaceServer {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void assenzaAll(int idGita) throws Exception {
+        try{
+
+            toServer.writeUnshared("assenzaAll");
+            toServer.flush();
+            toServer.writeUnshared(idGita);
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean controlGita(String id) throws Exception {
+        boolean success = false;
+
+        try{
+
+            toServer.writeUnshared("controlGita");
+            toServer.flush();
+            toServer.writeUnshared(id);
+            toServer.flush();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = (boolean) fromServer.readUnshared();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return success;
+    }
 }

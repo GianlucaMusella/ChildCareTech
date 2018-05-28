@@ -58,6 +58,8 @@ public class AddTrip {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         }if(andata.isAfter(ritorno)){
             lblStatus.setText("La data di andata è successiva a quella di ritorno");
+        }if(!interfaceServer.controlGita(id)){
+            lblStatus.setText("ERRORE: Id gita già presente");
         }else {
 
             try {

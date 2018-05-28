@@ -70,11 +70,6 @@ public class AppealTrip implements Initializable{
     }
 
     public void appelloTrip (ActionEvent actionEvent) throws Exception {
-        /*
-        ArrayList<AppelloGS> modificaPresenza = tableAppello.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-        SI RIUSCISSE A FARE CON LA MULTISELECT SAREBBE MOLTO MEGLIO, MA DOVREI PROVARE PER CAPIRE COME FUNZIONA
-         */
         AppealGS bambinoPresente = tableAppello.getSelectionModel().getSelectedItem();
         String codiceFiscale = bambinoPresente.getCodiceFiscale();
 
@@ -85,11 +80,7 @@ public class AppealTrip implements Initializable{
     }
 
     public void assenza (ActionEvent actionEvent) throws Exception {
-        /*
-        ArrayList<AppelloGS> modificaPresenza = tableAppello.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        SI RIUSCISSE A FARE CON LA MULTISELECT SAREBBE MOLTO MEGLIO, MA DOVREI PROVARE PER CAPIRE COME FUNZIONA
-         */
         AppealGS bambinoAssente = tableAppello.getSelectionModel().getSelectedItem();
         String codiceFiscale = bambinoAssente.getCodiceFiscale();
 
@@ -98,6 +89,7 @@ public class AppealTrip implements Initializable{
         InterfaceServer interfaceServer = Singleton.getInstance().rmiLookup();
         interfaceServer.bambinoAssenteServer(codiceFiscale, Integer.parseInt(idGita.getText()));
     }
+
     public void assenzaAll (ActionEvent actionEvent) throws Exception {
         InterfaceServer interfaceServer = Singleton.getInstance().rmiLookup();
         interfaceServer.assenzaAll(Integer.parseInt(idGita.getText()));
@@ -114,45 +106,4 @@ public class AppealTrip implements Initializable{
         stage.show();
     }
 
-
-
-
-
-
-/*
-
-    // PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA PARTE SERVER LOAD DATA
-     public ArrayList<AppelloGS> loadDataServer (int idGita) throws SQLException {
-         ArrayList<AppelloGS> values = new ArrayList<>();
-         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-         Statement stmt = connectionDatabase.initializeConnection().createStatement();
-         String SQL = ("SELECT mydb.bambini.Nome, mydb.bambini.Cognome, mydb.bambini,CodiceFiscale, mydb.bambini_has_gita.Presenza ((FROM mydb.bambini_has_gita" +
-                 "INNER JOIN mydb.bambini ON mydb.bambini.idBambino = mydb.bambini_has_gita.Bambini_idBambino)" +
-                 "INNER JOIN mydb.gita ON mydb.gita.idGita = mydb.bambini_has_gita.Gita_idGita = ");
-         ResultSet rs = stmt.executeQuery(SQL + idGita + ")");
-         while (rs.next()){
-             String colonnaNome = rs.getString("Nome");
-             String colonnaCognome = rs.getString ("Cognome");
-             String colonnaCodicefiscale = rs.getString("CodiceFiscale");
-             String colonnaPresenza;
-             if (rs.getBoolean("Presenza"))
-                 colonnaPresenza = ("Presente");
-             else
-                 colonnaPresenza = ("Assente");
-
-             values.add(new AppelloGS(colonnaNome, colonnaCognome, colonnaCodicefiscale, colonnaPresenza));
-         }
-         return values;
-     }
-     public void bambinoPresenteServer (String CodiceFiscale) throws SQLException {
-         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
-         Statement stmt = connectionDatabase.initializeConnection().createStatement();
-         int idBambino;
-         String JoinSQL = ("SELECT * FROM mydb.bambini WHERE CodiceFiscale = '");
-         ResultSet rs = stmt.executeQuery(JoinSQL + CodiceFiscale + "')");
-         idBambino = rs.getInt("idBambino");
-         String SQL = ("UPDATE mydb.bambini_has_gita SET Presenza = 1 WHERE mydb.bambini_has_gita.Bambini_idBambino = ");
-         int n = stmt.executeUpdate(SQL + idBambino + ")");
-     }
-*/
 }
