@@ -1709,7 +1709,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         ArrayList<AppealGS> values = new ArrayList<>();
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
-        String SQL = ("SELECT mydb.bambini.Nome, mydb.bambini.Cognome, mydb.bambini.CodiceFiscale, mydb.bambini_has_gita.Presenza " +
+        String SQL = ("SELECT mydb.bambini.Nome, mydb.bambini.Cognome, mydb.bambini.CodiceFiscale, mydb.bambini_has_gita.Presenza, mydb.bambini_has_gita.Pullman " +
                 "FROM ((mydb.bambini_has_gita " +
                 "INNER JOIN mydb.bambini ON mydb.bambini.CodiceFiscale = mydb.bambini_has_gita.Bambini_CodiceFiscale AND mydb.bambini_has_gita.Gita_idGita = ");
         ResultSet rs = stmt.executeQuery(SQL + idGita + "))");
@@ -1717,14 +1717,17 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
             String colonnaNome = rs.getString("Nome");
             String colonnaCognome = rs.getString ("Cognome");
             String colonnaCodicefiscale = rs.getString("CodiceFiscale");
+            int colonnaPullman = rs.getInt("Pullman");
             String colonnaPresenza;
 
-            if (rs.getBoolean("Presenza"))
+            if (rs.getInt("Presenza") == 1)
                 colonnaPresenza = ("Presente");
-            else
+            else if (rs.getInt("Presenza") == 0)
                 colonnaPresenza = ("Assente");
+            else // if (rs.getInt("Presenza") == 2)
+                colonnaPresenza = ("Presente sul pullman sbagliato");
 
-            values.add(new AppealGS(colonnaNome, colonnaCognome, colonnaCodicefiscale, colonnaPresenza));
+            values.add(new AppealGS(colonnaNome, colonnaCognome, colonnaCodicefiscale, colonnaPresenza, colonnaPullman));
         }
         return values;
     }

@@ -25,4 +25,7 @@ public class assegnaPullman {
                 codicefiscale  + "' AND Gita_idGIta = '" + idGita + "'");
         int i = stmt.executeUpdate(SQL);
     }
+    public void pullmanGiusto (String codiceFiscale, String idGita, int pullman) {
+
+    }
 }
