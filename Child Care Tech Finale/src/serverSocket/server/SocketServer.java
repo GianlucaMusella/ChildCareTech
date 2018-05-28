@@ -57,9 +57,7 @@ public class SocketServer extends Thread implements Runnable {
             }
 
         } catch (Exception e) {
-            String threadName = this.getName();
-            System.out.println("EOF: " + threadName + " terminated");
-            e.printStackTrace();
+
             try {
                 s.close();
             } catch (IOException e1) {
@@ -284,6 +282,19 @@ public class SocketServer extends Thread implements Runnable {
                 String codiceFiscale = (String) inputFromClient.readUnshared();
 
                 responce = rmiServer.deleteChild(codiceFiscale);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
+        }else if(commandMethod.equals("controlChild")){
+
+            try {
+
+                System.out.println("Sto eseguendo da Socket");
+                String codiceFiscale = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.controlChild(codiceFiscale);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

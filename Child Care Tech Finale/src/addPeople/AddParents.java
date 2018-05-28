@@ -66,6 +66,16 @@ public class AddParents implements Initializable{
     @FXML
     private Button show;
 
+    private InterfaceServer interfaceServer;
+
+    public AddParents(){
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -113,12 +123,7 @@ public class AddParents implements Initializable{
                 sesso = sessoF;
             }
             try {
-                InterfaceServer interfaceServer;
-                if (Controller.selection.equals("RMI")) {
-                    interfaceServer = Singleton.getInstance().rmiLookup();
-                } else {
-                    interfaceServer = Singleton.getInstance().methodSocket();
-                }
+
                 boolean success = interfaceServer.addParents(codiceFiscale, nome, cognome, data, luogo, telefono, sesso);
                 if (success) {
                     txtNome.clear();

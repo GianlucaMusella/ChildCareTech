@@ -6,6 +6,7 @@ import getterAndSetter.trip.AppealGS;
 import getterAndSetter.trip.TripGS;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public interface InterfaceServer extends Remote{
     ArrayList<ChildGS> viewChild() throws Exception;
     boolean modifyChild(String codiceFiscale, String Nome, String cognome, String luogo, LocalDate data, String idBambino) throws Exception;
     boolean deleteChild (String codiceFiscale) throws Exception;
+    boolean controlChild(String codiceFiscale) throws Exception;
 
     boolean addTeacher(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String insegnante, String username, String password) throws Exception;
     boolean addStaff(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String mansione) throws Exception;
@@ -72,5 +74,6 @@ public interface InterfaceServer extends Remote{
     boolean newpartecipanteTrip(String codiceFiscale, String idGita) throws Exception;
     boolean deleteTrip(String idGita) throws Exception;
     void pullmanCount(String idGita) throws Exception;
+
 
 }

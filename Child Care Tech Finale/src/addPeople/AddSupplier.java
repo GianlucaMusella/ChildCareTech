@@ -57,6 +57,16 @@ public class AddSupplier implements Initializable{
     @FXML
     private Button show;
 
+    private InterfaceServer interfaceServer;
+
+    public AddSupplier(){
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -95,13 +105,6 @@ public class AddSupplier implements Initializable{
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         else {
             try {
-                InterfaceServer interfaceServer;
-
-                if (Controller.selection.equals("RMI")) {
-                    interfaceServer = Singleton.getInstance().rmiLookup();
-                } else {
-                    interfaceServer = Singleton.getInstance().methodSocket();
-                }
 
                 boolean success = interfaceServer.addSupplier(name, surname, azienda, fornitura, partitaIva);
                 if (success) {

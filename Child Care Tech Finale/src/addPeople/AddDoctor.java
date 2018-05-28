@@ -63,6 +63,16 @@ public class AddDoctor implements Initializable{
     @FXML
     private Button show;
 
+    private InterfaceServer interfaceServer;
+
+    public AddDoctor(){
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -96,13 +106,6 @@ public class AddDoctor implements Initializable{
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         else {
             try {
-                InterfaceServer interfaceServer;
-
-                if (Controller.selection.equals("RMI")) {
-                    interfaceServer = Singleton.getInstance().rmiLookup();
-                } else {
-                    interfaceServer = Singleton.getInstance().methodSocket();
-                }
 
                 boolean success = interfaceServer.addDoctor(codiceFiscale, nome, cognome, data, luogo, sesso);
 

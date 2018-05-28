@@ -127,6 +127,16 @@ public class AddChild implements Initializable{
     @FXML
     private Button show;
 
+    private InterfaceServer interfaceServer;
+
+    public AddChild(){
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -204,16 +214,12 @@ public class AddChild implements Initializable{
         if (txtNome.getText().isEmpty() || txtCognome.getText().isEmpty() || txtCodiceFiscale.getText().isEmpty() && txtCodiceFiscale.getText().length() == 16 ||
                 txtLuogo.getText().isEmpty() || txtPediatra.getText().isEmpty() || txtIDBambino.getText().isEmpty() || txtContatto.getText().isEmpty() || txtGenitore1.getText().isEmpty() ) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
+        }else if(!interfaceServer.controlChild(codiceFiscale)){
+            lblStatus.setText("ERRORE: Cambia Codice Fiscale");
         }
         else {
             try{
 
-                InterfaceServer interfaceServer;
-                if (Controller.selection.equals("RMI")) {
-                    interfaceServer = Singleton.getInstance().rmiLookup();
-                } else {
-                    interfaceServer = Singleton.getInstance().methodSocket();
-                }
                 boolean success = interfaceServer.addChild(codiceFiscale, idBambino, nome, cognome, data, luogo, allergie, genitore1, genitore2, sesso, pediatra, contatto);
 
                 if(success){

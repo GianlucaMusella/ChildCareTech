@@ -521,6 +521,32 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
+    public boolean controlChild(String codiceFiscale) throws Exception {
+        boolean success = false;
+
+        try{
+
+            toServer.writeUnshared("controlChild");
+            toServer.flush();
+            toServer.writeUnshared(codiceFiscale);
+            toServer.flush();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            success = (boolean) fromServer.readUnshared();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return success;
+
+    }
+
+    @Override
     public boolean addTeacher(String nome, String cognome, String codiceFiscale, LocalDate data, String luogo, String allergie, String sesso, String insegnante, String username, String password) throws Exception {
 
         boolean success = false;

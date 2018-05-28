@@ -79,6 +79,16 @@ public class AddTeacher implements Initializable{
     @FXML
     private Button show;
 
+    private InterfaceServer interfaceServer;
+
+    public AddTeacher(){
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -116,12 +126,7 @@ public class AddTeacher implements Initializable{
                 sesso = sessoF;
             }
             try {
-                InterfaceServer interfaceServer;
-                if (Controller.selection.equals("RMI")) {
-                    interfaceServer = Singleton.getInstance().rmiLookup();
-                } else {
-                    interfaceServer = Singleton.getInstance().methodSocket();
-                }
+
                 boolean success = interfaceServer.addTeacher(nome, cognome, codiceFiscale, data, luogo, allergie, sesso, insegnante, username, password);
                 if (success) {
                     txtNome.clear();
