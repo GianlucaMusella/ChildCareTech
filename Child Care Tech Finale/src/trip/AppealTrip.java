@@ -98,6 +98,9 @@ public class AppealTrip implements Initializable{
         InterfaceServer interfaceServer = Singleton.getInstance().rmiLookup();
         interfaceServer.bambinoAssenteServer(codiceFiscale, Integer.parseInt(idGita.getText()));
     }
+    public void assenzaAll (ActionEvent actionEvent) {
+
+    }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
