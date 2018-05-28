@@ -106,6 +106,7 @@ public class TripPartecipant implements Initializable{
         }
         interfaceServer.newpartecipanteTrip(txtCodicefiscale.getText(), txtIDgita.getText());
         interfaceServer.pullmanCount(txtIDgita.getText());
+        interfaceServer.assegnaPullman(txtCodicefiscale.getText(), txtIDgita.getText());
 
         txtCodicefiscale.clear();
         txtIDgita.clear();
