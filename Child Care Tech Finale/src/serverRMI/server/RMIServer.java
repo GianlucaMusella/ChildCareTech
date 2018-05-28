@@ -1409,19 +1409,29 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement stmt = connectionDatabase.initializeConnection().createStatement();
         if (!primo.isEmpty()) {
-            String SQL = ("SELECT  mydb.bambini.Nome, mydb.bambini.Cognome, mydb.Allergeni.Nome, mydb.Primi.Nome " +
+            String SQLChild = ("SELECT  mydb.bambini.Nome, mydb.bambini.Cognome, mydb.Allergeni.Nome, mydb.Primi.Nome " +
                     "FROM ((( mydb.primi " +
                     "INNER JOIN mydb.allergeni_has_primi ON mydb.allergeni_has_primi.Primi_Nome = mydb.primi.nome) " +
                     "INNER JOIN mydb.allergeni ON mydb.allergeni_has_primi.Allergeni_Nome = mydb.allergeni.Nome) " +
                     "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
                     "WHERE mydb.primi.Nome = '" + primo + "'");
-            ResultSet rs = stmt.executeQuery(SQL);
+            String SQLPersonal = ("SELECT  mydb.PersonaleInterno.Nome, mydb.PersonaleInterno.Cognome, mydb.Allergeni.Nome, mydb.Primi.Nome " +
+                    "FROM ((( mydb.primi " +
+                    "INNER JOIN mydb.allergeni_has_primi ON mydb.allergeni_has_primi.Primi_Nome = mydb.primi.nome) " +
+                    "INNER JOIN mydb.allergeni ON mydb.allergeni_has_primi.Allergeni_Nome = mydb.allergeni.Nome) " +
+                    "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
+                    "WHERE mydb.primi.Nome = '" + primo + "'");
+            ResultSet rsChild = stmt.executeQuery(SQLChild);
+            ResultSet rsPersonal = stmt.executeQuery(SQLPersonal);
 
             //System.out.println(rs.getString(1)); // prova per vedere se funziona
 
-            while (rs.next())
-                values.add(new BambiniAllergici(rs.getString(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4), null, null));
+            while (rsChild.next())
+                values.add(new BambiniAllergici(rsChild.getString(1), rsChild.getString(2), rsChild.getString(3),
+                        rsChild.getString(4), null, null));
+            while (rsPersonal.next())
+                values.add(new BambiniAllergici(rsPersonal.getString(1), rsPersonal.getString(2), rsPersonal.getString(3),
+                        rsPersonal.getString(4), null, null));
         }
         if (!secondo.isEmpty()){
             String SQL = ("SELECT  mydb.bambini.Nome, mydb.bambini.Cognome, mydb.Allergeni.Nome, mydb.Secondi.Nome " +
@@ -1430,11 +1440,21 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
                 "INNER JOIN mydb.allergeni ON mydb.allergeni_has_secondi.Allergeni_Nome = mydb.allergeni.Nome) " +
                 "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
                 "WHERE mydb.secondi.Nome = '" + secondo + "'");
+            String SQLPersonal = ("SELECT  mydb.PersonaleInterno.Nome, mydb.PersonaleInterno.Cognome, mydb.Allergeni.Nome, mydb.Secondi.Nome " +
+                    "FROM ((( mydb.secondi " +
+                    "INNER JOIN mydb.allergeni_has_secondi ON mydb.allergeni_has_secondi.Secondi_Nome = mydb.secondi.nome) " +
+                    "INNER JOIN mydb.allergeni ON mydb.allergeni_has_secondi.Allergeni_Nome = mydb.allergeni.Nome) " +
+                    "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
+                    "WHERE mydb.secondi.Nome = '" + secondo + "'");
             ResultSet rs = stmt.executeQuery(SQL);
+            ResultSet rsPersonal = stmt.executeQuery(SQLPersonal);
 
             while (rs.next())
                 values.add(new BambiniAllergici(rs.getString(1), rs.getString(2), rs.getString(3),
                         null, rs.getString(4), null));
+            while (rsPersonal.next())
+                values.add(new BambiniAllergici(rsPersonal.getString(1), rsPersonal.getString(2), rsPersonal.getString(3),
+                        null , rsPersonal.getString(4), null));
         }
         if (!contorno.isEmpty()){
             String SQL = ("SELECT  mydb.bambini.Nome, mydb.bambini.Cognome, mydb.Allergeni.Nome, mydb.contorno.Nome " +
@@ -1443,11 +1463,21 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
                     "INNER JOIN mydb.allergeni ON mydb.allergeni_has_contorno.Allergeni_Nome = mydb.allergeni.Nome) " +
                     "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
                     "WHERE mydb.contorno.Nome = '" + contorno + "'");
+            String SQLPersonal = ("SELECT  mydb.PersonaleInterno.Nome, mydb.PersonaleInterno.Cognome, mydb.Allergeni.Nome, mydb.contorno.Nome " +
+                    "FROM ((( mydb.contorno " +
+                    "INNER JOIN mydb.allergeni_has_contorno ON mydb.allergeni_has_contorno.Contorno_Nome = mydb.contorno.nome) " +
+                    "INNER JOIN mydb.allergeni ON mydb.allergeni_has_contorno.Allergeni_Nome = mydb.allergeni.Nome) " +
+                    "INNER JOIN mydb.bambini ON mydb.bambini.Allergie = mydb.allergeni.Nome) " +
+                    "WHERE mydb.contorno.Nome = '" + contorno + "'");
             ResultSet rs = stmt.executeQuery(SQL);
+            ResultSet rsPersonal = stmt.executeQuery(SQLPersonal);
 
             while (rs.next())
                 values.add(new BambiniAllergici(rs.getString(1), rs.getString(2), rs.getString(3),
                         null, null, rs.getString(4)));
+            while (rsPersonal.next())
+                values.add(new BambiniAllergici(rsPersonal.getString(1), rsPersonal.getString(2), rsPersonal.getString(3),
+                        null , null, rsPersonal.getString(4)));
         }
 
         return values;
