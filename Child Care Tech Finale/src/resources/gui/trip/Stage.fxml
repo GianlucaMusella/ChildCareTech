@@ -17,10 +17,9 @@
          </image>
       </ImageView>
       <Button layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#back_method" prefHeight="34.0" prefWidth="37.0" />
-      <TextField fx:id="txtTappa" layoutX="45.0" layoutY="115.0" promptText="Tappa" />
-      <TextField fx:id="txtidGita" layoutX="45.0" layoutY="152.0" promptText="ID gita" />
-      <DatePicker fx:id="giornoTappa" layoutX="45.0" layoutY="188.0" prefHeight="25.0" prefWidth="149.0" promptText="Data " />
-      <TextField fx:id="txtOra" layoutX="45.0" layoutY="225.0" promptText="Orario (hh:mm)" />
+      <TextField fx:id="txtTappa" layoutX="45.0" layoutY="77.0" promptText="Tappa" />
+      <TextField fx:id="txtidGita" layoutX="45.0" layoutY="117.0" promptText="ID gita" />
+      <DatePicker fx:id="giornoTappa" layoutX="45.0" layoutY="158.0" prefHeight="25.0" prefWidth="149.0" promptText="Data " />
       <TableView fx:id="tableGita" layoutX="230.0" layoutY="77.0" prefHeight="200.0" prefWidth="329.0">
         <columns>
           <TableColumn fx:id="columnIDGita" prefWidth="45.0" text="ID" />
@@ -29,7 +28,7 @@
             <TableColumn fx:id="columnRitorno" prefWidth="97.0" text="Ritorno" />
         </columns>
       </TableView>
-      <Button layoutX="230.0" layoutY="294.0" mnemonicParsing="false" onAction="#viewInfo" text="Mostra Gita" />
+      <Button fx:id="show" layoutX="230.0" layoutY="294.0" mnemonicParsing="false" onAction="#viewInfo" text="Mostra Gite" />
       <Button layoutX="491.0" layoutY="341.0" mnemonicParsing="false" onAction="#newTappa" text="Conferma" />
    </children>
 </AnchorPane>

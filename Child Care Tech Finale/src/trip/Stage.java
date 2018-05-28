@@ -49,6 +49,9 @@ public class Stage implements Initializable{
     @FXML
     private TableColumn<TripGS, String> columnRitorno;
 
+    @FXML
+    private Button show;
+
     private InterfaceServer interfaceServer;
 
     public Stage(){
@@ -76,7 +79,7 @@ public class Stage implements Initializable{
         });
 
         tableGita.getItems().clear();
-
+        show.fire();
     }
 
     public void viewInfo(ActionEvent actionEvent) throws Exception {
