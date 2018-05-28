@@ -21,8 +21,11 @@ public class assegnaPullman {
         }
         float x = (float) (counter / 1.00);
         int Pullman = (int) Math.ceil(x);
-        String SQL = ("UPDATE Bambini_has_gita SET numPullman = " + numPullman + " WHERE Bambini_CodiceFiscale = '" +
+        String SQL = ("UPDATE Bambini_has_gita SET numPullman = " + Pullman + " WHERE Bambini_CodiceFiscale = '" +
                 codicefiscale  + "' AND Gita_idGIta = '" + idGita + "'");
         int i = stmt.executeUpdate(SQL);
+    }
+    public void pullmanGiusto (String codiceFiscale, String idGita, int pullman) {
+
     }
 }
