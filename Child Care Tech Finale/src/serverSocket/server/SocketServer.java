@@ -998,6 +998,14 @@ public class SocketServer extends Thread implements Runnable {
             rmiServer.pullmanCount(idGita);
             return true;
 
+        }else if(commandMethod.equals("pullmanAssign")){
+
+            String codiceFiscale = (String) inputFromClient.readUnshared();
+            String idGita = (String) inputFromClient.readUnshared();
+
+            rmiServer.assegnaPullman(codiceFiscale, idGita);
+            return true;
+
         }
 
         return false;

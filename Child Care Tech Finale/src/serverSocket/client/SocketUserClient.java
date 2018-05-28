@@ -2075,4 +2075,20 @@ public class SocketUserClient implements InterfaceServer {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void assegnaPullman(String codiceFiscale, String idGita) throws Exception {
+        try{
+
+            toServer.writeUnshared("pullmanAssign");
+            toServer.flush();
+            toServer.writeUnshared(codiceFiscale);
+            toServer.flush();
+            toServer.writeUnshared(idGita);
+            toServer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

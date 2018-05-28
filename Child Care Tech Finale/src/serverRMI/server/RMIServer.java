@@ -1865,4 +1865,22 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
     }
 
+    @Override
+    public void assegnaPullman(String codiceFiscale, String idGita) throws Exception {
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement stmt = connectionDatabase.initializeConnection().createStatement();
+
+        String PullmanSQL = ("SELECT * FROM mydb.bambini_has_gita WHERE mydb.bambini_has_gita.Gita_idGIta = ");
+        ResultSet rsbis = stmt.executeQuery(PullmanSQL + idGita);
+        float counter = 0.0f;
+        while (rsbis.next()){
+            counter = counter + 1;
+        }
+        float x = (float) (counter / 1.00);
+        int Pullman = (int) Math.ceil(x);
+        String SQL = ("UPDATE mydb.bambini_has_gita SET Pullman = " + Pullman + " WHERE mydb.bambini_has_gita.Bambini_CodiceFiscale = '" +
+                codiceFiscale  + "' AND mydb.bambini_has_gita.Gita_idGIta = '" + idGita + "'");
+        stmt.executeUpdate(SQL);
+    }
+
 }

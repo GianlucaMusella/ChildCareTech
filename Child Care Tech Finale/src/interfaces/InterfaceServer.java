@@ -74,6 +74,7 @@ public interface InterfaceServer extends Remote{
     boolean newpartecipanteTrip(String codiceFiscale, String idGita) throws Exception;
     boolean deleteTrip(String idGita) throws Exception;
     void pullmanCount(String idGita) throws Exception;
+    void assegnaPullman(String codiceFiscale, String idGita) throws Exception;
 
 
 }
