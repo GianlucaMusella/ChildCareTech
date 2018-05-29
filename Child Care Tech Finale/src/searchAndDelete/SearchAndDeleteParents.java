@@ -89,22 +89,25 @@ public class SearchAndDeleteParents implements Initializable{
 
 
     public void deleteParents (ActionEvent actionEvent) throws Exception {
-
-        ParentsGS deletableParentsGS = tabellaGenitori.getSelectionModel().getSelectedItem();
-        int index = tabellaGenitori.getSelectionModel().getSelectedIndex();
-        String codiceFiscale = deletableParentsGS.getCodiceFiscale();
-
-        System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
-
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
+        if (tabellaGenitori.getSelectionModel().isEmpty()){
+            lblStatus.setText("ERRORE: nessun elemento selezionato");
         }
-        interfaceServer.deleteParents(codiceFiscale);
-        tabellaGenitori.getItems().remove(index);
+        else {
+            ParentsGS deletableParentsGS = tabellaGenitori.getSelectionModel().getSelectedItem();
+            int index = tabellaGenitori.getSelectionModel().getSelectedIndex();
+            String codiceFiscale = deletableParentsGS.getCodiceFiscale();
 
+            System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
+
+            InterfaceServer interfaceServer;
+            if (Controller.selection.equals("RMI")) {
+                interfaceServer = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceServer = Singleton.getInstance().methodSocket();
+            }
+            interfaceServer.deleteParents(codiceFiscale);
+            tabellaGenitori.getItems().remove(index);
+        }
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
