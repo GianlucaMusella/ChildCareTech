@@ -7,12 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
@@ -51,6 +48,9 @@ public class SearchAndDeleteChild implements Initializable {
 
     @FXML
     private Button show;
+
+    @FXML
+    private Label lblStatus;
 
     private InterfaceServer interfaceServer;
 
@@ -96,16 +96,21 @@ public class SearchAndDeleteChild implements Initializable {
 
 
     public void deleteChild (ActionEvent actionEvent) throws Exception {
+        if (tableBambini.getSelectionModel().isEmpty()) {
+            lblStatus.setText("ERRORE: nessun elemento selezionato");
+        }
+        else {
+            ChildGS DeletableChild = tableBambini.getSelectionModel().getSelectedItem();
+            int index = tableBambini.getSelectionModel().getSelectedIndex();
+            String codiceFiscale = DeletableChild.getCodiceFiscale();
 
-        ChildGS DeletableChild = tableBambini.getSelectionModel().getSelectedItem();
-        int index = tableBambini.getSelectionModel().getSelectedIndex();
-        String codiceFiscale = DeletableChild.getCodiceFiscale();
+            System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
-        System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
-
-        interfaceServer.deleteChild(codiceFiscale);
-        tableBambini.getItems().remove(index);
-
+            boolean success = interfaceServer.deleteChild(codiceFiscale);
+            if (success) {
+                tableBambini.getItems().remove(index);
+            }
+        }
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
