@@ -649,11 +649,13 @@ public class SocketUserClient implements InterfaceServer {
 
         try{
 
-            toServer.writeUnshared("addTeacher");
+            toServer.writeUnshared("addStaff");
             toServer.flush();
             toServer.writeUnshared(nome);
             toServer.flush();
             toServer.writeUnshared(cognome);
+            toServer.flush();
+            toServer.writeUnshared(codiceFiscale);
             toServer.flush();
             toServer.writeUnshared(String.valueOf(data));
             toServer.flush();

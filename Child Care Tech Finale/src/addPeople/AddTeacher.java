@@ -126,9 +126,9 @@ public class AddTeacher implements Initializable{
                 txtLuogo.getText().isEmpty() || txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         }else {
-            if (!interfaceServer.controlStaff(codiceFiscale)) {
+            if (interfaceServer.controlStaff(codiceFiscale)) {
                 lblStatus.setText("ERRORE: Cambia Codice Fiscale");
-            }else {
+            }else{
                 try {
 
                     boolean success = interfaceServer.addTeacher(nome, cognome, codiceFiscale, data, luogo, allergie, sesso, insegnante, username, password);

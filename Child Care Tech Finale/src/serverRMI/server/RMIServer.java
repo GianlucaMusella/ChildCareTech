@@ -654,7 +654,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
         ResultSet rs = statement.executeQuery(control);
 
-        if(!rs.next())
+        if(rs.next())
             return true;
         else
             return false;

@@ -33,7 +33,7 @@ public class ServerStart {
 
         try {
             serverSocket = new ServerSocket(3365);
-            System.out.println("Server SOCKET listening...");
+            System.out.println("Server SOCKET inizializzato");
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Server error");

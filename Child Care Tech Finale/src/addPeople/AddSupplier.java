@@ -104,10 +104,11 @@ public class AddSupplier implements Initializable{
                 || txtFornitura.getText().isEmpty()) {
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         } else {
-            if (!interfaceServer.controlSupplier(azienda)) {
-                lblStatus.setText("ERRORE: Cambia Azienda");
-            } else {
-                try {
+
+                if (!interfaceServer.controlSupplier(azienda)) {
+                    lblStatus.setText("ERRORE: Cambia Azienda");
+                }else{
+                    try {
 
                     boolean success = interfaceServer.addSupplier(name, surname, azienda, fornitura, partitaIva);
                     if (success) {
