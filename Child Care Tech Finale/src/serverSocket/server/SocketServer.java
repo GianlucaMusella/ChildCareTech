@@ -955,7 +955,7 @@ public class SocketServer extends Thread implements Runnable {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            ArrayList<AppealGS> ready = rmiServer.loadDataServer(Integer.parseInt(idGita));
+            ArrayList<AppealGS> ready = rmiServer.loadDataServer(idGita);
             if (ready == null) {
                 outputToClient.writeUnshared(true);
                 outputToClient.flush();
@@ -971,6 +971,7 @@ public class SocketServer extends Thread implements Runnable {
 
 
         }else if(commandMethod.equals("bambinoPresenteServer")){
+
 
             String codiceFiscale = (String) inputFromClient.readUnshared();
             String idGita = (String) inputFromClient.readUnshared();
@@ -994,7 +995,6 @@ public class SocketServer extends Thread implements Runnable {
                 String tappa = (String) inputFromClient.readUnshared();
                 String idGita = (String) inputFromClient.readUnshared();
                 LocalDate giorno = LocalDate.parse((CharSequence) inputFromClient.readUnshared());
-                String ora = (String) inputFromClient.readUnshared();
 
                 responce = rmiServer.newTappaServer(tappa, idGita, giorno);
 

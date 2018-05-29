@@ -319,7 +319,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
 
     @Override
     public boolean controlSupplier(String azienda) throws Exception {
-        String control = "SELECT * FROM mydb.fornitori WHERE CodiceFiscale = '"+ azienda+"'";
+        String control = "SELECT * FROM mydb.fornitori WHERE Azienda = '"+ azienda+"'";
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
         Statement statement = connectionDatabase.initializeConnection().createStatement();
@@ -1930,7 +1930,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
-    public ArrayList<AppealGS> loadDataServer(int idGita) throws Exception {
+    public ArrayList<AppealGS> loadDataServer(String idGita) throws Exception {
 
         ArrayList<AppealGS> values = new ArrayList<>();
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
@@ -1938,7 +1938,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         String SQL = ("SELECT mydb.bambini.Nome, mydb.bambini.Cognome, mydb.bambini.CodiceFiscale, mydb.bambini_has_gita.Presenza, mydb.bambini_has_gita.Pullman " +
                 "FROM ((mydb.bambini_has_gita " +
                 "INNER JOIN mydb.bambini ON mydb.bambini.CodiceFiscale = mydb.bambini_has_gita.Bambini_CodiceFiscale AND mydb.bambini_has_gita.Gita_idGita = ");
-        ResultSet rs = stmt.executeQuery(SQL + idGita + "))");
+        ResultSet rs = stmt.executeQuery(SQL + Integer.parseInt(idGita) + "))");
         while (rs.next()){
             String colonnaNome = rs.getString("Nome");
             String colonnaCognome = rs.getString ("Cognome");

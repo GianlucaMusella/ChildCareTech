@@ -175,14 +175,17 @@ public class AddMenu implements Initializable{
     }
 
     public void addMenu(ActionEvent actionEvent) throws Exception{
+
+        String nome = nomeMenu.getText();
+        String primo = primoPiatto.getText();
+        String secondo = secondoPiatto.getText();
+        String contorno = txtContorno.getText();
+        LocalDate giorno = txtGiorno.getValue();
+
         if (nomeMenu.getText().isEmpty() || primoPiatto.getText().isEmpty() || secondoPiatto.getText().isEmpty() || txtContorno.getText().isEmpty())
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
         else {
-            String nome = nomeMenu.getText();
-            String primo = primoPiatto.getText();
-            String secondo = secondoPiatto.getText();
-            String contorno = txtContorno.getText();
-            LocalDate giorno = txtGiorno.getValue();
+
             try {
                 InterfaceServer interfaceServer;
                 if (Controller.selection.equals("RMI")) {
@@ -196,6 +199,7 @@ public class AddMenu implements Initializable{
                     primoPiatto.clear();
                     secondoPiatto.clear();
                     txtGiorno.getEditor().clear();
+                    txtContorno.clear();
                     lblStatus.setTextFill(Color.BLACK);
                     lblStatus.setText("Inserimento riuscito");
                 }
