@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
@@ -51,6 +48,9 @@ public class SearchAndDeleteStaff implements Initializable{
 
     @FXML
     private Button show;
+
+    @FXML
+    private Label lblStatus;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -96,23 +96,27 @@ public class SearchAndDeleteStaff implements Initializable{
 
 
     public void deleteStaff (ActionEvent actionEvent) throws Exception {
-
-        StaffGS deletableStaff = tabellaStaff.getSelectionModel().getSelectedItem();
-        int index = tabellaStaff.getSelectionModel().getSelectedIndex();
-        String codiceFiscale = deletableStaff.getCodiceFiscale();
-
-        System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
-
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
+        if (tabellaStaff.getSelectionModel().isEmpty()){
+            lblStatus.setText("ERRORE: nessun elemento selezionato");
         }
-        interfaceServer.deleteStaff(codiceFiscale);
-        tabellaStaff.getItems().remove(index);
+        else {
+            StaffGS deletableStaff = tabellaStaff.getSelectionModel().getSelectedItem();
+            int index = tabellaStaff.getSelectionModel().getSelectedIndex();
+            String codiceFiscale = deletableStaff.getCodiceFiscale();
 
+            System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
+            InterfaceServer interfaceServer;
+            if (Controller.selection.equals("RMI")) {
+                interfaceServer = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceServer = Singleton.getInstance().methodSocket();
+            }
+            boolean success = interfaceServer.deleteStaff(codiceFiscale);
+            if (success) {
+                tabellaStaff.getItems().remove(index);
+            }
+        }
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
