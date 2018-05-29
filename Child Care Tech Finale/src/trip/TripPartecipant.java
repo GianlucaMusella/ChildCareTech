@@ -117,7 +117,6 @@ public class TripPartecipant implements Initializable{
             interfaceServer.assegnaPullman(txtCodicefiscale.getText(), txtIDgita.getText());
 
             txtCodicefiscale.clear();
-            txtIDgita.clear();
         }
     }
 
