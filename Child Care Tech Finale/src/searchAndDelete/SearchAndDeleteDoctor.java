@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
@@ -45,6 +42,9 @@ public class SearchAndDeleteDoctor implements Initializable{
 
     @FXML
     private Button show;
+
+    @FXML
+    private Label lblStatus;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -89,23 +89,27 @@ public class SearchAndDeleteDoctor implements Initializable{
 
 
     public void deleteDoctor(ActionEvent actionEvent) throws Exception {
-
-        DoctorGS deletableDoctors = tabellaPediatra.getSelectionModel().getSelectedItem();
-        int index = tabellaPediatra.getSelectionModel().getSelectedIndex();
-        String codiceFiscale = deletableDoctors.getCodiceFiscale();
-
-        System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
-
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
+        if (tabellaPediatra.getSelectionModel().isEmpty()){
+            lblStatus.setText("ERRORE: nessun elemento selezionato");
         }
-        interfaceServer.deleteDoctors(codiceFiscale);
-        tabellaPediatra.getItems().remove(index);
+        else {
+            DoctorGS deletableDoctors = tabellaPediatra.getSelectionModel().getSelectedItem();
+            int index = tabellaPediatra.getSelectionModel().getSelectedIndex();
+            String codiceFiscale = deletableDoctors.getCodiceFiscale();
 
+            System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
 
+            InterfaceServer interfaceServer;
+            if (Controller.selection.equals("RMI")) {
+                interfaceServer = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceServer = Singleton.getInstance().methodSocket();
+            }
+            boolean success = interfaceServer.deleteDoctors(codiceFiscale);
+            if (success) {
+                tabellaPediatra.getItems().remove(index);
+            }
+        }
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
