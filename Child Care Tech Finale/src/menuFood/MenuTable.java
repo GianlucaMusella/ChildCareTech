@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -38,6 +39,9 @@ public class MenuTable implements Initializable{
 
     @FXML
     private TableColumn<MenuGS, String> colonnaGiorno;
+
+    @FXML
+    private Label lblStatus;
 
     @FXML
     private Button show;
@@ -73,20 +77,25 @@ public class MenuTable implements Initializable{
 
     public void deleteMenu(ActionEvent actionEvent) throws Exception {
 
-        MenuGS deletableMenu = tabellaMenu.getSelectionModel().getSelectedItem();
-        String nomeMenu = deletableMenu.getNomeMenu();
-
-        System.out.println(nomeMenu); // Ho messo questo per capire se prende il codice fiscale giusto
-
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
+        if (tabellaMenu.getSelectionModel().isEmpty()) {
+            lblStatus.setText("ERRORE: nessun elemento selezionato");
         }
-        interfaceServer.deleteMenu(nomeMenu);
+        else {
+            MenuGS deletableMenu = tabellaMenu.getSelectionModel().getSelectedItem();
+            String nomeMenu = deletableMenu.getNomeMenu();
 
-        show.fire();
+            System.out.println(nomeMenu); // Ho messo questo per capire se prende il codice fiscale giusto
+
+            InterfaceServer interfaceServer;
+            if (Controller.selection.equals("RMI")) {
+                interfaceServer = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceServer = Singleton.getInstance().methodSocket();
+            }
+            interfaceServer.deleteMenu(nomeMenu);
+
+            show.fire();
+        }
     }
 
 

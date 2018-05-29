@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -41,6 +42,9 @@ public class TripOrganize implements Initializable {
 
     @FXML
     private TableColumn<TripGS, String> colonnaPullman;
+
+    @FXML
+    private Label lblStatus;
 
     @FXML
     private Button show;
@@ -77,21 +81,25 @@ public class TripOrganize implements Initializable {
 
     public void deleteTrip(ActionEvent actionEvent) throws Exception {
 
-        TripGS deletableTrips = tableGita.getSelectionModel().getSelectedItem();
-        String idGita = deletableTrips.getId();
-
-        System.out.println(idGita); // Ho messo questo per capire se prende il codice fiscale giusto
-
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
+        if (tableGita.getSelectionModel().isEmpty()) {
+            lblStatus.setText("ERRORE: nessun elemento selezionato");
         }
-        interfaceServer.deleteTrip(idGita);
+        else {
+            TripGS deletableTrips = tableGita.getSelectionModel().getSelectedItem();
+            String idGita = deletableTrips.getId();
 
-        show.fire();
+            System.out.println(idGita); // Ho messo questo per capire se prende il codice fiscale giusto
 
+            InterfaceServer interfaceServer;
+            if (Controller.selection.equals("RMI")) {
+                interfaceServer = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceServer = Singleton.getInstance().methodSocket();
+            }
+            interfaceServer.deleteTrip(idGita);
+
+            show.fire();
+        }
     }
 
     public void createTrip(ActionEvent actionEvent) throws Exception {
