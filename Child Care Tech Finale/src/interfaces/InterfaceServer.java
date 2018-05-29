@@ -15,6 +15,7 @@ public interface InterfaceServer extends Remote{
 
     boolean addSupplier(String name, String surname, String azienda, String fornitura, String partitaIva) throws Exception;
     ArrayList<SupplierGS> viewSupplier() throws Exception;
+    ArrayList<OrderGS> viewOrder() throws Exception;
     ArrayList<SupplierGS> searchSupplier(String azienda, String fornitura, String partitaIva) throws Exception;
     boolean modifySupplier(String azienda, String nome, String cognome, String fornitura, String partitaIva) throws Exception;
     boolean addOrder(String azienda, String ordini, String quantità) throws Exception;

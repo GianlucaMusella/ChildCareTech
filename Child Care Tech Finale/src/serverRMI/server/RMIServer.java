@@ -139,6 +139,28 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
+    public ArrayList<OrderGS> viewOrder() throws Exception {
+        ArrayList<OrderGS> values = new ArrayList<>();
+        String sql = ("SELECT mydb.Fornitori_has_Ordine.Fornitori_Azienda, mydb.Fornitori_has_Ordine.Ordine_Nome, mydb.Ordine.Quantita" +
+                " FROM mydb.Fornitori_has_Ordine " +
+                "INNER JOIN mydb.Ordine ON mydb.Ordine.Nome = mydb.Fornitori_has_Ordine.Ordine_Nome");
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+        Statement statement = connectionDatabase.initializeConnection().createStatement();
+
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()) {
+            String colonnaAzienda = rs.getString(1);
+            String colonnaOrdine = rs.getString(2);
+            String colonnaQuantita = rs.getString(3);
+
+
+            values.add(new OrderGS(colonnaAzienda, colonnaOrdine, colonnaQuantita));
+        }
+        rs.close();
+        return values;    }
+
+    @Override
     public ArrayList<SupplierGS> searchSupplier(String azienda, String fornitura, String partitaIva) throws Exception {
 
         ArrayList<SupplierGS> values = new ArrayList<>();

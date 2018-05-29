@@ -1,5 +1,6 @@
 package addPeople;
 
+import getterAndSetter.people.OrderGS;
 import getterAndSetter.people.SupplierGS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -45,6 +46,18 @@ public class AddOrder implements Initializable{
     private TableColumn<SupplierGS, String> colonnaFornitura;
 
     @FXML
+    private TableView<OrderGS> tabellaOrdini;
+
+    @FXML
+    private TableColumn<OrderGS, String> colonnaAziendaa;
+
+    @FXML
+    private TableColumn<OrderGS, String> colonnaOrdine;
+
+    @FXML
+    private TableColumn<OrderGS, String> colonnaQuantità;
+
+    @FXML
     private Label lblStatus;
 
     @FXML
@@ -67,6 +80,10 @@ public class AddOrder implements Initializable{
         colonnaPartitaIVA.setCellValueFactory(new PropertyValueFactory<>("partitaIva"));
         colonnaFornitura.setCellValueFactory(new PropertyValueFactory<>("fornitura"));
 
+        colonnaAziendaa.setCellValueFactory(new PropertyValueFactory<>("azienda"));
+        colonnaOrdine.setCellValueFactory(new PropertyValueFactory<>("ordine"));
+        colonnaQuantità.setCellValueFactory(new PropertyValueFactory<>("quantità"));
+
 
         tabellaFornitori.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -78,21 +95,27 @@ public class AddOrder implements Initializable{
         });
 
         tabellaFornitori.getItems().clear();
+        tabellaOrdini.getItems().clear();
+
         show.fire();
     }
 
     public void viewSupplier(ActionEvent actionEvent) throws Exception{
 
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
-        }
         ArrayList<SupplierGS> supplierGS = interfaceServer.viewSupplier();
 
         tabellaFornitori.setColumnResizePolicy(tabellaFornitori.CONSTRAINED_RESIZE_POLICY);
         tabellaFornitori.setItems(FXCollections.observableArrayList(supplierGS));
+
+        viewOrder(actionEvent);
+    }
+
+    public void viewOrder(ActionEvent actionEvent) throws Exception{
+
+        ArrayList<OrderGS> orderGS = interfaceServer.viewOrder();
+
+        tabellaOrdini.setColumnResizePolicy(tabellaOrdini.CONSTRAINED_RESIZE_POLICY);
+        tabellaOrdini.setItems(FXCollections.observableArrayList(orderGS));
     }
 
     public void addOrder(ActionEvent actionEvent) throws Exception {

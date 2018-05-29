@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPeople.AddOrder">
    <children>
-      <ImageView fitHeight="405.0" fitWidth="603.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="470.0" fitWidth="734.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../image/185235620.jpg" />
          </image>
@@ -19,15 +19,15 @@
       <TextField fx:id="txtAzienda" layoutX="43.0" layoutY="66.0" promptText="Azienda" />
       <TextField fx:id="txtOrdine" layoutX="43.0" layoutY="103.0" promptText="Ordine" />
       <TextField fx:id="txtQuantità" layoutX="43.0" layoutY="141.0" promptText="Quantità" />
-      <TableView fx:id="tabellaFornitori" layoutX="218.0" layoutY="66.0" prefHeight="200.0" prefWidth="358.0">
+      <TableView fx:id="tabellaFornitori" layoutX="218.0" layoutY="66.0" prefHeight="164.0" prefWidth="425.0">
         <columns>
-          <TableColumn fx:id="colonnaAzienda" prefWidth="114.0" text="Azienda" />
-          <TableColumn fx:id="colonnaPartitaIVA" prefWidth="120.0" text="Partita IVA" />
-            <TableColumn fx:id="colonnaFornitura" prefWidth="123.0" text="Fornitura" />
+          <TableColumn fx:id="colonnaAzienda" prefWidth="149.0" text="Azienda" />
+          <TableColumn fx:id="colonnaPartitaIVA" prefWidth="130.0" text="Partita IVA" />
+            <TableColumn fx:id="colonnaFornitura" prefWidth="145.0" text="Fornitura" />
         </columns>
       </TableView>
-      <Button fx:id="show" layoutX="242.0" layoutY="284.0" mnemonicParsing="false" onAction="#viewSupplier" text="Mostra Fornitori" />
-      <Button layoutX="493.0" layoutY="330.0" mnemonicParsing="false" onAction="#addOrder" text="Salva Ordine" />
+      <Button fx:id="show" layoutX="43.0" layoutY="183.0" mnemonicParsing="false" onAction="#viewSupplier" text="Mostra Fornitori e Ordini" />
+      <Button layoutX="43.0" layoutY="223.0" mnemonicParsing="false" onAction="#addOrder" text="Salva Ordine" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_method" prefHeight="35.0" prefWidth="32.0">
          <graphic>
             <ImageView fitHeight="31.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
@@ -38,5 +38,13 @@
          </graphic>
       </Button>
       <Label fx:id="lblStatus" layoutX="43.0" layoutY="334.0" prefHeight="17.0" prefWidth="65.0" textFill="RED" />
+      <TableView fx:id="tabellaOrdini" layoutX="218.0" layoutY="261.0" prefHeight="164.0" prefWidth="425.0">
+        <columns>
+          <TableColumn fx:id="colonnaAziendaa" prefWidth="148.0" text="Azienda" />
+          <TableColumn fx:id="colonnaOrdine" prefWidth="143.0" text="Ordine" />
+            <TableColumn fx:id="colonnaQuantità" minWidth="0.0" prefWidth="133.0" text="Quantità" />
+        </columns>
+      </TableView>
+      <Label layoutX="218.0" layoutY="240.0" text="Ordini Effettuati" />
    </children>
 </AnchorPane>

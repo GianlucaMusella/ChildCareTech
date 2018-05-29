@@ -114,6 +114,23 @@ public class SocketServer extends Thread implements Runnable {
             }
             return responce;
 
+        } else if(commandMethod.equals("viewOrder")) {
+
+            System.out.println("Carico Dati da Socket");
+            ArrayList<OrderGS> ready = rmiServer.viewOrder();
+            if (ready == null) {
+                outputToClient.writeUnshared(true);
+                outputToClient.flush();
+                responce = false;
+            } else {
+                outputToClient.writeUnshared(false);
+                outputToClient.flush();
+                outputToClient.writeUnshared(ready);
+                outputToClient.flush();
+                responce = true;
+            }
+            return responce;
+
         }else if(commandMethod.equals("searchSupplier")){
 
             System.out.println("Cerco dal Socket");
