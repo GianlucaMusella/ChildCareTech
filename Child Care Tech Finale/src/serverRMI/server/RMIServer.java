@@ -338,6 +338,8 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement1 = null;
         PreparedStatement preparedStatement2 = null;
+        PreparedStatement preparedStatement3 = null;
+
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();
 
         String child = "INSERT INTO mydb.bambini (idBambino,CodiceFiscale,Nome,Cognome,Data_di_Nascita,Luogo_di_Nascita,Allergie,Sesso,Pediatra_CodiceFiscale) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -350,6 +352,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
             preparedStatement = connectionDatabase.initializeConnection().prepareStatement(child);
             preparedStatement1 = connectionDatabase.initializeConnection().prepareStatement(parents);
             preparedStatement2 = connectionDatabase.initializeConnection().prepareStatement(contact);
+            preparedStatement3 = connectionDatabase.initializeConnection().prepareStatement(parents);
 
             preparedStatement.setInt(1, Integer.parseInt(idBambino));
             preparedStatement.setString(2, codiceFiscale);
@@ -371,6 +374,10 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
             preparedStatement2.setString(2, contatto);
             preparedStatement2.executeUpdate();
 
+            preparedStatement3.setString(1, codiceFiscale);
+            preparedStatement3.setString(2, genitore2);
+            preparedStatement3.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -380,6 +387,7 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
                     preparedStatement.close();
                     preparedStatement1.close(); //chiudo le connessioni al db una volta effettuato il controllo
                     preparedStatement2.close();
+                    preparedStatement3.close();
                     return true;
                 }
             } catch (Exception e) {
