@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Controller;
@@ -48,6 +45,9 @@ public class SearchAndDeleteSupplier implements Initializable{
 
     @FXML
     private Button show;
+
+    @FXML
+    private Label lblStatus;
 
 
     @Override
@@ -93,23 +93,27 @@ public class SearchAndDeleteSupplier implements Initializable{
 
 
     public void deleteSupplier (ActionEvent actionEvent) throws Exception {
-
-        SupplierGS deletableSupplier = tabellaAzienda.getSelectionModel().getSelectedItem();
-        int index = tabellaAzienda.getSelectionModel().getSelectedIndex();
-        String azienda = deletableSupplier.getAzienda();
-
-        System.out.println(azienda); // Ho messo questo per capire se prende il codice fiscale giusto
-
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
+        if (tabellaAzienda.getSelectionModel().isEmpty()) {
+            lblStatus.setText("ERRORE: nessun elemento selezionato");
         } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
-        }
-        interfaceServer.deleteSupplier(azienda);
-        tabellaAzienda.getItems().remove(index);
-    }
+            SupplierGS deletableSupplier = tabellaAzienda.getSelectionModel().getSelectedItem();
+            int index = tabellaAzienda.getSelectionModel().getSelectedIndex();
+            String azienda = deletableSupplier.getAzienda();
 
+            System.out.println(azienda); // Ho messo questo per capire se prende il codice fiscale giusto
+
+            InterfaceServer interfaceServer;
+            if (Controller.selection.equals("RMI")) {
+                interfaceServer = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceServer = Singleton.getInstance().methodSocket();
+            }
+            boolean success = interfaceServer.deleteSupplier(azienda);
+            if (success) {
+                tabellaAzienda.getItems().remove(index);
+            }
+        }
+    }
     public void back_method(ActionEvent actionEvent) throws Exception{
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
         Parent root = FXMLLoader.load(getClass().getResource("/resources/gui/menu/SupplierMenu.fxml"));
