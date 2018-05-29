@@ -5,6 +5,7 @@ import getterAndSetter.people.*;
 import interfaces.InterfaceServer;
 import getterAndSetter.trip.AppealGS;
 import getterAndSetter.trip.TripGS;
+import trip.AppealTrip;
 
 import java.io.*;
 import java.net.Socket;
@@ -2177,27 +2178,56 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
-    public ArrayList<AppealGS> loadDataServer(int idGita) throws Exception {
+    public ArrayList<AppealGS> loadDataServer(String idGita) throws Exception {
 
+        boolean ok = false;
         try{
-
             toServer.writeUnshared("loadDataServer");
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(idGita));
+            toServer.writeUnshared(idGita);
             toServer.flush();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            return (ArrayList<AppealGS>) fromServer.readObject();
-        } catch (IOException e) {
+        ArrayList<AppealGS> arrayListToReturn = new ArrayList<>();
+        boolean isEmpty = false;
+        try {
+            isEmpty = (boolean) fromServer.readUnshared();
+            System.out.println("Is db empty? " +isEmpty);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        if(!isEmpty) {
+            try {
+                Object loaded = fromServer.readUnshared();
+                if (loaded instanceof ArrayList<?>) {
+                    //get list
+                    ArrayList<?> loadedAl = (ArrayList<?>) loaded;
+                    if (loadedAl.size() > 0) {
+                        for (Object element : loadedAl) {
+                            if (element instanceof AppealGS) {
+                                AppealGS myElement = (AppealGS) element;
+                                arrayListToReturn.add(myElement);
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            ok = (boolean) fromServer.readUnshared ();
+            System.out.println("Read reply from server");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        System.out.println(ok);
+
+        if(ok){
+            return arrayListToReturn;
         }
         return null;
-
     }
 
 
@@ -2209,7 +2239,7 @@ public class SocketUserClient implements InterfaceServer {
             toServer.flush();
             toServer.writeUnshared(codiceFiscale);
             toServer.flush();
-            toServer.writeUnshared(String.valueOf(idGita));
+            toServer.writeUnshared(idGita);
             toServer.flush();
             toServer.writeUnshared(pullman);
             toServer.flush();

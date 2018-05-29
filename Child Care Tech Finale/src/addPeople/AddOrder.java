@@ -50,6 +50,16 @@ public class AddOrder implements Initializable{
     @FXML
     private Button show;
 
+    private InterfaceServer interfaceServer;
+
+    public AddOrder(){
+        if (Controller.selection.equals("RMI")) {
+            interfaceServer = Singleton.getInstance().rmiLookup();
+        } else {
+            interfaceServer = Singleton.getInstance().methodSocket();
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -85,22 +95,21 @@ public class AddOrder implements Initializable{
         tabellaFornitori.setItems(FXCollections.observableArrayList(supplierGS));
     }
 
-    public void addOrder(ActionEvent actionEvent) throws Exception{
-        if (txtAzienda.getText().isEmpty() || txtOrdine.getText().isEmpty() || txtQuantità.getText().isEmpty())
+    public void addOrder(ActionEvent actionEvent) throws Exception {
+
+        String azienda = txtAzienda.getText();
+        String ordini = txtOrdine.getText();
+        String quantità = txtQuantità.getText();
+
+        if (txtAzienda.getText().isEmpty() || txtOrdine.getText().isEmpty() || txtQuantità.getText().isEmpty()){
             lblStatus.setText("ERRORE: Dati obbligatori mancanti");
-        else {
-            String azienda = txtAzienda.getText();
-            String ordini = txtOrdine.getText();
-            String quantità = txtQuantità.getText();
+        }else {
+
             try {
-                InterfaceServer interfaceServer;
-                if (Controller.selection.equals("RMI")) {
-                    interfaceServer = Singleton.getInstance().rmiLookup();
-                } else {
-                    interfaceServer = Singleton.getInstance().methodSocket();
-                }
+
                 boolean success = interfaceServer.addOrder(azienda, ordini, quantità);
-                if (success) {
+
+                if (!success) {
                     txtAzienda.clear();
                     txtOrdine.clear();
                     txtQuantità.clear();

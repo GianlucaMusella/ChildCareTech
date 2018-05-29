@@ -55,10 +55,10 @@ public class AppealTrip implements Initializable{
     private InterfaceServer interfaceServer;
 
     public AppealTrip(){
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
+        if (Controller.selection.equals("SOCKTE")) {
             interfaceServer = Singleton.getInstance().methodSocket();
+        } else {
+            interfaceServer = Singleton.getInstance().rmiLookup();
         }
     }
 
@@ -81,7 +81,8 @@ public class AppealTrip implements Initializable{
         if(idGita.getText().isEmpty()) {
             lblStatus.setText("Errore: dati mancanti");
         } else {
-            ArrayList<AppealGS> appelloGSArrayList = interfaceServer.loadDataServer(Integer.parseInt(idGita.getText()));  //Qui vado a chiamare la parte Server che scrivo in fondo al codice come ieri
+
+            ArrayList<AppealGS> appelloGSArrayList = interfaceServer.loadDataServer(idGita.getText());  //Qui vado a chiamare la parte Server che scrivo in fondo al codice come ieri
 
             tableAppello.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
             tableAppello.setItems(FXCollections.observableArrayList(appelloGSArrayList));
@@ -91,7 +92,7 @@ public class AppealTrip implements Initializable{
     public void appelloTrip (ActionEvent actionEvent) throws Exception {
 
 
-        if(idGita.getText().isEmpty() || txtPullman.getText().isEmpty()) {
+        if(idGita.getText().isEmpty() || txtPullman.getText().isEmpty() || tableAppello.getSelectionModel().isEmpty()) {
             lblStatus.setText("Errore: dati mancanti");
         } else {
 
