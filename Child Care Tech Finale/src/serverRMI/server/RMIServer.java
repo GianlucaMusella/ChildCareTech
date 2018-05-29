@@ -289,6 +289,34 @@ public class RMIServer extends UnicastRemoteObject implements InterfaceServer {
     }
 
     @Override
+    public boolean deleteOrder(String nome) throws Exception {
+        ConnectionDatabase connectionDatabase = new ConnectionDatabase();
+
+        PreparedStatement st = null;
+
+        String queryDelete = "DELETE FROM mydb.Ordine WHERE Nome = '" + nome + "';";
+
+        try {
+
+            st = connectionDatabase.initializeConnection().prepareStatement(queryDelete);
+            st.executeUpdate(queryDelete);
+            System.out.println("Deleted from Ordine.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
+    }
+
+    @Override
     public boolean deleteSupplier(String azienda) throws Exception {
 
         ConnectionDatabase connectionDatabase = new ConnectionDatabase();

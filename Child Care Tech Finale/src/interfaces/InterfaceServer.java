@@ -18,6 +18,7 @@ public interface InterfaceServer extends Remote{
     ArrayList<SupplierGS> searchSupplier(String azienda, String fornitura, String partitaIva) throws Exception;
     boolean modifySupplier(String azienda, String nome, String cognome, String fornitura, String partitaIva) throws Exception;
     boolean addOrder(String azienda, String ordini, String quantità) throws Exception;
+    boolean deleteOrder (String nome) throws Exception;
     boolean deleteSupplier(String azienda) throws Exception;
     boolean controlSupplier(String azienda) throws Exception;
 
