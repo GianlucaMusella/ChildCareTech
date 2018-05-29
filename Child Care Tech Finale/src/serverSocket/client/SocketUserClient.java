@@ -332,6 +332,28 @@ public class SocketUserClient implements InterfaceServer {
     }
 
     @Override
+    public boolean deleteOrder(String nome) throws Exception {
+        try{
+
+            toServer.writeUnshared("deleteOrder");
+            toServer.flush();
+            toServer.writeUnshared(nome);
+            toServer.flush();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            return (boolean) fromServer.readUnshared();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    @Override
     public boolean deleteSupplier(String azienda) throws Exception {
 
         try{

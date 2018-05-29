@@ -191,7 +191,20 @@ public class SocketServer extends Thread implements Runnable {
 
             return responce;
 
-        }else if(commandMethod.equals("deleteSupplier")){
+        }else if(commandMethod.equals("deleteOrder")){
+
+            try {
+                System.out.println("Sto eseguendo da Socket");
+                String nome = (String) inputFromClient.readUnshared();
+
+                responce = rmiServer.deleteOrder(nome);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return responce;
+
+        }
+        else if(commandMethod.equals("deleteSupplier")){
 
             try {
                 System.out.println("Sto eseguendo da Socket");

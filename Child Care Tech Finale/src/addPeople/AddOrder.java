@@ -118,6 +118,28 @@ public class AddOrder implements Initializable{
         tabellaOrdini.setItems(FXCollections.observableArrayList(orderGS));
     }
 
+    public void deleteOrder(ActionEvent actionEvent) throws Exception {
+        if (tabellaOrdini.getSelectionModel().isEmpty()) {
+            lblStatus.setText("ERRORE: nessun elemento selezionato");
+        } else {
+            OrderGS deletableOrder = tabellaOrdini.getSelectionModel().getSelectedItem();
+            int index = tabellaOrdini.getSelectionModel().getSelectedIndex();
+            String ordine = deletableOrder.getOrdine();
+
+            InterfaceServer interfaceServer;
+            if (Controller.selection.equals("RMI")) {
+                interfaceServer = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceServer = Singleton.getInstance().methodSocket();
+            }
+            boolean success = interfaceServer.deleteOrder(ordine);
+            if (success) {
+                tabellaOrdini.getItems().remove(index);
+            }
+        }
+    }
+
+
     public void addOrder(ActionEvent actionEvent) throws Exception {
 
         String azienda = txtAzienda.getText();
