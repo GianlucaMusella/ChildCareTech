@@ -9,11 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Controller;
 import main.Singleton;
@@ -45,6 +43,9 @@ public class SearchAndDeleteParents implements Initializable{
 
     @FXML
     private Button show;
+
+    @FXML
+    private Label lblStatus;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -89,22 +90,27 @@ public class SearchAndDeleteParents implements Initializable{
 
 
     public void deleteParents (ActionEvent actionEvent) throws Exception {
-
-        ParentsGS deletableParentsGS = tabellaGenitori.getSelectionModel().getSelectedItem();
-        int index = tabellaGenitori.getSelectionModel().getSelectedIndex();
-        String codiceFiscale = deletableParentsGS.getCodiceFiscale();
-
-        System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
-
-        InterfaceServer interfaceServer;
-        if (Controller.selection.equals("RMI")) {
-            interfaceServer = Singleton.getInstance().rmiLookup();
-        } else {
-            interfaceServer = Singleton.getInstance().methodSocket();
+        if (tabellaGenitori.getSelectionModel().isEmpty()){
+            lblStatus.setText("ERRORE: nessun elemento selezionato");
         }
-        interfaceServer.deleteParents(codiceFiscale);
-        tabellaGenitori.getItems().remove(index);
+        else {
+            ParentsGS deletableParentsGS = tabellaGenitori.getSelectionModel().getSelectedItem();
+            int index = tabellaGenitori.getSelectionModel().getSelectedIndex();
+            String codiceFiscale = deletableParentsGS.getCodiceFiscale();
 
+            System.out.println(codiceFiscale); // Ho messo questo per capire se prende il codice fiscale giusto
+
+            InterfaceServer interfaceServer;
+            if (Controller.selection.equals("RMI")) {
+                interfaceServer = Singleton.getInstance().rmiLookup();
+            } else {
+                interfaceServer = Singleton.getInstance().methodSocket();
+            }
+            boolean success = interfaceServer.deleteParents(codiceFiscale);
+            if (success) {
+                tabellaGenitori.getItems().remove(index);
+            }
+        }
     }
 
     public void back_method(ActionEvent actionEvent) throws Exception{
